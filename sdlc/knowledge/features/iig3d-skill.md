@@ -4,18 +4,18 @@ title: iig3d skill
 description: The 3D corporate infographic capability built on 2026-09-15 to 2026-09-17 lives inside the
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
-status: stable
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:07:19Z" }
+status: draft
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:08:00Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
-stale_after: "2026-10-01T01:07:19Z"
-source_commit: 10a11532e27e891142d2a73eab56a70af78fb5ea
+stale_after: "2026-10-01T01:08:00Z"
+source_commit: 75021e8e8a3aed241138c425aa2715a8f13d7ad1
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T10:56:31+10:00", digest: daa98ddd4cbde167 }
-  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T01:07:19Z", digest: 44e09a27bf5b55e6 }
+  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T11:07:58+10:00", digest: 42ec5661d00bec92 }
 ---
 
 # Problem
@@ -216,11 +216,11 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `skills/iig3d/refs/3d-slab-stack/ref-03-folded-ribbon-tiers.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-01-target-four-pills.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-02-target-six-pills-symmetric.jpg`
-- `skills/iig3d/scripts/iig3d.py`
+- `skills/iig3d/scripts/iig3d.py` in [iig3d.py](/modules/iig3d-py.md)
 - `skills/iig3d/templates/base-prompt.md`
 - `skills/iig3d/templates/meta.example.yaml`
 - `skills/iig3d/templates/spec.example.yaml`
-- `tests/conftest.py`
+- `tests/conftest.py` in [conftest.py](/modules/conftest-py.md)
 - `tests/fixtures/brand.css`
 - `tests/fixtures/sample-prompt-3d-disc-timeline.md`
 - `tests/fixtures/sample-prompt-industrial-3d.md`
@@ -240,6 +240,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_routing.py`
 - `tests/test_skill_md.py`
 - `tests/test_spec.py`
+- `uv.lock`
 
 # Review
 - no review yet

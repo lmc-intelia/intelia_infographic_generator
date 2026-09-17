@@ -11,10 +11,20 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [iig3d skill](features/iig3d-skill.md) - The 3D corporate infographic capability built on 2026-09-15 to 2026-09-17 lives inside the
 
 # Modules
-* none yet
+* [conftest.py](modules/conftest-py.md) - Graphify community 5: tests/conftest.py
+* [iig3d.py](modules/iig3d-py.md) - Graphify community 6: skills/iig3d/scripts/iig3d.py
 
 # Hubs
-* none yet
+* [build_parser()](hubs/build-parser.md) - Graphify god node with degree 3 in skills/iig3d/scripts/iig3d.py
+* [conftest.py](hubs/conftest-py.md) - Graphify god node with degree 5 in tests/conftest.py
+* [fixture](hubs/fixture.md) - Graphify god node with degree 3
+* [fixtures()](hubs/fixtures.md) - Graphify god node with degree 3 in tests/conftest.py
+* [iig3d()](hubs/iig3d.md) - Graphify god node with degree 3 in tests/conftest.py
+* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 3 in skills/iig3d/scripts/iig3d.py
+* [main()](hubs/main.md) - Graphify god node with degree 2 in skills/iig3d/scripts/iig3d.py
+* [Path](hubs/path.md) - Graphify god node with degree 2
+* [skill_root()](hubs/skill-root.md) - Graphify god node with degree 3 in tests/conftest.py
+* [UsageError](hubs/usageerror.md) - Graphify god node with degree 3 in skills/iig3d/scripts/iig3d.py
 
 # Lessons
 * none yet

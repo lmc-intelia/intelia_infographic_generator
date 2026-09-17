@@ -1,0 +1,80 @@
+name: 3d-isometric-light
+device: Isometric platforms, roads, city and factory blocks, small people
+backdrop: White / pale
+items: {min: 4, max: 6}
+aspect_default: landscape
+layout:
+  structure:
+    - Scene in true 30 degree isometric projection, centre 60 to 70 percent of the canvas
+    - Platforms, roads or islands define zones
+    - Extruded blocks on each platform stand for systems or components
+    - Leader lines with dot terminals from scene elements to labels outside the scene
+    - Optional planks or bridges linking two platforms
+  variants:
+    - {name: Winding platform, focus: "Journeys, milestones", emphasis: "Road bending in S or Z shapes, cube milestones"}
+    - {name: Floating islands, focus: "Current vs future, two platforms", emphasis: Two islands joined by road planks}
+    - {name: Stacked tiers, focus: Layered ecosystems, emphasis: Three islands floating above each other}
+    - {name: Factory floor, focus: "Operations, logistics", emphasis: Machines and vehicles as simple blocks}
+  visual_elements:
+    - Every block, road and platform on the same isometric grid
+    - Platform tops light, sides one shade darker, single top-left light source
+    - Simple extruded blocks with few surface details
+    - Faint vertical light beams linking stacked tiers
+    - Roads dark with white dashes
+  text_placement:
+    - Title at top
+    - Platform names in the studio space above each island
+    - Zone labels outside the scene, linked by leader lines, never on the scene
+    - Direction labels on plank or road top faces
+    - Portrait for winding platforms and tiers, landscape for road timelines and floors
+style:
+  palette:
+    - Family item colours on blocks, cubes and zone platforms; blue and orange dominant for factory scenes
+    - "White or #F4F6F9 backdrop; platform tops light grey #E3E7ED, platform sides mid grey"
+    - Roads charcoal with white dashes; water and glass in light teal
+  visual_elements:
+    - True 30 degree isometric projection; every block, road and platform on the same grid
+    - Winding road or platform ribbon that bends in S or Z shapes to create zones
+    - Buildings, machines and vehicles as simple extruded blocks with a few surface details; small flat-shaded people for scale
+    - Cube milestones with an icon on the top face and a numeral or year beside them
+    - Leader lines (1 to 2 px) with dot terminals from a scene element to a label outside the scene
+    - "Stacked tiers: three floating islands with faint vertical light beams linking them"
+  typography:
+    - Family typography; section titles bold caps in the item colour, descriptions light charcoal, all labels outside the scene
+  composition:
+    - Scene occupies the centre 60 to 70 percent; labels in the surrounding whitespace, never on top of the scene
+    - Portrait for winding platforms and stacked tiers; landscape for road timelines and factory floors
+    - Four to six labelled zones or milestones
+    - Consistent light source from the top-left across every block
+prompt_fragment: >-
+  Render as a polished corporate isometric 3D infographic on a white or pale studio backdrop: a winding road or floating platform in true 30 degree isometric projection carrying simple extruded buildings, machines, vehicles, cubes or zones, with small flat-shaded people for scale. Each labelled zone or milestone sits on the platform in its own saturated colour (teal, orange, royal blue, lime green, magenta, purple), platform tops light grey with mid grey sides, roads charcoal with white dashes. Thin leader lines with dot terminals pull every label out into the surrounding whitespace, never over the scene. Soft offset shadows, consistent top-left light. Geometric sans-serif: bold caps section names, light charcoal descriptions, two-tone title. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder text. Clean premium business-template 3D.
+best_for:
+  - System and site maps
+  - Operations and logistics flows
+  - Campus or platform overviews
+  - Current-state to future-state bridges
+refs:
+  - id: "01"
+    file: ref-01-smart-city-platform.jpg
+    shows: Portrait winding isometric platform with suburb, business towers, industrial plant and green energy zones, leader lines to four labelled sections
+    flags: [clean]
+  - id: "02"
+    file: ref-02-road-timeline-cubes.jpg
+    shows: Isometric zig-zag road with six coloured cube milestones, year labels and icons, alternating text blocks
+    flags: [watermark, low-res]
+  - id: "03"
+    file: ref-03-factory-workflow-scene.jpg
+    shows: "Isometric factory floor on a rounded white card: machines on pedestals, dashed workflow paths, forklifts, trucks and workers in orange and blue"
+    flags: [clean]
+  - id: "04"
+    file: ref-04-stacked-platform-tiers.jpg
+    shows: Three isometric island tiers floating vertically, each a different scene, leader lines to labels on both sides
+    flags: [clean]
+pairings:
+  isometric-map: ["01", "03"]
+  winding-roadmap: ["02", "01"]
+  hierarchical-layers: ["04", "01"]
+  structural-breakdown: ["03", "04"]
+  linear-progression: ["02", "03"]
+alternates: [3d-isometric-dark, 3d-slab-stack]
+source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-isometric-light.md, added: "2026-09-17"}

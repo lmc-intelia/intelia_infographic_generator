@@ -1,0 +1,22 @@
+# Minimal schema walked by validate_member(): key -> type, or key -> {type, keys|items}.
+member:
+  name: str
+  device: str
+  backdrop: str
+  items: {type: map, keys: {min: int, max: int}}
+  aspect_default: {type: enum, values: [landscape, portrait, square]}
+  layout: {type: map, keys: {structure: list, variants: list, visual_elements: list, text_placement: list}}
+  style: {type: map, keys: {palette: list, visual_elements: list, typography: list, composition: list}}
+  prompt_fragment: str
+  best_for: list
+  refs: {type: list, items: {type: map, keys: {id: str, file: str, shows: str, flags: list}}}
+  pairings: map
+  alternates: list
+  source: {type: map, keys: {origin: str, added: str}}
+meta:
+  member: str
+  new_member: map
+  shows: str
+  flags: list
+  pairings: map
+  file: str

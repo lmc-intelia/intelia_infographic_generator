@@ -1,0 +1,86 @@
+name: 3d-capsule-hub
+device: Central disc, pill capsules with rimmed circles, thin connectors, rimmed capsule wheel
+backdrop: White
+items: {min: 4, max: 8}
+aspect_default: landscape
+layout:
+  structure:
+    - Hub disc centred, 20 to 28 percent of the shorter canvas side
+    - Concentric rings on the hub face for layered hubs
+    - Capsules in two columns (landscape) or in a ring (square)
+    - Connectors from each capsule to the hub, never crossing
+    - Optional orbit ring around the hub for a cross-cutting item
+  variants:
+    - {name: Capsule hub, focus: Inputs and outputs around one platform, emphasis: Capsule columns left and right}
+    - {name: Segment ring, focus: Cycles, emphasis: Wedges surround the hub directly}
+    - {name: Hub with ribbon, focus: Hub feeding a sequence, emphasis: Serpentine ribbon of small discs}
+    - {name: Rimmed wheel, focus: "Peer topics, no hierarchy", emphasis: "Capsule outline and circle rim share the item colour, thick connector stubs on the hub"}
+  visual_elements:
+    - Hub disc bevelled with a glossy white face plate
+    - "Capsules: white pills with a thin outline, rimmed circle at the inner end"
+    - Connectors thin and dark with a coloured dot terminal at the hub end matching the capsule rim
+    - Circle faces plain colour or a simple white line icon
+    - Small tab under the hub for a supporting tool
+  text_placement:
+    - Title at top
+    - Hub label on the inner disc
+    - Capsule name filling the pill body
+    - Connector labels along the connector line
+    - Orbit ring label on the ring
+style:
+  palette:
+    - Hub disc white face with a two-colour or grey rim; capsules white with a thin grey outline; each capsule's circle rim in one family colour
+    - "Rimmed wheel variant (ref-05): the capsule outline itself takes the item colour, doubled as a thick rim on the icon circle, and the hub ring carries short thick connector stubs in blue"
+    - "Segment ring variant: analogous colours stepping around the ring (teal to green) or the full family cycle"
+    - White or pale studio backdrop, optional faint orbit rings around the hub
+  visual_elements:
+    - Hub disc 20 to 28 percent of the shorter canvas side, bevelled, with the title inside
+    - "Capsules: rounded pill outlines, rimmed circle at the inner end, text filling the rest"
+    - "Connectors: thin charcoal lines with a coloured dot where they meet the hub and a plain dot at the capsule"
+    - "Segment ring: wedges with visible depth stepping forward, numerals on the wedges, icons inside"
+    - Flat icons in white on the coloured circles
+  typography:
+    - Family typography; title inside the hub in bold caps, capsule names bold caps in the item colour, descriptions light charcoal
+  composition:
+    - Hub centred; capsules in two columns (landscape) or around the hub in a ring (square)
+    - Four to eight capsules; more than eight, switch to 3d-paper-tile
+    - Connectors never cross; order capsules so lines fan out cleanly
+    - "Segment ring: four to eight wedges, labels outside the ring"
+prompt_fragment: >-
+  Render as a polished corporate 3D infographic organised around a large bevelled central disc with a white glossy face plate holding the title. Around it, each item is a pill-shaped capsule outlined in thin grey, anchored by a rimmed circle with a flat white icon on a saturated colour, joined to the hub by a thin charcoal connector with a coloured dot terminal; alternatively wedges of a 3D segment ring surround the hub directly. Capsules sit in two columns or in a ring, connectors never cross. White studio backdrop with optional faint orbit rings, soft offset shadows, top-left highlights. Circle colours cycle through red, orange, lime green, teal, royal blue, purple, magenta with no repeat on neighbours. Geometric sans-serif type, bold caps names, light charcoal descriptions. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder text. Clean premium business-template 3D.
+best_for:
+  - Central concept with related items
+  - Capability and stakeholder maps
+  - Source-to-consumer pictures around one platform
+  - Feature wheels and cycles
+refs:
+  - id: "01"
+    file: ref-01-capsule-hub.jpg
+    shows: Central white disc, eight outlined pill capsules in two columns, each with a rimmed circle and icon, thin connectors with coloured dot terminals on the hub
+    flags: [watermark]
+  - id: "02"
+    file: ref-02-central-disc-ribbon.jpg
+    shows: Large orange-to-magenta rimmed hub disc with dashed orbit lines, connectors to a vertical serpentine ribbon of five icon discs
+    flags: [watermark]
+  - id: "03"
+    file: ref-03-segment-ring.jpg
+    shows: Seven-segment green to teal ring around a central disc, numbered wedges with icons and labels
+    flags: [low-res]
+  - id: "04"
+    file: ref-04-comparision.jpg
+    shows: "Two-column comparison: two vertical section pillars with vertical titles, a VS diamond between them, five glossy dumbbell capsules per side (icon circle plus number circle), text outward in the whitespace, concentric rings behind"
+    flags: [clean]
+  - id: "05"
+    file: ref-05-rimmed-capsule-wheel.jpg
+    shows: Eight white capsules in two columns of four around a bevelled hub, each capsule outlined in its own family colour with a thick coloured rim on the icon circle, thick blue connector stubs from the hub ring, icons in colour, hub title with a colour-dot progress strip
+    flags: [clean]
+pairings:
+  hub-spoke: ["01", "05", "02"]
+  circular-flow: ["03", "01"]
+  tree-branching: ["01", "05"]
+  venn-diagram: ["02", "01"]
+  binary-comparison: ["04"]
+  comparison-matrix: ["04", "01"]
+  bento-grid: ["05", "01"]
+alternates: [3d-hex-cluster, 3d-paper-tile, 3d-disc-timeline]
+source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-capsule-hub.md, added: "2026-09-17"}

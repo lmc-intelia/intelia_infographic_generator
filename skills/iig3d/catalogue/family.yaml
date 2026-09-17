@@ -1,0 +1,66 @@
+# 3D corporate family: shared constants and the layout routing table.
+# Source: baoyu-infographic 2.1.0-lmc references/styles/3d-family.md (2026-09-17).
+version: 1
+
+palette:
+  items:
+    - {name: teal, hex: "#1FB5C8"}
+    - {name: orange, hex: "#F5851F"}
+    - {name: magenta, hex: "#E4327A"}
+    - {name: royal blue, hex: "#2456C4"}
+    - {name: lime green, hex: "#8CC63F"}
+    - {name: purple, hex: "#7B3FA0"}
+    - {name: red, hex: "#E2312A"}
+    - {name: yellow, hex: "#F7C11B"}
+  light_backdrop: ["#F4F6F9", "#E3E7ED"]
+  blue_grey_backdrop: ["#C9D3DC", "#E6ECF1"]
+  dark_backdrop: ["#1C2A4A", "#101A33"]
+  neutrals: {white: "#FFFFFF", mid_grey: "#9AA3AE", charcoal: "#2B2F36"}
+  shadows: Soft, offset down-right, 15 to 25 percent opacity, never hard black
+  override_rule: A project palette replaces the item colours only; backdrop, neutrals and shadow rules stay
+
+typography:
+  - Geometric sans-serif (Montserrat, Poppins, Gotham look)
+  - Titles all caps, bold, letter-spaced, often two-tone (bold word plus light word)
+  - "Step labels: large bold numeral over small all-caps word (01 over STEP)"
+  - Body text small, light, charcoal, left-aligned, short blocks beside each shape
+  - "Stats: oversized bold numerals in the item colour with a short caption"
+
+negative_list: No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template 3D.
+
+aspect_map: {landscape: "16:9", portrait: "9:16", square: "1:1"}
+supported_ratios: ["1:1", "3:2", "2:3", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+portrait_ratios: ["9:16", "2:3", "3:4", "4:5"]
+text_budget: {landscape: 120, portrait: 160}
+
+ref_rules:
+  max_total: 6
+  per_render: [2, 3]
+  max_long_edge_px: 1600
+  style_only_note: >-
+    The images above are style references only. Match their rendering style, depth, lighting,
+    palette treatment and typography. Do not copy their text or data.
+
+# Used when style is omitted or industrial-3d. Naming a 3d-* member skips this table.
+routing:
+  linear-progression: {primary: 3d-disc-timeline, alternates: [3d-arrow-ribbon, 3d-slab-stack, 3d-gradient-pedestal, 3d-cylinder-column]}
+  winding-roadmap: {primary: 3d-isometric-light, alternates: [3d-disc-timeline]}
+  circular-flow: {primary: 3d-capsule-hub, alternates: [3d-paper-tile]}
+  hub-spoke: {primary: 3d-capsule-hub, alternates: [3d-hex-cluster, 3d-target-callout, 3d-paper-tile]}
+  tree-branching: {primary: 3d-paper-tile, alternates: [3d-hex-cluster, 3d-capsule-hub, 3d-target-callout]}
+  hierarchical-layers: {primary: 3d-slab-stack, alternates: [3d-glass-layer, 3d-isometric-light, 3d-cylinder-column]}
+  funnel: {primary: 3d-slab-stack, alternates: [3d-arrow-ribbon, 3d-cylinder-column]}
+  bridge: {primary: 3d-arrow-ribbon, alternates: [3d-disc-timeline, 3d-target-callout]}
+  dashboard: {primary: 3d-paper-tile, alternates: [3d-isometric-dark, 3d-cylinder-column, 3d-target-callout]}
+  bento-grid: {primary: 3d-paper-tile, alternates: [3d-slab-stack, 3d-hex-cluster]}
+  periodic-table: {primary: 3d-paper-tile, alternates: [3d-hex-cluster]}
+  comparison-matrix: {primary: 3d-gradient-pedestal, alternates: [3d-paper-tile]}
+  binary-comparison: {primary: 3d-gradient-pedestal, alternates: [3d-slab-stack, 3d-capsule-hub]}
+  isometric-map: {primary: 3d-isometric-light, alternates: [3d-isometric-dark, 3d-glass-layer]}
+  structural-breakdown: {primary: 3d-isometric-light, alternates: [3d-glass-layer, 3d-slab-stack]}
+  dense-modules: {primary: 3d-isometric-dark, alternates: [3d-paper-tile]}
+  iceberg: {primary: 3d-slab-stack, alternates: [3d-glass-layer, 3d-isometric-dark]}
+  jigsaw: {primary: 3d-paper-tile, alternates: [3d-hex-cluster]}
+  venn-diagram: {primary: 3d-capsule-hub, alternates: [3d-paper-tile]}
+  comic-strip: {primary: 3d-paper-tile, alternates: []}
+  story-mountain: {primary: 3d-arrow-ribbon, alternates: [3d-slab-stack, 3d-cylinder-column]}

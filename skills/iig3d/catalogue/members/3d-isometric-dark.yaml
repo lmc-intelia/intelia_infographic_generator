@@ -1,0 +1,77 @@
+name: 3d-isometric-dark
+device: Isometric ribbon with 3D charts and glass towers on deep navy
+backdrop: Deep navy
+items: {min: 3, max: 5}
+aspect_default: portrait
+layout:
+  structure:
+    - Isometric ribbon folding down the page, each turn a stage for one module
+    - Three to five chart modules, each with a headline figure
+    - Bar towers, stacked bars, exploded rings or pies as the modules
+    - "Glass tower variant: striped columns with a sphere on top and a leader to a label bar"
+    - "City variant: numbered markers with leader lines on the dark ground"
+  variants:
+    - {name: Ribbon stages, focus: Multi-chart reports, emphasis: "Portrait, ribbon path top to bottom"}
+    - {name: Glass towers, focus: Ranked figures, emphasis: "Landscape, tower height equals value"}
+    - {name: Navy city, focus: System maps at night, emphasis: "Numbered markers, glowing blocks"}
+  visual_elements:
+    - Navy gradient ground, optional faint isometric cubes at low opacity
+    - Ribbon or platform in light steel blue
+    - Saturated data colours glowing against the ground, white for neutral series
+    - Value labels on bar top faces or beside bars
+    - Small isometric props beside the relevant chart
+  text_placement:
+    - Title at top in white
+    - Headline figure oversized in the series colour, unit in light grey
+    - Captions may sit at the isometric angle along the ribbon
+    - Body in light grey, short blocks beside each module
+    - No module overlaps another
+style:
+  palette:
+    - "Backdrop #1C2A4A to #101A33 navy gradient; optional faint isometric cubes scattered at 10 percent opacity"
+    - "Ribbon or platform in light steel blue #4A7FC1 to #7FB3E6"
+    - "Data colours: family item colours at full saturation, plus white for neutral series"
+    - "Text white for headings, light grey #C7CEDB for body, item colour for figures"
+  visual_elements:
+    - Isometric ribbon that folds and turns down the page, each turn creating a stage for one chart module
+    - 3D bar towers with visible side faces, value labels on the top face or beside the bar
+    - Stacked layer bars for composition data, exploded ring or pie for share data
+    - "Glass tower variant: tall translucent striped columns with a small sphere on top and a leader to a label bar"
+    - Numbered circle markers on city scenes, leader lines to labels on the dark ground
+    - Small isometric props (devices, machines) beside the relevant chart
+  typography:
+    - Family typography in white; chart captions may sit at the isometric angle along the ribbon
+    - Figures oversized and bold in the series colour with the unit in light grey
+  composition:
+    - Portrait or tall formats for the ribbon; landscape for city and tower variants
+    - Three to five chart modules per canvas, each with a headline figure
+    - Keep the ribbon path readable top to bottom; no module overlaps another
+    - One light source, colours never desaturated by the dark ground
+prompt_fragment: >-
+  Render as an editorial corporate 3D infographic on a deep navy studio backdrop: a light steel-blue isometric ribbon or platform folds down the page and each of its stages carries one 3D data module in true 30 degree isometric projection, such as extruded bar towers with visible side faces, stacked layer bars, an exploded ring chart or translucent striped glass towers with sphere caps. Saturated series colours (teal, orange, magenta, royal blue, lime green, yellow) glow against the navy; value labels sit on the top faces or beside the bars. Numbered circle markers and thin leader lines with dot terminals link modules to white headings and light grey descriptions in the surrounding space. Faint scattered isometric cubes in the background, soft shadows, top-left light. Geometric sans-serif type, oversized bold figures in the series colour. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder text. Clean premium business-template 3D.
+best_for:
+  - Statistics stories and market summaries
+  - Multi-chart reports and KPI narratives
+  - Dense executive data pages
+  - Night-mode system maps
+refs:
+  - id: "01"
+    file: ref-01-ribbon-dataviz.jpg
+    shows: "Tall portrait: a light blue isometric ribbon snakes down a navy field carrying 3D bar charts, stacked layer bars, a 3D printer model and an exploded ring chart, angled labels in white"
+    flags: [clean]
+  - id: "02"
+    file: ref-02-isometric-city.jpg
+    shows: Isometric city blocks in teal, orange and magenta on a navy ground, street names on the roads, numbered circle markers with leader lines to labels
+    flags: [watermark]
+  - id: "03"
+    file: ref-03-glass-bar-towers.jpg
+    shows: Five striped glass 3D bar towers in gradient colours with dot-terminal leaders to hexagon-tabbed label bars on the right, flattened onto navy
+    flags: [watermark]
+pairings:
+  dashboard: ["01", "03"]
+  dense-modules: ["01"]
+  isometric-map: ["02", "01"]
+  linear-progression: ["01"]
+  iceberg: ["01"]
+alternates: [3d-isometric-light, 3d-paper-tile]
+source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-isometric-dark.md, added: "2026-09-17"}

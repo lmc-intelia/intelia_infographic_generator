@@ -1,0 +1,67 @@
+name: 3d-cylinder-column
+device: Stepped glossy cylinders with bent 3D arrows to labels
+backdrop: Pale studio, reflective floor
+items: {min: 3, max: 6}
+aspect_default: landscape
+layout:
+  structure:
+    - Three to six cylinders in a row on a reflective floor
+    - Heights step evenly; tallest first for a descending rank, last for an ascending build
+    - One bent arrow per cylinder, out of the top, 90-degree turn, pointing sideways to the label
+    - "Label block per cylinder: numeral, caps word, title, description"
+    - Optional icon on each cylinder face
+  variants:
+    - {name: Descending, focus: "Ranked priorities, funnels, countdowns", emphasis: "Tallest at the left, heights fall to the right"}
+    - {name: Ascending, focus: "Growth, maturity, build-up", emphasis: "Shortest at the left, heights climb to the right"}
+    - {name: Bar chart, focus: Data with narrative, emphasis: "Height encodes the value, numeral shows it"}
+  visual_elements:
+    - Cylinders with a visible open top and a glossy vertical highlight
+    - Arrows as thick ribbons in the cylinder colour, flat chevron heads
+    - Flat single-colour icon centred on each face
+    - Faint mirrored reflection on the floor plane
+    - Warm ramp of colours left to right, or the family cycle
+  text_placement:
+    - Title at top, left-aligned
+    - Large numeral over a small caps word at each arrow head
+    - Bold title and two-line description to the right of the numeral
+    - Labels stagger upward with the arrows so none overlap
+    - Reading order follows the arrows, left to right
+style:
+  palette:
+    - "Warm ramp default, one colour per cylinder in order: yellow #F7C11B, orange #F5851F, red-orange #E8482B, crimson #C2182B; extend with magenta #E4327A and purple #7B3FA0 for five or six items"
+    - Full family cycle allowed when the content is not ranked
+    - "Arrow matches its cylinder colour; icon near-black #2B2F36 on the face"
+    - "Pale grey studio backdrop #F4F6F9, floor plane with a faint mirrored reflection of each cylinder"
+  visual_elements:
+    - Cylinders with a visible open top (darker inner ellipse), glossy vertical highlight on the left, side shading on the right
+    - Heights step evenly; tallest cylinder first for a descending rank, last for an ascending build
+    - "Arrow: a thick ribbon emerging from inside the cylinder, bending 90 degrees, ending in a flat chevron head pointing at the label"
+    - "Label block: large bold numeral over a small caps word, then a bold title and two lines of light description to the right"
+    - One icon per cylinder centred on the face, flat, single colour
+  typography:
+    - Family typography; numerals are the largest text after the title, titles bold caps, descriptions light charcoal
+  composition:
+    - Three to six cylinders; more than six, switch to 3d-slab-stack
+    - Cylinders occupy the lower two thirds of a landscape canvas; arrows and labels stagger upward so no label overlaps another
+    - "Portrait: cylinders narrower and closer, arrows shorter, labels stacked in one column on the right"
+    - Reading order follows the arrows, left to right
+prompt_fragment: >-
+  Render as a polished corporate 3D infographic built from glossy vertical cylinders of stepped heights standing on a pale reflective floor, one saturated colour per cylinder in a warm ramp from yellow through orange and red to crimson. Each cylinder has a visible open top and a flat dark icon on its face. A thick 3D arrow ribbon in the cylinder's colour rises out of the open top, bends 90 degrees and points sideways to its label: a large bold step numeral over a small caps word, a bold title and two lines of light charcoal description. Arrows stagger so labels never overlap. Pale grey studio backdrop, soft floor reflection, top-left highlights. Geometric sans-serif type. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template 3D.
+best_for:
+  - Ranked steps and priorities
+  - Stage sequences and maturity levels
+  - Countdowns
+  - Bar-chart data with a label per bar
+refs:
+  - id: "01"
+    file: ref-01-stepped-cylinders-arrows.jpg
+    shows: Four cylinders descending left to right in yellow, orange, red and crimson, bent arrows out of each top pointing right to 01 DATA style labels, dark icons on the faces, soft floor reflection
+    flags: [watermark]
+pairings:
+  linear-progression: ["01"]
+  funnel: ["01"]
+  hierarchical-layers: ["01"]
+  dashboard: ["01"]
+  story-mountain: ["01"]
+alternates: [3d-slab-stack, 3d-arrow-ribbon]
+source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-cylinder-column.md, added: "2026-09-17"}

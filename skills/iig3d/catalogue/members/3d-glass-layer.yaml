@@ -1,0 +1,68 @@
+name: 3d-glass-layer
+device: Exploded stack of translucent isometric plates with pill tabs
+backdrop: Pure white
+items: {min: 3, max: 7}
+aspect_default: landscape
+layout:
+  structure:
+    - Three to seven equal isometric plates centred on one vertical axis
+    - Even gaps between plates so every plate stays visible
+    - Numbered pill tab per plate, alternating left and right
+    - Thin connector from each tab to the nearest plate corner
+    - Description text under each tab
+  variants:
+    - {name: Exploded stack, focus: Architecture and reference layers, emphasis: Tabs alternate left and right}
+    - {name: Single column, focus: "Portrait, many layers", emphasis: "Tabs all on the right, numerals descend"}
+    - {name: Waterline, focus: Visible versus hidden layers, emphasis: "Plates above and below a line, opacity fades with depth"}
+    - {name: Floating floors, focus: Site or platform tiers, emphasis: Plates carry small isometric blocks}
+  visual_elements:
+    - Translucent glass plates, cool gradient from frosted white to royal blue
+    - Thin lighter edge highlight on every plate
+    - White pill tabs outlined in navy, tinted numeral circle
+    - Thin navy connectors with dot terminals
+    - Pure white backdrop, shadow only under the base plate
+  text_placement:
+    - Title top-left, two-tone
+    - Layer name inside the tab beside the numeral
+    - Two-line description under the tab
+    - Nothing on the plates themselves
+    - State the reading direction (top is outermost) in the title or a footnote
+style:
+  palette:
+    - "Cool ramp default, top to bottom: frosted white #E8ECF5, lavender #A99BE0, cyan #3FD4F2, teal #2FB5A8, royal blue #2456C4; numeral circles tinted to match their plate"
+    - Family cycle allowed when layers are peers rather than a ramp
+    - "Plates 60 to 80 percent opaque with a thin lighter edge highlight; pure white backdrop #FFFFFF, no studio gradient"
+    - "Text navy #1C2A4A for titles and tabs, charcoal #2B2F36 for descriptions"
+  visual_elements:
+    - "Plates: isometric rhombus slabs at 30 degrees, 4 to 6 percent thick, equal size, centred on one vertical axis"
+    - Gaps between plates equal to roughly one plate thickness times three, so the stack reads as exploded
+    - "Tabs: white pill outlined in navy, tinted circle with the numeral at the left end, layer name in bold; description in light text beneath the tab"
+    - "Connectors: thin navy lines from the tab to the nearest plate corner, dot terminal at the plate"
+    - "Title top-left, two-tone: bold blue first line, lighter navy second line"
+  typography:
+    - Family typography; layer names bold mixed case in navy, numerals medium weight inside the circle, descriptions light charcoal
+  composition:
+    - Three to seven plates; more than seven, switch to 3d-slab-stack
+    - "Landscape: stack centred, tabs alternate left and right, odd numbers left"
+    - "Portrait: stack centred, tabs all on the right, numerals descend"
+    - Top plate is the outermost or user-facing layer, base plate is the foundation; state the reading direction in the content block
+    - Nothing sits on the plates; all text lives in the tabs
+prompt_fragment: >-
+  Render as a polished corporate 3D infographic built as an exploded stack of translucent isometric glass plates floating one above another with even gaps, each plate a cool gradient stepping from frosted white through lavender, cyan and teal to royal blue at the base, lower plates visible through the ones above, thin lighter edge highlights. Each plate is labelled by a white pill tab outlined in navy with a tinted numeral circle and the layer name in bold, alternating left and right, joined to the plate corner by a thin navy connector with a dot terminal, a short light description beneath each tab. Pure white backdrop, no studio gradient, soft shadow only under the base plate. Geometric sans-serif type, two-tone blue title top-left. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template 3D.
+best_for:
+  - Architecture and technology stacks
+  - Abstraction levels and reference models
+  - Platform and data tiers
+  - Exploded system views
+refs:
+  - id: "01"
+    file: ref-01-five-glass-layers.jpg
+    shows: Five translucent isometric plates stacked with gaps, white-grey at the top through lavender, cyan and teal to royal blue at the base, outlined pill tabs (01 Layer Name) alternating left and right with a tinted numeral circle, description text under each tab, two-tone blue title top-left
+    flags: [watermark]
+pairings:
+  hierarchical-layers: ["01"]
+  structural-breakdown: ["01"]
+  iceberg: ["01"]
+  isometric-map: ["01"]
+alternates: [3d-slab-stack, 3d-isometric-light]
+source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-glass-layer.md, added: "2026-09-17"}
