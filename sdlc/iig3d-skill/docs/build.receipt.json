@@ -1,0 +1,16 @@
+{
+  "stage": "build",
+  "type": "workflow",
+  "sources": [
+    {
+      "resource": "sdlc/iig3d-skill/plan.md",
+      "digest": "fa55f5bbfae6974c80e653d00cbc1369ac9123d149052c956cd910e761fb4123"
+    }
+  ],
+  "source_digest": "464b6394945982bfc1eba9db405fb7d1971cda609f816b0e3ae025d068599302",
+  "specification_sha256": "b93de803998dd3f2a752c8eb39ca93d6f48865664134b59b2d749a59f9b1b623",
+  "artifact_sha256": "4f9758b8a0ca555b9d482d492962cab92820aaaf4415bc8125156669884e5bf6",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "archify_version": "2.17.0-dev.1",
+  "delivered_at": "2026-09-17T01:06:36Z"
+}

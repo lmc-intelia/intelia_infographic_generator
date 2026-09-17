@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "iig3d skill: build",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "views": [
+      {
+        "id": "order",
+        "label": "Order of work",
+        "focus": [
+          "scaffold",
+          "catalogue",
+          "assemble",
+          "render",
+          "extend",
+          "skill",
+          "final"
+        ],
+        "note": "Sixteen TDD steps in six groups; each group's failing test is written before its code."
+      },
+      {
+        "id": "loop",
+        "label": "Red-green loop",
+        "focus": [
+          "red",
+          "green",
+          "stop"
+        ],
+        "note": "Every step: test first, sdlc build red must fail, implement, sdlc build green, build sync, commit."
+      },
+      {
+        "id": "riskiest",
+        "label": "Riskiest step",
+        "focus": [
+          "extend",
+          "final"
+        ],
+        "note": "Step 13 regenerates 11 watermarked refs through the skill's own render (live Gemini key in ./.env)."
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "tests",
+      "label": "Tests first"
+    },
+    {
+      "id": "data",
+      "label": "Catalogue + refs"
+    },
+    {
+      "id": "script",
+      "label": "iig3d.py"
+    },
+    {
+      "id": "gates",
+      "label": "sdlc gates"
+    },
+    {
+      "id": "stop",
+      "label": "Stop conditions",
+      "variant": "exception"
+    }
+  ],
+  "phases": [
+    {
+      "id": "p1",
+      "label": "Steps 1-4",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "p2",
+      "label": "Steps 5-10",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "p3",
+      "label": "Steps 11-16",
+      "fromCol": 4,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "scaffold",
+    "catalogue",
+    "assemble",
+    "render",
+    "extend",
+    "skill",
+    "final"
+  ],
+  "nodes": [
+    {
+      "id": "scaffold",
+      "lane": "tests",
+      "col": 0,
+      "type": "frontend",
+      "label": "1 scaffold",
+      "sublabel": "pyproject, CLI stub",
+      "tag": "test_cli"
+    },
+    {
+      "id": "catalogue",
+      "lane": "data",
+      "col": 1,
+      "type": "database",
+      "label": "2-4 catalogue",
+      "sublabel": "YAML, routing, spec",
+      "tag": "test_catalogue"
+    },
+    {
+      "id": "assemble",
+      "lane": "script",
+      "col": 2,
+      "type": "backend",
+      "label": "5-7 assemble",
+      "sublabel": "refs, palette, prompt",
+      "tag": "test_prompt"
+    },
+    {
+      "id": "render",
+      "lane": "script",
+      "col": 3,
+      "type": "cloud",
+      "label": "8-10 render",
+      "sublabel": "creds, Gemini, CLI",
+      "tag": "mocked client"
+    },
+    {
+      "id": "extend",
+      "lane": "data",
+      "col": 4,
+      "type": "database",
+      "label": "11-13 extend",
+      "sublabel": "docs, add, 30 refs",
+      "tag": "11 live calls"
+    },
+    {
+      "id": "skill",
+      "lane": "tests",
+      "col": 5,
+      "type": "frontend",
+      "label": "14-15 skill",
+      "sublabel": "SKILL.md, install",
+      "tag": "symlinks"
+    },
+    {
+      "id": "red",
+      "lane": "gates",
+      "col": 0,
+      "type": "security",
+      "label": "build red",
+      "sublabel": "test must fail",
+      "tag": "per step"
+    },
+    {
+      "id": "green",
+      "lane": "gates",
+      "col": 3,
+      "type": "security",
+      "label": "green + sync",
+      "sublabel": "commit per step",
+      "tag": "per step"
+    },
+    {
+      "id": "final",
+      "lane": "gates",
+      "col": 5,
+      "type": "external",
+      "label": "16 accept",
+      "sublabel": "simplify, 12 renders",
+      "tag": "owner reviews"
+    },
+    {
+      "id": "stop",
+      "lane": "stop",
+      "col": 0,
+      "type": "security",
+      "label": "red passes",
+      "sublabel": "test wrong, stop"
+    }
+  ],
+  "edges": [
+    {
+      "from": "scaffold",
+      "to": "catalogue",
+      "variant": "emphasis"
+    },
+    {
+      "from": "catalogue",
+      "to": "assemble",
+      "variant": "emphasis"
+    },
+    {
+      "from": "assemble",
+      "to": "render",
+      "variant": "emphasis"
+    },
+    {
+      "from": "render",
+      "to": "extend",
+      "variant": "emphasis"
+    },
+    {
+      "from": "extend",
+      "to": "skill",
+      "variant": "emphasis"
+    },
+    {
+      "from": "skill",
+      "to": "final",
+      "variant": "emphasis",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "scaffold",
+      "to": "red",
+      "label": "test first",
+      "variant": "security",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "red",
+      "to": "green",
+      "label": "implement",
+      "variant": "dashed"
+    },
+    {
+      "from": "green",
+      "to": "render",
+      "label": "next step",
+      "variant": "dashed",
+      "role": "return",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelDy": 11
+    },
+    {
+      "from": "red",
+      "to": "stop",
+      "label": "exit 0",
+      "variant": "security",
+      "role": "error",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 11
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "Summary",
+      "items": [
+        "Generated by sdlc from build sources @ 464b63949459; drafts are Claude's reading of the artifact, the acceptor decides",
+        "16 steps, 15 test files, one script; every step commits as build(iig3d-skill): <step> after red, green and sync",
+        "Files that change: 6 root files, 30 skill files, 30 ref JPEGs, 20 test files; all listed so build sync passes"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Risks",
+      "items": [
+        "Step 13 needs GEMINI_API_KEY in ./.env (copy from ../intelia_knowledge_base/.env, never committed) and 11 to 22 Pro image calls",
+        "Regenerated refs may echo a watermark: view each, rerun once, else use a clean sibling ref",
+        "google-genai unverified on Python 3.14: .python-version pins 3.12"
+      ]
+    }
+  ]
+}

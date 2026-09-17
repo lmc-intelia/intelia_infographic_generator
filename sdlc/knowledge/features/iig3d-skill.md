@@ -5,15 +5,17 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: stable
-generated: { by: sdlc/0.3.5, at: "2026-09-17T00:56:26Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:07:19Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
-stale_after: "2026-10-01T00:56:26Z"
-source_commit: cf5e42882533b503289d073f4dad15ec3861d9e0
+  - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
+stale_after: "2026-10-01T01:07:19Z"
+source_commit: 10a11532e27e891142d2a73eab56a70af78fb5ea
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
-  - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T00:56:26Z", digest: daa98ddd4cbde167 }
+  - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T10:56:31+10:00", digest: daa98ddd4cbde167 }
+  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T01:07:19Z", digest: 44e09a27bf5b55e6 }
 ---
 
 # Problem
@@ -144,7 +146,100 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 21. **Clean replacement of watermarked refs** (Concern 1 resolution, 2026-09-17). The 9 source refs flagged `watermark` (`3d-disc-timeline` 01, 02, 04; `3d-capsule-hub` 01, 02; `3d-isometric-dark` 02, 03; `3d-isometric-light` 02; `3d-target-callout` 02; `3d-cylinder-column` 01; `3d-glass-layer` 01) are not vendored. Before the skill is declared built, each is replaced by a clean image produced by `render` from `templates/spec.example.yaml` content with the original as the only `--ref`, at 2K and the member's `aspect_default`, then registered through `add --meta` with `flags: [clean]`, `shows` written by Claude from the render, and the same pairings the original held. The originals are deleted from the working tree before the first commit that adds `refs/`. `check` fails if any vendored ref carries the `watermark` flag (`--allow-watermark` relaxes this for user-added refs only, recorded per ref as `source.user_added: true`). Cost: 11 Gemini Pro image calls. Two of the eleven (`3d-disc-timeline` 02, `3d-isometric-light` 02) are also `low-res`; their regenerations lift that flag too.
 
 # Files
-- plan.md not written yet
+- `.claude/skills/iig3d`
+- `.gitignore`
+- `.python-version`
+- `.sdlc.toml`
+- `11 clean regenerations replacing watermarked originals :`
+- `19 clean originals copied from `~/.agents/skills/baoyu-infographic/references/styles/<member>/` :`
+- `Reference images`
+- `Repository root:`
+- `Skill:`
+- `Tests:`
+- `justfile`
+- `pyproject.toml`
+- `skills/iig3d/SKILL.md`
+- `skills/iig3d/catalogue/family.yaml`
+- `skills/iig3d/catalogue/members/3d-arrow-ribbon.yaml`
+- `skills/iig3d/catalogue/members/3d-capsule-hub.yaml`
+- `skills/iig3d/catalogue/members/3d-cylinder-column.yaml`
+- `skills/iig3d/catalogue/members/3d-disc-timeline.yaml`
+- `skills/iig3d/catalogue/members/3d-glass-layer.yaml`
+- `skills/iig3d/catalogue/members/3d-gradient-pedestal.yaml`
+- `skills/iig3d/catalogue/members/3d-hex-cluster.yaml`
+- `skills/iig3d/catalogue/members/3d-isometric-dark.yaml`
+- `skills/iig3d/catalogue/members/3d-isometric-light.yaml`
+- `skills/iig3d/catalogue/members/3d-paper-tile.yaml`
+- `skills/iig3d/catalogue/members/3d-slab-stack.yaml`
+- `skills/iig3d/catalogue/members/3d-target-callout.yaml`
+- `skills/iig3d/catalogue/schema.yaml`
+- `skills/iig3d/docs/CATALOGUE.md`
+- `skills/iig3d/docs/members/3d-arrow-ribbon.md`
+- `skills/iig3d/docs/members/3d-capsule-hub.md`
+- `skills/iig3d/docs/members/3d-cylinder-column.md`
+- `skills/iig3d/docs/members/3d-disc-timeline.md`
+- `skills/iig3d/docs/members/3d-glass-layer.md`
+- `skills/iig3d/docs/members/3d-gradient-pedestal.md`
+- `skills/iig3d/docs/members/3d-hex-cluster.md`
+- `skills/iig3d/docs/members/3d-isometric-dark.md`
+- `skills/iig3d/docs/members/3d-isometric-light.md`
+- `skills/iig3d/docs/members/3d-paper-tile.md`
+- `skills/iig3d/docs/members/3d-slab-stack.md`
+- `skills/iig3d/docs/members/3d-target-callout.md`
+- `skills/iig3d/refs/3d-arrow-ribbon/ref-01-chevron-arrow-flow.jpg`
+- `skills/iig3d/refs/3d-arrow-ribbon/ref-02-folded-ribbon-tiers.jpg`
+- `skills/iig3d/refs/3d-capsule-hub/ref-01-capsule-hub.jpg`
+- `skills/iig3d/refs/3d-capsule-hub/ref-02-central-disc-ribbon.jpg`
+- `skills/iig3d/refs/3d-capsule-hub/ref-03-segment-ring.jpg`
+- `skills/iig3d/refs/3d-capsule-hub/ref-04-comparision.jpg`
+- `skills/iig3d/refs/3d-capsule-hub/ref-05-rimmed-capsule-wheel.jpg`
+- `skills/iig3d/refs/3d-cylinder-column/ref-01-stepped-cylinders-arrows.jpg`
+- `skills/iig3d/refs/3d-disc-timeline/ref-01-rimmed-disc-timeline.jpg`
+- `skills/iig3d/refs/3d-disc-timeline/ref-02-s-curve-ribbon-discs.jpg`
+- `skills/iig3d/refs/3d-disc-timeline/ref-03-disc-chain-track.jpg`
+- `skills/iig3d/refs/3d-disc-timeline/ref-04-serpentine-ribbon.jpg`
+- `skills/iig3d/refs/3d-glass-layer/ref-01-five-glass-layers.jpg`
+- `skills/iig3d/refs/3d-gradient-pedestal/ref-01-four-pedestals.jpg`
+- `skills/iig3d/refs/3d-hex-cluster/ref-01-honeycomb-hub.jpg`
+- `skills/iig3d/refs/3d-isometric-dark/ref-01-ribbon-dataviz.jpg`
+- `skills/iig3d/refs/3d-isometric-dark/ref-02-isometric-city.jpg`
+- `skills/iig3d/refs/3d-isometric-dark/ref-03-glass-bar-towers.jpg`
+- `skills/iig3d/refs/3d-isometric-light/ref-01-smart-city-platform.jpg`
+- `skills/iig3d/refs/3d-isometric-light/ref-02-road-timeline-cubes.jpg`
+- `skills/iig3d/refs/3d-isometric-light/ref-03-factory-workflow-scene.jpg`
+- `skills/iig3d/refs/3d-isometric-light/ref-04-stacked-platform-tiers.jpg`
+- `skills/iig3d/refs/3d-paper-tile/ref-01-tile-chart-set.jpg`
+- `skills/iig3d/refs/3d-paper-tile/ref-02-semicircle-tabs.jpg`
+- `skills/iig3d/refs/3d-paper-tile/ref-03-hexagon-tree.jpg`
+- `skills/iig3d/refs/3d-slab-stack/ref-01-stacked-slabs.jpg`
+- `skills/iig3d/refs/3d-slab-stack/ref-02-staircase-steps.jpg`
+- `skills/iig3d/refs/3d-slab-stack/ref-03-folded-ribbon-tiers.jpg`
+- `skills/iig3d/refs/3d-target-callout/ref-01-target-four-pills.jpg`
+- `skills/iig3d/refs/3d-target-callout/ref-02-target-six-pills-symmetric.jpg`
+- `skills/iig3d/scripts/iig3d.py`
+- `skills/iig3d/templates/base-prompt.md`
+- `skills/iig3d/templates/meta.example.yaml`
+- `skills/iig3d/templates/spec.example.yaml`
+- `tests/conftest.py`
+- `tests/fixtures/brand.css`
+- `tests/fixtures/sample-prompt-3d-disc-timeline.md`
+- `tests/fixtures/sample-prompt-industrial-3d.md`
+- `tests/fixtures/spec-pipeline.yaml`
+- `tests/fixtures/wide-3000px.jpg`
+- `tests/test_add.py`
+- `tests/test_aspect.py`
+- `tests/test_catalogue.py`
+- `tests/test_cli.py`
+- `tests/test_creds.py`
+- `tests/test_docs.py`
+- `tests/test_install.py`
+- `tests/test_palette.py`
+- `tests/test_prompt.py`
+- `tests/test_refs.py`
+- `tests/test_render.py`
+- `tests/test_routing.py`
+- `tests/test_skill_md.py`
+- `tests/test_spec.py`
 
 # Review
 - no review yet
@@ -152,10 +247,11 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 # Status
 - intent.md: accepted
 - spec.md: accepted
-- plan.md: missing
+- plan.md: accepted
 - test-report: missing or failed
 - deployed: nowhere
 
 # Documents
+- build: sdlc/iig3d-skill/docs/build.html (9/9 showcase, 0 errors, 0 warnings)
 - design: sdlc/iig3d-skill/docs/design.html (9/9 showcase, 0 errors, 0 warnings)
 - plan: sdlc/iig3d-skill/docs/plan.html (9/9 showcase, 0 errors, 0 warnings)
