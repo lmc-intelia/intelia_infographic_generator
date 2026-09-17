@@ -1,6 +1,6 @@
 # sdlc plugin configuration (read by every stage; commit it)
 [commands]
-test = "pytest -q"          # must exit non-zero on failure
+test = "uv run pytest -q"   # must exit non-zero on failure
 lint = ""                   # optional
 build = ""                  # optional
 

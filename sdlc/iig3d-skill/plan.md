@@ -5,6 +5,7 @@ From: spec.md (2026-09-17). Status: accepted. Risk: low.
 Repository root:
 - pyproject.toml (new)
 - .python-version (new)
+- uv.lock (new)
 - .sdlc.toml
 - .gitignore
 - justfile
