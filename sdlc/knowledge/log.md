@@ -3,6 +3,32 @@
 ## 2026-09-17
 * **Update**: [iig3d skill](/features/iig3d-skill.md) verified by process:sdlc-test.
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [conftest.py](/modules/conftest-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_refs.py](/modules/test-refs-py.md).
+* **Update**: [test_prompt.py](/modules/test-prompt-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [test_add.py](/modules/test-add-py.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [UsageError](/modules/usageerror.md).
+* **Update**: [test_render.py](/modules/test-render-py.md).
+* **Creation**: [assemble](/modules/assemble.md).
+* **Creation**: [add_ref](/modules/add-ref.md).
+* **Creation**: [normalise_image](/modules/normalise-image.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [test_prompt.py](/hubs/test-prompt-py.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [test_catalogue.py](/hubs/test-catalogue-py.md).
+* **Update**: [Member](/hubs/member.md).
+* **Update**: [prepare()](/hubs/prepare.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md) verified by process:sdlc-test.
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [conftest.py](/modules/conftest-py.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).

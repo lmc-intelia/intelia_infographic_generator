@@ -8,5 +8,5 @@
 * [Path](path.md) - Graphify god node with degree 27
 * [prepare()](prepare.md) - Graphify god node with degree 16 in skills/iig3d/scripts/iig3d.py
 * [test_catalogue.py](test-catalogue-py.md) - Graphify god node with degree 17 in tests/test_catalogue.py
-* [test_prompt.py](test-prompt-py.md) - Graphify god node with degree 18 in tests/test_prompt.py
+* [test_prompt.py](test-prompt-py.md) - Graphify god node with degree 19 in tests/test_prompt.py
 * [UsageError](usageerror.md) - Graphify god node with degree 16 in skills/iig3d/scripts/iig3d.py

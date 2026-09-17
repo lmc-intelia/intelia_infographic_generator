@@ -5,11 +5,11 @@ description: Graphify god node with degree 17 in tests/test_catalogue.py
 resource: tests/test_catalogue.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:39:55Z" }
-stale_after: "2026-10-01T01:39:55Z"
-source_commit: b1e30e35d422dc248b071a3c4a81203781d4c73c
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
+stale_after: "2026-10-01T02:19:39Z"
+source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
 sources:
-  - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T11:38:15+10:00", digest: 836700b6098f276c }
+  - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T12:19:34+10:00", digest: 395385c4ca4fb714 }
 ---
 
 # Where

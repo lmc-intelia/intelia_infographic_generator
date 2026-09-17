@@ -5,11 +5,11 @@ description: "Graphify community 12: tests/test_refs.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:39:55Z" }
-stale_after: "2026-10-01T01:39:55Z"
-source_commit: b1e30e35d422dc248b071a3c4a81203781d4c73c
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
+stale_after: "2026-10-01T02:19:39Z"
+source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
 sources:
-  - { id: test_refs, resource: tests/test_refs.py, last_modified: "2026-09-17T11:38:15+10:00", digest: 9d5a4232b0c089b4 }
+  - { id: test_refs, resource: tests/test_refs.py, last_modified: "2026-09-17T12:19:34+10:00", digest: f438601cb14b26b0 }
 ---
 
 # Files
@@ -18,17 +18,21 @@ sources:
 # Symbols
 - test_refs.py (tests/test_refs.py:L1)
 - R5: pick 2 to 3 refs per render honouring pairing order and the flag rules; cap… (tests/test_refs.py:L1)
-- test_pairing_order_and_existence() (tests/test_refs.py:L12)
-- test_clean_first_and_no_two_watermarks() (tests/test_refs.py:L18)
-- test_low_res_never_alone() (tests/test_refs.py:L27)
-- test_single_ref_member_returns_one() (tests/test_refs.py:L37)
-- test_fallback_when_layout_has_no_pairing() (tests/test_refs.py:L42)
-- test_device_layout_uses_first_pairing() (tests/test_refs.py:L47)
-- test_user_refs_appended_and_capped_at_six() (tests/test_refs.py:L52)
-- test_missing_ref_file_raises() (tests/test_refs.py:L68)
-- test_missing_user_ref_raises() (tests/test_refs.py:L75)
+- test_missing_ref_file_raises() (tests/test_refs.py:L107)
+- test_missing_user_ref_raises() (tests/test_refs.py:L114)
+- test_style_refs_disabled() (tests/test_refs.py:L119)
+- flagged() (tests/test_refs.py:L13)
+- The shipped catalogue carries no watermark flags any more; restore the source… (tests/test_refs.py:L14)
+- test_never_two_watermarks_even_when_pairing_names_two() (tests/test_refs.py:L27)
+- test_low_res_alone_gets_company() (tests/test_refs.py:L40)
+- test_pairing_order_and_existence() (tests/test_refs.py:L49)
+- test_clean_first_and_no_two_watermarks() (tests/test_refs.py:L55)
+- test_low_res_never_alone() (tests/test_refs.py:L65)
+- test_single_ref_member_returns_one() (tests/test_refs.py:L76)
 - names() (tests/test_refs.py:L8)
-- test_style_refs_disabled() (tests/test_refs.py:L80)
+- test_fallback_when_layout_has_no_pairing() (tests/test_refs.py:L81)
+- test_device_layout_uses_first_pairing() (tests/test_refs.py:L86)
+- test_user_refs_appended_and_capped_at_six() (tests/test_refs.py:L91)
 
 # Depends on
 - no EXTRACTED edges to other modules

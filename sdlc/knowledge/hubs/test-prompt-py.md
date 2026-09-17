@@ -1,15 +1,15 @@
 ---
 type: Hub
 title: test_prompt.py
-description: Graphify god node with degree 18 in tests/test_prompt.py
+description: Graphify god node with degree 19 in tests/test_prompt.py
 resource: tests/test_prompt.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:39:55Z" }
-stale_after: "2026-10-01T01:39:55Z"
-source_commit: b1e30e35d422dc248b071a3c4a81203781d4c73c
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
+stale_after: "2026-10-01T02:19:39Z"
+source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
 sources:
-  - { id: test_prompt, resource: tests/test_prompt.py, last_modified: "2026-09-17T11:21:00+10:00", digest: 5f6098a9e1e41457 }
+  - { id: test_prompt, resource: tests/test_prompt.py, last_modified: "2026-09-17T12:19:34+10:00", digest: 9da58fb9da436d5b }
 ---
 
 # Where
@@ -19,4 +19,4 @@ sources:
 - [test_prompt.py](/modules/test-prompt-py.md)
 
 # Why it matters
-- degree 18: many modules reach this symbol; changes here have a wide blast radius
+- degree 19: many modules reach this symbol; changes here have a wide blast radius

@@ -5,49 +5,41 @@ description: "Graphify community 35: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:47:43Z" }
-stale_after: "2026-10-01T01:47:43Z"
-source_commit: 1d771a6e54b0997d70b05103a6a7a41fe3de7b8b
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
+stale_after: "2026-10-01T02:19:39Z"
+source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:47:39+10:00", digest: 8cd1197f28e29ede }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T12:19:34+10:00", digest: 6abb96a301e9dd69 }
 ---
 
 # Files
 - `skills/iig3d/scripts/iig3d.py`
 
 # Symbols
-- .member_yaml() (skills/iig3d/scripts/iig3d.py:L101)
-- catalogue_markdown() (skills/iig3d/scripts/iig3d.py:L1056)
-- expected_docs() (skills/iig3d/scripts/iig3d.py:L1075)
-- render_docs() (skills/iig3d/scripts/iig3d.py:L1082)
-- stale_docs() (skills/iig3d/scripts/iig3d.py:L1091)
-- `docs stale: <path>` for every generated file that is missing or differs from… (skills/iig3d/scripts/iig3d.py:L1092)
-- .is_layout() (skills/iig3d/scripts/iig3d.py:L113)
-- A general routing layout or a member's own device name. (skills/iig3d/scripts/iig3d.py:L114)
-- cmd_list() (skills/iig3d/scripts/iig3d.py:L1153)
-- .negative_tail() (skills/iig3d/scripts/iig3d.py:L118)
-- Last sentence of the family negative list; a fragment that ends with it already… (skills/iig3d/scripts/iig3d.py:L119)
-- .flag_values() (skills/iig3d/scripts/iig3d.py:L123)
-- read_yaml() (skills/iig3d/scripts/iig3d.py:L127)
-- check() (skills/iig3d/scripts/iig3d.py:L1288)
-- Every catalogue rule in one pass; empty list means clean. (skills/iig3d/scripts/iig3d.py:L1289)
-- write_yaml() (skills/iig3d/scripts/iig3d.py:L132)
-- load_catalogue() (skills/iig3d/scripts/iig3d.py:L138)
-- _check_type() (skills/iig3d/scripts/iig3d.py:L154)
-- Walk one schema node: a bare type name or {type, keys|items|values}. (skills/iig3d/scripts/iig3d.py:L155)
-- validate_member() (skills/iig3d/scripts/iig3d.py:L180)
-- Problems with a member record against schema.yaml `member`; empty when valid. (skills/iig3d/scripts/iig3d.py:L181)
-- has_negative_list() (skills/iig3d/scripts/iig3d.py:L582)
-- .items() (skills/iig3d/scripts/iig3d.py:L59)
-- Catalogue (skills/iig3d/scripts/iig3d.py:L87)
-- _load_meta() (skills/iig3d/scripts/iig3d.py:L916)
-- .routing() (skills/iig3d/scripts/iig3d.py:L94)
-- _new_member_record() (skills/iig3d/scripts/iig3d.py:L941)
-- add_ref() (skills/iig3d/scripts/iig3d.py:L962)
-- Normalise an image into refs/<member>/, register it in the member YAML (or… (skills/iig3d/scripts/iig3d.py:L963)
+- catalogue_markdown() (skills/iig3d/scripts/iig3d.py:L1064)
+- expected_docs() (skills/iig3d/scripts/iig3d.py:L1083)
+- render_docs() (skills/iig3d/scripts/iig3d.py:L1090)
+- stale_docs() (skills/iig3d/scripts/iig3d.py:L1099)
+- `docs stale: <path>` for every generated file that is missing or differs from… (skills/iig3d/scripts/iig3d.py:L1100)
+- .is_layout() (skills/iig3d/scripts/iig3d.py:L114)
+- A general routing layout or a member's own device name. (skills/iig3d/scripts/iig3d.py:L115)
+- cmd_list() (skills/iig3d/scripts/iig3d.py:L1161)
+- .negative_tail() (skills/iig3d/scripts/iig3d.py:L119)
+- Last sentence of the family negative list; a fragment that ends with it already… (skills/iig3d/scripts/iig3d.py:L120)
+- cmd_check() (skills/iig3d/scripts/iig3d.py:L1231)
+- .flag_values() (skills/iig3d/scripts/iig3d.py:L124)
+- check() (skills/iig3d/scripts/iig3d.py:L1296)
+- Every catalogue rule in one pass; empty list means clean. (skills/iig3d/scripts/iig3d.py:L1297)
+- orientation() (skills/iig3d/scripts/iig3d.py:L348)
+- has_negative_list() (skills/iig3d/scripts/iig3d.py:L583)
+- .items() (skills/iig3d/scripts/iig3d.py:L60)
+- Catalogue (skills/iig3d/scripts/iig3d.py:L88)
+- _load_meta() (skills/iig3d/scripts/iig3d.py:L924)
+- .routing() (skills/iig3d/scripts/iig3d.py:L95)
+- .family_yaml() (skills/iig3d/scripts/iig3d.py:L99)
 
 # Depends on
-- [_dry_assembly](/modules/dry-assembly.md)
+- [add_ref](/modules/add-ref.md)
 - [iig3d.py](/modules/iig3d-py.md)
 - [Member](/modules/member.md)
 - [Path](/modules/path.md)

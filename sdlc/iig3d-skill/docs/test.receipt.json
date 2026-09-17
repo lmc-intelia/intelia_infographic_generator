@@ -1,0 +1,20 @@
+{
+  "stage": "test",
+  "type": "sequence",
+  "sources": [
+    {
+      "resource": "sdlc/iig3d-skill/review.md",
+      "digest": "6e5af00d5208693fda868e9701ea61bd0a3465bd61525d89eacbacf795700a4d"
+    },
+    {
+      "resource": "sdlc/iig3d-skill/test-report.json",
+      "digest": "68fa3e97af48a2c74ebcf6e49aab08315d8523805e6bb9053b11e9717dd968b7"
+    }
+  ],
+  "source_digest": "0c7504048ddfac299b6bc4626d224878382cee568c6d10748c4013ab0f33556f",
+  "specification_sha256": "9b8f3bda0e4d13ab49ad4f5b26b8df1c27215fe935b9c4f6b2aa21dce15c4288",
+  "artifact_sha256": "8bb82654a8e7a84a487a08341da278c2be2d2eaa98eaa4de7257358bf266299c",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "archify_version": "2.17.0-dev.1",
+  "delivered_at": "2026-09-17T02:20:31Z"
+}

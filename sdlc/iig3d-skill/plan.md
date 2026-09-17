@@ -9,6 +9,7 @@ Repository root:
 - .sdlc.toml
 - .gitignore
 - .pre-commit-config.yaml (new)
+- REVIEW.md (new)
 - justfile
 - .claude/skills/iig3d (new, symlink -> ../../skills/iig3d)
 

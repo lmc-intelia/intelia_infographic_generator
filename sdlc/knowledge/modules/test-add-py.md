@@ -5,11 +5,11 @@ description: "Graphify community 34: tests/test_add.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:39:55Z" }
-stale_after: "2026-10-01T01:39:55Z"
-source_commit: b1e30e35d422dc248b071a3c4a81203781d4c73c
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
+stale_after: "2026-10-01T02:19:39Z"
+source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
 sources:
-  - { id: test_add, resource: tests/test_add.py, last_modified: "2026-09-17T11:27:35+10:00", digest: 0ef37838f07d29eb }
+  - { id: test_add, resource: tests/test_add.py, last_modified: "2026-09-17T12:19:34+10:00", digest: 4328270b984e5a00 }
 ---
 
 # Files
@@ -21,6 +21,10 @@ sources:
 - write_meta() (tests/test_add.py:L10)
 - test_ids_increment_past_highest() (tests/test_add.py:L105)
 - test_normalise_image_small_stays_small() (tests/test_add.py:L111)
+- test_new_member_name_must_be_slug() (tests/test_add.py:L120)
+- Review finding: a member name is a path segment; only 3d-[a-z0-9-]+ is allowed. (tests/test_add.py:L121)
+- test_user_added_watermark_is_reported() (tests/test_add.py:L133)
+- Review finding (R21): a watermarked user image is registered but check must say… (tests/test_add.py:L134)
 - test_add_to_existing_member() (tests/test_add.py:L16)
 - test_new_member() (tests/test_add.py:L37)
 - test_replace_missing_file_entry() (tests/test_add.py:L59)

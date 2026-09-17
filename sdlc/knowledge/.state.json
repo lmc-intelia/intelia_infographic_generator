@@ -1,8 +1,8 @@
 {
-  "commit": "1d771a6e54b0997d70b05103a6a7a41fe3de7b8b",
-  "graph_commit": "1d771a6e54b0997d70b05103a6a7a41fe3de7b8b",
-  "updates": 2,
-  "ts": "2026-09-17T02:08:40Z",
+  "commit": "1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da",
+  "graph_commit": "1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da",
+  "updates": 3,
+  "ts": "2026-09-17T02:19:41Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -11,9 +11,10 @@
       "modules/test-catalogue-py.md"
     ],
     "tests/conftest.py": [
-      "modules/conftest-py.md"
+      "modules/conftest-py.md",
+      "modules/test-render-py.md"
     ],
-    "tests/test_render.py": [
+    "tests/test_install.py": [
       "modules/conftest-py.md"
     ],
     "tests/test_cli.py": [
@@ -25,7 +26,9 @@
       "modules/catalogue.md",
       "modules/path.md",
       "modules/usageerror.md",
-      "modules/dry-assembly.md"
+      "modules/assemble.md",
+      "modules/add-ref.md",
+      "modules/normalise-image.md"
     ],
     "tests/test_aspect.py": [
       "modules/test-aspect-py.md"
@@ -54,8 +57,8 @@
     "tests/test_skill_md.py": [
       "modules/test-skill-md-py.md"
     ],
-    "tests/test_install.py": [
-      "modules/test-install-py.md"
+    "tests/test_render.py": [
+      "modules/test-render-py.md"
     ]
   }
 }

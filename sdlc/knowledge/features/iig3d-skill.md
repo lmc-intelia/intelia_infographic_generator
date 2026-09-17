@@ -5,18 +5,20 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T02:08:40Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:08:40Z" }
-stale_after: "2026-10-01T02:08:40Z"
-source_commit: 1d771a6e54b0997d70b05103a6a7a41fe3de7b8b
+  - { by: "process:sdlc-test", at: "2026-09-17T02:19:41Z" }
+stale_after: "2026-10-01T02:19:39Z"
+source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
-  - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T11:13:02+10:00", digest: 4948ad7b23ac3a24 }
-  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T11:15:25+10:00", digest: 4835459672b9e05e }
+  - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 6ae2d676b3b13706 }
+  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T12:19:34+10:00", digest: de99c9a8c4c7d6b1 }
+  - { id: review, resource: sdlc/iig3d-skill/review.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 4a3230f281ec7aea }
 ---
 
 # Problem
@@ -140,7 +142,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 16. **List** (I-outcome). `list [--json]` prints members with device, item range, aspect default, ref count; and the 21 general layouts with their primary member.
 17. **Install** (I-decisions). `just install-local` creates `~/.claude/skills/iig3d -> <repo>/skills/iig3d` and `.claude/skills/iig3d -> ../../skills/iig3d`, refusing to overwrite a real directory; `just uninstall-local` removes only symlinks it made. `npx skills add <repo>` works because the layout is `skills/<name>/SKILL.md`.
 18. **Source policy** (I-constraints). The script never emits SVG, HTML or canvas; never post-processes text in a generated PNG; always writes the prompt file before the API call; strips any string matching an API-key pattern from spec, notes and prompt output.
-19. **Repository hygiene** (I-constraints). `.gitignore` lists `.env`, `.venv/`, `__pycache__/`, `infographic/`-style output directories are not ignored (user decides). Root `pyproject.toml` declares the same runtime deps plus `pytest` for the test suite; `.sdlc.toml` test command becomes `uv run pytest -q`.
+19. **Repository hygiene** (I-constraints). `.gitignore` lists `.env`, `.venv/`, `__pycache__/` and `infographic/` (render output; the user copies what they keep). Root `pyproject.toml` declares the same runtime deps plus `pytest` for the test suite; `.sdlc.toml` test command becomes `uv run pytest -q`.
 
 20. **Brand palette from CSS** (product owner request 2026-09-17, extends the intent's "project palette override replaces the item colours only" rule). `--palette-css PATH` on `prompt` and `render`, or `palette_css: PATH` in the content spec, reads a CSS file from the user's repository and derives the item colours. Extraction: custom properties in declaration order (`--name: <colour>`) first, then any other `#hex`, `rgb()`, `hsl()` literal; values normalised to `#RRGGBB`; duplicates dropped; neutrals dropped (HSL saturation under 15 percent, lightness over 92 or under 10 percent); at most 8 kept. `--palette-vars a,b,c` restricts and orders extraction to named custom properties. Precedence: `--palette-css` flag over `palette_css` in the spec; `--palette-vars` over `palette_vars`. A relative `palette_css` resolves against the spec file's directory; a relative `--palette-css` against the current working directory. A missing file exits 1 naming the resolved path. Fewer than 3 usable colours exits 1 naming the file. The prompt's Style Guidelines gain a trailing paragraph: `Project palette override: cycle item colours in this order: <name> #RRGGBB, ...; never repeat a colour on adjacent items; keep the family backdrop, neutrals, shadows and typography unchanged.` The prompt frontmatter records `palette: {source: <path>, colours: [{name, hex}]}`. Backdrop, neutral and shadow values are never replaced. `palette --css PATH [--vars ...]` prints the extraction as JSON for preview.
 
@@ -218,12 +220,12 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `skills/iig3d/refs/3d-slab-stack/ref-03-folded-ribbon-tiers.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-01-target-four-pills.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-02-target-six-pills-symmetric.jpg`
-- `skills/iig3d/scripts/iig3d.py` in [_dry_assembly](/modules/dry-assembly.md)
+- `skills/iig3d/scripts/iig3d.py` in [normalise_image](/modules/normalise-image.md)
 - `skills/iig3d/templates/base-prompt.md`
 - `skills/iig3d/templates/meta.example.yaml`
 - `skills/iig3d/templates/spec.example.yaml`
 - `tests/__init__.py`
-- `tests/conftest.py` in [conftest.py](/modules/conftest-py.md)
+- `tests/conftest.py` in [test_render.py](/modules/test-render-py.md)
 - `tests/fixtures/brand.css`
 - `tests/fixtures/sample-prompt-3d-disc-timeline.md`
 - `tests/fixtures/sample-prompt-industrial-3d.md`
@@ -235,18 +237,18 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_cli.py` in [test_cli.py](/modules/test-cli-py.md)
 - `tests/test_creds.py` in [test_creds.py](/modules/test-creds-py.md)
 - `tests/test_docs.py` in [test_docs.py](/modules/test-docs-py.md)
-- `tests/test_install.py` in [test_install.py](/modules/test-install-py.md)
+- `tests/test_install.py` in [conftest.py](/modules/conftest-py.md)
 - `tests/test_palette.py` in [test_palette.py](/modules/test-palette-py.md)
 - `tests/test_prompt.py` in [test_prompt.py](/modules/test-prompt-py.md)
 - `tests/test_refs.py` in [test_refs.py](/modules/test-refs-py.md)
-- `tests/test_render.py` in [conftest.py](/modules/conftest-py.md)
+- `tests/test_render.py` in [test_render.py](/modules/test-render-py.md)
 - `tests/test_routing.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
 - `tests/test_skill_md.py` in [test_skill_md.py](/modules/test-skill-md-py.md)
 - `tests/test_spec.py` in [test_spec.py](/modules/test-spec-py.md)
 - `uv.lock`
 
 # Review
-- no review yet
+- Important: 5, Nit: 5
 
 # Status
 - intent.md: accepted
