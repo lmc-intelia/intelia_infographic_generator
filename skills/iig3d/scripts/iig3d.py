@@ -22,6 +22,7 @@ import json
 import os
 import re
 import sys
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -708,6 +709,151 @@ def api_key(explicit: str | None, cwd: Path | None = None) -> tuple[str, str]:
         if os.environ.get(name):
             return os.environ[name], f"env:{name}"
     raise UsageError(f"no API key: expected GEMINI_API_KEY in {env_path} or the environment")
+
+
+# --- render ---
+
+DEFAULT_MODEL = "gemini-3-pro-image"
+RESOLUTIONS = ("1K", "2K", "4K")
+STYLE_NOTE = "The images above are style references only. Match their rendering style, depth, lighting, palette treatment and typography. Do not copy their text or data."
+EXIT_CODES = {"ok": 0, "dry-run": 0, "error": 2}
+
+
+def exit_code(result: dict) -> int:
+    return EXIT_CODES.get(result.get("status", "error"), 2)
+
+
+def load_prompt_text(path: Path) -> str:
+    text = Path(path).read_text(encoding="utf-8")
+    if text.startswith("---"):
+        end = text.find("\n---", 3)
+        if end != -1:
+            text = text[end + 4 :]
+    return text.strip()
+
+
+def backup_existing(path: Path) -> Path | None:
+    if not path.exists():
+        return None
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    target = path.with_name(f"{path.stem}-backup-{stamp}{path.suffix}")
+    path.rename(target)
+    return target
+
+
+def _genai_client(api_key: str):
+    from google import genai
+
+    return genai.Client(api_key=api_key)
+
+
+def render(
+    prompt_path: Path,
+    out_png: Path,
+    ratio: str,
+    resolution: str = "2K",
+    model: str | None = None,
+    refs: list[Path] | tuple[Path, ...] = (),
+    retries: int = 1,
+    dry_run: bool = False,
+    api_key: str | None = None,
+    client_factory=None,
+    prompt_warnings: list[str] | None = None,
+) -> dict:
+    """Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.
+
+    Returns the single result record the CLI prints; status ok | dry-run | error."""
+    if resolution not in RESOLUTIONS:
+        raise UsageError(f"resolution must be one of {', '.join(RESOLUTIONS)}, got {resolution!r}")
+    model = model or os.environ.get("IIG3D_MODEL") or DEFAULT_MODEL
+    prompt_path, out_png = Path(prompt_path), Path(out_png)
+    prompt = load_prompt_text(prompt_path)
+    if not prompt:
+        raise UsageError(f"empty prompt: {prompt_path}")
+    ref_paths = [Path(r) for r in refs]
+    base = {
+        "path": str(out_png.resolve()),
+        "bytes": 0,
+        "model": model,
+        "aspect_ratio": ratio,
+        "resolution": resolution,
+        "refs": len(ref_paths),
+        "attempts": 0,
+        "elapsed_seconds": 0.0,
+        "prompt_file": str(prompt_path.resolve()),
+        "prompt_chars": len(prompt),
+        "warnings": list(prompt_warnings or []),
+    }
+    if dry_run:
+        return {"status": "dry-run", **base}
+
+    from io import BytesIO
+
+    from google.genai import types
+    from PIL import Image as PILImage
+
+    client = (client_factory or _genai_client)(api_key)
+    contents: list = [PILImage.open(r) for r in ref_paths]
+    if contents:
+        contents.append(STYLE_NOTE)
+    contents.append(prompt)
+    image_cfg = types.ImageConfig(image_size=resolution, aspect_ratio=ratio)
+    config = types.GenerateContentConfig(
+        response_modalities=["TEXT", "IMAGE"],
+        image_config=image_cfg,
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+    )
+    started = time.time()
+    last_error: Exception | None = None
+    for attempt in range(1, retries + 2):
+        try:
+            print(f"[{attempt}] {model} {ratio} {resolution} refs={len(ref_paths)}", file=sys.stderr)
+            response = client.models.generate_content(model=model, contents=contents, config=config)
+            image = None
+            for part in response.parts or []:
+                if getattr(part, "text", None):
+                    print(f"Model text: {part.text.strip()[:300]}", file=sys.stderr)
+                elif getattr(part, "inline_data", None) is not None:
+                    data = part.inline_data.data
+                    if isinstance(data, str):
+                        import base64
+
+                        data = base64.b64decode(data)
+                    image = PILImage.open(BytesIO(data))
+                    break
+            if image is None:
+                raise RuntimeError("no image part in response (content may have been refused)")
+            if image.mode == "RGBA":
+                flat = PILImage.new("RGB", image.size, (255, 255, 255))
+                flat.paste(image, mask=image.split()[3])
+                image = flat
+            elif image.mode != "RGB":
+                image = image.convert("RGB")
+            out_png.parent.mkdir(parents=True, exist_ok=True)
+            backup = backup_existing(out_png)
+            image.save(str(out_png), "PNG")
+            result = {
+                "status": "ok",
+                **base,
+                "bytes": out_png.stat().st_size,
+                "attempts": attempt,
+                "elapsed_seconds": round(time.time() - started, 1),
+            }
+            if backup:
+                result["backup"] = str(backup)
+            return result
+        except Exception as err:
+            last_error = err
+            print(f"Attempt {attempt} failed: {err}", file=sys.stderr)
+            if attempt <= retries:
+                time.sleep(2 * attempt)
+    return {
+        "status": "error",
+        **base,
+        "attempts": retries + 1,
+        "elapsed_seconds": round(time.time() - started, 1),
+        "error": str(last_error),
+    }
 
 
 # --- cli ---

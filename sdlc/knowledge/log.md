@@ -4,6 +4,18 @@
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [Member](/modules/member.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_prompt.py](/modules/test-prompt-py.md).
+* **Creation**: [test_creds.py](/modules/test-creds-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [Member](/hubs/member.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Deprecation**: [test_routing.py](/hubs/test-routing-py.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Creation**: [test_prompt.py](/modules/test-prompt-py.md).
 * **Update**: [iig3d.py](/hubs/iig3d-py.md).
 * **Creation**: [assemble()](/hubs/assemble.md).

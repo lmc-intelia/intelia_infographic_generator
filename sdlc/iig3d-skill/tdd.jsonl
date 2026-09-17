@@ -14,3 +14,5 @@
 {"phase": "green", "step": "prompt", "exit": 0, "ts": "2026-09-17"}
 {"phase": "red", "step": "creds", "exit": 1, "ts": "2026-09-17"}
 {"phase": "green", "step": "creds", "exit": 0, "ts": "2026-09-17"}
+{"phase": "red", "step": "render", "exit": 1, "ts": "2026-09-17"}
+{"phase": "green", "step": "render", "exit": 0, "ts": "2026-09-17"}

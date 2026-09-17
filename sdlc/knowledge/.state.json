@@ -1,8 +1,8 @@
 {
-  "commit": "fa6e99be0b4fc2a31b39a5a34c91b557f3e9e9a9",
-  "graph_commit": "fa6e99be0b4fc2a31b39a5a34c91b557f3e9e9a9",
-  "updates": 2,
-  "ts": "2026-09-17T01:21:04Z",
+  "commit": "646c305c3cf5097475ddbd17e3f8940ff9f1afdb",
+  "graph_commit": "646c305c3cf5097475ddbd17e3f8940ff9f1afdb",
+  "updates": 3,
+  "ts": "2026-09-17T01:21:39Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -28,6 +28,10 @@
     ],
     "tests/test_palette.py": [
       "modules/test-palette-py.md"
+    ],
+    "tests/test_creds.py": [
+      "modules/test-prompt-py.md",
+      "modules/test-creds-py.md"
     ],
     "tests/test_prompt.py": [
       "modules/test-prompt-py.md"
