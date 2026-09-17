@@ -1,6 +1,6 @@
 ---
 type: Hub
-title: Catalogue
+title: dispatch()
 description: Graphify god node with degree 17 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
@@ -13,7 +13,7 @@ sources:
 ---
 
 # Where
-- `skills/iig3d/scripts/iig3d.py:L78`
+- `skills/iig3d/scripts/iig3d.py:L989`
 
 # Module
 - [iig3d.py](/modules/iig3d-py.md)

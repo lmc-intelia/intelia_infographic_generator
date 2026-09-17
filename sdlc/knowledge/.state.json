@@ -1,19 +1,24 @@
 {
-  "commit": "3fd7b58f5224c043931253a0ca447ae81380f05d",
-  "graph_commit": "3fd7b58f5224c043931253a0ca447ae81380f05d",
-  "updates": 4,
-  "ts": "2026-09-17T01:22:58Z",
+  "commit": "98b000f59040f64ed079923f41989f9b05d6b26b",
+  "graph_commit": "98b000f59040f64ed079923f41989f9b05d6b26b",
+  "updates": 5,
+  "ts": "2026-09-17T01:24:25Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
     ],
     "tests/conftest.py": [
-      "modules/conftest-py.md",
-      "modules/test-render-py.md"
+      "modules/conftest-py.md"
+    ],
+    "tests/test_render.py": [
+      "modules/conftest-py.md"
     ],
     "skills/iig3d/scripts/iig3d.py": [
       "modules/member.md",
       "modules/iig3d-py.md"
+    ],
+    "tests/test_cli.py": [
+      "modules/test-cli-py.md"
     ],
     "tests/test_aspect.py": [
       "modules/test-aspect-py.md"
@@ -36,9 +41,6 @@
     ],
     "tests/test_prompt.py": [
       "modules/test-prompt-py.md"
-    ],
-    "tests/test_render.py": [
-      "modules/test-render-py.md"
     ]
   }
 }

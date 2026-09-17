@@ -4,6 +4,23 @@
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [conftest.py](/modules/conftest-py.md).
 * **Update**: [Member](/modules/member.md).
+* **Creation**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Creation**: [dispatch()](/hubs/dispatch.md).
+* **Creation**: [prepare()](/hubs/prepare.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Creation**: [test_cli.py](/hubs/test-cli-py.md).
+* **Deprecation**: [Member](/hubs/member.md).
+* **Deprecation**: [test_catalogue.py](/hubs/test-catalogue-py.md).
+* **Deprecation**: [test_refs.py](/hubs/test-refs-py.md).
+* **Deprecation**: [test_render.py](/hubs/test-render-py.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [conftest.py](/modules/conftest-py.md).
+* **Update**: [Member](/modules/member.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Creation**: [test_render.py](/modules/test-render-py.md).
 * **Update**: [iig3d.py](/hubs/iig3d-py.md).

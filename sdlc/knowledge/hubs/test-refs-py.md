@@ -4,19 +4,14 @@ title: test_refs.py
 description: Graphify god node with degree 12 in tests/test_refs.py
 resource: tests/test_refs.py
 tags: [hub, graphify]
-status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
-stale_after: "2026-10-01T01:19:06Z"
-source_commit: c41d6d6a630903c77274cef3967923ec721af525
+status: deprecated
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:24:25Z" }
+source_commit: 98b000f59040f64ed079923f41989f9b05d6b26b
 sources:
   - { id: test_refs, resource: tests/test_refs.py, last_modified: "2026-09-17T11:17:54+10:00", digest: 2e2bc8ff7292d47f }
 ---
 
-# Where
-- `tests/test_refs.py:L1`
+# Deprecated
+- sources removed by commit `98b000f59040`: `tests/test_refs.py`
+- replacement: [test_refs.py](/modules/test-refs-py.md)
 
-# Module
-- [test_refs.py](/modules/test-refs-py.md)
-
-# Why it matters
-- degree 12: many modules reach this symbol; changes here have a wide blast radius

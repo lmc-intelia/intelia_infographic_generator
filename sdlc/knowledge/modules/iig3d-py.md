@@ -5,11 +5,11 @@ description: "Graphify community 9: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:22:58Z" }
-stale_after: "2026-10-01T01:22:58Z"
-source_commit: 3fd7b58f5224c043931253a0ca447ae81380f05d
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:24:25Z" }
+stale_after: "2026-10-01T01:24:25Z"
+source_commit: 98b000f59040f64ed079923f41989f9b05d6b26b
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:22:55+10:00", digest: 9eab99d7c9d62503 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:24:21+10:00", digest: 9492b4ff52b292e6 }
 ---
 
 # Files
@@ -17,7 +17,11 @@ sources:
 
 # Symbols
 - iig3d.py (skills/iig3d/scripts/iig3d.py:L1)
+- main() (skills/iig3d/scripts/iig3d.py:L1015)
 - read_yaml() (skills/iig3d/scripts/iig3d.py:L102)
+- render_docs() (skills/iig3d/scripts/iig3d.py:L1031)
+- check() (skills/iig3d/scripts/iig3d.py:L1035)
+- add_ref() (skills/iig3d/scripts/iig3d.py:L1039)
 - write_yaml() (skills/iig3d/scripts/iig3d.py:L107)
 - load_catalogue() (skills/iig3d/scripts/iig3d.py:L113)
 - Route (skills/iig3d/scripts/iig3d.py:L173)
@@ -32,8 +36,6 @@ sources:
 - snap_aspect() (skills/iig3d/scripts/iig3d.py:L321)
 - Return (supported ratio, original when snapped). Presets and None use the… (skills/iig3d/scripts/iig3d.py:L322)
 - orientation() (skills/iig3d/scripts/iig3d.py:L336)
-- _ordered_pool() (skills/iig3d/scripts/iig3d.py:L343)
-- Pairing refs for the layout first (falling back to the first pairing), then… (skills/iig3d/scripts/iig3d.py:L344)
 - UsageError (skills/iig3d/scripts/iig3d.py:L35)
 - select_refs() (skills/iig3d/scripts/iig3d.py:L352)
 - Pairing refs for the layout (2 to 3), padded from the member pool when short,… (skills/iig3d/scripts/iig3d.py:L359)
@@ -51,6 +53,9 @@ sources:
 - Prompt (skills/iig3d/scripts/iig3d.py:L523)
 - redact() (skills/iig3d/scripts/iig3d.py:L529)
 - slugify() (skills/iig3d/scripts/iig3d.py:L533)
+- _bullets() (skills/iig3d/scripts/iig3d.py:L537)
+- render_layout_block() (skills/iig3d/scripts/iig3d.py:L541)
+- The member's device layout as the markdown block the Layout Guidelines slot… (skills/iig3d/scripts/iig3d.py:L542)
 - content_block() (skills/iig3d/scripts/iig3d.py:L558)
 - text_labels() (skills/iig3d/scripts/iig3d.py:L582)
 - word_count() (skills/iig3d/scripts/iig3d.py:L594)
@@ -70,11 +75,17 @@ sources:
 - Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.… (skills/iig3d/scripts/iig3d.py:L763)
 - Catalogue (skills/iig3d/scripts/iig3d.py:L78)
 - .routing() (skills/iig3d/scripts/iig3d.py:L85)
-- build_parser() (skills/iig3d/scripts/iig3d.py:L862)
-- main() (skills/iig3d/scripts/iig3d.py:L870)
+- _add_common() (skills/iig3d/scripts/iig3d.py:L862)
+- _add_prepare_args() (skills/iig3d/scripts/iig3d.py:L866)
+- build_parser() (skills/iig3d/scripts/iig3d.py:L879)
 - .layouts() (skills/iig3d/scripts/iig3d.py:L89)
 - .member() (skills/iig3d/scripts/iig3d.py:L92)
+- _split_vars() (skills/iig3d/scripts/iig3d.py:L920)
+- prepare() (skills/iig3d/scripts/iig3d.py:L940)
+- Shared front half of prompt and render: spec, route, aspect, refs, palette,… (skills/iig3d/scripts/iig3d.py:L941)
+- cmd_render() (skills/iig3d/scripts/iig3d.py:L969)
 - .ref_path() (skills/iig3d/scripts/iig3d.py:L98)
+- dispatch() (skills/iig3d/scripts/iig3d.py:L989)
 
 # Depends on
 - [Member](/modules/member.md)

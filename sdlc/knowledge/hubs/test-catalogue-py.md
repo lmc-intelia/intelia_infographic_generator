@@ -4,19 +4,14 @@ title: test_catalogue.py
 description: Graphify god node with degree 12 in tests/test_catalogue.py
 resource: tests/test_catalogue.py
 tags: [hub, graphify]
-status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
-stale_after: "2026-10-01T01:19:06Z"
-source_commit: c41d6d6a630903c77274cef3967923ec721af525
+status: deprecated
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:24:25Z" }
+source_commit: 98b000f59040f64ed079923f41989f9b05d6b26b
 sources:
   - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T11:14:46+10:00", digest: ca5fb70a1d2a7057 }
 ---
 
-# Where
-- `tests/test_catalogue.py:L1`
+# Deprecated
+- sources removed by commit `98b000f59040`: `tests/test_catalogue.py`
+- replacement: [test_catalogue.py](/modules/test-catalogue-py.md)
 
-# Module
-- [test_catalogue.py](/modules/test-catalogue-py.md)
-
-# Why it matters
-- degree 12: many modules reach this symbol; changes here have a wide blast radius

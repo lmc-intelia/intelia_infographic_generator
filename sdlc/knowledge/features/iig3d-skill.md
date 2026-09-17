@@ -5,13 +5,13 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:22:58Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:24:25Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
-stale_after: "2026-10-01T01:22:58Z"
-source_commit: 3fd7b58f5224c043931253a0ca447ae81380f05d
+stale_after: "2026-10-01T01:24:25Z"
+source_commit: 98b000f59040f64ed079923f41989f9b05d6b26b
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T11:13:02+10:00", digest: 4948ad7b23ac3a24 }
@@ -222,7 +222,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `skills/iig3d/templates/meta.example.yaml`
 - `skills/iig3d/templates/spec.example.yaml`
 - `tests/__init__.py`
-- `tests/conftest.py` in [test_render.py](/modules/test-render-py.md)
+- `tests/conftest.py` in [conftest.py](/modules/conftest-py.md)
 - `tests/fixtures/brand.css`
 - `tests/fixtures/sample-prompt-3d-disc-timeline.md`
 - `tests/fixtures/sample-prompt-industrial-3d.md`
@@ -231,14 +231,14 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_add.py`
 - `tests/test_aspect.py` in [test_aspect.py](/modules/test-aspect-py.md)
 - `tests/test_catalogue.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
-- `tests/test_cli.py`
+- `tests/test_cli.py` in [test_cli.py](/modules/test-cli-py.md)
 - `tests/test_creds.py` in [test_creds.py](/modules/test-creds-py.md)
 - `tests/test_docs.py`
 - `tests/test_install.py`
 - `tests/test_palette.py` in [test_palette.py](/modules/test-palette-py.md)
 - `tests/test_prompt.py` in [test_prompt.py](/modules/test-prompt-py.md)
 - `tests/test_refs.py` in [test_refs.py](/modules/test-refs-py.md)
-- `tests/test_render.py` in [test_render.py](/modules/test-render-py.md)
+- `tests/test_render.py` in [conftest.py](/modules/conftest-py.md)
 - `tests/test_routing.py` in [test_routing.py](/modules/test-routing-py.md)
 - `tests/test_skill_md.py`
 - `tests/test_spec.py` in [test_spec.py](/modules/test-spec-py.md)
