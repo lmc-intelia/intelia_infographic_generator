@@ -5,9 +5,9 @@ description: "Graphify community 3: tests/test_catalogue.py, tests/test_routing.
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
-stale_after: "2026-10-01T02:19:39Z"
-source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
+stale_after: "2026-10-01T02:38:32Z"
+source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
 sources:
   - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T12:19:34+10:00", digest: 395385c4ca4fb714 }
   - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-17T11:15:25+10:00", digest: 53a24b265e288942 }

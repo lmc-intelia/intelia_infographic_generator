@@ -5,19 +5,19 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T02:20:44Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:08:40Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:19:41Z" }
-stale_after: "2026-10-01T02:20:44Z"
-source_commit: 18c9116a221453123bc0629d5479baed07f1a778
+stale_after: "2026-10-01T02:38:32Z"
+source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 6ae2d676b3b13706 }
-  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T12:20:41+10:00", digest: 12268d489b2ae222 }
+  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T12:22:16+10:00", digest: f29d8c13a7797458 }
   - { id: review, resource: sdlc/iig3d-skill/review.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 4a3230f281ec7aea }
 ---
 
@@ -150,6 +150,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 
 # Files
 - `.claude/skills/iig3d`
+- `.github/workflows/agent-evals.yml`
 - `.gitignore`
 - `.pre-commit-config.yaml`
 - `.python-version`
@@ -161,6 +162,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `Repository root:`
 - `Skill:`
 - `Tests:`
+- `evals/iig3d-prompt-from-brief.json`
 - `justfile`
 - `pyproject.toml`
 - `skills/iig3d/SKILL.md`
@@ -238,7 +240,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_cli.py` in [test_cli.py](/modules/test-cli-py.md)
 - `tests/test_creds.py` in [test_creds.py](/modules/test-creds-py.md)
 - `tests/test_docs.py` in [test_docs.py](/modules/test-docs-py.md)
-- `tests/test_install.py` in [conftest.py](/modules/conftest-py.md)
+- `tests/test_install.py` in [test_install.py](/modules/test-install-py.md)
 - `tests/test_palette.py` in [test_palette.py](/modules/test-palette-py.md)
 - `tests/test_prompt.py` in [test_prompt.py](/modules/test-prompt-py.md)
 - `tests/test_refs.py` in [test_refs.py](/modules/test-refs-py.md)

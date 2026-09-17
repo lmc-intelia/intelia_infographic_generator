@@ -11,11 +11,11 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [iig3d skill](features/iig3d-skill.md) - The 3D corporate infographic capability built on 2026-09-15 to 2026-09-17 lives inside the
 
 # Modules
-* [add_ref](modules/add-ref.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py
+* [_new_member_record](modules/new-member-record.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py
 * [assemble](modules/assemble.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
 * [Catalogue](modules/catalogue.md) - Graphify community 35: skills/iig3d/scripts/iig3d.py
-* [conftest.py](modules/conftest-py.md) - Graphify community 5: tests/conftest.py, tests/test_install.py
 * [iig3d.py](modules/iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
+* [load_catalogue](modules/load-catalogue.md) - Graphify community 40: skills/iig3d/scripts/iig3d.py
 * [Member](modules/member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
 * [normalise_image](modules/normalise-image.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [Path](modules/path.md) - Graphify community 36: skills/iig3d/scripts/iig3d.py
@@ -25,10 +25,11 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [test_cli.py](modules/test-cli-py.md) - Graphify community 7: tests/test_cli.py
 * [test_creds.py](modules/test-creds-py.md) - Graphify community 20: tests/test_creds.py
 * [test_docs.py](modules/test-docs-py.md) - Graphify community 32: tests/test_docs.py
+* [test_install.py](modules/test-install-py.md) - Graphify community 42: tests/test_install.py
 * [test_palette.py](modules/test-palette-py.md) - Graphify community 16: tests/test_palette.py
 * [test_prompt.py](modules/test-prompt-py.md) - Graphify community 19: tests/test_prompt.py
 * [test_refs.py](modules/test-refs-py.md) - Graphify community 12: tests/test_refs.py
-* [test_render.py](modules/test-render-py.md) - Graphify community 40: tests/conftest.py, tests/test_render.py
+* [test_render.py](modules/test-render-py.md) - Graphify community 5: tests/conftest.py, tests/test_render.py
 * [test_skill_md.py](modules/test-skill-md-py.md) - Graphify community 38: tests/test_skill_md.py
 * [test_spec.py](modules/test-spec-py.md) - Graphify community 11: tests/test_spec.py
 * [UsageError](modules/usageerror.md) - Graphify community 39: skills/iig3d/scripts/iig3d.py
@@ -43,7 +44,7 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [prepare()](hubs/prepare.md) - Graphify god node with degree 16 in skills/iig3d/scripts/iig3d.py
 * [test_catalogue.py](hubs/test-catalogue-py.md) - Graphify god node with degree 17 in tests/test_catalogue.py
 * [test_prompt.py](hubs/test-prompt-py.md) - Graphify god node with degree 19 in tests/test_prompt.py
-* [UsageError](hubs/usageerror.md) - Graphify god node with degree 16 in skills/iig3d/scripts/iig3d.py
+* [UsageError](hubs/usageerror.md) - Graphify god node with degree 17 in skills/iig3d/scripts/iig3d.py
 
 # Lessons
 * none yet

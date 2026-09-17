@@ -5,11 +5,11 @@ description: "Graphify community 11: tests/test_spec.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:39:55Z" }
-stale_after: "2026-10-01T01:39:55Z"
-source_commit: b1e30e35d422dc248b071a3c4a81203781d4c73c
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
+stale_after: "2026-10-01T02:38:32Z"
+source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
 sources:
-  - { id: test_spec, resource: tests/test_spec.py, last_modified: "2026-09-17T11:16:28+10:00", digest: 9986126757f36467 }
+  - { id: test_spec, resource: tests/test_spec.py, last_modified: "2026-09-17T12:38:26+10:00", digest: bf14c7c175d47bce }
 ---
 
 # Files
@@ -22,6 +22,7 @@ sources:
 - test_bad_spec_names_key() (tests/test_spec.py:L39)
 - test_palette_css_resolves_against_spec_dir() (tests/test_spec.py:L47)
 - test_stats_and_refs() (tests/test_spec.py:L58)
+- test_invalid_yaml_is_usage_error() (tests/test_spec.py:L67)
 - test_fixture_loads() (tests/test_spec.py:L8)
 
 # Depends on

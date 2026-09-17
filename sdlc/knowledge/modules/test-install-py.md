@@ -1,13 +1,13 @@
 ---
 type: Module
 title: test_install.py
-description: "Graphify community 41: tests/test_install.py"
+description: "Graphify community 42: tests/test_install.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:47:43Z" }
-stale_after: "2026-10-01T01:47:43Z"
-source_commit: 1d771a6e54b0997d70b05103a6a7a41fe3de7b8b
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
+stale_after: "2026-10-01T02:38:32Z"
+source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
 sources:
   - { id: test_install, resource: tests/test_install.py, last_modified: "2026-09-17T11:38:15+10:00", digest: dccf82b998a27cee }
 ---
@@ -24,7 +24,7 @@ sources:
 - test_refuses_real_directory() (tests/test_install.py:L48)
 
 # Depends on
-- [conftest.py](/modules/conftest-py.md)
+- [test_render.py](/modules/test-render-py.md)
 
 # Inferred
 - no INFERRED edges; treat any that appear as hints

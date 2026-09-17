@@ -5,9 +5,9 @@ description: "Graphify community 16: tests/test_palette.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:39:55Z" }
-stale_after: "2026-10-01T01:39:55Z"
-source_commit: b1e30e35d422dc248b071a3c4a81203781d4c73c
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
+stale_after: "2026-10-01T02:38:32Z"
+source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
 sources:
   - { id: test_palette, resource: tests/test_palette.py, last_modified: "2026-09-17T11:19:03+10:00", digest: a8842ca3f4b63120 }
 ---
