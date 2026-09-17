@@ -10,6 +10,7 @@ Repository root:
 - .gitignore
 - .pre-commit-config.yaml (new)
 - REVIEW.md (new)
+- README.md (new)
 - evals/iig3d-prompt-from-brief.json (new)
 - .github/workflows/agent-evals.yml (new)
 - justfile

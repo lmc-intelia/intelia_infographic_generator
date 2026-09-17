@@ -1,0 +1,303 @@
+# iig3d: 3D corporate infographics for Claude Code
+
+`iig3d` is a Claude Code skill that renders infographics in the glossy corporate 3D
+family (stacked slabs, rimmed disc timelines, capsule hubs, glass layers, isometric
+platforms and so on) with Google's Nano Banana Pro image model. One Python script does
+every deterministic step: it routes a layout to a family member, picks reference images,
+assembles the prompt, persists it, calls the Gemini API and saves the PNG. Claude only
+writes a short YAML content spec and confirms the choices.
+
+The skill lives in `skills/iig3d/`. Everything else in this repository is the development
+environment (tests, pre-commit, sdlc stage records) and can be ignored by users.
+
+## Contents
+
+- [Requirements](#requirements)
+- [Install](#install)
+- [Credentials](#credentials)
+- [Quick start](#quick-start)
+- [The content spec](#the-content-spec)
+- [Choosing a member and layout](#choosing-a-member-and-layout)
+- [Brand colours from a CSS file](#brand-colours-from-a-css-file)
+- [Commands](#commands)
+- [Adding your own reference images](#adding-your-own-reference-images)
+- [Using the skill from Claude Code](#using-the-skill-from-claude-code)
+- [Output files](#output-files)
+- [Troubleshooting](#troubleshooting)
+- [Development](#development)
+
+## Requirements
+
+- [`uv`](https://docs.astral.sh/uv/) on the PATH. The script carries its own dependency
+  header (PEP 723), so `uv run` installs `google-genai`, `pillow` and `pyyaml` on first use.
+  Python 3.10 or later.
+- A Google Gemini API key with access to `gemini-3-pro-image`.
+- Claude Code, if you want Claude to drive it. The script also works on its own.
+
+## Install
+
+Pick one.
+
+**From this repository into Claude Code (any project):**
+
+```bash
+npx skills add lmc-intella/intelia_infographic_generator --skill iig3d
+```
+
+**From a checkout, as symlinks (keeps the skill in sync with the repo):**
+
+```bash
+git clone https://github.com/lmc-intella/intelia_infographic_generator.git
+cd intelia_infographic_generator
+just install-local      # ~/.claude/skills/iig3d and .claude/skills/iig3d -> skills/iig3d
+```
+
+`just uninstall-local` removes only those two symlinks.
+
+**Standalone, no Claude Code:** copy `skills/iig3d/` anywhere and call
+`uv run <that dir>/scripts/iig3d.py ...`.
+
+## Credentials
+
+Put your key in a `.env` file in the directory you run the command from:
+
+```
+GEMINI_API_KEY=AIza...
+```
+
+The script reads `./.env` in the current directory, then `GEMINI_API_KEY` or
+`GOOGLE_API_KEY` from the environment, then `--api-key`. It does not look in parent
+directories. When nothing is found it exits 1 with:
+
+```
+no API key: expected GEMINI_API_KEY in /your/dir/.env or the environment
+```
+
+The key value is never written to stdout, prompt files, YAML or logs. Keep `.env` out of git
+(this repository's `.gitignore` already lists it).
+
+## Quick start
+
+```bash
+cp skills/iig3d/templates/spec.example.yaml spec.yaml   # edit title and items
+uv run skills/iig3d/scripts/iig3d.py render --spec spec.yaml --out-dir infographic/my-topic
+```
+
+Output:
+
+```json
+{"status": "ok", "path": ".../infographic/my-topic/infographic.png", "bytes": 3013940,
+ "model": "gemini-3-pro-image", "aspect_ratio": "16:9", "resolution": "2K", "refs": 1,
+ "attempts": 1, "elapsed_seconds": 31.0,
+ "prompt_file": ".../infographic/my-topic/prompts/01-infographic-my-title.md",
+ "warnings": [], "member": "3d-glass-layer", "layout": "hierarchical-layers", ...}
+```
+
+A render takes about 30 seconds at 2K. Add `--dry-run` to write the prompt file and skip the
+API call; add `--resolution 4K` for print.
+
+## The content spec
+
+One YAML file per infographic. Only `title` and `items` are required.
+
+```yaml
+title: OPENWIKI REFRESH PIPELINE          # on-image title, verbatim
+subtitle: Five steps from commit to published wiki
+language: en                              # language of every label (default en)
+layout: linear-progression                # a general layout or a 3d-* device name
+style: industrial-3d                      # industrial-3d routes by layout; or name a 3d-* member
+aspect: landscape                         # landscape | portrait | square | W:H such as 4:3
+palette_css: ./brand.css                  # optional, see Brand colours
+palette_vars: [--brand-primary, --brand-secondary]   # optional, restricts and orders the colours
+items:                                    # one per step, tier, capsule, pill, cell, plate or cylinder
+  - label: COMMIT                         # required; rendered as "01 COMMIT"
+    detail: Developer pushes to main      # one line under the label
+    value: "73%"                          # optional stat shown with the item
+    icon: git-branch                      # optional hint for the icon
+stats:                                    # optional headline numbers
+  - {value: "12x", caption: faster refresh}
+notes: keep the world map faint           # optional design instructions
+refs: [./my-brand-reference.jpg]          # optional extra reference images (max 6 total)
+```
+
+Rules the script enforces: unknown keys and missing `title`, `items` or `label` fail with the
+key named; relative `palette_css` and `refs` paths resolve against the spec file's directory;
+anything that looks like an API key inside the text is replaced with `[redacted]`.
+
+Warnings (not errors) are returned when the on-image text exceeds about 120 words for
+landscape or 160 for portrait, when the item count is outside the member's range (the
+warning names an alternate member), and when a custom aspect ratio is snapped to the nearest
+supported one. `--strict` turns warnings into exit 1.
+
+## Choosing a member and layout
+
+Twelve members share one rendering language and differ in the structural device:
+
+| Style | Device | Items | Best for |
+|-------|--------|-------|----------|
+| `3d-slab-stack` | Stacked extruded slabs, staircase, folded ribbons | 3 to 7 | tiers, ranked lists, funnels |
+| `3d-arrow-ribbon` | Fat chevron arrows carrying a sequence | 5 to 8 | pipelines, journeys |
+| `3d-disc-timeline` | Rimmed discs on a track, chain or S-curve | 4 to 8 | timelines, procedures |
+| `3d-paper-tile` | Embossed tiles, hexagons, tabs, tile-capped charts | 6 to 16 | dashboards, grids |
+| `3d-gradient-pedestal` | Isometric gradient pedestals with 3D numerals | 3 to 5 | short summaries, comparisons |
+| `3d-capsule-hub` | Central disc with pill capsules and connectors | 4 to 8 | capability maps, cycles |
+| `3d-isometric-light` | Isometric platforms, roads and blocks on white | 4 to 6 | site and system maps |
+| `3d-isometric-dark` | Isometric ribbon with 3D charts on navy | 3 to 5 | data stories, KPI pages |
+| `3d-target-callout` | Tilted bullseye with beams to numbered pills | 3 to 6 | goals, OKRs |
+| `3d-hex-cluster` | Honeycomb of outlined hexagons around a hub | 6 to 10 | inventories, taxonomies |
+| `3d-cylinder-column` | Stepped glossy cylinders with bent arrows | 3 to 6 | ranked steps, bar charts |
+| `3d-glass-layer` | Exploded stack of translucent plates | 3 to 7 | architecture layers |
+
+Two ways to pick:
+
+- Name the member: `style: 3d-target-callout`. The layout defaults to the member's own device.
+- Route by layout: `style: industrial-3d` (or omit it) with one of the 21 general layouts
+  (`linear-progression`, `hub-spoke`, `hierarchical-layers`, `dashboard`, `bento-grid`,
+  `funnel`, `isometric-map`, ...). `route --layout L` shows the member and alternates.
+
+`list` prints every member and layout. The generated catalogue at
+`skills/iig3d/docs/CATALOGUE.md` and the per-member pages under `skills/iig3d/docs/members/`
+describe each device, its reference images, palette and composition rules.
+
+## Brand colours from a CSS file
+
+Point the skill at a stylesheet and its colours replace the family item colours. Backdrop,
+neutrals, shadows and typography stay as they are.
+
+```bash
+uv run skills/iig3d/scripts/iig3d.py palette --css src/styles/brand.css          # preview
+uv run skills/iig3d/scripts/iig3d.py render --spec spec.yaml --out-dir out --palette-css src/styles/brand.css
+```
+
+Extraction takes custom properties (`--name: value`) in declaration order, then bare
+`#hex`, `rgb()` and `hsl()` literals; greys, near-white and near-black are dropped; duplicates
+are dropped; at most 8 colours are kept. `--palette-vars a,b,c` (or `palette_vars` in the
+spec) restricts and orders the extraction to named properties. Fewer than 3 usable colours is
+an error. The prompt gains a "Project palette override" paragraph and the prompt file's
+frontmatter records the source and colours.
+
+## Commands
+
+Every command prints one JSON line on stdout; diagnostics go to stderr.
+
+| Command | Purpose |
+|---------|---------|
+| `list` | members (device, item range, aspect default, refs) and the 21 general layouts |
+| `route --layout L [--style S]` | which member renders this layout; alternates |
+| `refs --member M --layout L [--ref IMG]` | the 2 to 3 reference images a render would pass |
+| `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
+| `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
+| `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
+| `add --image IMG --meta meta.yaml` | register an image as a reference (below) |
+| `docs` | regenerate `docs/` markdown from the YAML catalogue |
+| `check [--allow-watermark]` | validate catalogue, refs and docs; exit 1 with every violation |
+
+Every command that touches the catalogue accepts `--skill-root DIR` (default: the script's
+own skill directory).
+
+Exit codes: 0 ok, 1 usage or credentials (`{"status":"error","error":...}`), 2 API or
+output failure (same shape, `attempts` and `elapsed_seconds` filled in).
+
+## Adding your own reference images
+
+Any image can become a first-class reference with the same build-out as the shipped ones.
+
+1. Look at the image and decide whether it belongs to an existing member or founds a new one.
+2. Write a meta file (start from `skills/iig3d/templates/meta.example.yaml`):
+
+   ```yaml
+   member: 3d-capsule-hub                 # or new_member: {name: 3d-orbit-ring, ...full member block...}
+   shows: "Three-level capsule hierarchy: hub disc, eight capsules, sub-capsules per capsule"
+   flags: [clean]                         # clean | watermark | low-res
+   pairings: [hub-spoke, tree-branching]  # layouts this reference suits
+   slug: capsule-hierarchy                # optional file name stem
+   ```
+
+3. Run it:
+
+   ```bash
+   uv run skills/iig3d/scripts/iig3d.py add --image CAPSULE-hierarchy.png --meta meta.yaml
+   ```
+
+The script resizes to at most 1600 px as an RGB JPEG at `refs/<member>/ref-NN-<slug>.jpg`,
+appends the entry to the member YAML with `source: {path, added, user_added: true}`, extends
+the pairings, regenerates the docs and runs `check`. Vendored entries are never edited by
+`add`, only extended. A new member needs its full block in `new_member` (copy a file from
+`skills/iig3d/catalogue/members/` and drop `refs`, `pairings`, `source`); `routing:` lists the
+general layouts whose alternates gain the member. Member names must match
+`3d-[a-z0-9-]+`.
+
+A `watermark` flag is reported as a violation until you pass `--allow-watermark` to `check`;
+the selector never passes two watermarked references together. Rights for images you add stay
+with you.
+
+## Using the skill from Claude Code
+
+With the skill installed, ask for a "3d infographic", "industrial 3d", or `/iig3d`. Claude
+follows `skills/iig3d/SKILL.md`:
+
+1. Once per session it asks "Load a CSS file for brand colours?" (skip by naming a CSS file
+   in the request, setting `palette_css`, or saying `--no-confirm`).
+2. It writes `spec.yaml` from your source, verbatim labels, secrets stripped.
+3. It confirms member, layout, aspect and language once, then runs `render`.
+4. It reports the PNG path, the prompt file and any warnings. It never patches rendered text
+   with code and never substitutes SVG or HTML for the image; a bad render is re-rendered from
+   a corrected spec.
+
+## Output files
+
+```
+infographic/<slug>/
+  prompts/01-infographic-<title-slug>.md   # frontmatter: layout, style, style_member, aspect,
+                                           #   language, references[, palette]; body: the full prompt
+  infographic.png                          # RGB PNG at the requested resolution
+  infographic-backup-YYYYMMDD-HHMMSS.png   # previous render, when you render again
+```
+
+Prompt numbers only increase (`02-`, `03-`, ...); nothing is overwritten. The prompt file is
+the reproducibility record.
+
+## Troubleshooting
+
+| Symptom | Cause and fix |
+|---------|---------------|
+| `no API key: expected GEMINI_API_KEY in <dir>/.env or the environment` | Put the key in `./.env` of the directory you run from, or export it. No parent-directory lookup. |
+| `unknown layout 'x'; valid: ...` | Use one of the listed general layouts or a `3d-*` member name. |
+| `unknown key(s) ...` in the spec | Only the keys shown in [The content spec](#the-content-spec) are allowed. |
+| `status: error`, `no image part in response` | Content refused or truncated. Simplify the spec, remove named people or brands, rerun. |
+| `429` in the error | Quota. The script already retried once; wait and rerun. |
+| Garbled text in the PNG | Fix the spec (shorter labels, fewer items) and render again; the old PNG is kept as a backup. |
+| `reference image missing: ...` | A catalogue ref file is absent; run `check` and restore the file. |
+| `not valid YAML: ...` | A colon inside an unquoted value is the usual cause; quote the string. |
+
+## Development
+
+```bash
+uv sync                 # runtime deps plus pytest, ruff, bandit, pre-commit
+just hooks              # install pre-commit hooks (ruff, ruff-format, bandit, gitleaks, uv-lock)
+just test               # uv run pytest -q
+just lint               # uv run pre-commit run --all-files
+just iig3d-check        # validate the catalogue, refs and generated docs
+IIG3D_LIVE=1 uv run pytest -q tests/test_render.py   # one live smoke render (costs one API call)
+```
+
+Layout of the skill:
+
+```
+skills/iig3d/
+  SKILL.md                    # what Claude reads
+  scripts/iig3d.py            # the whole CLI, one file, PEP 723 header
+  catalogue/family.yaml       # palette, typography, negative list, routing table, ref rules
+  catalogue/members/3d-*.yaml # one member each: device, layout, style, prompt fragment, refs, pairings
+  catalogue/schema.yaml       # walked by validate_member
+  refs/<member>/ref-NN-*.jpg  # reference images, all clean renders or clean originals
+  templates/                  # base-prompt.md, spec.example.yaml, meta.example.yaml
+  docs/                       # generated by `iig3d.py docs`; do not edit by hand
+```
+
+The catalogue is the source of truth; markdown under `docs/` is generated and `check` fails
+when it is stale. Adding a thirteenth member is one YAML file plus one refs folder; no Python
+changes.
+
+The repository is developed with the `sdlc` Claude Code plugin; stage records live under
+`sdlc/`. `evals/` holds a headless eval that drives the skill from a brief to a prompt file.

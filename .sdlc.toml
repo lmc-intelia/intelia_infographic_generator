@@ -10,8 +10,8 @@ protected_paths = []        # globs Claude may never edit, e.g. "src/gen/**"
 test_globs = ["tests/**", "test_*.py", "*_test.py", "*.test.*", "*.spec.*"]
 
 [deploy]
-command = ""                # release command with {env}, e.g. "./deploy.sh {env}"; the pre-bash hook gates it
-rollback = ""               # single rehearsed command; required before production
+command = "just install-local"   # dev: symlink the skill into ~/.claude/skills and .claude/skills; production = PR merged to main
+rollback = "just uninstall-local"   # removes only the two symlinks install-local made
 [deploy.environments]
 dev = "free"                # agent deploys freely
 staging = "ask"             # agent asks before deploying
