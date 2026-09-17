@@ -5,19 +5,19 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T02:19:39Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:20:44Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:08:40Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:19:41Z" }
-stale_after: "2026-10-01T02:19:39Z"
-source_commit: 1c44ce7af8f81c51eaf6b7d3b08e5cffeb7b73da
+stale_after: "2026-10-01T02:20:44Z"
+source_commit: 18c9116a221453123bc0629d5479baed07f1a778
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 6ae2d676b3b13706 }
-  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T12:19:34+10:00", digest: de99c9a8c4c7d6b1 }
+  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T12:20:41+10:00", digest: 12268d489b2ae222 }
   - { id: review, resource: sdlc/iig3d-skill/review.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 4a3230f281ec7aea }
 ---
 
@@ -156,6 +156,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `.sdlc.toml`
 - `11 clean regenerations replacing watermarked originals :`
 - `19 clean originals copied from `~/.agents/skills/baoyu-infographic/references/styles/<member>/` :`
+- `REVIEW.md`
 - `Reference images`
 - `Repository root:`
 - `Skill:`
@@ -261,3 +262,4 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - build: sdlc/iig3d-skill/docs/build.html (9/9 showcase, 0 errors, 0 warnings)
 - design: sdlc/iig3d-skill/docs/design.html (9/9 showcase, 0 errors, 0 warnings)
 - plan: sdlc/iig3d-skill/docs/plan.html (9/9 showcase, 0 errors, 0 warnings)
+- test: sdlc/iig3d-skill/docs/test.html (9/9 showcase, 0 errors, 0 warnings)

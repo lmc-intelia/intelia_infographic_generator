@@ -3,3 +3,4 @@ graphify-out/
 .venv/
 __pycache__/
 infographic/
+evals/out/

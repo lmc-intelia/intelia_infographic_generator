@@ -1,0 +1,34 @@
+{
+  "pass_rate": 1.0,
+  "threshold": 1.0,
+  "results": [
+    {
+      "name": "iig3d-prompt-from-brief",
+      "passed": true,
+      "agent_exit": 0,
+      "checks": [
+        {
+          "cmd": "ls evals/out/prompts/01-infographic-*.md",
+          "exit": 0,
+          "tail": "evals/out/prompts/01-infographic-software-release-process.md"
+        },
+        {
+          "cmd": "grep -q 'style_member: 3d-slab-stack' evals/out/prompts/01-infographic-*.md",
+          "exit": 0,
+          "tail": ""
+        },
+        {
+          "cmd": "grep -q '\"03 VERIFY\"' evals/out/prompts/01-infographic-*.md",
+          "exit": 0,
+          "tail": ""
+        },
+        {
+          "cmd": "uv run skills/iig3d/scripts/iig3d.py check",
+          "exit": 0,
+          "tail": "{\"status\": \"ok\", \"violations\": []}"
+        }
+      ]
+    }
+  ],
+  "ts": "2026-09-17"
+}

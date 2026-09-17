@@ -1,6 +1,8 @@
 # Knowledge Update Log
 
 ## 2026-09-17
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [Path](/hubs/path.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md) verified by process:sdlc-test.
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
