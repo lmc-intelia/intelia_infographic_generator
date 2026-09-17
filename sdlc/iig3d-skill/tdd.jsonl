@@ -8,3 +8,5 @@
 {"phase": "green", "step": "aspect-spec", "exit": 0, "ts": "2026-09-17"}
 {"phase": "red", "step": "refs", "exit": 1, "ts": "2026-09-17"}
 {"phase": "green", "step": "refs", "exit": 0, "ts": "2026-09-17"}
+{"phase": "red", "step": "palette", "exit": 1, "ts": "2026-09-17"}
+{"phase": "green", "step": "palette", "exit": 0, "ts": "2026-09-17"}

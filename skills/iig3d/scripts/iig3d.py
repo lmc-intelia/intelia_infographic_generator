@@ -17,6 +17,7 @@ JSON object on stdout; diagnostics go to stderr.
 from __future__ import annotations
 
 import argparse
+import colorsys
 import json
 import re
 import sys
@@ -393,6 +394,114 @@ def select_refs(
             raise UsageError(f"reference image not found: {extra_path}")
         paths.append(extra_path)
     return paths[: rules["max_total"]]
+
+
+# --- palette ---
+
+PALETTE_MIN, PALETTE_MAX = 3, 8
+CSS_VAR_RE = re.compile(r"--([A-Za-z0-9_-]+)\s*:\s*([^;}]+)")
+COLOUR_RE = re.compile(r"#[0-9A-Fa-f]{8}\b|#[0-9A-Fa-f]{6}\b|#[0-9A-Fa-f]{3,4}\b|rgba?\([^)]*\)|hsla?\([^)]*\)")
+
+
+@dataclass(frozen=True)
+class Colour:
+    name: str
+    hex: str
+
+    def as_dict(self) -> dict:
+        return {"name": self.name, "hex": self.hex}
+
+
+def _nums(body: str) -> list[float]:
+    return [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", body)]
+
+
+def normalise_colour(value: str) -> str | None:
+    """Any CSS colour literal to #RRGGBB (alpha dropped); None when it is not a colour."""
+    value = value.strip()
+    if value.startswith("#"):
+        digits = value[1:]
+        if len(digits) in (3, 4):
+            digits = "".join(ch * 2 for ch in digits[:3])
+        elif len(digits) == 8:
+            digits = digits[:6]
+        elif len(digits) != 6:
+            return None
+        return "#" + digits.upper()
+    lower = value.lower()
+    if lower.startswith("rgb"):
+        nums = _nums(value[value.index("(") + 1 :])
+        if len(nums) < 3:
+            return None
+        r, g, b = (max(0, min(255, round(n))) for n in nums[:3])
+        return f"#{r:02X}{g:02X}{b:02X}"
+    if lower.startswith("hsl"):
+        nums = _nums(value[value.index("(") + 1 :])
+        if len(nums) < 3:
+            return None
+        h, sat, light = nums[0] % 360 / 360, nums[1] / 100, nums[2] / 100
+        r, g, b = (round(c * 255) for c in colorsys.hls_to_rgb(h, light, sat))
+        return f"#{r:02X}{g:02X}{b:02X}"
+    return None
+
+
+def is_neutral(hex_colour: str) -> bool:
+    """Greys, near-white and near-black by the HSL rule: S < 15 %, L > 92 % or L < 10 %."""
+    r, g, b = (int(hex_colour[i : i + 2], 16) / 255 for i in (1, 3, 5))
+    _h, light, sat = colorsys.rgb_to_hls(r, g, b)
+    return sat < 0.15 or light > 0.92 or light < 0.10
+
+
+def extract_palette(css_path: Path, vars: list[str] | None = None) -> list[Colour]:
+    """Colours from a CSS file: custom properties in declaration order, then bare literals;
+    normalised, neutrals and duplicates dropped, capped at 8. `vars` restricts and orders."""
+    css_path = Path(css_path)
+    if not css_path.is_file():
+        raise UsageError(f"palette CSS not found: {css_path}")
+    text = css_path.read_text(encoding="utf-8", errors="replace")
+    text = re.sub(r"/\*.*?\*/", "", text, flags=re.DOTALL)
+    named: list[Colour] = []
+    for name, raw in CSS_VAR_RE.findall(text):
+        hex_colour = normalise_colour(raw)
+        if hex_colour:
+            named.append(Colour(name, hex_colour))
+    if vars:
+        by_name = {c.name: c for c in named}
+        chosen: list[Colour] = []
+        missing: list[str] = []
+        for var in vars:
+            key = var.lstrip("-")
+            if key in by_name:
+                chosen.append(by_name[key])
+            else:
+                missing.append(var)
+        if missing:
+            raise UsageError(f"{css_path}: custom propert{'y' if len(missing) == 1 else 'ies'} not found: {', '.join(missing)}")
+        colours = chosen
+    else:
+        seen: set[str] = set()
+        colours = []
+        var_values = {normalise_colour(raw) for _n, raw in CSS_VAR_RE.findall(text)}
+        literal_index = len(named)
+        for literal in COLOUR_RE.findall(re.sub(CSS_VAR_RE, "", text)):
+            hex_colour = normalise_colour(literal)
+            if hex_colour and hex_colour not in var_values:
+                literal_index += 1
+                named.append(Colour(f"colour-{literal_index}", hex_colour))
+        for colour in named:
+            if is_neutral(colour.hex) or colour.hex in seen:
+                continue
+            seen.add(colour.hex)
+            colours.append(colour)
+        colours = colours[:PALETTE_MAX]
+    if len(colours) < PALETTE_MIN:
+        raise UsageError(f"{css_path}: only {len(colours)} usable colour(s); need at least {PALETTE_MIN} saturated colours")
+    return colours
+
+
+def palette_paragraph(colours: list[Colour]) -> str:
+    listing = ", ".join(f"{c.name} {c.hex}" for c in colours)
+    return f"Project palette override: cycle item colours in this order: {listing}; never repeat a colour on adjacent items; keep the family backdrop, neutrals, shadows and typography unchanged."
 
 
 # --- cli ---

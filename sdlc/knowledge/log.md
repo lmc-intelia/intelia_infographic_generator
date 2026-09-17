@@ -1,6 +1,16 @@
 # Knowledge Update Log
 
 ## 2026-09-17
+* **Update**: [Member](/modules/member.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_refs.py](/modules/test-refs-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [test_refs.py](/hubs/test-refs-py.md).
+* **Update**: [Member](/hubs/member.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [load_spec()](/hubs/load-spec.md).
+* **Update**: [select_refs()](/hubs/select-refs.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
 * **Update**: [conftest.py](/modules/conftest-py.md).
