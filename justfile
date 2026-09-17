@@ -55,3 +55,13 @@ uninstall-local:
 # validate the iig3d catalogue, refs and generated docs
 iig3d-check:
     @uv run skills/iig3d/scripts/iig3d.py check
+
+# sdlc deploy command: dev and staging install the skill locally; production is the merged PR
+deploy env:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    case "{{env}}" in
+        dev|staging) just install-local ;;
+        production) echo "production release = merge the PR on GitHub; nothing to run locally" >&2; exit 1 ;;
+        *) echo "unknown environment {{env}}" >&2; exit 2 ;;
+    esac

@@ -41,13 +41,13 @@ Pick one.
 **From this repository into Claude Code (any project):**
 
 ```bash
-npx skills add lmc-intella/intelia_infographic_generator --skill iig3d
+npx skills add lmc-intelia/intelia_infographic_generator --skill iig3d
 ```
 
 **From a checkout, as symlinks (keeps the skill in sync with the repo):**
 
 ```bash
-git clone https://github.com/lmc-intella/intelia_infographic_generator.git
+git clone https://github.com/lmc-intelia/intelia_infographic_generator.git
 cd intelia_infographic_generator
 just install-local      # ~/.claude/skills/iig3d and .claude/skills/iig3d -> skills/iig3d
 ```

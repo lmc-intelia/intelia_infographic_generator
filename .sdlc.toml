@@ -10,7 +10,7 @@ protected_paths = []        # globs Claude may never edit, e.g. "src/gen/**"
 test_globs = ["tests/**", "test_*.py", "*_test.py", "*.test.*", "*.spec.*"]
 
 [deploy]
-command = "just install-local"   # dev: symlink the skill into ~/.claude/skills and .claude/skills; production = PR merged to main
+command = "just deploy {env}"    # dev/staging: symlink the skill locally; production: the merged PR (the recipe refuses to run it)
 rollback = "just uninstall-local"   # removes only the two symlinks install-local made
 [deploy.environments]
 dev = "free"                # agent deploys freely
