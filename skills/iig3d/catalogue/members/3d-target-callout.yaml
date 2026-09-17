@@ -1,0 +1,104 @@
+name: 3d-target-callout
+device: Tilted glossy bullseye, tapered beams to numbered pills, single hue
+backdrop: White to pale grey
+items:
+  min: 3
+  max: 6
+aspect_default: landscape
+layout:
+  structure:
+  - Target disc tilted toward the viewer, 35 to 45 percent of the canvas height
+  - One beam per item from the bullseye to its pill, beams never crossing
+  - Pills fully rounded, numbered circle at the inner end facing the target
+  - Pills stacked in one column (three to five items) or split either side (six items)
+  - Optional closing line under the target for the outcome statement
+  variants:
+  - name: Side target
+    focus: Three to five goals or criteria
+    emphasis: Target left, pills stacked right
+  - name: Centred target
+    focus: Six items in balance
+    emphasis: Target centred, three pills per side
+  - name: Stacked target
+    focus: Portrait goal list
+    emphasis: Target at the top, pills fanning down
+  visual_elements:
+  - Thick disc rim, four to five concentric rings, dark bullseye
+  - Tapered flat beams, wide at the pill and narrow at the centre
+  - Pills in the same single hue as the target, white rimmed numeral circle
+  - Soft elliptical shadow beneath the target
+  - No icons; numerals carry the order
+  text_placement:
+  - Title at top, left-aligned or centred above the target
+  - Outcome or goal name on or beside the target
+  - Pill title in bold white caps, two-line description below in light white
+  - Numerals in the white circles
+  - Closing line beneath the target if the layout needs one
+style:
+  palette:
+  - 'Single hue: family red #E2312A for rings, pills and beams; darker #B5231D on the disc rim and pill shading; white ring
+    gaps, near-black #2B2F36 bullseye'
+  - A brand colour override replaces the red as a single hue; do not cycle colours across pills
+  - 'White to pale grey studio backdrop #FFFFFF to #E3E7ED, soft elliptical shadow under the target'
+  visual_elements:
+  - Target disc 35 to 45 percent of the canvas height, tilted 15 to 25 degrees so the thick rim shows, four to five concentric
+    rings, glossy top-left highlight
+  - 'Beams: flat tapered triangles from the bullseye to each pill, wide at the pill, narrow at the centre, never crossing'
+  - 'Pills: fully rounded rectangles, item hue, white rimmed circle at the inner end with the numeral in the item hue'
+  - 'Pill text: bold white caps title, light white body text, two lines maximum'
+  - No icons on the pills; the numeral carries wayfinding
+  typography:
+  - Family typography; numerals bold in the item hue on white circles, titles bold white caps, body light white
+  composition:
+  - 'Three to five items: target in the left third, pills stacked on the right (ref 01)'
+  - 'Six items: target centred, three pills either side, numbered circles facing inward (ref 02)'
+  - More than six items, switch to 3d-capsule-hub or 3d-hex-cluster
+  - Beams meet at the bullseye; stagger pill heights so beams stay distinct
+  - 'Portrait: target at the top, pills stacked below, beams fanning downward'
+prompt_fragment: 'Render as a polished corporate 3D infographic centred on a glossy bullseye target: a thick tilted disc with
+  concentric rings in one saturated hue and white, a dark bullseye, a top-left highlight and a soft shadow beneath. From the
+  bullseye, flat tapered beams shoot outward to rounded label pills in the same hue, each pill anchored by a white rimmed
+  circle holding a bold numeral. Beams never cross. Pill titles in bold white caps, descriptions in light white text. Single
+  hue throughout on a white to pale grey studio backdrop. Geometric sans-serif type. No hand-drawn lines, no paper texture,
+  no cartoon characters, no photographic realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template
+  3D.'
+best_for:
+- Goals, objectives and OKRs
+- Success criteria and targets
+- Priorities and focus areas
+- Strategy pillars aimed at one outcome
+refs:
+- id: '01'
+  file: ref-01-target-four-pills.jpg
+  shows: Red bullseye disc on the left, four red pills stacked on the right, each with a numbered white circle at the inner
+    end, tapered red beams converging on the bullseye, soft shadow under the disc
+  flags:
+  - clean
+- id: '02'
+  file: ref-02-target-six-pills-symmetric.jpg
+  shows: Large glossy red bullseye target tilted toward the viewer on the left, five tapered red beams from the bullseye to
+    rounded red pills stacked on the right, each pill anchored by a white rimmed circle with a red numeral, bold white caps
+    titles, pale grey studio with a soft shadow
+  flags:
+  - clean
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-target-callout-02/infographic.png
+    added: '2026-09-17'
+    user_added: true
+    regenerated: true
+pairings:
+  hub-spoke:
+  - '01'
+  - '02'
+  dashboard:
+  - '01'
+  tree-branching:
+  - '02'
+  bridge:
+  - '01'
+alternates:
+- 3d-capsule-hub
+- 3d-hex-cluster
+source:
+  origin: baoyu-infographic 2.1.0-lmc references/styles/3d-target-callout.md
+  added: '2026-09-17'

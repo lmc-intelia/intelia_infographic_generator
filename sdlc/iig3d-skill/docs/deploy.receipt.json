@@ -1,0 +1,16 @@
+{
+  "stage": "deploy",
+  "type": "lifecycle",
+  "sources": [
+    {
+      "resource": "sdlc/iig3d-skill/pr-body.md",
+      "digest": "9791bb6c8985e6e21a25a236a23f760ca27a02e6eb2b1d87585df77fc7b6ef7b"
+    }
+  ],
+  "source_digest": "3f34aacb7ddc71d294451bb8c7de4cc3f3760293da6b83db0b3b77e0072fd436",
+  "specification_sha256": "3b3bff0adebb5521d166743f111b1e10ce933b1b755e2a404fa6ece451ea76bf",
+  "artifact_sha256": "c78d01e013b790aa66bc47765fe5682f50471833c97364aab7df5b2a6b99fb6e",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "archify_version": "2.17.0-dev.1",
+  "delivered_at": "2026-09-17T02:47:53Z"
+}

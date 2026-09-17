@@ -1,0 +1,18 @@
+/* Fixture brand sheet: custom properties in mixed order plus loose literals. */
+:root {
+  --brand-primary: #1F3A5F;
+  --brand-secondary: rgb(31, 181, 200);
+  --brand-grey: #9aa3ae;
+  --white: #fff;
+  --brand-accent: hsl(28 92% 54%);
+  --brand-magenta: #E4327A;
+  --ink: #111111;
+  --brand-primary-dup: #1f3a5f;
+  --brand-lime: #8CC63F;
+  --brand-purple: #7B3FA0;
+  --brand-red: #E2312A;
+  --brand-yellow: #F7C11B;
+  --brand-navy: #2456C4;
+  --brand-cyan: #3FD4F2;
+}
+.button { background: #0A7D5A; color: #ffffff; border: 1px solid #C2182B; }

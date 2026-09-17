@@ -1,6 +1,6 @@
 # sdlc plugin configuration (read by every stage; commit it)
 [commands]
-test = "pytest -q"          # must exit non-zero on failure
+test = "uv run pytest -q"   # must exit non-zero on failure
 lint = ""                   # optional
 build = ""                  # optional
 
@@ -10,8 +10,8 @@ protected_paths = []        # globs Claude may never edit, e.g. "src/gen/**"
 test_globs = ["tests/**", "test_*.py", "*_test.py", "*.test.*", "*.spec.*"]
 
 [deploy]
-command = ""                # release command with {env}, e.g. "./deploy.sh {env}"; the pre-bash hook gates it
-rollback = ""               # single rehearsed command; required before production
+command = "just deploy {env}"    # dev/staging: symlink the skill locally; production: the merged PR (the recipe refuses to run it)
+rollback = "just uninstall-local"   # removes only the two symlinks install-local made
 [deploy.environments]
 dev = "free"                # agent deploys freely
 staging = "ask"             # agent asks before deploying

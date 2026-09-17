@@ -1,0 +1,11 @@
+{
+  "purpose": "The iig3d skill turns a short brief into a content spec and a persisted prompt file without calling the image API.",
+  "prompt": "Use the iig3d skill (skills/iig3d/SKILL.md). Brief: a four-step software release process: Plan, Build, Verify, Ship, each with a one-line detail. Write the content spec to evals/out/release.yaml with style 3d-slab-stack and layout hierarchical-layers, then run `uv run skills/iig3d/scripts/iig3d.py prompt --spec evals/out/release.yaml --out-dir evals/out` and report the prompt_file path from its JSON. Do not run render and do not ask questions.",
+  "allowed_tools": ["Read", "Write", "Bash(uv run skills/iig3d/scripts/iig3d.py:*)", "Bash(mkdir:*)"],
+  "checks": [
+    "ls evals/out/prompts/01-infographic-*.md",
+    "grep -q 'style_member: 3d-slab-stack' evals/out/prompts/01-infographic-*.md",
+    "grep -q '\"03 VERIFY\"' evals/out/prompts/01-infographic-*.md",
+    "uv run skills/iig3d/scripts/iig3d.py check"
+  ]
+}

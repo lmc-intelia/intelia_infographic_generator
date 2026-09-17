@@ -1,0 +1,67 @@
+name: 3d-hex-cluster
+device: Honeycomb of outlined hexagon cells around a central disc
+backdrop: White to pale grey
+items: {min: 6, max: 10}
+aspect_default: landscape
+layout:
+  structure:
+    - Hub disc centred, 25 to 30 percent of the shorter canvas side
+    - Six to ten equal hexagon cells sharing edges in honeycomb columns
+    - "Each cell: icon at the top, name, short description"
+    - Connectors from each cell to the hub rim, never crossing
+    - Optional category grouping by rim colour
+  variants:
+    - {name: Twin columns, focus: Items around one platform, emphasis: Two honeycomb columns flanking the hub}
+    - {name: Ring, focus: "Square canvas, even weight", emphasis: Cells circle the hub}
+    - {name: Hubless honeycomb, focus: "Interlocking parts, no centre", emphasis: "Cells share edges edge to edge, no connectors"}
+    - {name: Grouped honeycomb, focus: Categories, emphasis: "Outer rim colour per group, cells clustered by group"}
+  visual_elements:
+    - Flat-topped hexagons, two or three thin concentric outline rims
+    - Line icon in charcoal or the rim colour
+    - Hub with a white face and grey bevel ring
+    - Thin connectors with a right-angle bend and dot terminals
+    - Cells overlap the hub edge slightly to read as one assembly
+  text_placement:
+    - Title in the hub, two lines maximum
+    - Cell name bold caps under the icon
+    - Two-line description under the name, inside the cell
+    - Group labels outside the honeycomb when grouped
+    - Nothing spills past the outer rim
+style:
+  palette:
+    - "Monochrome cool default: navy #1C2A4A, teal #1FB5C8 and pale blue #9DD3E8 for the layered rims; white #FFFFFF cell faces; charcoal #2B2F36 icons and text; teal hub title"
+    - "Family variant: one family colour per cell on the outer rim, inner rims stay grey"
+    - White to pale grey studio backdrop, faint soft shadow under each cell and under the hub
+  visual_elements:
+    - Hexagons flat-topped, equal size, sharing edges in a honeycomb; two or three thin outline rims offset outward like contour lines
+    - "Each cell: line icon at the top, bold caps name, two-line light description, all centred"
+    - Hub disc 25 to 30 percent of the shorter canvas side, white face, grey bevel ring, optional second thin ring outside
+    - "Connectors: thin charcoal lines with a right-angle bend, dot terminal at the cell end, dot on the hub rim"
+    - Cells overlap the hub slightly at the inner edge to read as one assembly
+  typography:
+    - Family typography; cell names bold caps in charcoal, descriptions light and small, hub title bold caps in the accent colour
+  composition:
+    - Six to ten cells; two honeycomb columns flanking the hub (landscape); ring of cells around the hub (square); hub at the top with the honeycomb below (portrait)
+    - Fewer than six cells, switch to 3d-capsule-hub; more than ten, switch to 3d-paper-tile
+    - Connectors never cross; route each to the nearest free point on the hub rim
+    - Keep text inside the cell; nothing spills past the outer rim
+prompt_fragment: >-
+  Render as a polished corporate 3D infographic built as a honeycomb: glossy white flat-topped hexagon cells sharing edges, each framed by two or three thin concentric outline rims in navy, teal and pale blue, with a flat line icon at the top, a bold caps name and a short light description inside. The cells cluster in two honeycomb columns around a large white bevelled central disc with a grey rim that holds the title. Thin charcoal connectors with dot terminals link each cell to the hub and never cross. White to pale grey studio backdrop, soft shadows under cells and hub, top-left highlights. Geometric sans-serif type. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template 3D.
+best_for:
+  - Capability clusters and service inventories
+  - Ecosystem and module maps
+  - Category taxonomies
+  - Team and role structures
+refs:
+  - id: "01"
+    file: ref-01-honeycomb-hub.jpg
+    shows: Ten white hexagon cells in two honeycomb columns of five, layered navy and teal outline rims, line icon at the top of each cell, central white disc with a grey bevel ring and a two-line teal title, thin connectors with dot terminals
+    flags: [clean]
+pairings:
+  hub-spoke: ["01"]
+  jigsaw: ["01"]
+  periodic-table: ["01"]
+  tree-branching: ["01"]
+  bento-grid: ["01"]
+alternates: [3d-paper-tile, 3d-capsule-hub]
+source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-hex-cluster.md, added: "2026-09-17"}

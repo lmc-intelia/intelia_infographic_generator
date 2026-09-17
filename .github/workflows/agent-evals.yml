@@ -1,0 +1,39 @@
+name: Tests and agent evals
+on:
+  pull_request:
+    paths: ['CLAUDE.md', '.claude/**', 'evals/**', 'skills/**', 'tests/**', 'pyproject.toml', 'uv.lock']
+  schedule:
+    - cron: '0 2 * * *'
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - run: uv run pytest -q
+      - run: uv run skills/iig3d/scripts/iig3d.py check
+      - run: uv run pre-commit run --all-files
+  evals:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decide whether an API key is available
+        id: key
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: echo "present=$([ -n "$ANTHROPIC_API_KEY" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - if: steps.key.outputs.present == 'true'
+        uses: astral-sh/setup-uv@v5
+      - if: steps.key.outputs.present == 'true'
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          git clone --depth 1 https://github.com/linus-McM/cc_sdlc.git "$RUNNER_TEMP/cc_sdlc"
+      - name: Run eval suite
+        if: steps.key.outputs.present == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: uv run --no-project "$RUNNER_TEMP/cc_sdlc/plugin/scripts/sdlc.py" test evals
+      - if: steps.key.outputs.present != 'true'
+        run: echo "ANTHROPIC_API_KEY secret not set; evals skipped (tests job still gates the PR)"

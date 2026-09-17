@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "name": "test",
+      "cmd": "uv run pytest -q",
+      "exit": 0,
+      "tail": "........................................................................ [ 24%]\n........................................................................ [ 49%]\n..............................................................s......... [ 73%]\n........................................................................ [ 98%]\n....                                                                     [100%]\n291 passed, 1 skipped in 4.09s"
+    },
+    {
+      "name": "knowledge",
+      "cmd": "sdlc knowledge check",
+      "exit": 0,
+      "tail": "conformance: 0 policy: 1 trust: {'unverified': 58, 'machine-confirmed': 0, 'human-reviewed': 1}\npolicy: features/iig3d-skill.md: draft concept carries a human: verified event; only an accept may write one (policy)"
+    }
+  ],
+  "cycles": 16,
+  "ts": "2026-09-17"
+}

@@ -4,18 +4,21 @@ title: iig3d skill
 description: The 3D corporate infographic capability built on 2026-09-15 to 2026-09-17 lives inside the
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
-status: stable
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:07:19Z" }
+status: draft
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:49:04Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
-stale_after: "2026-10-01T01:07:19Z"
-source_commit: 10a11532e27e891142d2a73eab56a70af78fb5ea
+  - { by: "process:sdlc-test", at: "2026-09-17T02:08:40Z" }
+  - { by: "process:sdlc-test", at: "2026-09-17T02:19:41Z" }
+stale_after: "2026-10-01T02:49:04Z"
+source_commit: aa3a723da7adc722413ffac3e5399b633577a672
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
-  - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T10:56:31+10:00", digest: daa98ddd4cbde167 }
-  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T01:07:19Z", digest: 44e09a27bf5b55e6 }
+  - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 6ae2d676b3b13706 }
+  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T12:44:12+10:00", digest: 01cfbd1f35f7366a }
+  - { id: review, resource: sdlc/iig3d-skill/review.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 4a3230f281ec7aea }
 ---
 
 # Problem
@@ -123,7 +126,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 1. **Skill layout** (I-outcome, I-decisions). `skills/iig3d/` at the repository root holds `SKILL.md`, `scripts/iig3d.py`, `catalogue/`, `refs/`, `templates/`. `SKILL.md` has frontmatter `name: iig3d` and a `description` that triggers on "3d infographic", "industrial 3d", "iig3d", and is at most 80 lines.
 2. **Standalone** (I-success). The skill runs with only `uv` on the PATH and never reads `~/.agents`, `~/.baoyu-skills` or the `nano-banana-pro` plugin. `scripts/iig3d.py` carries a PEP 723 header (`google-genai>=1.0.0`, `pillow>=10.0.0`, `pyyaml>=6.0`), so `uv run skills/iig3d/scripts/iig3d.py ...` works from a fresh `npx skills add` install.
 3. **Catalogue as data** (I-outcome). `catalogue/family.yaml` holds palette, typography, negative list, aspect map, text budget and the layout routing table. `catalogue/members/<member>.yaml` holds one member each (12 files) with: `device`, `backdrop`, `layout` (structure, variants, text placement bullets), `prompt_fragment` (verbatim from the source style file), `best_for`, `items` `{min, max}`, `aspect_default`, `refs` (file, shows, flags), `pairings` (layout → ordered ref ids), `alternates`, `source` (origin note). Adding a member is adding one YAML file and one refs folder; no Python edit.
-4. **Routing** (I-outcome). `route --layout L [--style S]` returns `{member, alternates, reason}`. `S` omitted or `industrial-3d`: `L` is looked up in the family routing table (every row of `3d-family.md`, 22 general layouts); `L` equal to a member's own device name (`3d-*`) returns that member. `S` equal to a `3d-*` member returns it and skips the table. Unknown `L` or `S` exits 1 with the valid lists.
+4. **Routing** (I-outcome). `route --layout L [--style S]` returns `{member, alternates, reason}`. `S` omitted or `industrial-3d`: `L` is looked up in the family routing table (every row of `3d-family.md`, 21 general layouts); `L` equal to a member's own device name (`3d-*`) returns that member. `S` equal to a `3d-*` member returns it and skips the table. Unknown `L` or `S` exits 1 with the valid lists.
 5. **Reference selection** (I-outcome). `refs --member M --layout L [--ref FILE]...` returns 2 to 3 member refs from the member's `pairings[L]` (fallback: first pairing entry, then all refs in order), ordered clean first, with: never two `watermark` refs together, never a `low-res` ref alone or as the only clean-free pick, user refs appended, total capped at 6. Every selected path exists on disk.
 6. **Content spec** (I-decisions). Input is one YAML file: `title` (required), `subtitle`, `language` (default `en`), `layout`, `style`, `aspect`, `palette_css`, `palette_vars[]`, `items[]` (`label` required, `detail`, `icon`, `value`), `stats[]` (`value`, `caption`), `notes`, `refs[]`. Unknown keys or a missing `title`/`items` exit 1 naming the key.
 7. **Aspect snapping** (I-outcome). Named presets map landscape→`16:9`, portrait→`9:16`, square→`1:1`. Any `W:H` outside `1:1 3:2 2:3 3:4 4:3 4:5 5:4 9:16 16:9 21:9` snaps to the nearest supported ratio by numeric value and the result carries `aspect_snapped_from`. Missing aspect uses the member's `aspect_default`.
@@ -136,10 +139,10 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 13. **Add reference** (I-outcome, I-success). `add --image PATH --meta META.yaml` where META names `member` (existing) or `new_member` (full member block per R3 minus refs), plus `shows`, `flags[]`, `pairings`. The script: validates META against the member schema; copies the image to `refs/<member>/ref-NN-<slug>.jpg` resized to at most 1600 px on the long edge as RGB JPEG quality 88; appends the ref to the member YAML (creating `catalogue/members/<new>.yaml` and the routing-table `alternates` entries the meta names); records `source: {path, added: date}`; regenerates docs (R14); runs `check` (R15). It never edits an existing ref entry or another member.
 14. **Generated markdown** (I-outcome). `docs` renders `skills/iig3d/docs/CATALOGUE.md` (family table, routing table, palette) and `skills/iig3d/docs/members/<member>.md` (same sections as the source style and layout files: device, refs table, palette, visual elements, typography, composition rules, prompt fragment, best for, pairings) from YAML. Markdown is never hand-edited; `check` fails when it is stale.
 15. **Check** (I-success). `check` validates every member YAML against the schema, every ref file exists and is ≤1600 px JPEG, flags are from `{clean, watermark, low-res}`, pairings reference known layouts and ref ids, prompt fragments end with the negative list, routing table rows name existing members, docs are fresh, and a dry-run prompt assembles for every member × every pairing layout with zero R5 violations. Exit 1 lists every violation.
-16. **List** (I-outcome). `list [--json]` prints members with device, item range, aspect default, ref count; and the 22 general layouts with their primary member.
+16. **List** (I-outcome). `list [--json]` prints members with device, item range, aspect default, ref count; and the 21 general layouts with their primary member.
 17. **Install** (I-decisions). `just install-local` creates `~/.claude/skills/iig3d -> <repo>/skills/iig3d` and `.claude/skills/iig3d -> ../../skills/iig3d`, refusing to overwrite a real directory; `just uninstall-local` removes only symlinks it made. `npx skills add <repo>` works because the layout is `skills/<name>/SKILL.md`.
 18. **Source policy** (I-constraints). The script never emits SVG, HTML or canvas; never post-processes text in a generated PNG; always writes the prompt file before the API call; strips any string matching an API-key pattern from spec, notes and prompt output.
-19. **Repository hygiene** (I-constraints). `.gitignore` lists `.env`, `.venv/`, `__pycache__/`, `infographic/`-style output directories are not ignored (user decides). Root `pyproject.toml` declares the same runtime deps plus `pytest` for the test suite; `.sdlc.toml` test command becomes `uv run pytest -q`.
+19. **Repository hygiene** (I-constraints). `.gitignore` lists `.env`, `.venv/`, `__pycache__/` and `infographic/` (render output; the user copies what they keep). Root `pyproject.toml` declares the same runtime deps plus `pytest` for the test suite; `.sdlc.toml` test command becomes `uv run pytest -q`.
 
 20. **Brand palette from CSS** (product owner request 2026-09-17, extends the intent's "project palette override replaces the item colours only" rule). `--palette-css PATH` on `prompt` and `render`, or `palette_css: PATH` in the content spec, reads a CSS file from the user's repository and derives the item colours. Extraction: custom properties in declaration order (`--name: <colour>`) first, then any other `#hex`, `rgb()`, `hsl()` literal; values normalised to `#RRGGBB`; duplicates dropped; neutrals dropped (HSL saturation under 15 percent, lightness over 92 or under 10 percent); at most 8 kept. `--palette-vars a,b,c` restricts and orders extraction to named custom properties. Precedence: `--palette-css` flag over `palette_css` in the spec; `--palette-vars` over `palette_vars`. A relative `palette_css` resolves against the spec file's directory; a relative `--palette-css` against the current working directory. A missing file exits 1 naming the resolved path. Fewer than 3 usable colours exits 1 naming the file. The prompt's Style Guidelines gain a trailing paragraph: `Project palette override: cycle item colours in this order: <name> #RRGGBB, ...; never repeat a colour on adjacent items; keep the family backdrop, neutrals, shadows and typography unchanged.` The prompt frontmatter records `palette: {source: <path>, colours: [{name, hex}]}`. Backdrop, neutral and shadow values are never replaced. `palette --css PATH [--vars ...]` prints the extraction as JSON for preview.
 
@@ -147,15 +150,20 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 
 # Files
 - `.claude/skills/iig3d`
+- `.github/workflows/agent-evals.yml`
 - `.gitignore`
+- `.pre-commit-config.yaml`
 - `.python-version`
 - `.sdlc.toml`
 - `11 clean regenerations replacing watermarked originals :`
 - `19 clean originals copied from `~/.agents/skills/baoyu-infographic/references/styles/<member>/` :`
+- `README.md`
+- `REVIEW.md`
 - `Reference images`
 - `Repository root:`
 - `Skill:`
 - `Tests:`
+- `evals/iig3d-prompt-from-brief.json`
 - `justfile`
 - `pyproject.toml`
 - `skills/iig3d/SKILL.md`
@@ -216,42 +224,46 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `skills/iig3d/refs/3d-slab-stack/ref-03-folded-ribbon-tiers.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-01-target-four-pills.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-02-target-six-pills-symmetric.jpg`
-- `skills/iig3d/scripts/iig3d.py`
+- `skills/iig3d/scripts/iig3d.py` in [_dry_assembly](/modules/dry-assembly.md)
 - `skills/iig3d/templates/base-prompt.md`
 - `skills/iig3d/templates/meta.example.yaml`
 - `skills/iig3d/templates/spec.example.yaml`
-- `tests/conftest.py`
+- `tests/__init__.py`
+- `tests/conftest.py` in [test_render.py](/modules/test-render-py.md)
 - `tests/fixtures/brand.css`
 - `tests/fixtures/sample-prompt-3d-disc-timeline.md`
 - `tests/fixtures/sample-prompt-industrial-3d.md`
 - `tests/fixtures/spec-pipeline.yaml`
 - `tests/fixtures/wide-3000px.jpg`
-- `tests/test_add.py`
-- `tests/test_aspect.py`
-- `tests/test_catalogue.py`
-- `tests/test_cli.py`
-- `tests/test_creds.py`
-- `tests/test_docs.py`
-- `tests/test_install.py`
-- `tests/test_palette.py`
-- `tests/test_prompt.py`
-- `tests/test_refs.py`
-- `tests/test_render.py`
-- `tests/test_routing.py`
-- `tests/test_skill_md.py`
-- `tests/test_spec.py`
+- `tests/test_add.py` in [test_add.py](/modules/test-add-py.md)
+- `tests/test_aspect.py` in [test_aspect.py](/modules/test-aspect-py.md)
+- `tests/test_catalogue.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
+- `tests/test_cli.py` in [test_cli.py](/modules/test-cli-py.md)
+- `tests/test_creds.py` in [test_creds.py](/modules/test-creds-py.md)
+- `tests/test_docs.py` in [test_docs.py](/modules/test-docs-py.md)
+- `tests/test_install.py` in [test_install.py](/modules/test-install-py.md)
+- `tests/test_palette.py` in [test_palette.py](/modules/test-palette-py.md)
+- `tests/test_prompt.py` in [test_prompt.py](/modules/test-prompt-py.md)
+- `tests/test_refs.py` in [test_refs.py](/modules/test-refs-py.md)
+- `tests/test_render.py` in [test_render.py](/modules/test-render-py.md)
+- `tests/test_routing.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
+- `tests/test_skill_md.py` in [test_skill_md.py](/modules/test-skill-md-py.md)
+- `tests/test_spec.py` in [test_spec.py](/modules/test-spec-py.md)
+- `uv.lock`
 
 # Review
-- no review yet
+- Important: 5, Nit: 5
 
 # Status
 - intent.md: accepted
 - spec.md: accepted
 - plan.md: accepted
-- test-report: missing or failed
-- deployed: nowhere
+- test-report: passed
+- deployed: dev
 
 # Documents
 - build: sdlc/iig3d-skill/docs/build.html (9/9 showcase, 0 errors, 0 warnings)
+- deploy: sdlc/iig3d-skill/docs/deploy.html (9/9 showcase, 0 errors, 0 warnings)
 - design: sdlc/iig3d-skill/docs/design.html (9/9 showcase, 0 errors, 0 warnings)
 - plan: sdlc/iig3d-skill/docs/plan.html (9/9 showcase, 0 errors, 0 warnings)
+- test: sdlc/iig3d-skill/docs/test.html (9/9 showcase, 0 errors, 0 warnings)

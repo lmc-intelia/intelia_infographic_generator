@@ -1,7 +1,63 @@
 {
-  "commit": "10a11532e27e891142d2a73eab56a70af78fb5ea",
-  "graph_commit": "10a11532e27e891142d2a73eab56a70af78fb5ea",
+  "commit": "aa3a723da7adc722413ffac3e5399b633577a672",
+  "graph_commit": "3e969d70bf509b62442f8aa329c97fe878575321",
   "updates": 1,
-  "ts": "2026-09-17T01:07:19Z",
-  "files": {}
+  "ts": "2026-09-17T02:49:04Z",
+  "files": {
+    "tests/test_catalogue.py": [
+      "modules/test-catalogue-py.md"
+    ],
+    "tests/test_routing.py": [
+      "modules/test-catalogue-py.md"
+    ],
+    "tests/conftest.py": [
+      "modules/test-render-py.md"
+    ],
+    "tests/test_render.py": [
+      "modules/test-render-py.md"
+    ],
+    "tests/test_cli.py": [
+      "modules/test-cli-py.md"
+    ],
+    "skills/iig3d/scripts/iig3d.py": [
+      "modules/iig3d-py.md",
+      "modules/member.md",
+      "modules/catalogue.md",
+      "modules/path.md",
+      "modules/usageerror.md",
+      "modules/assemble.md",
+      "modules/new-member-record.md",
+      "modules/dry-assembly.md"
+    ],
+    "tests/test_aspect.py": [
+      "modules/test-aspect-py.md"
+    ],
+    "tests/test_spec.py": [
+      "modules/test-spec-py.md"
+    ],
+    "tests/test_refs.py": [
+      "modules/test-refs-py.md"
+    ],
+    "tests/test_palette.py": [
+      "modules/test-palette-py.md"
+    ],
+    "tests/test_prompt.py": [
+      "modules/test-prompt-py.md"
+    ],
+    "tests/test_creds.py": [
+      "modules/test-creds-py.md"
+    ],
+    "tests/test_docs.py": [
+      "modules/test-docs-py.md"
+    ],
+    "tests/test_add.py": [
+      "modules/test-add-py.md"
+    ],
+    "tests/test_skill_md.py": [
+      "modules/test-skill-md-py.md"
+    ],
+    "tests/test_install.py": [
+      "modules/test-install-py.md"
+    ]
+  }
 }

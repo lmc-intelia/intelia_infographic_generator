@@ -1,0 +1,17 @@
+title: OPENWIKI REFRESH PIPELINE
+subtitle: Five steps from commit to published wiki
+language: en
+layout: linear-progression
+style: 3d-disc-timeline
+aspect: landscape
+items:
+  - label: COMMIT
+    detail: Developer pushes to main
+  - label: TRIGGER
+    detail: Scheduled GitHub Action starts
+  - label: ANALYSE
+    detail: Gemini reads changed source files
+  - label: GENERATE
+    detail: Wiki pages regenerated
+  - label: PUBLISH
+    detail: Pages committed to openwiki/
