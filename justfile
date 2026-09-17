@@ -16,3 +16,15 @@ opus:
 # interactive Claude shell on Fable, permissions off
 fable:
     @claude --dangerously-skip-permissions --model fable "/caveman"
+
+# install pre-commit hooks into .git/hooks (keeps the sdlc post-commit block)
+hooks:
+    @uv run pre-commit install --install-hooks
+
+# run every pre-commit hook against the whole tree
+lint:
+    @uv run pre-commit run --all-files
+
+# run the test suite
+test:
+    @uv run pytest -q

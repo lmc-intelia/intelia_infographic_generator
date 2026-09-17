@@ -5,13 +5,33 @@ from __future__ import annotations
 import pytest
 
 MEMBERS = [
-    "3d-slab-stack", "3d-arrow-ribbon", "3d-disc-timeline", "3d-paper-tile",
-    "3d-gradient-pedestal", "3d-capsule-hub", "3d-isometric-light", "3d-isometric-dark",
-    "3d-target-callout", "3d-hex-cluster", "3d-cylinder-column", "3d-glass-layer",
+    "3d-slab-stack",
+    "3d-arrow-ribbon",
+    "3d-disc-timeline",
+    "3d-paper-tile",
+    "3d-gradient-pedestal",
+    "3d-capsule-hub",
+    "3d-isometric-light",
+    "3d-isometric-dark",
+    "3d-target-callout",
+    "3d-hex-cluster",
+    "3d-cylinder-column",
+    "3d-glass-layer",
 ]
 MEMBER_KEYS = {
-    "name", "device", "backdrop", "items", "aspect_default", "layout", "style",
-    "prompt_fragment", "best_for", "refs", "pairings", "alternates", "source",
+    "name",
+    "device",
+    "backdrop",
+    "items",
+    "aspect_default",
+    "layout",
+    "style",
+    "prompt_fragment",
+    "best_for",
+    "refs",
+    "pairings",
+    "alternates",
+    "source",
 }
 FLAGS = {"clean", "watermark", "low-res"}
 
@@ -28,7 +48,7 @@ def test_twelve_members(cat):
 @pytest.mark.parametrize("name", MEMBERS)
 def test_member_keys(cat, name):
     member = cat.member(name)
-    assert MEMBER_KEYS <= set(member.raw)
+    assert set(member.raw) >= MEMBER_KEYS
     assert member.items["min"] <= member.items["max"]
     assert member.aspect_default in {"landscape", "portrait", "square"}
 

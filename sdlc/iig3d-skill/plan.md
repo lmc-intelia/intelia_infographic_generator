@@ -8,6 +8,7 @@ Repository root:
 - uv.lock (new)
 - .sdlc.toml
 - .gitignore
+- .pre-commit-config.yaml (new)
 - justfile
 - .claude/skills/iig3d (new, symlink -> ../../skills/iig3d)
 
