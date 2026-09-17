@@ -1,0 +1,20 @@
+# Meta for `iig3d.py add --image <file> --meta <this>`. Claude writes this after viewing the image.
+# Either `member` (existing 3d-* name) or `new_member` (a full member block without `refs`).
+member: 3d-hex-cluster
+# new_member:
+#   name: 3d-orbit-ring
+#   device: Concentric orbit rings with satellite discs
+#   backdrop: White
+#   items: {min: 4, max: 8}
+#   aspect_default: landscape
+#   layout: {structure: [...], variants: [{name: ..., focus: ..., emphasis: ...}], visual_elements: [...], text_placement: [...]}
+#   style: {palette: [...], visual_elements: [...], typography: [...], composition: [...]}
+#   prompt_fragment: "Render as ... Clean premium business-template 3D."
+#   best_for: [...]
+#   alternates: [3d-capsule-hub]
+#   routing: [hub-spoke, circular-flow]      # general layouts whose alternates gain this member
+shows: Twelve outlined hexagon cells in a ring around a navy hub disc, line icons, thin connectors
+flags: [clean]                 # clean | watermark | low-res (one or more)
+pairings: [hub-spoke, bento-grid]   # layouts whose pairing list gains this ref (appended last)
+# slug: honeycomb-ring         # optional; default is the image file stem
+# file: ref-01-honeycomb-hub.jpg   # optional; replace an existing catalogue entry whose file is missing on disk

@@ -856,6 +856,138 @@ def render(
     }
 
 
+# --- add ---
+
+META_KEYS = {"member", "new_member", "shows", "flags", "pairings", "slug", "file"}
+FLAG_VALUES = {"clean", "watermark", "low-res"}
+
+
+def normalise_image(src: Path, dest: Path, max_edge: int = 1600, quality: int = 88) -> Path:
+    """Copy `src` to `dest` as an RGB JPEG no larger than `max_edge` on its long side."""
+    from PIL import Image as PILImage
+
+    with PILImage.open(src) as image:
+        image = image.convert("RGB")
+        width, height = image.size
+        scale = max_edge / max(width, height)
+        if scale < 1:
+            image = image.resize((round(width * scale), round(height * scale)), PILImage.LANCZOS)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        image.save(str(dest), "JPEG", quality=quality, optimize=True)
+    return dest
+
+
+def _load_meta(meta_path: Path, cat: Catalogue) -> dict:
+    meta = read_yaml(meta_path)
+    if not isinstance(meta, dict):
+        raise UsageError(f"{meta_path}: meta must be a mapping")
+    unknown = sorted(set(meta) - META_KEYS)
+    if unknown:
+        raise UsageError(f"{meta_path}: unknown key(s) {', '.join(unknown)}")
+    for key in ("shows", "flags"):
+        if not meta.get(key):
+            raise UsageError(f"{meta_path}: missing {key}")
+    if bool(meta.get("member")) == bool(meta.get("new_member")):
+        raise UsageError(f"{meta_path}: give exactly one of member or new_member")
+    if not isinstance(meta["flags"], list) or not set(meta["flags"]) <= FLAG_VALUES:
+        raise UsageError(f"{meta_path}: flags must be a list from {sorted(FLAG_VALUES)}")
+    pairings = meta.get("pairings") or []
+    if not isinstance(pairings, list):
+        raise UsageError(f"{meta_path}: pairings must be a list of layout names")
+    valid_layouts = set(cat.routing) | set(cat.members)
+    if meta.get("new_member"):
+        valid_layouts.add(meta["new_member"].get("name", ""))
+    bad = [layout for layout in pairings if layout not in valid_layouts]
+    if bad:
+        raise UsageError(f"{meta_path}: unknown pairing layout(s) {', '.join(bad)}")
+    meta["pairings"] = pairings
+    return meta
+
+
+def _new_member_record(cat: Catalogue, block: dict, meta_path: Path) -> tuple[dict, list[str]]:
+    block = dict(block)
+    routing_rows = block.pop("routing", []) or []
+    name = block.get("name", "")
+    if not name.startswith(MEMBER_PREFIX):
+        raise UsageError(f"{meta_path}: new_member.name must start with {MEMBER_PREFIX}")
+    if name in cat.members:
+        raise UsageError(f"{meta_path}: member {name} already exists; use member: {name}")
+    bad_rows = [row for row in routing_rows if row not in cat.routing]
+    if bad_rows:
+        raise UsageError(f"{meta_path}: unknown routing layout(s) {', '.join(bad_rows)}")
+    block.setdefault("refs", [])
+    block.setdefault("pairings", {})
+    block.setdefault("alternates", [])
+    block.setdefault("source", {"origin": f"user-added via iig3d.py add ({meta_path.name})", "added": time.strftime("%Y-%m-%d")})
+    problems = validate_member(block, cat.schema)
+    if problems:
+        raise UsageError(f"{meta_path}: new_member invalid: " + "; ".join(problems))
+    return block, routing_rows
+
+
+def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
+    """Normalise an image into refs/<member>/, register it in the member YAML (or create the member),
+    regenerate docs and report. Vendored entries are only ever extended, never edited, except a
+    `file:` replacement for an entry whose image is missing on disk (R21 regeneration)."""
+    image, meta_path = Path(image), Path(meta_path)
+    if not image.is_file():
+        raise UsageError(f"image not found: {image}")
+    meta = _load_meta(meta_path, cat)
+    routing_rows: list[str] = []
+    if meta.get("new_member"):
+        record, routing_rows = _new_member_record(cat, meta["new_member"], meta_path)
+        name = record["name"]
+    else:
+        name = meta["member"]
+        record = dict(cat.member(name).raw)
+    refs = list(record["refs"])
+    stamp = time.strftime("%Y-%m-%d")
+    source = {"path": str(image), "added": stamp, "user_added": True}
+    forced = meta.get("file")
+    if forced:
+        existing = next((r for r in refs if r["file"] == forced), None)
+        if existing is None:
+            raise UsageError(f"{meta_path}: file {forced} is not a catalogue entry of {name}; omit file to add a new ref")
+        if cat.ref_path(name, existing).is_file():
+            raise UsageError(f"{meta_path}: {forced} already exists on disk; add never overwrites a vendored ref")
+        ref_id, file_name = existing["id"], forced
+        entry = {**existing, "shows": meta["shows"], "flags": list(meta["flags"]), "source": {**source, "regenerated": True}}
+        refs[refs.index(existing)] = entry
+    else:
+        ref_id = f"{max((int(r['id']) for r in refs), default=0) + 1:02d}"
+        slug = slugify(meta.get("slug") or image.stem)
+        file_name = f"ref-{ref_id}-{slug}.jpg"
+        entry = {"id": ref_id, "file": file_name, "shows": meta["shows"], "flags": list(meta["flags"]), "source": source}
+        refs.append(entry)
+    pairings = {k: list(v) for k, v in record["pairings"].items()}
+    for layout in meta["pairings"]:
+        pairings.setdefault(layout, [])
+        if ref_id not in pairings[layout]:
+            pairings[layout].append(ref_id)
+    record["refs"], record["pairings"] = refs, pairings
+    normalise_image(image, cat.root / "refs" / name / file_name, max_edge=cat.family["ref_rules"]["max_long_edge_px"])
+    write_yaml(cat.root / "catalogue" / "members" / f"{name}.yaml", record)
+    if routing_rows:
+        family = read_yaml(cat.root / "catalogue" / "family.yaml")
+        for row in routing_rows:
+            alternates = family["routing"][row].setdefault("alternates", [])
+            if name not in alternates:
+                alternates.append(name)
+        write_yaml(cat.root / "catalogue" / "family.yaml", family)
+    fresh = load_catalogue(cat.root)
+    docs = render_docs(fresh)
+    problems = check(fresh, allow_watermark=True)
+    return {
+        "status": "ok" if not problems else "error",
+        "member": name,
+        "ref_id": ref_id,
+        "ref_file": str(cat.root / "refs" / name / file_name),
+        "yaml": str(cat.root / "catalogue" / "members" / f"{name}.yaml"),
+        "docs": [str(d) for d in docs],
+        "check": problems,
+    }
+
+
 # --- docs ---
 
 GENERATED_NOTE = "<!-- Generated by `iig3d.py docs` from catalogue/*.yaml. Do not edit by hand. -->"
@@ -1116,12 +1248,8 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:  # replaced in the check step
-    raise NotImplementedError("check")
-
-
-def add_ref(cat: Catalogue, image: Path, meta: Path) -> dict:  # replaced in the add step
-    raise NotImplementedError("add")
+def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:  # extended in the check step
+    return stale_docs(cat)
 
 
 if __name__ == "__main__":

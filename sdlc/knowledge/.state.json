@@ -1,10 +1,13 @@
 {
-  "commit": "98b000f59040f64ed079923f41989f9b05d6b26b",
-  "graph_commit": "98b000f59040f64ed079923f41989f9b05d6b26b",
-  "updates": 5,
-  "ts": "2026-09-17T01:24:25Z",
+  "commit": "68f1d44b8bd8981182c204343218b1eb73026578",
+  "graph_commit": "68f1d44b8bd8981182c204343218b1eb73026578",
+  "updates": 1,
+  "ts": "2026-09-17T01:25:36Z",
   "files": {
     "tests/test_catalogue.py": [
+      "modules/test-catalogue-py.md"
+    ],
+    "tests/test_routing.py": [
       "modules/test-catalogue-py.md"
     ],
     "tests/conftest.py": [
@@ -13,12 +16,12 @@
     "tests/test_render.py": [
       "modules/conftest-py.md"
     ],
-    "skills/iig3d/scripts/iig3d.py": [
-      "modules/member.md",
-      "modules/iig3d-py.md"
-    ],
     "tests/test_cli.py": [
       "modules/test-cli-py.md"
+    ],
+    "skills/iig3d/scripts/iig3d.py": [
+      "modules/iig3d-py.md",
+      "modules/build-parser.md"
     ],
     "tests/test_aspect.py": [
       "modules/test-aspect-py.md"
@@ -29,18 +32,17 @@
     "tests/test_refs.py": [
       "modules/test-refs-py.md"
     ],
-    "tests/test_routing.py": [
-      "modules/test-routing-py.md"
-    ],
     "tests/test_palette.py": [
       "modules/test-palette-py.md"
     ],
-    "tests/test_creds.py": [
-      "modules/test-prompt-py.md",
-      "modules/test-creds-py.md"
-    ],
     "tests/test_prompt.py": [
       "modules/test-prompt-py.md"
+    ],
+    "tests/test_creds.py": [
+      "modules/test-creds-py.md"
+    ],
+    "tests/test_docs.py": [
+      "modules/test-docs-py.md"
     ]
   }
 }

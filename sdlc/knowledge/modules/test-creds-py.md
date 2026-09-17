@@ -1,13 +1,13 @@
 ---
 type: Module
 title: test_creds.py
-description: "Graphify community 21: tests/test_creds.py"
+description: "Graphify community 20: tests/test_creds.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:21:39Z" }
-stale_after: "2026-10-01T01:21:39Z"
-source_commit: 646c305c3cf5097475ddbd17e3f8940ff9f1afdb
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:25:36Z" }
+stale_after: "2026-10-01T01:25:36Z"
+source_commit: 68f1d44b8bd8981182c204343218b1eb73026578
 sources:
   - { id: test_creds, resource: tests/test_creds.py, last_modified: "2026-09-17T11:21:36+10:00", digest: 4c40dd0d7e15dc03 }
 ---
@@ -25,9 +25,10 @@ sources:
 - test_parent_dotenv_ignored() (tests/test_creds.py:L42)
 - test_key_value_never_in_source() (tests/test_creds.py:L52)
 - test_parse_env_file() (tests/test_creds.py:L59)
+- clean_env() (tests/test_creds.py:L9)
 
 # Depends on
-- [test_prompt.py](/modules/test-prompt-py.md)
+- no EXTRACTED edges to other modules
 
 # Inferred
 - no INFERRED edges; treat any that appear as hints

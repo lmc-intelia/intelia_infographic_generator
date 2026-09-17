@@ -5,13 +5,13 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:24:25Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:25:36Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
-stale_after: "2026-10-01T01:24:25Z"
-source_commit: 98b000f59040f64ed079923f41989f9b05d6b26b
+stale_after: "2026-10-01T01:25:36Z"
+source_commit: 68f1d44b8bd8981182c204343218b1eb73026578
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T11:13:02+10:00", digest: 4948ad7b23ac3a24 }
@@ -217,7 +217,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `skills/iig3d/refs/3d-slab-stack/ref-03-folded-ribbon-tiers.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-01-target-four-pills.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-02-target-six-pills-symmetric.jpg`
-- `skills/iig3d/scripts/iig3d.py` in [iig3d.py](/modules/iig3d-py.md)
+- `skills/iig3d/scripts/iig3d.py` in [build_parser](/modules/build-parser.md)
 - `skills/iig3d/templates/base-prompt.md`
 - `skills/iig3d/templates/meta.example.yaml`
 - `skills/iig3d/templates/spec.example.yaml`
@@ -233,13 +233,13 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_catalogue.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
 - `tests/test_cli.py` in [test_cli.py](/modules/test-cli-py.md)
 - `tests/test_creds.py` in [test_creds.py](/modules/test-creds-py.md)
-- `tests/test_docs.py`
+- `tests/test_docs.py` in [test_docs.py](/modules/test-docs-py.md)
 - `tests/test_install.py`
 - `tests/test_palette.py` in [test_palette.py](/modules/test-palette-py.md)
 - `tests/test_prompt.py` in [test_prompt.py](/modules/test-prompt-py.md)
 - `tests/test_refs.py` in [test_refs.py](/modules/test-refs-py.md)
 - `tests/test_render.py` in [conftest.py](/modules/conftest-py.md)
-- `tests/test_routing.py` in [test_routing.py](/modules/test-routing-py.md)
+- `tests/test_routing.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
 - `tests/test_skill_md.py`
 - `tests/test_spec.py` in [test_spec.py](/modules/test-spec-py.md)
 - `uv.lock`

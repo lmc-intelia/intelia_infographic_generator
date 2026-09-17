@@ -5,9 +5,9 @@ description: "Graphify community 12: tests/test_refs.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
-stale_after: "2026-10-01T01:19:06Z"
-source_commit: c41d6d6a630903c77274cef3967923ec721af525
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:25:36Z" }
+stale_after: "2026-10-01T01:25:36Z"
+source_commit: 68f1d44b8bd8981182c204343218b1eb73026578
 sources:
   - { id: test_refs, resource: tests/test_refs.py, last_modified: "2026-09-17T11:17:54+10:00", digest: 2e2bc8ff7292d47f }
 ---

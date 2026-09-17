@@ -1,24 +1,21 @@
 ---
 type: Module
 title: test_prompt.py
-description: "Graphify community 19: tests/test_creds.py, tests/test_prompt.py"
+description: "Graphify community 19: tests/test_prompt.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:21:39Z" }
-stale_after: "2026-10-01T01:21:39Z"
-source_commit: 646c305c3cf5097475ddbd17e3f8940ff9f1afdb
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:25:36Z" }
+stale_after: "2026-10-01T01:25:36Z"
+source_commit: 68f1d44b8bd8981182c204343218b1eb73026578
 sources:
-  - { id: test_creds, resource: tests/test_creds.py, last_modified: "2026-09-17T11:21:36+10:00", digest: 4c40dd0d7e15dc03 }
   - { id: test_prompt, resource: tests/test_prompt.py, last_modified: "2026-09-17T11:21:00+10:00", digest: 5f6098a9e1e41457 }
 ---
 
 # Files
-- `tests/test_creds.py`
 - `tests/test_prompt.py`
 
 # Symbols
-- clean_env() (tests/test_creds.py:L9)
 - test_prompt.py (tests/test_prompt.py:L1)
 - R8, R9, R18: prompt assembly, persisted prompt files, warnings, redaction. (tests/test_prompt.py:L1)
 - section() (tests/test_prompt.py:L10)
