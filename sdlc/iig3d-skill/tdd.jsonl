@@ -27,3 +27,4 @@
 {"phase": "red", "step": "install", "exit": 1, "ts": "2026-09-17"}
 {"phase": "green", "step": "check-and-refs", "exit": 0, "ts": "2026-09-17"}
 {"phase": "green", "step": "skill-md", "exit": 0, "ts": "2026-09-17"}
+{"phase": "green", "step": "install", "exit": 0, "ts": "2026-09-17"}
