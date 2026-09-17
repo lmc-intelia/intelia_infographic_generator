@@ -1,22 +1,22 @@
 ---
 type: Hub
-title: parametrize
-description: Graphify god node with degree 8
-resource: graphify-out/graph.json
+title: test_aspect.py
+description: Graphify god node with degree 8 in tests/test_aspect.py
+resource: tests/test_aspect.py
 tags: [hub, graphify]
 status: draft
 generated: { by: sdlc/0.3.5, at: "2026-09-17T01:16:19Z" }
 stale_after: "2026-10-01T01:16:19Z"
 source_commit: b5f9d93b2d5e408ed343acec987b36518cafb135
 sources:
-  - { id: graph, resource: graphify-out/graph.json, last_modified: "2026-09-17T01:16:19Z", digest: 068b3be287b59d43 }
+  - { id: test_aspect, resource: tests/test_aspect.py, last_modified: "2026-09-17T11:16:16+10:00", digest: 3e9ae8c1fec4540b }
 ---
 
 # Where
-- not in the current graph
+- `tests/test_aspect.py:L1`
 
 # Module
-- no module concept covers this node
+- [test_aspect.py](/modules/test-aspect-py.md)
 
 # Why it matters
 - degree 8: many modules reach this symbol; changes here have a wide blast radius

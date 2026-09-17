@@ -4,6 +4,41 @@
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Creation**: [test_aspect.py](/modules/test-aspect-py.md).
+* **Creation**: [test_spec.py](/modules/test-spec-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Member](/hubs/member.md).
+* **Update**: [test_routing.py](/hubs/test-routing-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [parametrize](/hubs/parametrize.md).
+* **Creation**: [load_spec()](/hubs/load-spec.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Creation**: [test_aspect.py](/hubs/test-aspect-py.md).
+* **Update**: [load_catalogue()](/hubs/load-catalogue.md).
+* **Deprecation**: [Route](/hubs/route.md).
+* **Deprecation**: [validate_member()](/hubs/validate-member.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Creation**: [Catalogue](/modules/catalogue.md).
+* **Creation**: [test_routing.py](/modules/test-routing-py.md).
+* **Creation**: [parametrize](/modules/parametrize.md).
+* **Update**: [test_catalogue.py](/hubs/test-catalogue-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Member](/hubs/member.md).
+* **Creation**: [test_routing.py](/hubs/test-routing-py.md).
+* **Update**: [parametrize](/hubs/parametrize.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [load_catalogue()](/hubs/load-catalogue.md).
+* **Creation**: [Route](/hubs/route.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [validate_member()](/hubs/validate-member.md).
+* **Deprecation**: [_check_type()](/hubs/check-type.md).
+* **Deprecation**: [conftest.py](/hubs/conftest-py.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [test_catalogue.py](/hubs/test-catalogue-py.md).
 * **Update**: [iig3d.py](/hubs/iig3d-py.md).
 * **Update**: [parametrize](/hubs/parametrize.md).

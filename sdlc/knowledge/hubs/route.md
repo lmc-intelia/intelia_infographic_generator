@@ -1,7 +1,7 @@
 ---
 type: Hub
-title: validate_member()
-description: Graphify god node with degree 5 in skills/iig3d/scripts/iig3d.py
+title: Route
+description: Graphify god node with degree 6 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: deprecated

@@ -1,7 +1,7 @@
 ---
 type: Hub
-title: iig3d.py
-description: Graphify god node with degree 18 in skills/iig3d/scripts/iig3d.py
+title: load_spec()
+description: Graphify god node with degree 8 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: draft
@@ -13,10 +13,10 @@ sources:
 ---
 
 # Where
-- `skills/iig3d/scripts/iig3d.py:L1`
+- `skills/iig3d/scripts/iig3d.py:L251`
 
 # Module
 - [iig3d.py](/modules/iig3d-py.md)
 
 # Why it matters
-- degree 18: many modules reach this symbol; changes here have a wide blast radius
+- degree 8: many modules reach this symbol; changes here have a wide blast radius

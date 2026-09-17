@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -197,6 +198,133 @@ def route(cat: Catalogue, layout: str | None, style: str | None) -> Route:
         raise UsageError(f"unknown layout {layout!r}; valid: {', '.join(cat.layouts)} or a 3d-* member name")
     row = cat.routing[layout]
     return Route(row["primary"], layout, list(row["alternates"]), f"routing table: {layout} -> {row['primary']}")
+
+
+# --- spec ---
+
+SPEC_KEYS = {
+    "title",
+    "subtitle",
+    "language",
+    "layout",
+    "style",
+    "aspect",
+    "palette_css",
+    "palette_vars",
+    "items",
+    "stats",
+    "notes",
+    "refs",
+}
+ITEM_KEYS = {"label", "detail", "icon", "value"}
+
+
+@dataclass
+class Item:
+    label: str
+    detail: str = ""
+    icon: str | None = None
+    value: str | None = None
+
+
+@dataclass
+class Spec:
+    title: str
+    items: list[Item]
+    subtitle: str = ""
+    language: str = "en"
+    layout: str | None = None
+    style: str | None = None
+    aspect: str | None = None
+    palette_css: Path | None = None
+    palette_vars: list[str] = field(default_factory=list)
+    stats: list[dict] = field(default_factory=list)
+    notes: str = ""
+    refs: list[Path] = field(default_factory=list)
+    path: Path | None = None
+
+
+def _str(value) -> str:
+    return "" if value is None else str(value)
+
+
+def load_spec(path: Path) -> Spec:
+    """Parse the YAML content spec; unknown keys and missing title/items/label fail by name."""
+    path = Path(path)
+    raw = read_yaml(path)
+    if not isinstance(raw, dict):
+        raise UsageError(f"{path}: spec must be a mapping")
+    unknown = sorted(set(raw) - SPEC_KEYS)
+    if unknown:
+        raise UsageError(f"{path}: unknown key(s) {', '.join(unknown)}; allowed: {', '.join(sorted(SPEC_KEYS))}")
+    if not raw.get("title"):
+        raise UsageError(f"{path}: missing title")
+    items_raw = raw.get("items")
+    if not isinstance(items_raw, list) or not items_raw:
+        raise UsageError(f"{path}: items must be a non-empty list")
+    items: list[Item] = []
+    for index, entry in enumerate(items_raw):
+        if not isinstance(entry, dict) or not entry.get("label"):
+            raise UsageError(f"{path}: items[{index}] missing label")
+        extra = sorted(set(entry) - ITEM_KEYS)
+        if extra:
+            raise UsageError(f"{path}: items[{index}] unknown key(s) {', '.join(extra)}")
+        items.append(
+            Item(
+                label=_str(entry["label"]),
+                detail=_str(entry.get("detail")),
+                icon=entry.get("icon"),
+                value=None if entry.get("value") is None else _str(entry["value"]),
+            )
+        )
+    base = path.resolve().parent
+    css = raw.get("palette_css")
+    return Spec(
+        title=_str(raw["title"]),
+        items=items,
+        subtitle=_str(raw.get("subtitle")),
+        language=_str(raw.get("language")) or "en",
+        layout=raw.get("layout"),
+        style=raw.get("style"),
+        aspect=None if raw.get("aspect") is None else _str(raw["aspect"]),
+        palette_css=(base / css).resolve() if css else None,
+        palette_vars=[str(v) for v in raw.get("palette_vars") or []],
+        stats=[dict(s) for s in raw.get("stats") or []],
+        notes=_str(raw.get("notes")),
+        refs=[(base / r).resolve() for r in raw.get("refs") or []],
+        path=path.resolve(),
+    )
+
+
+# --- aspect ---
+
+RATIO_RE = re.compile(r"^(\d+(?:\.\d+)?):(\d+(?:\.\d+)?)$")
+
+
+def _ratio_value(ratio: str) -> float:
+    match = RATIO_RE.match(ratio.strip())
+    if not match or float(match.group(1)) == 0 or float(match.group(2)) == 0:
+        raise UsageError(f"aspect {ratio!r} is not a W:H ratio or one of landscape, portrait, square")
+    return float(match.group(1)) / float(match.group(2))
+
+
+def snap_aspect(cat: Catalogue, aspect: str | None, member_default: str) -> tuple[str, str | None]:
+    """Return (supported ratio, original when snapped). Presets and None use the family map."""
+    presets = cat.family["aspect_map"]
+    if aspect is None:
+        return presets[member_default], None
+    if aspect in presets:
+        return presets[aspect], None
+    supported = cat.family["supported_ratios"]
+    if aspect in supported:
+        return aspect, None
+    target = _ratio_value(aspect)
+    nearest = min(supported, key=lambda r: abs(_ratio_value(r) - target))
+    return nearest, aspect
+
+
+def orientation(cat: Catalogue, ratio: str) -> str:
+    return "portrait" if ratio in cat.family["portrait_ratios"] else "landscape"
 
 
 # --- cli ---

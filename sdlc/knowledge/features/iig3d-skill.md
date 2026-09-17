@@ -5,17 +5,17 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:14:51Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:16:19Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
-stale_after: "2026-10-01T01:14:51Z"
-source_commit: 3a84d3d797ba3000a67e68f9a71f1c6a3e872e74
+stale_after: "2026-10-01T01:16:19Z"
+source_commit: b5f9d93b2d5e408ed343acec987b36518cafb135
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T11:13:02+10:00", digest: 4948ad7b23ac3a24 }
-  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T11:14:46+10:00", digest: 6bbe60760e203009 }
+  - { id: plan, resource: sdlc/iig3d-skill/plan.md, last_modified: "2026-09-17T11:15:25+10:00", digest: 4835459672b9e05e }
 ---
 
 # Problem
@@ -217,10 +217,11 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `skills/iig3d/refs/3d-slab-stack/ref-03-folded-ribbon-tiers.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-01-target-four-pills.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-02-target-six-pills-symmetric.jpg`
-- `skills/iig3d/scripts/iig3d.py` in [validate_member](/modules/validate-member.md)
+- `skills/iig3d/scripts/iig3d.py` in [Catalogue](/modules/catalogue.md)
 - `skills/iig3d/templates/base-prompt.md`
 - `skills/iig3d/templates/meta.example.yaml`
 - `skills/iig3d/templates/spec.example.yaml`
+- `tests/__init__.py`
 - `tests/conftest.py` in [conftest.py](/modules/conftest-py.md)
 - `tests/fixtures/brand.css`
 - `tests/fixtures/sample-prompt-3d-disc-timeline.md`
@@ -228,7 +229,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/fixtures/spec-pipeline.yaml`
 - `tests/fixtures/wide-3000px.jpg`
 - `tests/test_add.py`
-- `tests/test_aspect.py`
+- `tests/test_aspect.py` in [test_aspect.py](/modules/test-aspect-py.md)
 - `tests/test_catalogue.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
 - `tests/test_cli.py`
 - `tests/test_creds.py`
@@ -238,9 +239,9 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_prompt.py`
 - `tests/test_refs.py`
 - `tests/test_render.py`
-- `tests/test_routing.py`
+- `tests/test_routing.py` in [test_aspect.py](/modules/test-aspect-py.md)
 - `tests/test_skill_md.py`
-- `tests/test_spec.py`
+- `tests/test_spec.py` in [test_spec.py](/modules/test-spec-py.md)
 - `uv.lock`
 
 # Review
