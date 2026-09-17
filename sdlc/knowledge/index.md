@@ -20,20 +20,21 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [test_palette.py](modules/test-palette-py.md) - Graphify community 16: tests/test_palette.py
 * [test_prompt.py](modules/test-prompt-py.md) - Graphify community 19: tests/test_creds.py, tests/test_prompt.py
 * [test_refs.py](modules/test-refs-py.md) - Graphify community 12: tests/test_refs.py
+* [test_render.py](modules/test-render-py.md) - Graphify community 20: tests/conftest.py, tests/test_render.py
 * [test_routing.py](modules/test-routing-py.md) - Graphify community 14: tests/test_routing.py
 * [test_spec.py](modules/test-spec-py.md) - Graphify community 11: tests/test_spec.py
 
 # Hubs
 * [assemble()](hubs/assemble.md) - Graphify god node with degree 18 in skills/iig3d/scripts/iig3d.py
-* [Catalogue](hubs/catalogue.md) - Graphify god node with degree 11 in skills/iig3d/scripts/iig3d.py
-* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 38 in skills/iig3d/scripts/iig3d.py
+* [conftest.py](hubs/conftest-py.md) - Graphify god node with degree 14 in tests/conftest.py
+* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 43 in skills/iig3d/scripts/iig3d.py
 * [Member](hubs/member.md) - Graphify god node with degree 12 in skills/iig3d/scripts/iig3d.py
-* [Path](hubs/path.md) - Graphify god node with degree 11
+* [Path](hubs/path.md) - Graphify god node with degree 14
 * [test_catalogue.py](hubs/test-catalogue-py.md) - Graphify god node with degree 12 in tests/test_catalogue.py
-* [test_palette.py](hubs/test-palette-py.md) - Graphify god node with degree 11 in tests/test_palette.py
 * [test_prompt.py](hubs/test-prompt-py.md) - Graphify god node with degree 18 in tests/test_prompt.py
 * [test_refs.py](hubs/test-refs-py.md) - Graphify god node with degree 12 in tests/test_refs.py
-* [UsageError](hubs/usageerror.md) - Graphify god node with degree 12 in skills/iig3d/scripts/iig3d.py
+* [test_render.py](hubs/test-render-py.md) - Graphify god node with degree 14 in tests/test_render.py
+* [UsageError](hubs/usageerror.md) - Graphify god node with degree 13 in skills/iig3d/scripts/iig3d.py
 
 # Lessons
 * none yet

@@ -859,21 +859,185 @@ def render(
 # --- cli ---
 
 
+def _add_common(sub: argparse.ArgumentParser) -> None:
+    sub.add_argument("--skill-root", default=None, help="skill directory (default: this script's parent)")
+
+
+def _add_prepare_args(sub: argparse.ArgumentParser) -> None:
+    sub.add_argument("--spec", required=True, help="YAML content spec")
+    sub.add_argument("--out-dir", required=True, help="output directory (prompts/ and infographic.png)")
+    sub.add_argument("--layout", default=None)
+    sub.add_argument("--style", default=None, help="3d-* member or industrial-3d")
+    sub.add_argument("--aspect", default=None, help="landscape | portrait | square | W:H")
+    sub.add_argument("--palette-css", default=None, help="CSS file whose colours replace the item colours")
+    sub.add_argument("--palette-vars", default=None, help="comma-separated custom properties to use, in order")
+    sub.add_argument("--ref", action="append", default=[], help="user reference image (repeatable)")
+    sub.add_argument("--no-style-refs", action="store_true", help="do not pass the member's bundled refs")
+    sub.add_argument("--strict", action="store_true", help="turn prompt warnings into exit 1")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="iig3d", description=__doc__.splitlines()[0])
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in SUBCOMMANDS:
-        sub.add_parser(name)
+    p_list = sub.add_parser("list", help="members and layouts")
+    _add_common(p_list)
+    p_route = sub.add_parser("route", help="resolve layout and style to a member")
+    p_route.add_argument("--layout", default=None)
+    p_route.add_argument("--style", default=None)
+    _add_common(p_route)
+    p_refs = sub.add_parser("refs", help="reference images for a member and layout")
+    p_refs.add_argument("--member", required=True)
+    p_refs.add_argument("--layout", required=True)
+    p_refs.add_argument("--ref", action="append", default=[])
+    _add_common(p_refs)
+    p_prompt = sub.add_parser("prompt", help="assemble and persist the prompt file")
+    _add_prepare_args(p_prompt)
+    _add_common(p_prompt)
+    p_render = sub.add_parser("render", help="assemble the prompt and render with Nano Banana Pro")
+    _add_prepare_args(p_render)
+    p_render.add_argument("--dry-run", action="store_true")
+    p_render.add_argument("--resolution", default="2K", choices=RESOLUTIONS)
+    p_render.add_argument("--model", default=None)
+    p_render.add_argument("--retries", type=int, default=1)
+    p_render.add_argument("--api-key", default=None)
+    p_render.add_argument("--no-confirm", action="store_true", help="accepted for parity with SKILL.md; no effect here")
+    _add_common(p_render)
+    p_add = sub.add_parser("add", help="add a reference image to the catalogue")
+    p_add.add_argument("--image", required=True)
+    p_add.add_argument("--meta", required=True)
+    _add_common(p_add)
+    p_docs = sub.add_parser("docs", help="regenerate catalogue markdown")
+    _add_common(p_docs)
+    p_check = sub.add_parser("check", help="validate the catalogue, refs and docs")
+    p_check.add_argument("--allow-watermark", action="store_true")
+    _add_common(p_check)
+    p_palette = sub.add_parser("palette", help="preview colours extracted from a CSS file")
+    p_palette.add_argument("--css", required=True)
+    p_palette.add_argument("--vars", default=None, help="comma-separated custom properties")
     return parser
+
+
+def _split_vars(value: str | None) -> list[str]:
+    return [v.strip() for v in value.split(",") if v.strip()] if value else []
+
+
+def cmd_list(cat: Catalogue) -> dict:
+    members = [
+        {
+            "name": m.name,
+            "device": m.raw["device"],
+            "items": m.items,
+            "aspect_default": m.aspect_default,
+            "refs": len(m.refs),
+            "pairings": list(m.pairings),
+        }
+        for m in cat.members.values()
+    ]
+    layouts = [{"layout": layout, "primary": row["primary"], "alternates": row["alternates"]} for layout, row in cat.routing.items()]
+    return {"status": "ok", "members": members, "layouts": layouts, "umbrella": UMBRELLA}
+
+
+def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
+    """Shared front half of prompt and render: spec, route, aspect, refs, palette, prompt file."""
+    spec = load_spec(Path(args.spec))
+    route_ = route(cat, args.layout or spec.layout, args.style or spec.style)
+    member = cat.member(route_.member)
+    ratio, snapped_from = snap_aspect(cat, args.aspect or spec.aspect, member.aspect_default)
+    user_refs = [Path(r) for r in args.ref] + spec.refs
+    refs = select_refs(cat, member.name, route_.layout, user_refs=user_refs, style_refs=not args.no_style_refs)
+    css = Path(args.palette_css).resolve() if args.palette_css else spec.palette_css
+    palette = None
+    if css:
+        vars_ = _split_vars(args.palette_vars) or spec.palette_vars
+        palette = extract_palette(css, vars=vars_ or None)
+    prompt = assemble(cat, spec, route_, ratio, refs=refs, palette=palette, palette_source=css, strict=args.strict, aspect_snapped_from=snapped_from)
+    prompt_file = write_prompt(Path(args.out_dir), prompt, slugify(spec.title))
+    return {
+        "status": "ok",
+        "prompt_file": str(prompt_file),
+        "member": member.name,
+        "layout": route_.layout,
+        "style": route_.style,
+        "aspect_ratio": ratio,
+        "language": spec.language,
+        "refs": [str(r) for r in refs],
+        "palette": [c.as_dict() for c in palette] if palette else None,
+        "warnings": prompt.warnings,
+    }
+
+
+def cmd_render(cat: Catalogue, args: argparse.Namespace) -> dict:
+    key, source = api_key(args.api_key)
+    print(f"API key source: {source}", file=sys.stderr)
+    prepared = prepare(cat, args)
+    result = render(
+        Path(prepared["prompt_file"]),
+        Path(args.out_dir) / "infographic.png",
+        prepared["aspect_ratio"],
+        resolution=args.resolution,
+        model=args.model,
+        refs=[Path(r) for r in prepared["refs"]],
+        retries=args.retries,
+        dry_run=args.dry_run,
+        api_key=key,
+        prompt_warnings=prepared["warnings"],
+    )
+    result.update({k: prepared[k] for k in ("member", "layout", "style", "language", "palette")})
+    return result
+
+
+def dispatch(args: argparse.Namespace) -> dict:
+    if args.command == "palette":
+        colours = extract_palette(Path(args.css), vars=_split_vars(args.vars) or None)
+        return {"status": "ok", "source": str(Path(args.css).resolve()), "colours": [c.as_dict() for c in colours], "paragraph": palette_paragraph(colours)}
+    cat = load_catalogue(args.skill_root)
+    if args.command == "list":
+        return cmd_list(cat)
+    if args.command == "route":
+        return {"status": "ok", **route(cat, args.layout, args.style).as_dict()}
+    if args.command == "refs":
+        refs = select_refs(cat, args.member, args.layout, user_refs=[Path(r) for r in args.ref])
+        return {"status": "ok", "member": args.member, "layout": args.layout, "refs": [str(r) for r in refs]}
+    if args.command == "prompt":
+        return prepare(cat, args)
+    if args.command == "render":
+        return cmd_render(cat, args)
+    if args.command == "docs":
+        return {"status": "ok", "written": [str(p) for p in render_docs(cat)]}
+    if args.command == "check":
+        violations = check(cat, allow_watermark=args.allow_watermark)
+        return {"status": "ok" if not violations else "error", "violations": violations}
+    if args.command == "add":
+        return add_ref(cat, Path(args.image), Path(args.meta))
+    raise UsageError(f"unknown command {args.command}")
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        raise NotImplementedError(args.command)
+        result = dispatch(args)
     except UsageError as err:
         print(json.dumps({"status": "error", "error": str(err)}))
         return 1
+    except NotImplementedError as err:
+        print(json.dumps({"status": "error", "error": f"not implemented: {err}"}))
+        return 1
+    print(json.dumps(result))
+    if result.get("status") == "error":
+        return exit_code(result) if "attempts" in result else 1
+    return 0
+
+
+def render_docs(cat: Catalogue) -> list[Path]:  # replaced in the docs step
+    raise NotImplementedError("docs")
+
+
+def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:  # replaced in the check step
+    raise NotImplementedError("check")
+
+
+def add_ref(cat: Catalogue, image: Path, meta: Path) -> dict:  # replaced in the add step
+    raise NotImplementedError("add")
 
 
 if __name__ == "__main__":

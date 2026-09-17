@@ -1,17 +1,22 @@
 ---
 type: Hub
 title: conftest.py
-description: Graphify god node with degree 5 in tests/conftest.py
+description: Graphify god node with degree 14 in tests/conftest.py
 resource: tests/conftest.py
 tags: [hub, graphify]
-status: deprecated
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:15:28Z" }
-source_commit: a872f8dd13097b6286fe8281428ef16f2a673ad7
+status: draft
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:22:58Z" }
+stale_after: "2026-10-01T01:22:58Z"
+source_commit: 3fd7b58f5224c043931253a0ca447ae81380f05d
 sources:
-  - { id: conftest, resource: tests/conftest.py, last_modified: "2026-09-17T11:07:58+10:00", digest: 38d17db694246659 }
+  - { id: conftest, resource: tests/conftest.py, last_modified: "2026-09-17T11:22:55+10:00", digest: 889844ff3ec7d899 }
 ---
 
-# Deprecated
-- sources removed by commit `a872f8dd1309`: `tests/conftest.py`
-- replacement: [conftest.py](/modules/conftest-py.md)
+# Where
+- `tests/conftest.py:L1`
 
+# Module
+- [conftest.py](/modules/conftest-py.md)
+
+# Why it matters
+- degree 14: many modules reach this symbol; changes here have a wide blast radius

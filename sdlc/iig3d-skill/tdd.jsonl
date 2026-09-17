@@ -16,3 +16,5 @@
 {"phase": "green", "step": "creds", "exit": 0, "ts": "2026-09-17"}
 {"phase": "red", "step": "render", "exit": 1, "ts": "2026-09-17"}
 {"phase": "green", "step": "render", "exit": 0, "ts": "2026-09-17"}
+{"phase": "red", "step": "cli", "exit": 1, "ts": "2026-09-17"}
+{"phase": "green", "step": "cli", "exit": 0, "ts": "2026-09-17"}

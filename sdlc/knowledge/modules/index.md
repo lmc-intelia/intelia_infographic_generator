@@ -9,5 +9,6 @@
 * [test_palette.py](test-palette-py.md) - Graphify community 16: tests/test_palette.py
 * [test_prompt.py](test-prompt-py.md) - Graphify community 19: tests/test_creds.py, tests/test_prompt.py
 * [test_refs.py](test-refs-py.md) - Graphify community 12: tests/test_refs.py
+* [test_render.py](test-render-py.md) - Graphify community 20: tests/conftest.py, tests/test_render.py
 * [test_routing.py](test-routing-py.md) - Graphify community 14: tests/test_routing.py
 * [test_spec.py](test-spec-py.md) - Graphify community 11: tests/test_spec.py
