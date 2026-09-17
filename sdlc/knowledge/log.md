@@ -2,6 +2,7 @@
 
 ## 2026-09-17
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [Member](/modules/member.md).
 * **Update**: [Catalogue](/modules/catalogue.md).
