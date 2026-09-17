@@ -65,3 +65,13 @@ deploy env:
         production) echo "production release = merge the PR on GitHub; nothing to run locally" >&2; exit 1 ;;
         *) echo "unknown environment {{env}}" >&2; exit 2 ;;
     esac
+
+# macOS: copy skills/iig3d into ~/.claude/skills (Claude Code there does not follow symlinks); rerun after pulling
+install-copy:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    target="$HOME/.claude/skills/iig3d"
+    if [ -L "$target" ]; then rm "$target"; fi
+    mkdir -p "$HOME/.claude/skills"
+    rsync -a --delete --exclude '__pycache__' "$(pwd)/skills/iig3d/" "$target/"
+    echo "copied skills/iig3d -> $target"

@@ -1,6 +1,6 @@
 [project]
 name = "iig3d-dev"
-version = "0.1.0"
+version = "0.2.0"
 description = "Development environment for the iig3d Claude Code skill (3D corporate infographics)"
 requires-python = ">=3.10"
 dependencies = [

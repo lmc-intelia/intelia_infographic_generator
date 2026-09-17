@@ -1,6 +1,9 @@
 # Knowledge Update Log
 
 ## 2026-09-17
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [Path](/hubs/path.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
