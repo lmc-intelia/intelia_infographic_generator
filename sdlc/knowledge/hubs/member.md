@@ -1,22 +1,22 @@
 ---
 type: Hub
 title: Member
-description: Graphify god node with degree 10 in skills/iig3d/scripts/iig3d.py
+description: Graphify god node with degree 11 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:16:19Z" }
-stale_after: "2026-10-01T01:16:19Z"
-source_commit: b5f9d93b2d5e408ed343acec987b36518cafb135
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:17:28Z" }
+stale_after: "2026-10-01T01:17:28Z"
+source_commit: 8d4b265e69db0f1a36394836b45de401311e492f
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:16:16+10:00", digest: fd1757718180e318 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:16:28+10:00", digest: 53bab8f83bee8015 }
 ---
 
 # Where
 - `skills/iig3d/scripts/iig3d.py:L42`
 
 # Module
-- [iig3d.py](/modules/iig3d-py.md)
+- [Member](/modules/member.md)
 
 # Why it matters
-- degree 10: many modules reach this symbol; changes here have a wide blast radius
+- degree 11: many modules reach this symbol; changes here have a wide blast radius

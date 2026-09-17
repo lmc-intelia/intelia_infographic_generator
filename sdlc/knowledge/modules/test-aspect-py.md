@@ -1,21 +1,19 @@
 ---
 type: Module
 title: test_aspect.py
-description: "Graphify community 10: tests/test_aspect.py, tests/test_routing.py"
+description: "Graphify community 10: tests/test_aspect.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:16:19Z" }
-stale_after: "2026-10-01T01:16:19Z"
-source_commit: b5f9d93b2d5e408ed343acec987b36518cafb135
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:17:28Z" }
+stale_after: "2026-10-01T01:17:28Z"
+source_commit: 8d4b265e69db0f1a36394836b45de401311e492f
 sources:
-  - { id: test_aspect, resource: tests/test_aspect.py, last_modified: "2026-09-17T11:16:16+10:00", digest: 3e9ae8c1fec4540b }
-  - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-17T11:15:25+10:00", digest: 53a24b265e288942 }
+  - { id: test_aspect, resource: tests/test_aspect.py, last_modified: "2026-09-17T11:16:28+10:00", digest: 3e9ae8c1fec4540b }
 ---
 
 # Files
 - `tests/test_aspect.py`
-- `tests/test_routing.py`
 
 # Symbols
 - test_aspect.py (tests/test_aspect.py:L1)
@@ -27,7 +25,6 @@ sources:
 - test_none_uses_member_default() (tests/test_aspect.py:L30)
 - test_malformed_rejected() (tests/test_aspect.py:L36)
 - test_orientation() (tests/test_aspect.py:L42)
-- cat() (tests/test_routing.py:L35)
 
 # Depends on
 - no EXTRACTED edges to other modules

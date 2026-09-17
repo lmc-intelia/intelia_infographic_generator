@@ -1,21 +1,19 @@
 ---
 type: Module
 title: test_catalogue.py
-description: "Graphify community 3: tests/test_catalogue.py, tests/test_routing.py"
+description: "Graphify community 3: tests/test_catalogue.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:16:19Z" }
-stale_after: "2026-10-01T01:16:19Z"
-source_commit: b5f9d93b2d5e408ed343acec987b36518cafb135
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:17:28Z" }
+stale_after: "2026-10-01T01:17:28Z"
+source_commit: 8d4b265e69db0f1a36394836b45de401311e492f
 sources:
   - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T11:14:46+10:00", digest: ca5fb70a1d2a7057 }
-  - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-17T11:15:25+10:00", digest: 53a24b265e288942 }
 ---
 
 # Files
 - `tests/test_catalogue.py`
-- `tests/test_routing.py`
 
 # Symbols
 - test_catalogue.py (tests/test_catalogue.py:L1)
@@ -30,18 +28,9 @@ sources:
 - test_ref_flags() (tests/test_catalogue.py:L82)
 - test_alternates_exist() (tests/test_catalogue.py:L90)
 - test_family_constants() (tests/test_catalogue.py:L95)
-- test_routing.py (tests/test_routing.py:L1)
-- R4: industrial-3d routes by layout; a named member skips the table; unknown… (tests/test_routing.py:L1)
-- test_general_layout_routes_to_primary() (tests/test_routing.py:L41)
-- test_device_layout_returns_member() (tests/test_routing.py:L51)
-- test_explicit_member_style_skips_table() (tests/test_routing.py:L59)
-- test_layout_defaults_to_member_device() (tests/test_routing.py:L66)
-- test_no_layout_no_style_defaults_to_bento_grid() (tests/test_routing.py:L72)
-- test_unknown_layout_lists_valid_names() (tests/test_routing.py:L78)
-- test_unknown_style_lists_valid_names() (tests/test_routing.py:L84)
 
 # Depends on
-- [test_aspect.py](/modules/test-aspect-py.md)
+- no EXTRACTED edges to other modules
 
 # Inferred
 - no INFERRED edges; treat any that appear as hints

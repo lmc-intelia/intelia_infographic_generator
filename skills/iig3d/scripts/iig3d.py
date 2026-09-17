@@ -327,6 +327,74 @@ def orientation(cat: Catalogue, ratio: str) -> str:
     return "portrait" if ratio in cat.family["portrait_ratios"] else "landscape"
 
 
+# --- refs ---
+
+
+def _ordered_pool(member: Member, layout: str) -> list[dict]:
+    """Pairing refs for the layout first (falling back to the first pairing), then every other ref."""
+    by_id = {r["id"]: r for r in member.refs}
+    pairing = member.pairings.get(layout) or next(iter(member.pairings.values()), [])
+    pool = [by_id[rid] for rid in pairing if rid in by_id]
+    pool += [r for r in member.refs if r not in pool]
+    return pool
+
+
+def select_refs(
+    cat: Catalogue,
+    member_name: str,
+    layout: str,
+    user_refs: list[Path] | None = None,
+    style_refs: bool = True,
+) -> list[Path]:
+    """Pairing refs for the layout (2 to 3), padded from the member pool when short, with the
+    flag rules applied: never two watermarks, never only low-res refs, clean refs first.
+    User refs are appended; the total is capped by family ref_rules.max_total."""
+    rules = cat.family["ref_rules"]
+    low, high = rules["per_render"]
+    member = cat.member(member_name)
+    picked: list[dict] = []
+    if style_refs:
+        pool = _ordered_pool(member, layout)
+        pairing_len = len(member.pairings.get(layout) or next(iter(member.pairings.values()), []))
+        picked = pool[: min(high, max(pairing_len, 0))]
+        rest = [r for r in pool if r not in picked]
+        rest.sort(key=lambda r: ("clean" not in r["flags"], "low-res" in r["flags"]))
+        while len(picked) < low and rest:
+            picked.append(rest.pop(0))
+        seen_watermark = False
+        kept: list[dict] = []
+        for ref in picked:
+            if "watermark" in ref["flags"]:
+                if seen_watermark:
+                    continue
+                seen_watermark = True
+            kept.append(ref)
+        picked = kept
+        while len(picked) < low and rest:
+            candidate = rest.pop(0)
+            if "watermark" in candidate["flags"] and seen_watermark:
+                continue
+            seen_watermark = seen_watermark or "watermark" in candidate["flags"]
+            picked.append(candidate)
+        if picked and all("low-res" in r["flags"] for r in picked):
+            extra = next((r for r in rest if "low-res" not in r["flags"] and not ("watermark" in r["flags"] and seen_watermark)), None)
+            if extra:
+                picked.append(extra)
+        picked.sort(key=lambda r: "clean" not in r["flags"])
+    paths: list[Path] = []
+    for ref in picked:
+        path = cat.ref_path(member.name, ref)
+        if not path.is_file():
+            raise UsageError(f"reference image missing: {path}")
+        paths.append(path)
+    for extra_path in user_refs or []:
+        extra_path = Path(extra_path)
+        if not extra_path.is_file():
+            raise UsageError(f"reference image not found: {extra_path}")
+        paths.append(extra_path)
+    return paths[: rules["max_total"]]
+
+
 # --- cli ---
 
 

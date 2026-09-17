@@ -3,6 +3,24 @@
 ## 2026-09-17
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [conftest.py](/modules/conftest-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_aspect.py](/modules/test-aspect-py.md).
+* **Creation**: [test_refs.py](/modules/test-refs-py.md).
+* **Update**: [test_routing.py](/modules/test-routing-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Creation**: [test_refs.py](/hubs/test-refs-py.md).
+* **Update**: [Member](/hubs/member.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [test_routing.py](/hubs/test-routing-py.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [load_spec()](/hubs/load-spec.md).
+* **Creation**: [select_refs()](/hubs/select-refs.md).
+* **Deprecation**: [load_catalogue()](/hubs/load-catalogue.md).
+* **Deprecation**: [parametrize](/hubs/parametrize.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [Catalogue](/modules/catalogue.md).
 * **Creation**: [test_aspect.py](/modules/test-aspect-py.md).

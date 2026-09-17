@@ -1,6 +1,6 @@
 ---
 type: Hub
-title: load_spec()
+title: select_refs()
 description: Graphify god node with degree 8 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
@@ -13,7 +13,7 @@ sources:
 ---
 
 # Where
-- `skills/iig3d/scripts/iig3d.py:L251`
+- `skills/iig3d/scripts/iig3d.py:L342`
 
 # Module
 - [iig3d.py](/modules/iig3d-py.md)

@@ -35,3 +35,24 @@ def skill_root() -> Path:
 @pytest.fixture(scope="session")
 def fixtures() -> Path:
     return FIXTURES
+
+
+@pytest.fixture
+def tmp_catalogue(tmp_path, iig3d):
+    """A copy of the shipped catalogue in a temp skill root with a small JPEG for every ref."""
+    import shutil
+
+    from PIL import Image
+
+    root = tmp_path / "skill"
+    shutil.copytree(SKILL / "catalogue", root / "catalogue")
+    for template in ("templates", "docs"):
+        if (SKILL / template).exists():
+            shutil.copytree(SKILL / template, root / template)
+    cat = iig3d.load_catalogue(root)
+    for name, member in cat.members.items():
+        for ref in member.refs:
+            target = root / "refs" / name / ref["file"]
+            target.parent.mkdir(parents=True, exist_ok=True)
+            Image.new("RGB", (64, 40), (200, 120, 40)).save(target, "JPEG")
+    return iig3d.load_catalogue(root)
