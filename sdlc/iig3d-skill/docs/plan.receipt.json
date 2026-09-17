@@ -1,0 +1,16 @@
+{
+  "stage": "plan",
+  "type": "architecture",
+  "sources": [
+    {
+      "resource": "sdlc/iig3d-skill/intent.md",
+      "digest": "06c48f79bdaddaf858e822a90e6fc3099bcb35ba0f54f115ba380027ff5d1411"
+    }
+  ],
+  "source_digest": "a478f6697a8af65fd3c1d97760b8c2d5da78d3bc76a037d5079497b437d0a629",
+  "specification_sha256": "abbae5c4caa14a388b5ee2c3bafa8247e284dd438779505ddb6adcc3c19ecd1d",
+  "artifact_sha256": "976a5f49320e0f1c5fc5923b0e1c37104716042f17f9938f9fb339cb95477215",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "archify_version": "2.17.0-dev.1",
+  "delivered_at": "2026-09-17T00:36:33Z"
+}

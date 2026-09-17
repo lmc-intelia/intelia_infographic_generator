@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "iig3d skill: plan",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1120,
+      640
+    ],
+    "views": [
+      {
+        "id": "render-path",
+        "label": "Render path",
+        "focus": [
+          "owner",
+          "claude",
+          "script",
+          "prompt",
+          "gemini",
+          "output"
+        ],
+        "note": "One infographic: brief to YAML spec, script assembles prompt and refs, Gemini renders the PNG."
+      },
+      {
+        "id": "ingest-path",
+        "label": "Add a reference",
+        "focus": [
+          "userimg",
+          "claude",
+          "script",
+          "catalogue"
+        ],
+        "note": "User image is categorised by Claude, normalised by the script, registered in the catalogue."
+      },
+      {
+        "id": "boundary",
+        "label": "What changes",
+        "focus": [
+          "script",
+          "catalogue",
+          "prompt",
+          "install",
+          "baoyu"
+        ],
+        "note": "New code lives in skills/iig3d; the baoyu fork is read once at build time and never modified."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "owner",
+      "type": "external",
+      "label": "Linus McManamey",
+      "sublabel": "Owner, operator",
+      "pos": [
+        38,
+        260
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "claude",
+      "type": "frontend",
+      "label": "Claude Code",
+      "sublabel": "Spec and categorise",
+      "brand": "claude",
+      "pos": [
+        220,
+        260
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "script",
+      "type": "backend",
+      "label": "iig3d.py",
+      "sublabel": "CLI: prompt, render, add",
+      "pos": [
+        402,
+        260
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "prompt",
+      "type": "database",
+      "label": "prompts/NN-*.md",
+      "sublabel": "Persisted before API",
+      "pos": [
+        584,
+        260
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "gemini",
+      "type": "cloud",
+      "label": "Gemini API",
+      "sublabel": "gemini-3-pro-image",
+      "pos": [
+        766,
+        260
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "output",
+      "type": "external",
+      "label": "infographic.png",
+      "sublabel": "2K default",
+      "pos": [
+        948,
+        260
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "catalogue",
+      "type": "database",
+      "label": "Catalogue + refs",
+      "sublabel": "YAML + 36 ref JPEG",
+      "pos": [
+        402,
+        420
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "install",
+      "type": "messagebus",
+      "label": "Install paths",
+      "sublabel": "npx skills add, symlink",
+      "pos": [
+        402,
+        100
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "userimg",
+      "type": "external",
+      "label": "User image",
+      "sublabel": "add input",
+      "pos": [
+        220,
+        100
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "baoyu",
+      "type": "external",
+      "label": "baoyu-infographic fork",
+      "sublabel": "~/.agents, read once",
+      "pos": [
+        38,
+        420
+      ],
+      "size": [
+        138,
+        68
+      ]
+    },
+    {
+      "id": "dotenv",
+      "type": "security",
+      "label": "./.env",
+      "sublabel": "GEMINI_API_KEY",
+      "pos": [
+        766,
+        420
+      ],
+      "size": [
+        138,
+        68
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "skills/iig3d in Intelia repo (new)",
+      "wraps": [
+        "install",
+        "script",
+        "prompt",
+        "catalogue"
+      ],
+      "pad": 22
+    },
+    {
+      "kind": "region",
+      "label": "Unchanged source",
+      "wraps": [
+        "baoyu"
+      ],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "owner-to-claude",
+      "from": "owner",
+      "to": "claude",
+      "label": "brief + source",
+      "variant": "emphasis",
+      "labelDy": -28
+    },
+    {
+      "id": "claude-to-script",
+      "from": "claude",
+      "to": "script",
+      "label": "YAML spec",
+      "variant": "emphasis",
+      "labelDy": -28
+    },
+    {
+      "id": "script-to-catalogue",
+      "from": "script",
+      "to": "catalogue",
+      "label": "route, pick refs",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        468,
+        370
+      ]
+    },
+    {
+      "id": "script-to-prompt",
+      "from": "script",
+      "to": "prompt",
+      "label": "assemble",
+      "labelDy": -28
+    },
+    {
+      "id": "prompt-to-gemini",
+      "from": "prompt",
+      "to": "gemini",
+      "label": "prompt + refs",
+      "labelDy": -28
+    },
+    {
+      "id": "gemini-to-output",
+      "from": "gemini",
+      "to": "output",
+      "label": "PNG",
+      "variant": "emphasis"
+    },
+    {
+      "id": "dotenv-to-gemini",
+      "from": "dotenv",
+      "to": "gemini",
+      "label": "API key",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "userimg-to-claude",
+      "from": "userimg",
+      "to": "claude",
+      "label": "categorise",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        289,
+        182
+      ]
+    },
+    {
+      "id": "baoyu-to-catalogue",
+      "from": "baoyu",
+      "to": "catalogue",
+      "label": "distilled at build",
+      "variant": "dashed"
+    },
+    {
+      "id": "script-to-install",
+      "from": "script",
+      "to": "install",
+      "label": "shared + local",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "Summary",
+      "items": [
+        "Generated by sdlc from plan sources @ a478f6697a8a; drafts are Claude's reading of the artifact, the acceptor decides",
+        "Deterministic rules move from prose to Python: routing, ref flags, aspect snap, prompt assembly, render",
+        "Claude keeps judgement only: YAML content spec, member confirm, categorising added images",
+        "Shared from skills/iig3d, installed locally by symlink; credentials from ./.env in the calling directory"
+      ]
+    }
+  ]
+}

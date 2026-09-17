@@ -1,0 +1,16 @@
+{
+  "stage": "design",
+  "type": "dataflow",
+  "sources": [
+    {
+      "resource": "sdlc/iig3d-skill/spec.md",
+      "digest": "b3948abfeb888fac0755b344be9fb55d17bf2b2052bd14439d01aefb07668f98"
+    }
+  ],
+  "source_digest": "cea73d664d7f05364c064f5c480657b9c7c9e09555dab9811e2d01ecaaaebfbc",
+  "specification_sha256": "8fb5a7d2ea16c3780d041712375ae18153c495f6a1014f6ec1ad892bcece6e3a",
+  "artifact_sha256": "08f2a91008e6e4c3b538cb3141a802928b64312c554398c3bc2fb04c71b2a427",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "archify_version": "2.17.0-dev.1",
+  "delivered_at": "2026-09-17T00:56:25Z"
+}

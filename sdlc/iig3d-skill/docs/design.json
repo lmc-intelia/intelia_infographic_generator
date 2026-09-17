@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "iig3d skill: design",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1068,
+      760
+    ],
+    "animation": "trace",
+    "views": [
+      {
+        "id": "render-path",
+        "label": "Render path",
+        "focus": [
+          "spec",
+          "routing",
+          "prompt",
+          "promptfile",
+          "gemini",
+          "png"
+        ],
+        "note": "spec.yaml is routed to a member, assembled into a persisted prompt, rendered by Gemini to PNG."
+      },
+      {
+        "id": "catalogue",
+        "label": "Catalogue",
+        "focus": [
+          "catalogue",
+          "routing",
+          "prompt"
+        ],
+        "note": "YAML catalogue and flagged refs drive routing and ref selection: clean first, no watermark pairs, cap 6."
+      },
+      {
+        "id": "add-path",
+        "label": "Add a reference",
+        "focus": [
+          "userimg",
+          "addcmd",
+          "catalogue",
+          "docs"
+        ],
+        "note": "User image plus Claude-written meta.yaml extends catalogue, refs and generated markdown; vendored members never change."
+      },
+      {
+        "id": "credentials",
+        "label": "Credentials",
+        "focus": [
+          "dotenv",
+          "gemini"
+        ],
+        "note": "GEMINI_API_KEY from ./.env in the calling directory or the environment; never logged, no parent-directory walk."
+      }
+    ]
+  },
+  "stages": [
+    {
+      "label": "Input"
+    },
+    {
+      "label": "Catalogue"
+    },
+    {
+      "label": "Assemble"
+    },
+    {
+      "label": "Render"
+    },
+    {
+      "label": "Output"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "spec",
+      "type": "frontend",
+      "label": "spec.yaml",
+      "sublabel": "brand css",
+      "stage": 0,
+      "row": 0,
+      "tag": "R6 R20"
+    },
+    {
+      "id": "dotenv",
+      "type": "security",
+      "label": "./.env",
+      "sublabel": "caller dir",
+      "stage": 3,
+      "row": 3,
+      "tag": "R10"
+    },
+    {
+      "id": "userimg",
+      "type": "external",
+      "label": "User image",
+      "sublabel": "+ meta.yaml",
+      "stage": 0,
+      "row": 4,
+      "tag": "R13"
+    },
+    {
+      "id": "routing",
+      "type": "backend",
+      "label": "route()",
+      "sublabel": "alternates",
+      "stage": 1,
+      "row": 0,
+      "tag": "R4"
+    },
+    {
+      "id": "catalogue",
+      "type": "database",
+      "label": "catalogue + refs",
+      "sublabel": "30 refs",
+      "stage": 1,
+      "row": 2,
+      "tag": "R3 R5"
+    },
+    {
+      "id": "addcmd",
+      "type": "backend",
+      "label": "add()",
+      "sublabel": "register",
+      "stage": 1,
+      "row": 4,
+      "tag": "R13"
+    },
+    {
+      "id": "prompt",
+      "type": "backend",
+      "label": "assemble()",
+      "sublabel": "palette",
+      "stage": 2,
+      "row": 0,
+      "tag": "R7-R9 R20"
+    },
+    {
+      "id": "promptfile",
+      "type": "database",
+      "label": "prompts/NN-*.md",
+      "sublabel": "persisted",
+      "stage": 2,
+      "row": 2,
+      "tag": "R8"
+    },
+    {
+      "id": "docs",
+      "type": "database",
+      "label": "docs/*.md",
+      "sublabel": "generated",
+      "stage": 2,
+      "row": 4,
+      "tag": "R14"
+    },
+    {
+      "id": "gemini",
+      "type": "cloud",
+      "label": "Gemini API",
+      "sublabel": "3-pro-image",
+      "stage": 3,
+      "row": 1,
+      "tag": "R11"
+    },
+    {
+      "id": "png",
+      "type": "external",
+      "label": "infographic.png",
+      "sublabel": "+ JSON",
+      "stage": 4,
+      "row": 1,
+      "tag": "R11"
+    }
+  ],
+  "flows": [
+    {
+      "id": "spec-to-routing",
+      "from": "spec",
+      "to": "routing",
+      "label": "layout, style, css",
+      "classification": "content",
+      "variant": "emphasis",
+      "route": "straight",
+      "labelDy": -23
+    },
+    {
+      "id": "catalogue-to-routing",
+      "from": "catalogue",
+      "to": "routing",
+      "label": "table, refs, flags",
+      "classification": "data",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "route": "straight",
+      "labelAt": [
+        385,
+        271
+      ]
+    },
+    {
+      "id": "routing-to-prompt",
+      "from": "routing",
+      "to": "prompt",
+      "label": "member + refs",
+      "classification": "clean first, cap 6",
+      "variant": "emphasis",
+      "route": "straight",
+      "labelDy": -23
+    },
+    {
+      "id": "prompt-to-promptfile",
+      "from": "prompt",
+      "to": "promptfile",
+      "label": "prompt file",
+      "classification": "written before API",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "straight",
+      "labelAt": [
+        455,
+        300
+      ]
+    },
+    {
+      "id": "promptfile-to-gemini",
+      "from": "promptfile",
+      "to": "gemini",
+      "label": "prompt + refs",
+      "classification": "style refs only",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left",
+      "route": "auto"
+    },
+    {
+      "id": "dotenv-to-gemini",
+      "from": "dotenv",
+      "to": "gemini",
+      "label": "API key",
+      "classification": "never logged",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "route": "straight",
+      "labelAt": [
+        815,
+        385
+      ]
+    },
+    {
+      "id": "gemini-to-png",
+      "from": "gemini",
+      "to": "png",
+      "label": "PNG",
+      "classification": "2K default",
+      "variant": "emphasis",
+      "route": "straight",
+      "labelDy": -23
+    },
+    {
+      "id": "userimg-to-addcmd",
+      "from": "userimg",
+      "to": "addcmd",
+      "label": "image + meta",
+      "classification": "rights: user",
+      "variant": "default",
+      "route": "straight",
+      "labelDy": -23
+    },
+    {
+      "id": "addcmd-to-catalogue",
+      "from": "addcmd",
+      "to": "catalogue",
+      "label": "YAML + JPEG",
+      "classification": "append only",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "route": "straight",
+      "labelAt": [
+        385,
+        499
+      ]
+    },
+    {
+      "id": "addcmd-to-docs",
+      "from": "addcmd",
+      "to": "docs",
+      "label": "markdown",
+      "classification": "never hand-edited",
+      "variant": "dashed",
+      "route": "straight",
+      "labelDy": -23
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "Summary",
+      "items": [
+        "Generated by sdlc from design sources @ cea73d664d7f; drafts are Claude's reading of the artifact, the acceptor decides",
+        "One script, eight subcommands: list route refs prompt render add docs check; every one prints a single JSON line",
+        "YAML catalogue is the source of truth; markdown is generated; a 13th member is one YAML file plus one refs folder",
+        "Brand colours from a local CSS file: Claude asks once at skill start, --palette-css replaces item colours only; backdrop, neutrals, shadows stay"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Concerns",
+      "items": [
+        "Watermarked source refs are never committed: 11 regenerated clean via render + add before build ships (resolved 2026-09-17, owner: product owner)",
+        "Secret lives in ./.env beside output; .gitignore covers it; walk-up discovery removed on purpose",
+        "pytest never calls Gemini; live smoke gated by IIG3D_LIVE=1; acceptance pass is 12 manual renders"
+      ]
+    }
+  ]
+}
