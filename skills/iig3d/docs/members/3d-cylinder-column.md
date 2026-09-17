@@ -48,13 +48,13 @@ Member of the 3D corporate family. Stepped glossy cylinders with bent 3D arrows 
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Descending** | Ranked priorities, funnels, countdowns | Tallest at the left, heights fall to the right |
 | **Ascending** | Growth, maturity, build-up | Shortest at the left, heights climb to the right |
 | **Bar chart** | Data with narrative | Height encodes the value, numeral shows it |
 
-### Visual elements
+### Visual Elements
 
 - Cylinders with a visible open top and a glossy vertical highlight
 - Arrows as thick ribbons in the cylinder colour, flat chevron heads
@@ -62,7 +62,7 @@ Member of the 3D corporate family. Stepped glossy cylinders with bent 3D arrows 
 - Faint mirrored reflection on the floor plane
 - Warm ramp of colours left to right, or the family cycle
 
-### Text placement
+### Text Placement
 
 - Title at top, left-aligned
 - Large numeral over a small caps word at each arrow head

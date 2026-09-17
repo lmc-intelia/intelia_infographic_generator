@@ -52,13 +52,13 @@ Member of the 3D corporate family. Isometric ribbon with 3D charts and glass tow
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Ribbon stages** | Multi-chart reports | Portrait, ribbon path top to bottom |
 | **Glass towers** | Ranked figures | Landscape, tower height equals value |
 | **Navy city** | System maps at night | Numbered markers, glowing blocks |
 
-### Visual elements
+### Visual Elements
 
 - Navy gradient ground, optional faint isometric cubes at low opacity
 - Ribbon or platform in light steel blue
@@ -66,7 +66,7 @@ Member of the 3D corporate family. Isometric ribbon with 3D charts and glass tow
 - Value labels on bar top faces or beside bars
 - Small isometric props beside the relevant chart
 
-### Text placement
+### Text Placement
 
 - Title at top in white
 - Headline figure oversized in the series colour, unit in light grey

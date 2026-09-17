@@ -51,13 +51,13 @@ Member of the 3D corporate family. Stacked extruded slabs, staircase treads, fol
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Stacked slabs** | Tiers, layers, ranked lists | One colour per slab |
 | **Staircase** | Step sequences with progression | Treads rise bottom-left to top-right, numeral on each tread |
 | **Folded ribbon** | Funnels, narrowing stages | Angled bands overlap, hexagon tab carries the letter |
 
-### Visual elements
+### Visual Elements
 
 - Slabs extruded 8 to 12 percent of their width, seen from a slight top-left angle
 - Side faces one shade darker than top faces, single light source
@@ -65,7 +65,7 @@ Member of the 3D corporate family. Stacked extruded slabs, staircase treads, fol
 - Short leader lines or plain proximity linking slab to text
 - Monochrome option: one hue stepped light to dark across tiers
 
-### Text placement
+### Text Placement
 
 - Title at top, left-aligned
 - Tier name bold beside each slab, description below the name

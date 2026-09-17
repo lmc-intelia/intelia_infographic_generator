@@ -47,13 +47,13 @@ Member of the 3D corporate family. Isometric gradient pedestals with floating 3D
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Pedestal row** | Short step sequences | Equal heights, one colour per pedestal |
 | **Rising heights** | Tiers, maturity levels | Pedestals grow left to right |
 | **Comparison pair** | A vs B | Two wide pedestals, attributes listed in the fade |
 
-### Visual elements
+### Visual Elements
 
 - Base slab 8 to 10 percent thick, casts the only shadow
 - Column fades from solid at the base to transparent at about 60 percent height
@@ -61,7 +61,7 @@ Member of the 3D corporate family. Isometric gradient pedestals with floating 3D
 - Pale backdrop, no map or grid
 - 30 percent of the canvas left empty
 
-### Text placement
+### Text Placement
 
 - Title at top-centre
 - Header on the front face of each base slab

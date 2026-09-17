@@ -49,13 +49,13 @@ Member of the 3D corporate family. Tilted glossy bullseye, tapered beams to numb
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Side target** | Three to five goals or criteria | Target left, pills stacked right |
 | **Centred target** | Six items in balance | Target centred, three pills per side |
 | **Stacked target** | Portrait goal list | Target at the top, pills fanning down |
 
-### Visual elements
+### Visual Elements
 
 - Thick disc rim, four to five concentric rings, dark bullseye
 - Tapered flat beams, wide at the pill and narrow at the centre
@@ -63,7 +63,7 @@ Member of the 3D corporate family. Tilted glossy bullseye, tapered beams to numb
 - Soft elliptical shadow beneath the target
 - No icons; numerals carry the order
 
-### Text placement
+### Text Placement
 
 - Title at top, left-aligned or centred above the target
 - Outcome or goal name on or beside the target

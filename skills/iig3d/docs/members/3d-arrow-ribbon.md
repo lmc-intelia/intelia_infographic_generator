@@ -51,12 +51,12 @@ Member of the 3D corporate family. Fat 3D chevron arrows and folded ribbons carr
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Chevron flow** | Pipelines, journeys, momentum | Interlocking arrows, gradient along the flow |
 | **Folded ribbon tiers** | Stacked stages, funnels | Angled bands stacked vertically with hexagon tabs |
 
-### Visual elements
+### Visual Elements
 
 - Arrows with visible thickness, top faces lighter, side faces darker
 - One flat icon or numeral riding on each arrow top face
@@ -64,7 +64,7 @@ Member of the 3D corporate family. Fat 3D chevron arrows and folded ribbons carr
 - Thin parallel rail under the flow for cross-cutting items
 - Ribbon variant: hexagon letter tab and slim chevron pointer per band
 
-### Text placement
+### Text Placement
 
 - Title at top
 - Step names above the flow, detail lines below, alternating per arrow

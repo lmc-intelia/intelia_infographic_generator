@@ -9,14 +9,7 @@ member:
   style: {type: map, keys: {palette: list, visual_elements: list, typography: list, composition: list}}
   prompt_fragment: str
   best_for: list
-  refs: {type: list, items: {type: map, keys: {id: str, file: str, shows: str, flags: list}}}
+  refs: {type: list, items: {type: map, keys: {id: str, file: str, shows: str, flags: {type: list, items: {type: enum, values: [clean, watermark, low-res]}}}}}
   pairings: map
   alternates: list
   source: {type: map, keys: {origin: str, added: str}}
-meta:
-  member: str
-  new_member: map
-  shows: str
-  flags: list
-  pairings: map
-  file: str

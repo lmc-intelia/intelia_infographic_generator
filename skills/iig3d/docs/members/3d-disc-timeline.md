@@ -52,13 +52,13 @@ Member of the 3D corporate family. Rimmed bevelled discs on a track, ribbon or S
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Straight track** | Timelines, roadmaps | Landscape, five to eight discs, labels above and below |
 | **Chain track** | Numbered procedures | Portrait, thick grey 3D track snaking down |
 | **S-curve or serpentine** | Winding journeys | Ribbon width equals disc diameter, alternating curves |
 
-### Visual elements
+### Visual Elements
 
 - Discs bevelled, 3 to 4 percent rim thickness, glossy white face plate
 - Top-left highlight and soft shadow under each disc
@@ -66,7 +66,7 @@ Member of the 3D corporate family. Rimmed bevelled discs on a track, ribbon or S
 - Thin or dotted leader lines with dot terminals
 - Distinct rim colour on every neighbouring disc
 
-### Text placement
+### Text Placement
 
 - Title at top
 - Period or step label under each disc in a small panel

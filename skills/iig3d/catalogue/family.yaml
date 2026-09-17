@@ -37,9 +37,6 @@ ref_rules:
   max_total: 6
   per_render: [2, 3]
   max_long_edge_px: 1600
-  style_only_note: >-
-    The images above are style references only. Match their rendering style, depth, lighting,
-    palette treatment and typography. Do not copy their text or data.
 
 # Used when style is omitted or industrial-3d. Naming a 3d-* member skips this table.
 routing:

@@ -52,14 +52,14 @@ Member of the 3D corporate family. Central disc, pill capsules with rimmed circl
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Capsule hub** | Inputs and outputs around one platform | Capsule columns left and right |
 | **Segment ring** | Cycles | Wedges surround the hub directly |
 | **Hub with ribbon** | Hub feeding a sequence | Serpentine ribbon of small discs |
 | **Rimmed wheel** | Peer topics, no hierarchy | Capsule outline and circle rim share the item colour, thick connector stubs on the hub |
 
-### Visual elements
+### Visual Elements
 
 - Hub disc bevelled with a glossy white face plate
 - Capsules: white pills with a thin outline, rimmed circle at the inner end
@@ -67,7 +67,7 @@ Member of the 3D corporate family. Central disc, pill capsules with rimmed circl
 - Circle faces plain colour or a simple white line icon
 - Small tab under the hub for a supporting tool
 
-### Text placement
+### Text Placement
 
 - Title at top
 - Hub label on the inner disc

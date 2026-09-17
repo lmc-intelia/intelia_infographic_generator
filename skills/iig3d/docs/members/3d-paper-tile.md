@@ -51,7 +51,7 @@ Member of the 3D corporate family. Embossed paper tiles, hexagons, tabs and tile
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Square tile grid** | Collections, ledgers, issue lists | 2 by 2 up to 4 by 4 tiles |
 | **Tab panels** | Plans, matrices with gates | Column panels of stacked numbered tabs |
@@ -59,7 +59,7 @@ Member of the 3D corporate family. Embossed paper tiles, hexagons, tabs and tile
 | **Segment wheel** | Cycles | 4 to 8 wedges around a central disc |
 | **Tile-capped charts** | Dashboards, KPIs | Bars capped with white percentage tiles |
 
-### Visual elements
+### Visual Elements
 
 - Tiles with a 2 to 3 percent raised edge and soft offset shadow
 - Studio ground slightly darker than the tiles so they read as raised card
@@ -67,7 +67,7 @@ Member of the 3D corporate family. Embossed paper tiles, hexagons, tabs and tile
 - Thin coloured rims and connectors with dot terminals
 - Small tabs on tile edges for footnotes or sources
 
-### Text placement
+### Text Placement
 
 - Title at top
 - Tile heading bold on or beside the tile, body inside the tile

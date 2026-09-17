@@ -17,16 +17,22 @@ JSON object on stdout; diagnostics go to stderr.
 from __future__ import annotations
 
 import argparse
+import base64
 import colorsys
 import json
 import os
 import re
 import sys
 import time
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field, fields
+from io import BytesIO
 from pathlib import Path
 
+import tomllib
 import yaml
+
+YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+YAML_DUMPER = getattr(yaml, "CSafeDumper", yaml.SafeDumper)
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 SUBCOMMANDS = ["list", "route", "refs", "prompt", "render", "add", "docs", "check", "palette"]
@@ -73,6 +79,9 @@ class Member:
     def alternates(self) -> list[str]:
         return self.raw["alternates"]
 
+    def __getitem__(self, key: str):
+        return self.raw[key]
+
 
 @dataclass
 class Catalogue:
@@ -86,8 +95,11 @@ class Catalogue:
         return self.family["routing"]
 
     @property
-    def layouts(self) -> list[str]:
-        return list(self.routing)
+    def family_yaml(self) -> Path:
+        return self.root / "catalogue" / "family.yaml"
+
+    def member_yaml(self, name: str) -> Path:
+        return self.root / "catalogue" / "members" / f"{name}.yaml"
 
     def member(self, name: str) -> Member:
         try:
@@ -98,16 +110,29 @@ class Catalogue:
     def ref_path(self, member: str, ref: dict) -> Path:
         return self.root / "refs" / member / ref["file"]
 
+    def is_layout(self, name: str) -> bool:
+        """A general routing layout or a member's own device name."""
+        return name in self.routing or name in self.members
+
+    @property
+    def negative_tail(self) -> str:
+        """Last sentence of the family negative list; a fragment that ends with it already carries the list."""
+        return self.family["negative_list"].split(". ")[-1]
+
+    @property
+    def flag_values(self) -> list[str]:
+        return self.schema["member"]["refs"]["items"]["keys"]["flags"]["items"]["values"]
+
 
 def read_yaml(path: Path) -> dict:
     with path.open(encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
+        return yaml.load(handle, Loader=YAML_LOADER) or {}  # noqa: S506 # nosec B506 - SafeLoader or CSafeLoader only
 
 
 def write_yaml(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
-        yaml.safe_dump(data, handle, sort_keys=False, allow_unicode=True, width=120)
+        yaml.dump(data, handle, Dumper=YAML_DUMPER, sort_keys=False, allow_unicode=True, width=120)
 
 
 def load_catalogue(root: Path | None = None) -> Catalogue:
@@ -178,13 +203,7 @@ class Route:
     style: str = UMBRELLA
 
     def as_dict(self) -> dict:
-        return {
-            "member": self.member,
-            "layout": self.layout,
-            "style": self.style,
-            "alternates": list(self.alternates),
-            "reason": self.reason,
-        }
+        return asdict(self)
 
 
 def route(cat: Catalogue, layout: str | None, style: str | None) -> Route:
@@ -205,28 +224,12 @@ def route(cat: Catalogue, layout: str | None, style: str | None) -> Route:
         member = cat.member(layout)
         return Route(layout, layout, list(member.alternates), f"device layout {layout} names its member")
     if layout not in cat.routing:
-        raise UsageError(f"unknown layout {layout!r}; valid: {', '.join(cat.layouts)} or a 3d-* member name")
+        raise UsageError(f"unknown layout {layout!r}; valid: {', '.join(cat.routing)} or a 3d-* member name")
     row = cat.routing[layout]
     return Route(row["primary"], layout, list(row["alternates"]), f"routing table: {layout} -> {row['primary']}")
 
 
 # --- spec ---
-
-SPEC_KEYS = {
-    "title",
-    "subtitle",
-    "language",
-    "layout",
-    "style",
-    "aspect",
-    "palette_css",
-    "palette_vars",
-    "items",
-    "stats",
-    "notes",
-    "refs",
-}
-ITEM_KEYS = {"label", "detail", "icon", "value"}
 
 
 @dataclass
@@ -254,8 +257,16 @@ class Spec:
     path: Path | None = None
 
 
+SPEC_KEYS = {f.name for f in fields(Spec)} - {"path"}
+ITEM_KEYS = {f.name for f in fields(Item)}
+
+
 def _str(value) -> str:
     return "" if value is None else str(value)
+
+
+def _opt_str(value) -> str | None:
+    return None if value is None else str(value)
 
 
 def load_spec(path: Path) -> Spec:
@@ -284,7 +295,7 @@ def load_spec(path: Path) -> Spec:
                 label=_str(entry["label"]),
                 detail=_str(entry.get("detail")),
                 icon=entry.get("icon"),
-                value=None if entry.get("value") is None else _str(entry["value"]),
+                value=_opt_str(entry.get("value")),
             )
         )
     base = path.resolve().parent
@@ -296,7 +307,7 @@ def load_spec(path: Path) -> Spec:
         language=_str(raw.get("language")) or "en",
         layout=raw.get("layout"),
         style=raw.get("style"),
-        aspect=None if raw.get("aspect") is None else _str(raw["aspect"]),
+        aspect=_opt_str(raw.get("aspect")),
         palette_css=(base / css).resolve() if css else None,
         palette_vars=[str(v) for v in raw.get("palette_vars") or []],
         stats=[dict(s) for s in raw.get("stats") or []],
@@ -340,13 +351,53 @@ def orientation(cat: Catalogue, ratio: str) -> str:
 # --- refs ---
 
 
-def _ordered_pool(member: Member, layout: str) -> list[dict]:
-    """Pairing refs for the layout first (falling back to the first pairing), then every other ref."""
+def _pairing(member: Member, layout: str) -> list[str]:
+    """Ref ids paired with the layout; the member's first pairing when the layout has none."""
+    return member.pairings.get(layout) or next(iter(member.pairings.values()), [])
+
+
+def pick_style_refs(cat: Catalogue, member: Member, layout: str) -> list[dict]:
+    """Pairing refs for the layout (2 to 3), padded from the member pool when short, with the
+    flag rules applied: never two watermarks, never only low-res refs, clean refs first."""
+    low, high = cat.family["ref_rules"]["per_render"]
+    pairing = _pairing(member, layout)
     by_id = {r["id"]: r for r in member.refs}
-    pairing = member.pairings.get(layout) or next(iter(member.pairings.values()), [])
     pool = [by_id[rid] for rid in pairing if rid in by_id]
     pool += [r for r in member.refs if r not in pool]
-    return pool
+    cut = min(high, len(pairing))
+    head, rest = pool[:cut], pool[cut:]
+    rest.sort(key=lambda r: ("clean" not in r["flags"], "low-res" in r["flags"]))
+    picked: list[dict] = []
+    seen_watermark = False
+
+    def take(ref: dict) -> None:
+        nonlocal seen_watermark
+        watermark = "watermark" in ref["flags"]
+        if watermark and seen_watermark:
+            return
+        seen_watermark = seen_watermark or watermark
+        picked.append(ref)
+
+    for ref in head:
+        take(ref)
+    while len(picked) < low and rest:
+        take(rest.pop(0))
+    if picked and all("low-res" in r["flags"] for r in picked):
+        extra = next((r for r in rest if "low-res" not in r["flags"] and not ("watermark" in r["flags"] and seen_watermark)), None)
+        if extra:
+            picked.append(extra)
+    picked.sort(key=lambda r: "clean" not in r["flags"])
+    return picked
+
+
+def ref_rule_violations(refs: list[dict]) -> list[str]:
+    """The two selection invariants, stated once for the selector and the checker."""
+    problems = []
+    if sum("watermark" in r["flags"] for r in refs) > 1:
+        problems.append("two watermarked refs selected")
+    if refs and all("low-res" in r["flags"] for r in refs):
+        problems.append("only low-res refs selected")
+    return problems
 
 
 def select_refs(
@@ -356,43 +407,10 @@ def select_refs(
     user_refs: list[Path] | None = None,
     style_refs: bool = True,
 ) -> list[Path]:
-    """Pairing refs for the layout (2 to 3), padded from the member pool when short, with the
-    flag rules applied: never two watermarks, never only low-res refs, clean refs first.
-    User refs are appended; the total is capped by family ref_rules.max_total."""
-    rules = cat.family["ref_rules"]
-    low, high = rules["per_render"]
+    """Style refs as paths (see pick_style_refs), user refs appended, capped by ref_rules.max_total."""
     member = cat.member(member_name)
-    picked: list[dict] = []
-    if style_refs:
-        pool = _ordered_pool(member, layout)
-        pairing_len = len(member.pairings.get(layout) or next(iter(member.pairings.values()), []))
-        picked = pool[: min(high, max(pairing_len, 0))]
-        rest = [r for r in pool if r not in picked]
-        rest.sort(key=lambda r: ("clean" not in r["flags"], "low-res" in r["flags"]))
-        while len(picked) < low and rest:
-            picked.append(rest.pop(0))
-        seen_watermark = False
-        kept: list[dict] = []
-        for ref in picked:
-            if "watermark" in ref["flags"]:
-                if seen_watermark:
-                    continue
-                seen_watermark = True
-            kept.append(ref)
-        picked = kept
-        while len(picked) < low and rest:
-            candidate = rest.pop(0)
-            if "watermark" in candidate["flags"] and seen_watermark:
-                continue
-            seen_watermark = seen_watermark or "watermark" in candidate["flags"]
-            picked.append(candidate)
-        if picked and all("low-res" in r["flags"] for r in picked):
-            extra = next((r for r in rest if "low-res" not in r["flags"] and not ("watermark" in r["flags"] and seen_watermark)), None)
-            if extra:
-                picked.append(extra)
-        picked.sort(key=lambda r: "clean" not in r["flags"])
     paths: list[Path] = []
-    for ref in picked:
+    for ref in pick_style_refs(cat, member, layout) if style_refs else []:
         path = cat.ref_path(member.name, ref)
         if not path.is_file():
             raise UsageError(f"reference image missing: {path}")
@@ -402,7 +420,7 @@ def select_refs(
         if not extra_path.is_file():
             raise UsageError(f"reference image not found: {extra_path}")
         paths.append(extra_path)
-    return paths[: rules["max_total"]]
+    return paths[: cat.family["ref_rules"]["max_total"]]
 
 
 # --- palette ---
@@ -418,7 +436,7 @@ class Colour:
     hex: str
 
     def as_dict(self) -> dict:
-        return {"name": self.name, "hex": self.hex}
+        return asdict(self)
 
 
 def _nums(body: str) -> list[float]:
@@ -488,15 +506,11 @@ def extract_palette(css_path: Path, vars: list[str] | None = None) -> list[Colou
             raise UsageError(f"{css_path}: custom propert{'y' if len(missing) == 1 else 'ies'} not found: {', '.join(missing)}")
         colours = chosen
     else:
+        known = {c.hex for c in named}
+        literals = [h for h in map(normalise_colour, COLOUR_RE.findall(CSS_VAR_RE.sub("", text))) if h and h not in known]
+        named += [Colour(f"colour-{len(named) + i}", h) for i, h in enumerate(literals, 1)]
         seen: set[str] = set()
         colours = []
-        var_values = {normalise_colour(raw) for _n, raw in CSS_VAR_RE.findall(text)}
-        literal_index = len(named)
-        for literal in COLOUR_RE.findall(re.sub(CSS_VAR_RE, "", text)):
-            hex_colour = normalise_colour(literal)
-            if hex_colour and hex_colour not in var_values:
-                literal_index += 1
-                named.append(Colour(f"colour-{literal_index}", hex_colour))
         for colour in named:
             if is_neutral(colour.hex) or colour.hex in seen:
                 continue
@@ -538,21 +552,35 @@ def _bullets(lines: list[str]) -> str:
     return "\n".join(f"- {line}" for line in lines)
 
 
+def _table(headers: list[str], rows: list[list[str]]) -> str:
+    line = "| " + " | ".join(headers) + " |"
+    sep = "|" + "|".join("-" * (len(h) + 2) for h in headers) + "|"
+    body = "\n".join("| " + " | ".join(row) + " |" for row in rows)
+    return "\n".join([line, sep, body])
+
+
+def layout_sections(member: Member) -> list[tuple[str, str]]:
+    """(heading, body) pairs of the member's device layout, shared by the prompt and the docs."""
+    layout = member["layout"]
+    variants = [[f"**{v['name']}**", v["focus"], v["emphasis"]] for v in layout["variants"]]
+    return [
+        ("Structure", _bullets(layout["structure"])),
+        ("Variants", _table(["Variant", "Focus", "Visual Emphasis"], variants)),
+        ("Best For", _bullets(member["best_for"])),
+        ("Visual Elements", _bullets(layout["visual_elements"])),
+        ("Text Placement", _bullets(layout["text_placement"])),
+    ]
+
+
 def render_layout_block(member: Member) -> str:
     """The member's device layout as the markdown block the Layout Guidelines slot expects."""
-    layout = member.raw["layout"]
-    variants = "\n".join(f"| **{v['name']}** | {v['focus']} | {v['emphasis']} |" for v in layout["variants"])
-    return "\n\n".join(
-        [
-            f"# {member.name}",
-            member.raw["device"] + ".",
-            "## Structure\n\n" + _bullets(layout["structure"]),
-            "## Variants\n\n| Variant | Focus | Visual Emphasis |\n|---------|-------|-----------------|\n" + variants,
-            "## Best For\n\n" + _bullets(member.raw["best_for"]),
-            "## Visual Elements\n\n" + _bullets(layout["visual_elements"]),
-            "## Text Placement\n\n" + _bullets(layout["text_placement"]),
-        ]
-    )
+    parts = [f"# {member.name}", member["device"] + "."]
+    parts += [f"## {heading}\n\n{body}" for heading, body in layout_sections(member)]
+    return "\n\n".join(parts)
+
+
+def has_negative_list(fragment: str, cat: Catalogue) -> bool:
+    return fragment.strip().endswith(cat.negative_tail)
 
 
 def content_block(spec: Spec) -> str:
@@ -609,10 +637,9 @@ def assemble(
     """Fill templates/base-prompt.md; warnings for text budget and item range; strict raises."""
     member = cat.member(route_.member)
     template = (cat.root / TEMPLATE_PATH).read_text(encoding="utf-8")
-    negative = cat.family["negative_list"]
     style_block = member.prompt_fragment.strip()
-    if not style_block.endswith(negative.split(". ")[-1]):
-        style_block += "\n\n" + negative
+    if not has_negative_list(style_block, cat):
+        style_block += "\n\n" + cat.family["negative_list"]
     if palette:
         style_block += "\n\n" + palette_paragraph(palette)
     labels = text_labels(spec)
@@ -664,7 +691,7 @@ def write_prompt(out_dir: Path, prompt: Prompt, slug: str) -> Path:
     taken = [int(m.group(1)) for f in prompts_dir.iterdir() if (m := re.match(r"^(\d{2})-", f.name))]
     number = max(taken, default=0) + 1
     path = prompts_dir / f"{number:02d}-infographic-{slug}.md"
-    header = yaml.safe_dump(prompt.frontmatter, sort_keys=False, allow_unicode=True).rstrip()
+    header = yaml.dump(prompt.frontmatter, Dumper=YAML_DUMPER, sort_keys=False, allow_unicode=True).rstrip()
     path.write_text(f"---\n{header}\n---\n{prompt.text}", encoding="utf-8")
     return path
 
@@ -716,11 +743,40 @@ def api_key(explicit: str | None, cwd: Path | None = None) -> tuple[str, str]:
 DEFAULT_MODEL = "gemini-3-pro-image"
 RESOLUTIONS = ("1K", "2K", "4K")
 STYLE_NOTE = "The images above are style references only. Match their rendering style, depth, lighting, palette treatment and typography. Do not copy their text or data."
-EXIT_CODES = {"ok": 0, "dry-run": 0, "error": 2}
+EXIT_CODES = {"ok": 0, "dry-run": 0, "violations": 1, "error": 2}
 
 
 def exit_code(result: dict) -> int:
     return EXIT_CODES.get(result.get("status", "error"), 2)
+
+
+def to_rgb(image, background=(255, 255, 255)):
+    """Flatten any PIL mode to RGB; alpha composites onto `background`."""
+    from PIL import Image as PILImage
+
+    if image.mode == "RGB":
+        return image
+    if "A" in image.getbands():
+        image = image.convert("RGBA")
+        flat = PILImage.new("RGB", image.size, background)
+        flat.paste(image, mask=image.getchannel("A"))
+        return flat
+    return image.convert("RGB")
+
+
+def _image_from_response(response):
+    """First inline image part of a Gemini response as an RGB PIL image; None when absent."""
+    from PIL import Image as PILImage
+
+    for part in response.parts or []:
+        if getattr(part, "text", None):
+            print(f"Model text: {part.text.strip()[:300]}", file=sys.stderr)
+        elif getattr(part, "inline_data", None) is not None:
+            data = part.inline_data.data
+            if isinstance(data, str):
+                data = base64.b64decode(data)
+            return to_rgb(PILImage.open(BytesIO(data)))
+    return None
 
 
 def load_prompt_text(path: Path) -> str:
@@ -787,8 +843,6 @@ def render(
     if dry_run:
         return {"status": "dry-run", **base}
 
-    from io import BytesIO
-
     from google.genai import types
     from PIL import Image as PILImage
 
@@ -809,26 +863,9 @@ def render(
         try:
             print(f"[{attempt}] {model} {ratio} {resolution} refs={len(ref_paths)}", file=sys.stderr)
             response = client.models.generate_content(model=model, contents=contents, config=config)
-            image = None
-            for part in response.parts or []:
-                if getattr(part, "text", None):
-                    print(f"Model text: {part.text.strip()[:300]}", file=sys.stderr)
-                elif getattr(part, "inline_data", None) is not None:
-                    data = part.inline_data.data
-                    if isinstance(data, str):
-                        import base64
-
-                        data = base64.b64decode(data)
-                    image = PILImage.open(BytesIO(data))
-                    break
+            image = _image_from_response(response)
             if image is None:
                 raise RuntimeError("no image part in response (content may have been refused)")
-            if image.mode == "RGBA":
-                flat = PILImage.new("RGB", image.size, (255, 255, 255))
-                flat.paste(image, mask=image.split()[3])
-                image = flat
-            elif image.mode != "RGB":
-                image = image.convert("RGB")
             out_png.parent.mkdir(parents=True, exist_ok=True)
             backup = backup_existing(out_png)
             image.save(str(out_png), "PNG")
@@ -859,7 +896,6 @@ def render(
 # --- add ---
 
 META_KEYS = {"member", "new_member", "shows", "flags", "pairings", "slug", "file"}
-FLAG_VALUES = {"clean", "watermark", "low-res"}
 
 
 def normalise_image(src: Path, dest: Path, max_edge: int = 1600, quality: int = 88) -> Path:
@@ -867,7 +903,7 @@ def normalise_image(src: Path, dest: Path, max_edge: int = 1600, quality: int = 
     from PIL import Image as PILImage
 
     with PILImage.open(src) as image:
-        image = image.convert("RGB")
+        image = to_rgb(image)
         width, height = image.size
         scale = max_edge / max(width, height)
         if scale < 1:
@@ -889,15 +925,13 @@ def _load_meta(meta_path: Path, cat: Catalogue) -> dict:
             raise UsageError(f"{meta_path}: missing {key}")
     if bool(meta.get("member")) == bool(meta.get("new_member")):
         raise UsageError(f"{meta_path}: give exactly one of member or new_member")
-    if not isinstance(meta["flags"], list) or not set(meta["flags"]) <= FLAG_VALUES:
-        raise UsageError(f"{meta_path}: flags must be a list from {sorted(FLAG_VALUES)}")
+    if not isinstance(meta["flags"], list) or not set(meta["flags"]) <= set(cat.flag_values):
+        raise UsageError(f"{meta_path}: flags must be a list from {cat.flag_values}")
     pairings = meta.get("pairings") or []
     if not isinstance(pairings, list):
         raise UsageError(f"{meta_path}: pairings must be a list of layout names")
-    valid_layouts = set(cat.routing) | set(cat.members)
-    if meta.get("new_member"):
-        valid_layouts.add(meta["new_member"].get("name", ""))
-    bad = [layout for layout in pairings if layout not in valid_layouts]
+    new_name = (meta.get("new_member") or {}).get("name", "")
+    bad = [layout for layout in pairings if not cat.is_layout(layout) and layout != new_name]
     if bad:
         raise UsageError(f"{meta_path}: unknown pairing layout(s) {', '.join(bad)}")
     meta["pairings"] = pairings
@@ -941,48 +975,51 @@ def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
         name = meta["member"]
         record = dict(cat.member(name).raw)
     refs = list(record["refs"])
-    stamp = time.strftime("%Y-%m-%d")
-    source = {"path": str(image), "added": stamp, "user_added": True}
     forced = meta.get("file")
-    if forced:
-        existing = next((r for r in refs if r["file"] == forced), None)
-        if existing is None:
-            raise UsageError(f"{meta_path}: file {forced} is not a catalogue entry of {name}; omit file to add a new ref")
-        if cat.ref_path(name, existing).is_file():
-            raise UsageError(f"{meta_path}: {forced} already exists on disk; add never overwrites a vendored ref")
-        ref_id, file_name = existing["id"], forced
-        entry = {**existing, "shows": meta["shows"], "flags": list(meta["flags"]), "source": {**source, "regenerated": True}}
-        refs[refs.index(existing)] = entry
-    else:
+    existing = next((r for r in refs if r["file"] == forced), None) if forced else None
+    if forced and existing is None:
+        raise UsageError(f"{meta_path}: file {forced} is not a catalogue entry of {name}; omit file to add a new ref")
+    if existing is None:
         ref_id = f"{max((int(r['id']) for r in refs), default=0) + 1:02d}"
-        slug = slugify(meta.get("slug") or image.stem)
-        file_name = f"ref-{ref_id}-{slug}.jpg"
-        entry = {"id": ref_id, "file": file_name, "shows": meta["shows"], "flags": list(meta["flags"]), "source": source}
+        file_name = f"ref-{ref_id}-{slugify(meta.get('slug') or image.stem)}.jpg"
+    else:
+        ref_id, file_name = existing["id"], existing["file"]
+    source = {"path": str(image), "added": time.strftime("%Y-%m-%d"), "user_added": True}
+    if existing is not None:
+        source["regenerated"] = True
+    entry = {**(existing or {}), "id": ref_id, "file": file_name, "shows": meta["shows"], "flags": list(meta["flags"]), "source": source}
+    dest = cat.ref_path(name, entry)
+    if dest.exists():
+        raise UsageError(f"{meta_path}: {file_name} already exists on disk; add never overwrites a vendored ref")
+    if existing is None:
         refs.append(entry)
+    else:
+        refs[refs.index(existing)] = entry
     pairings = {k: list(v) for k, v in record["pairings"].items()}
     for layout in meta["pairings"]:
         pairings.setdefault(layout, [])
         if ref_id not in pairings[layout]:
             pairings[layout].append(ref_id)
     record["refs"], record["pairings"] = refs, pairings
-    normalise_image(image, cat.root / "refs" / name / file_name, max_edge=cat.family["ref_rules"]["max_long_edge_px"])
-    write_yaml(cat.root / "catalogue" / "members" / f"{name}.yaml", record)
+    normalise_image(image, dest, max_edge=cat.family["ref_rules"]["max_long_edge_px"])
+    member_yaml = cat.member_yaml(name)
+    write_yaml(member_yaml, record)
     if routing_rows:
-        family = read_yaml(cat.root / "catalogue" / "family.yaml")
+        family = read_yaml(cat.family_yaml)
         for row in routing_rows:
             alternates = family["routing"][row].setdefault("alternates", [])
             if name not in alternates:
                 alternates.append(name)
-        write_yaml(cat.root / "catalogue" / "family.yaml", family)
+        write_yaml(cat.family_yaml, family)
     fresh = load_catalogue(cat.root)
     docs = render_docs(fresh)
     problems = check(fresh, allow_watermark=True)
     return {
-        "status": "ok" if not problems else "error",
+        "status": "ok" if not problems else "violations",
         "member": name,
         "ref_id": ref_id,
-        "ref_file": str(cat.root / "refs" / name / file_name),
-        "yaml": str(cat.root / "catalogue" / "members" / f"{name}.yaml"),
+        "ref_file": str(dest),
+        "yaml": str(member_yaml),
         "docs": [str(d) for d in docs],
         "check": problems,
     }
@@ -993,47 +1030,32 @@ def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
 GENERATED_NOTE = "<!-- Generated by `iig3d.py docs` from catalogue/*.yaml. Do not edit by hand. -->"
 
 
-def _table(headers: list[str], rows: list[list[str]]) -> str:
-    line = "| " + " | ".join(headers) + " |"
-    sep = "|" + "|".join("-" * (len(h) + 2) for h in headers) + "|"
-    body = "\n".join("| " + " | ".join(row) + " |" for row in rows)
-    return "\n".join([line, sep, body])
-
-
-def member_markdown(cat: Catalogue, member: Member) -> str:
-    raw = member.raw
-    layout = raw["layout"]
+def member_markdown(member: Member) -> str:
+    style = member["style"]
     refs_rows = [[f"`{r['file']}`", r["shows"].replace("|", "\\|"), ", ".join(r["flags"])] for r in member.refs]
-    variants = [[f"**{v['name']}**", v["focus"], v["emphasis"]] for v in layout["variants"]]
     pairings = [f"- `{layout_name}`: refs {', '.join(ids)}" for layout_name, ids in member.pairings.items()]
+    layout = "\n\n".join(f"### {heading}\n\n{body}" for heading, body in layout_sections(member) if heading != "Best For")
     parts = [
         f"# {member.name}",
         GENERATED_NOTE,
-        f"Member of the 3D corporate family. {raw['device']}. Backdrop: {raw['backdrop']}. Items: {member.items['min']} to {member.items['max']}. Default aspect: {member.aspect_default}.",
+        f"Member of the 3D corporate family. {member['device']}. Backdrop: {member['backdrop']}. Items: {member.items['min']} to {member.items['max']}. Default aspect: {member.aspect_default}.",
         "## Reference images\n\n" + _table(["Ref", "Shows", "Flags"], refs_rows),
-        "## Colour palette\n\n" + _bullets(raw["style"]["palette"]),
-        "## Visual elements\n\n" + _bullets(raw["style"]["visual_elements"]),
-        "## Typography\n\n" + _bullets(raw["style"]["typography"]),
-        "## Composition rules\n\n" + _bullets(raw["style"]["composition"]),
-        "## Layout\n\n### Structure\n\n"
-        + _bullets(layout["structure"])
-        + "\n\n### Variants\n\n"
-        + _table(["Variant", "Focus", "Visual emphasis"], variants)
-        + "\n\n### Visual elements\n\n"
-        + _bullets(layout["visual_elements"])
-        + "\n\n### Text placement\n\n"
-        + _bullets(layout["text_placement"]),
+        "## Colour palette\n\n" + _bullets(style["palette"]),
+        "## Visual elements\n\n" + _bullets(style["visual_elements"]),
+        "## Typography\n\n" + _bullets(style["typography"]),
+        "## Composition rules\n\n" + _bullets(style["composition"]),
+        "## Layout\n\n" + layout,
         "## Prompt fragment\n\n```\n" + member.prompt_fragment.strip() + "\n```",
-        "## Best for\n\n" + _bullets(raw["best_for"]),
+        "## Best for\n\n" + _bullets(member["best_for"]),
         "## Recommended pairings\n\n" + "\n".join(pairings) + "\n\nAlternates: " + ", ".join(f"`{a}`" for a in member.alternates),
-        f"Source: {raw['source']['origin']} (added {raw['source']['added']}).",
+        f"Source: {member['source']['origin']} (added {member['source']['added']}).",
     ]
     return "\n\n".join(parts) + "\n"
 
 
 def catalogue_markdown(cat: Catalogue) -> str:
     family = cat.family
-    members = [[f"`{m.name}`", m.raw["device"], m.raw["backdrop"], f"{m.items['min']}-{m.items['max']}", str(len(m.refs))] for m in cat.members.values()]
+    members = [[f"`{m.name}`", m["device"], m["backdrop"], f"{m.items['min']}-{m.items['max']}", str(len(m.refs))] for m in cat.members.values()]
     routing = [[f"`{layout}`", f"`{row['primary']}`", ", ".join(f"`{a}`" for a in row["alternates"]) or "-"] for layout, row in cat.routing.items()]
     palette = [[c["name"], f"`{c['hex']}`"] for c in family["palette"]["items"]]
     parts = [
@@ -1053,7 +1075,7 @@ def catalogue_markdown(cat: Catalogue) -> str:
 def expected_docs(cat: Catalogue) -> dict[Path, str]:
     docs = {cat.root / "docs" / "CATALOGUE.md": catalogue_markdown(cat)}
     for member in cat.members.values():
-        docs[cat.root / "docs" / "members" / f"{member.name}.md"] = member_markdown(cat, member)
+        docs[cat.root / "docs" / "members" / f"{member.name}.md"] = member_markdown(member)
     return docs
 
 
@@ -1079,58 +1101,45 @@ def stale_docs(cat: Catalogue) -> list[str]:
 # --- cli ---
 
 
-def _add_common(sub: argparse.ArgumentParser) -> None:
-    sub.add_argument("--skill-root", default=None, help="skill directory (default: this script's parent)")
-
-
-def _add_prepare_args(sub: argparse.ArgumentParser) -> None:
-    sub.add_argument("--spec", required=True, help="YAML content spec")
-    sub.add_argument("--out-dir", required=True, help="output directory (prompts/ and infographic.png)")
-    sub.add_argument("--layout", default=None)
-    sub.add_argument("--style", default=None, help="3d-* member or industrial-3d")
-    sub.add_argument("--aspect", default=None, help="landscape | portrait | square | W:H")
-    sub.add_argument("--palette-css", default=None, help="CSS file whose colours replace the item colours")
-    sub.add_argument("--palette-vars", default=None, help="comma-separated custom properties to use, in order")
-    sub.add_argument("--ref", action="append", default=[], help="user reference image (repeatable)")
-    sub.add_argument("--no-style-refs", action="store_true", help="do not pass the member's bundled refs")
-    sub.add_argument("--strict", action="store_true", help="turn prompt warnings into exit 1")
-
-
 def build_parser() -> argparse.ArgumentParser:
+    common = argparse.ArgumentParser(add_help=False)
+    common.add_argument("--skill-root", default=None, help="skill directory (default: this script's parent)")
+    prepare_args = argparse.ArgumentParser(add_help=False)
+    prepare_args.add_argument("--spec", required=True, help="YAML content spec")
+    prepare_args.add_argument("--out-dir", required=True, help="output directory (prompts/ and infographic.png)")
+    prepare_args.add_argument("--layout", default=None)
+    prepare_args.add_argument("--style", default=None, help="3d-* member or industrial-3d")
+    prepare_args.add_argument("--aspect", default=None, help="landscape | portrait | square | W:H")
+    prepare_args.add_argument("--palette-css", default=None, help="CSS file whose colours replace the item colours")
+    prepare_args.add_argument("--palette-vars", default=None, help="comma-separated custom properties to use, in order")
+    prepare_args.add_argument("--ref", action="append", default=[], help="user reference image (repeatable)")
+    prepare_args.add_argument("--no-style-refs", action="store_true", help="do not pass the member's bundled refs")
+    prepare_args.add_argument("--strict", action="store_true", help="turn prompt warnings into exit 1")
+
     parser = argparse.ArgumentParser(prog="iig3d", description=__doc__.splitlines()[0])
     sub = parser.add_subparsers(dest="command", required=True)
-    p_list = sub.add_parser("list", help="members and layouts")
-    _add_common(p_list)
-    p_route = sub.add_parser("route", help="resolve layout and style to a member")
+    sub.add_parser("list", parents=[common], help="members and layouts")
+    p_route = sub.add_parser("route", parents=[common], help="resolve layout and style to a member")
     p_route.add_argument("--layout", default=None)
     p_route.add_argument("--style", default=None)
-    _add_common(p_route)
-    p_refs = sub.add_parser("refs", help="reference images for a member and layout")
+    p_refs = sub.add_parser("refs", parents=[common], help="reference images for a member and layout")
     p_refs.add_argument("--member", required=True)
     p_refs.add_argument("--layout", required=True)
     p_refs.add_argument("--ref", action="append", default=[])
-    _add_common(p_refs)
-    p_prompt = sub.add_parser("prompt", help="assemble and persist the prompt file")
-    _add_prepare_args(p_prompt)
-    _add_common(p_prompt)
-    p_render = sub.add_parser("render", help="assemble the prompt and render with Nano Banana Pro")
-    _add_prepare_args(p_render)
+    sub.add_parser("prompt", parents=[common, prepare_args], help="assemble and persist the prompt file")
+    p_render = sub.add_parser("render", parents=[common, prepare_args], help="assemble the prompt and render with Nano Banana Pro")
     p_render.add_argument("--dry-run", action="store_true")
     p_render.add_argument("--resolution", default="2K", choices=RESOLUTIONS)
     p_render.add_argument("--model", default=None)
     p_render.add_argument("--retries", type=int, default=1)
     p_render.add_argument("--api-key", default=None)
     p_render.add_argument("--no-confirm", action="store_true", help="accepted for parity with SKILL.md; no effect here")
-    _add_common(p_render)
-    p_add = sub.add_parser("add", help="add a reference image to the catalogue")
+    p_add = sub.add_parser("add", parents=[common], help="add a reference image to the catalogue")
     p_add.add_argument("--image", required=True)
     p_add.add_argument("--meta", required=True)
-    _add_common(p_add)
-    p_docs = sub.add_parser("docs", help="regenerate catalogue markdown")
-    _add_common(p_docs)
-    p_check = sub.add_parser("check", help="validate the catalogue, refs and docs")
+    sub.add_parser("docs", parents=[common], help="regenerate catalogue markdown")
+    p_check = sub.add_parser("check", parents=[common], help="validate the catalogue, refs and docs")
     p_check.add_argument("--allow-watermark", action="store_true")
-    _add_common(p_check)
     p_palette = sub.add_parser("palette", help="preview colours extracted from a CSS file")
     p_palette.add_argument("--css", required=True)
     p_palette.add_argument("--vars", default=None, help="comma-separated custom properties")
@@ -1145,7 +1154,7 @@ def cmd_list(cat: Catalogue) -> dict:
     members = [
         {
             "name": m.name,
-            "device": m.raw["device"],
+            "device": m["device"],
             "items": m.items,
             "aspect_default": m.aspect_default,
             "refs": len(m.refs),
@@ -1206,30 +1215,37 @@ def cmd_render(cat: Catalogue, args: argparse.Namespace) -> dict:
     return result
 
 
+def cmd_palette(args: argparse.Namespace) -> dict:
+    colours = extract_palette(Path(args.css), vars=_split_vars(args.vars) or None)
+    return {"status": "ok", "source": str(Path(args.css).resolve()), "colours": [c.as_dict() for c in colours], "paragraph": palette_paragraph(colours)}
+
+
+def cmd_check(cat: Catalogue, args: argparse.Namespace) -> dict:
+    violations = check(cat, allow_watermark=args.allow_watermark)
+    return {"status": "ok" if not violations else "violations", "violations": violations}
+
+
+HANDLERS = {
+    "list": lambda cat, args: cmd_list(cat),
+    "route": lambda cat, args: {"status": "ok", **route(cat, args.layout, args.style).as_dict()},
+    "refs": lambda cat, args: {
+        "status": "ok",
+        "member": args.member,
+        "layout": args.layout,
+        "refs": [str(r) for r in select_refs(cat, args.member, args.layout, user_refs=[Path(r) for r in args.ref])],
+    },
+    "prompt": prepare,
+    "render": cmd_render,
+    "add": lambda cat, args: add_ref(cat, Path(args.image), Path(args.meta)),
+    "docs": lambda cat, args: {"status": "ok", "written": [str(p) for p in render_docs(cat)]},
+    "check": cmd_check,
+}
+
+
 def dispatch(args: argparse.Namespace) -> dict:
     if args.command == "palette":
-        colours = extract_palette(Path(args.css), vars=_split_vars(args.vars) or None)
-        return {"status": "ok", "source": str(Path(args.css).resolve()), "colours": [c.as_dict() for c in colours], "paragraph": palette_paragraph(colours)}
-    cat = load_catalogue(args.skill_root)
-    if args.command == "list":
-        return cmd_list(cat)
-    if args.command == "route":
-        return {"status": "ok", **route(cat, args.layout, args.style).as_dict()}
-    if args.command == "refs":
-        refs = select_refs(cat, args.member, args.layout, user_refs=[Path(r) for r in args.ref])
-        return {"status": "ok", "member": args.member, "layout": args.layout, "refs": [str(r) for r in refs]}
-    if args.command == "prompt":
-        return prepare(cat, args)
-    if args.command == "render":
-        return cmd_render(cat, args)
-    if args.command == "docs":
-        return {"status": "ok", "written": [str(p) for p in render_docs(cat)]}
-    if args.command == "check":
-        violations = check(cat, allow_watermark=args.allow_watermark)
-        return {"status": "ok" if not violations else "error", "violations": violations}
-    if args.command == "add":
-        return add_ref(cat, Path(args.image), Path(args.meta))
-    raise UsageError(f"unknown command {args.command}")
+        return cmd_palette(args)
+    return HANDLERS[args.command](load_catalogue(args.skill_root), args)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -1239,57 +1255,54 @@ def main(argv: list[str] | None = None) -> int:
     except UsageError as err:
         print(json.dumps({"status": "error", "error": str(err)}))
         return 1
-    except NotImplementedError as err:
-        print(json.dumps({"status": "error", "error": f"not implemented: {err}"}))
-        return 1
     print(json.dumps(result))
-    if result.get("status") == "error":
-        return exit_code(result) if "attempts" in result else 1
-    return 0
+    return exit_code(result)
 
 
 # --- check ---
 
-PEP723_DEP_RE = re.compile(r'^#\s*"([^"]+)",?\s*$', re.MULTILINE)
+
+PEP723_BLOCK_RE = re.compile(r"^# /// script\n(.*?)^# ///$", re.MULTILINE | re.DOTALL)
+
+
+def pep723_dependencies(script: Path) -> list[str]:
+    """Dependencies from the script's inline metadata block, parsed as TOML per PEP 723."""
+    match = PEP723_BLOCK_RE.search(script.read_text(encoding="utf-8"))
+    if not match:
+        return []
+    toml = "\n".join(line[2:] if line.startswith("# ") else line[1:] for line in match.group(1).splitlines())
+    return tomllib.loads(toml).get("dependencies", [])
 
 
 def dependency_parity(skill_root: Path) -> list[str]:
     """The PEP 723 header and the repository pyproject.toml must list the same runtime packages."""
     script = Path(skill_root) / "scripts" / "iig3d.py"
-    if not script.exists():
-        return []
-    header = script.read_text(encoding="utf-8").split("# ///")[1]
-    inline = sorted(PEP723_DEP_RE.findall(header))
     pyproject = Path(skill_root).parents[1] / "pyproject.toml"
-    if not pyproject.exists():
+    if not script.exists() or not pyproject.exists():
         return []
-    import tomllib
-
+    inline = sorted(pep723_dependencies(script))
     declared = sorted(tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["dependencies"])
     return [] if inline == declared else [f"dependency drift: script {inline} vs pyproject {declared}"]
 
 
 def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:
     """Every catalogue rule in one pass; empty list means clean."""
+    from PIL import Image as PILImage
+
     problems: list[str] = []
-    negative_tail = cat.family["negative_list"].split(". ")[-1]
     max_edge = cat.family["ref_rules"]["max_long_edge_px"]
-    layouts = set(cat.routing)
     for layout, row in cat.routing.items():
         for name in [row["primary"], *row["alternates"]]:
             if name not in cat.members:
                 problems.append(f"routing {layout}: unknown member {name}")
     for name, member in cat.members.items():
-        problems += [f"{name}: {p}" for p in validate_member(member.raw, cat.schema)]
-        if not member.prompt_fragment.strip().endswith(negative_tail):
+        if not has_negative_list(member.prompt_fragment, cat):
             problems.append(f"{name}: prompt fragment does not end with the family negative list")
         if member.items["min"] > member.items["max"]:
             problems.append(f"{name}: items min {member.items['min']} > max {member.items['max']}")
         ids = set()
         for ref in member.refs:
             ids.add(ref["id"])
-            if not set(ref["flags"]) <= FLAG_VALUES:
-                problems.append(f"{name}/{ref['file']}: bad flags {ref['flags']}")
             if "watermark" in ref["flags"] and not allow_watermark and not ref.get("source", {}).get("user_added"):
                 problems.append(f"{name}/{ref['file']}: vendored ref carries the watermark flag")
             path = cat.ref_path(name, ref)
@@ -1297,8 +1310,6 @@ def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:
                 problems.append(f"{name}/{ref['file']}: missing on disk")
                 continue
             try:
-                from PIL import Image as PILImage
-
                 with PILImage.open(path) as image:
                     if image.format != "JPEG":
                         problems.append(f"{name}/{ref['file']}: not JPEG ({image.format})")
@@ -1310,7 +1321,7 @@ def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:
             if alt not in cat.members or alt == name:
                 problems.append(f"{name}: bad alternate {alt}")
         for layout, ref_ids in member.pairings.items():
-            if layout not in layouts and layout not in cat.members:
+            if not cat.is_layout(layout):
                 problems.append(f"{name}: pairing for unknown layout {layout}")
             for rid in ref_ids:
                 if rid not in ids:
@@ -1329,14 +1340,9 @@ def _dry_assembly(cat: Catalogue) -> list[str]:
     for name, member in cat.members.items():
         for layout in list(member.pairings) or [name]:
             try:
+                problems += [f"{name}/{layout}: {p}" for p in ref_rule_violations(pick_style_refs(cat, member, layout))]
                 refs = select_refs(cat, name, layout)
-                flags = [next(r["flags"] for r in member.refs if r["file"] == p.name) for p in refs]
-                if sum("watermark" in f for f in flags) > 1:
-                    problems.append(f"{name}/{layout}: two watermarked refs selected")
-                if refs and all("low-res" in f for f in flags):
-                    problems.append(f"{name}/{layout}: only low-res refs selected")
-                route_ = Route(name, layout, member.alternates, "check", name)
-                assemble(cat, spec, route_, cat.family["aspect_map"][member.aspect_default], refs=refs)
+                assemble(cat, spec, route(cat, layout, name), cat.family["aspect_map"][member.aspect_default], refs=refs)
             except UsageError as err:
                 problems.append(f"{name}/{layout}: {err}")
     return problems

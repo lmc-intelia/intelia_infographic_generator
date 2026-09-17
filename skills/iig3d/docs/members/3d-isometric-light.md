@@ -51,14 +51,14 @@ Member of the 3D corporate family. Isometric platforms, roads, city and factory 
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Winding platform** | Journeys, milestones | Road bending in S or Z shapes, cube milestones |
 | **Floating islands** | Current vs future, two platforms | Two islands joined by road planks |
 | **Stacked tiers** | Layered ecosystems | Three islands floating above each other |
 | **Factory floor** | Operations, logistics | Machines and vehicles as simple blocks |
 
-### Visual elements
+### Visual Elements
 
 - Every block, road and platform on the same isometric grid
 - Platform tops light, sides one shade darker, single top-left light source
@@ -66,7 +66,7 @@ Member of the 3D corporate family. Isometric platforms, roads, city and factory 
 - Faint vertical light beams linking stacked tiers
 - Roads dark with white dashes
 
-### Text placement
+### Text Placement
 
 - Title at top
 - Platform names in the studio space above each island

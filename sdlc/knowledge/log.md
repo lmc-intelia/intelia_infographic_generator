@@ -2,6 +2,9 @@
 
 ## 2026-09-17
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [conftest.py](/modules/conftest-py.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [test_refs.py](/modules/test-refs-py.md).

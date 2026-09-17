@@ -49,14 +49,14 @@ Member of the 3D corporate family. Exploded stack of translucent isometric plate
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Exploded stack** | Architecture and reference layers | Tabs alternate left and right |
 | **Single column** | Portrait, many layers | Tabs all on the right, numerals descend |
 | **Waterline** | Visible versus hidden layers | Plates above and below a line, opacity fades with depth |
 | **Floating floors** | Site or platform tiers | Plates carry small isometric blocks |
 
-### Visual elements
+### Visual Elements
 
 - Translucent glass plates, cool gradient from frosted white to royal blue
 - Thin lighter edge highlight on every plate
@@ -64,7 +64,7 @@ Member of the 3D corporate family. Exploded stack of translucent isometric plate
 - Thin navy connectors with dot terminals
 - Pure white backdrop, shadow only under the base plate
 
-### Text placement
+### Text Placement
 
 - Title top-left, two-tone
 - Layer name inside the tab beside the numeral

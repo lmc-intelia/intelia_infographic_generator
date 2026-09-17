@@ -47,14 +47,14 @@ Member of the 3D corporate family. Honeycomb of outlined hexagon cells around a 
 
 ### Variants
 
-| Variant | Focus | Visual emphasis |
+| Variant | Focus | Visual Emphasis |
 |---------|-------|-----------------|
 | **Twin columns** | Items around one platform | Two honeycomb columns flanking the hub |
 | **Ring** | Square canvas, even weight | Cells circle the hub |
 | **Hubless honeycomb** | Interlocking parts, no centre | Cells share edges edge to edge, no connectors |
 | **Grouped honeycomb** | Categories | Outer rim colour per group, cells clustered by group |
 
-### Visual elements
+### Visual Elements
 
 - Flat-topped hexagons, two or three thin concentric outline rims
 - Line icon in charcoal or the rim colour
@@ -62,7 +62,7 @@ Member of the 3D corporate family. Honeycomb of outlined hexagon cells around a 
 - Thin connectors with a right-angle bend and dot terminals
 - Cells overlap the hub edge slightly to read as one assembly
 
-### Text placement
+### Text Placement
 
 - Title in the hub, two lines maximum
 - Cell name bold caps under the icon

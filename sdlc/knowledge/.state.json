@@ -1,8 +1,8 @@
 {
-  "commit": "8f42a8df5cc43e4f5300f44b03d7007299e5d083",
-  "graph_commit": "8f42a8df5cc43e4f5300f44b03d7007299e5d083",
-  "updates": 3,
-  "ts": "2026-09-17T01:38:23Z",
+  "commit": "b1e30e35d422dc248b071a3c4a81203781d4c73c",
+  "graph_commit": "b1e30e35d422dc248b071a3c4a81203781d4c73c",
+  "updates": 1,
+  "ts": "2026-09-17T01:39:55Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -11,6 +11,9 @@
       "modules/test-catalogue-py.md"
     ],
     "tests/conftest.py": [
+      "modules/conftest-py.md"
+    ],
+    "tests/test_install.py": [
       "modules/conftest-py.md"
     ],
     "tests/test_render.py": [
@@ -46,9 +49,6 @@
     ],
     "tests/test_add.py": [
       "modules/test-add-py.md"
-    ],
-    "tests/test_install.py": [
-      "modules/test-install-py.md"
     ],
     "tests/test_skill_md.py": [
       "modules/test-skill-md-py.md"
