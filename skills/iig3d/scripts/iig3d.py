@@ -159,6 +159,46 @@ def validate_member(raw: dict, schema: dict) -> list[str]:
     return problems
 
 
+# --- routing ---
+
+UMBRELLA = "industrial-3d"
+DEFAULT_LAYOUT = "bento-grid"
+
+
+@dataclass
+class Route:
+    member: str
+    layout: str
+    alternates: list[str]
+    reason: str
+
+    def as_dict(self) -> dict:
+        return {"member": self.member, "layout": self.layout, "alternates": list(self.alternates), "reason": self.reason}
+
+
+def route(cat: Catalogue, layout: str | None, style: str | None) -> Route:
+    """Resolve (layout, style) to a family member.
+
+    Explicit 3d-* style wins; a 3d-* layout names its own member; otherwise the family routing
+    table maps a general layout to its primary member. Style omitted or `industrial-3d` both
+    mean "route by layout".
+    """
+    if style and style != UMBRELLA:
+        if style not in cat.members:
+            raise UsageError(f"unknown style {style!r}; valid: {UMBRELLA}, {', '.join(sorted(cat.members))}")
+        member = cat.member(style)
+        return Route(style, layout or style, list(member.alternates), f"explicit member style {style}")
+    if layout is None:
+        layout = DEFAULT_LAYOUT
+    if layout in cat.members:
+        member = cat.member(layout)
+        return Route(layout, layout, list(member.alternates), f"device layout {layout} names its member")
+    if layout not in cat.routing:
+        raise UsageError(f"unknown layout {layout!r}; valid: {', '.join(cat.layouts)} or a 3d-* member name")
+    row = cat.routing[layout]
+    return Route(row["primary"], layout, list(row["alternates"]), f"routing table: {layout} -> {row['primary']}")
+
+
 # --- cli ---
 
 

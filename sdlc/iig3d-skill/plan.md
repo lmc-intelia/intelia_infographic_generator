@@ -82,6 +82,7 @@ Reference images, 11 clean regenerations replacing watermarked originals (same f
 
 Tests:
 - tests/conftest.py (new)
+- tests/__init__.py (new)
 - tests/test_cli.py (new)
 - tests/test_catalogue.py (new)
 - tests/test_routing.py (new)

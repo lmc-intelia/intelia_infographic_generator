@@ -5,9 +5,9 @@ description: Graphify god node with degree 5 in tests/conftest.py
 resource: tests/conftest.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:08:00Z" }
-stale_after: "2026-10-01T01:08:00Z"
-source_commit: 75021e8e8a3aed241138c425aa2715a8f13d7ad1
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:14:51Z" }
+stale_after: "2026-10-01T01:14:51Z"
+source_commit: 3a84d3d797ba3000a67e68f9a71f1c6a3e872e74
 sources:
   - { id: conftest, resource: tests/conftest.py, last_modified: "2026-09-17T11:07:58+10:00", digest: 38d17db694246659 }
 ---

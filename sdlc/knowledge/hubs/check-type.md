@@ -1,7 +1,7 @@
 ---
 type: Hub
-title: Catalogue
-description: Graphify god node with degree 6 in skills/iig3d/scripts/iig3d.py
+title: _check_type()
+description: Graphify god node with degree 4 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: draft
@@ -13,10 +13,10 @@ sources:
 ---
 
 # Where
-- `skills/iig3d/scripts/iig3d.py:L74`
+- `skills/iig3d/scripts/iig3d.py:L125`
 
 # Module
-- [iig3d.py](/modules/iig3d-py.md)
+- [validate_member](/modules/validate-member.md)
 
 # Why it matters
-- degree 6: many modules reach this symbol; changes here have a wide blast radius
+- degree 4: many modules reach this symbol; changes here have a wide blast radius

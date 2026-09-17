@@ -1,14 +1,19 @@
 {
-  "commit": "75021e8e8a3aed241138c425aa2715a8f13d7ad1",
-  "graph_commit": "75021e8e8a3aed241138c425aa2715a8f13d7ad1",
-  "updates": 3,
-  "ts": "2026-09-17T01:08:00Z",
+  "commit": "3a84d3d797ba3000a67e68f9a71f1c6a3e872e74",
+  "graph_commit": "3a84d3d797ba3000a67e68f9a71f1c6a3e872e74",
+  "updates": 1,
+  "ts": "2026-09-17T01:14:51Z",
   "files": {
+    "tests/test_catalogue.py": [
+      "modules/test-catalogue-py.md"
+    ],
     "tests/conftest.py": [
       "modules/conftest-py.md"
     ],
     "skills/iig3d/scripts/iig3d.py": [
-      "modules/iig3d-py.md"
+      "modules/iig3d-py.md",
+      "modules/member.md",
+      "modules/validate-member.md"
     ]
   }
 }

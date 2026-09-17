@@ -4,19 +4,14 @@ title: Path
 description: Graphify god node with degree 2
 resource: graphify-out/graph.json
 tags: [hub, graphify]
-status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:08:00Z" }
-stale_after: "2026-10-01T01:08:00Z"
-source_commit: 75021e8e8a3aed241138c425aa2715a8f13d7ad1
+status: deprecated
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:14:51Z" }
+source_commit: 3a84d3d797ba3000a67e68f9a71f1c6a3e872e74
 sources:
   - { id: graph, resource: graphify-out/graph.json, last_modified: "2026-09-17T01:08:00Z", digest: 7d2db5e109300038 }
 ---
 
-# Where
-- not in the current graph
+# Deprecated
+- sources removed by commit `3a84d3d797ba`: `graphify-out/graph.json`
+- no replacement concept; kept so incoming links still resolve
 
-# Module
-- no module concept covers this node
-
-# Why it matters
-- degree 2: many modules reach this symbol; changes here have a wide blast radius

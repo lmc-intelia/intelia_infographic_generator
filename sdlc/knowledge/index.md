@@ -13,18 +13,21 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 # Modules
 * [conftest.py](modules/conftest-py.md) - Graphify community 5: tests/conftest.py
 * [iig3d.py](modules/iig3d-py.md) - Graphify community 6: skills/iig3d/scripts/iig3d.py
+* [Member](modules/member.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
+* [test_catalogue.py](modules/test-catalogue-py.md) - Graphify community 3: tests/test_catalogue.py
+* [validate_member](modules/validate-member.md) - Graphify community 10: skills/iig3d/scripts/iig3d.py
 
 # Hubs
-* [build_parser()](hubs/build-parser.md) - Graphify god node with degree 3 in skills/iig3d/scripts/iig3d.py
+* [_check_type()](hubs/check-type.md) - Graphify god node with degree 4 in skills/iig3d/scripts/iig3d.py
+* [Catalogue](hubs/catalogue.md) - Graphify god node with degree 6 in skills/iig3d/scripts/iig3d.py
 * [conftest.py](hubs/conftest-py.md) - Graphify god node with degree 5 in tests/conftest.py
-* [fixture](hubs/fixture.md) - Graphify god node with degree 3
-* [fixtures()](hubs/fixtures.md) - Graphify god node with degree 3 in tests/conftest.py
-* [iig3d()](hubs/iig3d.md) - Graphify god node with degree 3 in tests/conftest.py
-* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 3 in skills/iig3d/scripts/iig3d.py
-* [main()](hubs/main.md) - Graphify god node with degree 2 in skills/iig3d/scripts/iig3d.py
-* [Path](hubs/path.md) - Graphify god node with degree 2
-* [skill_root()](hubs/skill-root.md) - Graphify god node with degree 3 in tests/conftest.py
-* [UsageError](hubs/usageerror.md) - Graphify god node with degree 3 in skills/iig3d/scripts/iig3d.py
+* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 10 in skills/iig3d/scripts/iig3d.py
+* [load_catalogue()](hubs/load-catalogue.md) - Graphify god node with degree 7 in skills/iig3d/scripts/iig3d.py
+* [Member](hubs/member.md) - Graphify god node with degree 10 in skills/iig3d/scripts/iig3d.py
+* [parametrize](hubs/parametrize.md) - Graphify god node with degree 5
+* [test_catalogue.py](hubs/test-catalogue-py.md) - Graphify god node with degree 11 in tests/test_catalogue.py
+* [UsageError](hubs/usageerror.md) - Graphify god node with degree 5 in skills/iig3d/scripts/iig3d.py
+* [validate_member()](hubs/validate-member.md) - Graphify god node with degree 5 in skills/iig3d/scripts/iig3d.py
 
 # Lessons
 * none yet
