@@ -126,8 +126,11 @@ class Catalogue:
 
 
 def read_yaml(path: Path) -> dict:
-    with path.open(encoding="utf-8") as handle:
-        return yaml.load(handle, Loader=YAML_LOADER) or {}  # noqa: S506 # nosec B506 - SafeLoader or CSafeLoader only
+    try:
+        with path.open(encoding="utf-8") as handle:
+            return yaml.load(handle, Loader=YAML_LOADER) or {}  # noqa: S506 # nosec B506 - SafeLoader or CSafeLoader only
+    except yaml.YAMLError as err:
+        raise UsageError(f"{path}: not valid YAML: {str(err).splitlines()[0]}") from err
 
 
 def write_yaml(path: Path, data: dict) -> None:

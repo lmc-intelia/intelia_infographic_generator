@@ -13,6 +13,7 @@ Member of the 3D corporate family. Central disc, pill capsules with rimmed circl
 | `ref-03-segment-ring.jpg` | Seven-segment green to teal ring around a central disc, numbered wedges with icons and labels | low-res |
 | `ref-04-comparision.jpg` | Two-column comparison: two vertical section pillars with vertical titles, a VS diamond between them, five glossy dumbbell capsules per side (icon circle plus number circle), text outward in the whitespace, concentric rings behind | clean |
 | `ref-05-rimmed-capsule-wheel.jpg` | Eight white capsules in two columns of four around a bevelled hub, each capsule outlined in its own family colour with a thick coloured rim on the icon circle, thick blue connector stubs from the hub ring, icons in colour, hub title with a colour-dot progress strip | clean |
+| `ref-06-capsule-hierarchy.jpg` | Three-level capsule hierarchy: a chrome-rimmed central hub disc with the title, eight white pill capsules in two columns each anchored by a rimmed icon circle in red, orange, lime, teal, blue, purple, magenta and yellow, thin grey connectors with coloured dot terminals on the hub ring, and two or three small colour-filled sub-capsules fanning out from each capsule's outer end, faint orbit rings on a pale studio | clean |
 
 ## Colour palette
 
@@ -58,6 +59,7 @@ Member of the 3D corporate family. Central disc, pill capsules with rimmed circl
 | **Segment ring** | Cycles | Wedges surround the hub directly |
 | **Hub with ribbon** | Hub feeding a sequence | Serpentine ribbon of small discs |
 | **Rimmed wheel** | Peer topics, no hierarchy | Capsule outline and circle rim share the item colour, thick connector stubs on the hub |
+| **Capsule hierarchy** | Three-level structures, one platform with capabilities and sub-capabilities | Two or three small colour-filled sub-capsules fan out from each capsule's outer end |
 
 ### Visual Elements
 
@@ -90,9 +92,9 @@ Render as a polished corporate 3D infographic organised around a large bevelled 
 
 ## Recommended pairings
 
-- `hub-spoke`: refs 01, 05, 02
+- `hub-spoke`: refs 01, 05, 02, 06
 - `circular-flow`: refs 03, 01
-- `tree-branching`: refs 01, 05
+- `tree-branching`: refs 01, 05, 06
 - `venn-diagram`: refs 02, 01
 - `binary-comparison`: refs 04
 - `comparison-matrix`: refs 04, 01

@@ -25,6 +25,9 @@ layout:
   - name: Rimmed wheel
     focus: Peer topics, no hierarchy
     emphasis: Capsule outline and circle rim share the item colour, thick connector stubs on the hub
+  - name: Capsule hierarchy
+    focus: Three-level structures, one platform with capabilities and sub-capabilities
+    emphasis: Two or three small colour-filled sub-capsules fan out from each capsule's outer end
   visual_elements:
   - Hub disc bevelled with a glossy white face plate
   - 'Capsules: white pills with a thin outline, rimmed circle at the inner end'
@@ -114,17 +117,31 @@ refs:
     with a colour-dot progress strip
   flags:
   - clean
+- id: '06'
+  file: ref-06-capsule-hierarchy.jpg
+  shows: 'Three-level capsule hierarchy: a chrome-rimmed central hub disc with the title, eight white pill capsules in two
+    columns each anchored by a rimmed icon circle in red, orange, lime, teal, blue, purple, magenta and yellow, thin grey
+    connectors with coloured dot terminals on the hub ring, and two or three small colour-filled sub-capsules fanning out
+    from each capsule''s outer end, faint orbit rings on a pale studio'
+  flags:
+  - clean
+  source:
+    path: CAPSULE-hierarchy.png
+    added: '2026-09-17'
+    user_added: true
 pairings:
   hub-spoke:
   - '01'
   - '05'
   - '02'
+  - '06'
   circular-flow:
   - '03'
   - '01'
   tree-branching:
   - '01'
   - '05'
+  - '06'
   venn-diagram:
   - '02'
   - '01'
