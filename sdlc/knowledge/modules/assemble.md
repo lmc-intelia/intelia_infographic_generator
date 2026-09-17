@@ -5,9 +5,9 @@ description: "Graphify community 41: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
-stale_after: "2026-10-01T02:38:32Z"
-source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:46:21Z" }
+stale_after: "2026-10-01T02:46:21Z"
+source_commit: e5487b438d2313f75c508e756548c657f7715926
 sources:
   - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T12:38:26+10:00", digest: 4be94854c4daa288 }
 ---
@@ -29,9 +29,6 @@ sources:
 - Colours from a CSS file: custom properties in declaration order, then bare… (skills/iig3d/scripts/iig3d.py:L487)
 - palette_paragraph() (skills/iig3d/scripts/iig3d.py:L529)
 - Prompt (skills/iig3d/scripts/iig3d.py:L541)
-- slugify() (skills/iig3d/scripts/iig3d.py:L551)
-- render_layout_block() (skills/iig3d/scripts/iig3d.py:L579)
-- The member's device layout as the markdown block the Layout Guidelines slot… (skills/iig3d/scripts/iig3d.py:L580)
 - word_count() (skills/iig3d/scripts/iig3d.py:L626)
 - assemble() (skills/iig3d/scripts/iig3d.py:L630)
 - Fill templates/base-prompt.md; warnings for text budget and item range; strict… (skills/iig3d/scripts/iig3d.py:L641)
@@ -40,6 +37,7 @@ sources:
 
 # Depends on
 - [Catalogue](/modules/catalogue.md)
+- [_dry_assembly](/modules/dry-assembly.md)
 - [iig3d.py](/modules/iig3d-py.md)
 - [Member](/modules/member.md)
 - [UsageError](/modules/usageerror.md)

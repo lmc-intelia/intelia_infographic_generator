@@ -1,0 +1,16 @@
+{
+  "deployments": [
+    {
+      "env": "dev",
+      "ts": "2026-09-17",
+      "sha": "198ea368f373059363b6d01caec2fcf70afb6d9a",
+      "approver": "Linus McManamey"
+    }
+  ],
+  "rollback": {
+    "cmd": "just uninstall-local",
+    "exit": 0,
+    "tail": "removed /home/linusmcmanamey/.claude/skills/iig3d\nremoved .claude/skills/iig3d",
+    "ts": "2026-09-17"
+  }
+}

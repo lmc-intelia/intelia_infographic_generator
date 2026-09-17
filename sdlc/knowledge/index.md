@@ -11,13 +11,12 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [iig3d skill](features/iig3d-skill.md) - The 3D corporate infographic capability built on 2026-09-15 to 2026-09-17 lives inside the
 
 # Modules
+* [_dry_assembly](modules/dry-assembly.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [_new_member_record](modules/new-member-record.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py
 * [assemble](modules/assemble.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
 * [Catalogue](modules/catalogue.md) - Graphify community 35: skills/iig3d/scripts/iig3d.py
 * [iig3d.py](modules/iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
-* [load_catalogue](modules/load-catalogue.md) - Graphify community 40: skills/iig3d/scripts/iig3d.py
 * [Member](modules/member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
-* [normalise_image](modules/normalise-image.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [Path](modules/path.md) - Graphify community 36: skills/iig3d/scripts/iig3d.py
 * [test_add.py](modules/test-add-py.md) - Graphify community 34: tests/test_add.py
 * [test_aspect.py](modules/test-aspect-py.md) - Graphify community 10: tests/test_aspect.py

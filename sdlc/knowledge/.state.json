@@ -1,8 +1,8 @@
 {
-  "commit": "3e969d70bf509b62442f8aa329c97fe878575321",
-  "graph_commit": "d8412565305a2fce317384d37b5816a2bf81c8ac",
+  "commit": "e5487b438d2313f75c508e756548c657f7715926",
+  "graph_commit": "3e969d70bf509b62442f8aa329c97fe878575321",
   "updates": 1,
-  "ts": "2026-09-17T02:40:29Z",
+  "ts": "2026-09-17T02:46:21Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -25,10 +25,9 @@
       "modules/catalogue.md",
       "modules/path.md",
       "modules/usageerror.md",
-      "modules/load-catalogue.md",
       "modules/assemble.md",
       "modules/new-member-record.md",
-      "modules/normalise-image.md"
+      "modules/dry-assembly.md"
     ],
     "tests/test_aspect.py": [
       "modules/test-aspect-py.md"

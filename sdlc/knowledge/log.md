@@ -2,6 +2,16 @@
 
 ## 2026-09-17
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [UsageError](/modules/usageerror.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Update**: [_new_member_record](/modules/new-member-record.md).
+* **Update**: [_dry_assembly](/modules/dry-assembly.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_render.py](/modules/test-render-py.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [test_spec.py](/modules/test-spec-py.md).

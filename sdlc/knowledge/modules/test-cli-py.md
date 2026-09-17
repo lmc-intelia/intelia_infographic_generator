@@ -5,9 +5,9 @@ description: "Graphify community 7: tests/test_cli.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
-stale_after: "2026-10-01T02:38:32Z"
-source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
+generated: { by: sdlc/0.3.5, at: "2026-09-17T02:46:21Z" }
+stale_after: "2026-10-01T02:46:21Z"
+source_commit: e5487b438d2313f75c508e756548c657f7715926
 sources:
   - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-17T11:24:21+10:00", digest: 93b8aa057c422b47 }
 ---

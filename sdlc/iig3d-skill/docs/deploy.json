@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "iig3d skill: deploy",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "viewBox": [
+      1000,
+      640
+    ],
+    "views": [
+      {
+        "id": "rail",
+        "label": "Release rail",
+        "focus": [
+          "pr",
+          "dev",
+          "staging",
+          "production"
+        ],
+        "note": "PR #1 on feature/iig3d-skill; dev installs freely, staging asks, production needs approval and RELEASE_APPROVAL."
+      },
+      {
+        "id": "gates",
+        "label": "Gates",
+        "focus": [
+          "staging",
+          "approval",
+          "production",
+          "release"
+        ],
+        "note": "Code-owner approval closes the PR; RELEASE_APPROVAL unlocks the production gate; the pre-bash hook denies otherwise."
+      },
+      {
+        "id": "rollback",
+        "label": "Rehearsed rollback",
+        "focus": [
+          "live",
+          "rollback",
+          "restored"
+        ],
+        "note": "just uninstall-local rehearsed in a throwaway worktree (exit 0); maintain calls it on a 3-sigma breach after release."
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "main",
+      "label": "Environments"
+    },
+    {
+      "id": "gate",
+      "label": "Human gates"
+    },
+    {
+      "id": "recovery",
+      "label": "Rollback"
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal"
+    }
+  ],
+  "states": [
+    {
+      "id": "pr",
+      "type": "start",
+      "label": "PR open",
+      "sublabel": "feature -> main",
+      "lane": "main",
+      "col": 0,
+      "step": "01",
+      "tag": "#1"
+    },
+    {
+      "id": "dev",
+      "type": "success",
+      "label": "dev",
+      "sublabel": "just deploy dev",
+      "lane": "main",
+      "col": 1,
+      "step": "02",
+      "tag": "free"
+    },
+    {
+      "id": "staging",
+      "type": "waiting",
+      "label": "staging",
+      "sublabel": "just deploy staging",
+      "lane": "main",
+      "col": 2,
+      "step": "03",
+      "tag": "ask"
+    },
+    {
+      "id": "production",
+      "type": "decision",
+      "label": "production",
+      "sublabel": "merged PR",
+      "lane": "main",
+      "col": 3,
+      "step": "04",
+      "tag": "gate"
+    },
+    {
+      "id": "live",
+      "type": "success",
+      "label": "Live on main",
+      "sublabel": "npx skills add",
+      "lane": "main",
+      "col": 4,
+      "step": "05",
+      "tag": "released"
+    },
+    {
+      "id": "approval",
+      "type": "waiting",
+      "label": "Approve PR",
+      "sublabel": "code owner",
+      "lane": "gate",
+      "col": 0,
+      "tag": "human"
+    },
+    {
+      "id": "release",
+      "type": "waiting",
+      "label": "RELEASE_APPROVAL",
+      "sublabel": "release manager",
+      "lane": "gate",
+      "col": 1,
+      "tag": "env var"
+    },
+    {
+      "id": "rollback",
+      "type": "active",
+      "label": "Rolling back",
+      "sublabel": "just uninstall-local",
+      "lane": "recovery",
+      "col": 2,
+      "tag": "rehearsed"
+    },
+    {
+      "id": "restored",
+      "type": "success",
+      "label": "Previous release",
+      "sublabel": "symlinks removed",
+      "lane": "terminal",
+      "col": 2,
+      "tag": "terminal"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "pr",
+      "to": "dev",
+      "label": "check dev: allow",
+      "variant": "emphasis",
+      "labelAt": [
+        171,
+        122
+      ]
+    },
+    {
+      "from": "dev",
+      "to": "staging",
+      "label": "check staging: ask",
+      "variant": "default",
+      "labelAt": [
+        325,
+        122
+      ]
+    },
+    {
+      "from": "staging",
+      "to": "production",
+      "label": "check production",
+      "variant": "security",
+      "labelAt": [
+        479,
+        122
+      ]
+    },
+    {
+      "from": "production",
+      "to": "live",
+      "label": "record production",
+      "variant": "emphasis",
+      "labelAt": [
+        633,
+        122
+      ]
+    },
+    {
+      "from": "staging",
+      "to": "approval",
+      "variant": "security",
+      "route": "straight",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "production",
+      "to": "release",
+      "variant": "security",
+      "route": "straight",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "live",
+      "to": "rollback",
+      "label": "3-sigma breach",
+      "variant": "dashed",
+      "route": "straight",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        710,
+        202
+      ]
+    },
+    {
+      "from": "rollback",
+      "to": "restored",
+      "variant": "dashed",
+      "route": "straight",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "Summary",
+      "items": [
+        "Generated by sdlc from deploy sources @ 3f34aacb7ddc; drafts are Claude's reading of the artifact, the acceptor decides",
+        "Repo lmc-intelia/intelia_infographic_generator (private); main = baseline at plan accept; PR #1 carries the skill",
+        "deploy.command = just deploy {env}; dev and staging symlink the skill locally; production is the merged PR"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Gates and recovery",
+      "items": [
+        "Code-owner approval on PR #1; RELEASE_APPROVAL for production; pre-bash hook denies gated commands without it",
+        "Rollback just uninstall-local rehearsed in a detached worktree: exit 0, both symlinks removed, dev redeployed after"
+      ]
+    }
+  ]
+}

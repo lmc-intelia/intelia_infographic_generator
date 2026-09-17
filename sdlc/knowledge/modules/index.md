@@ -1,12 +1,11 @@
 # Modules
 
+* [_dry_assembly](dry-assembly.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [_new_member_record](new-member-record.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py
 * [assemble](assemble.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
 * [Catalogue](catalogue.md) - Graphify community 35: skills/iig3d/scripts/iig3d.py
 * [iig3d.py](iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
-* [load_catalogue](load-catalogue.md) - Graphify community 40: skills/iig3d/scripts/iig3d.py
 * [Member](member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
-* [normalise_image](normalise-image.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [Path](path.md) - Graphify community 36: skills/iig3d/scripts/iig3d.py
 * [test_add.py](test-add-py.md) - Graphify community 34: tests/test_add.py
 * [test_aspect.py](test-aspect-py.md) - Graphify community 10: tests/test_aspect.py
