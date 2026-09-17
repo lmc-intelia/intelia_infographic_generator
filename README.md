@@ -41,8 +41,12 @@ Pick one.
 **From this repository into Claude Code (any project):**
 
 ```bash
-npx skills add lmc-intelia/intelia_infographic_generator --skill iig3d
+npx skills add lmc-intelia/intelia_infographic_generator --skill iig3d --agent claude-code --copy
 ```
+
+`--copy` puts a real copy under `~/.claude/skills/iig3d`. Without it the installer keeps the
+skill in `~/.agents/skills/` and symlinks it, and on macOS Claude Code does not load skills
+through that symlink.
 
 **From a checkout, as symlinks (keeps the skill in sync with the repo):**
 
@@ -52,7 +56,9 @@ cd intelia_infographic_generator
 just install-local      # ~/.claude/skills/iig3d and .claude/skills/iig3d -> skills/iig3d
 ```
 
-`just uninstall-local` removes only those two symlinks.
+`just uninstall-local` removes only those two symlinks. On macOS use `just install-copy`
+instead: it copies `skills/iig3d` into `~/.claude/skills/iig3d` (rerun after pulling changes)
+because Claude Code on macOS does not load a skill through a symlink there.
 
 **Standalone, no Claude Code:** copy `skills/iig3d/` anywhere and call
 `uv run <that dir>/scripts/iig3d.py ...`.
