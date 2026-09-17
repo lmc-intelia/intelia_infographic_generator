@@ -5,9 +5,9 @@ description: Graphify god node with degree 10 in tests/test_routing.py
 resource: tests/test_routing.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:17:28Z" }
-stale_after: "2026-10-01T01:17:28Z"
-source_commit: 8d4b265e69db0f1a36394836b45de401311e492f
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
+stale_after: "2026-10-01T01:19:06Z"
+source_commit: c41d6d6a630903c77274cef3967923ec721af525
 sources:
   - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-17T11:15:25+10:00", digest: 53a24b265e288942 }
 ---

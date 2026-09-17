@@ -5,11 +5,11 @@ description: "Graphify community 11: tests/test_spec.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:16:19Z" }
-stale_after: "2026-10-01T01:16:19Z"
-source_commit: b5f9d93b2d5e408ed343acec987b36518cafb135
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
+stale_after: "2026-10-01T01:19:06Z"
+source_commit: c41d6d6a630903c77274cef3967923ec721af525
 sources:
-  - { id: test_spec, resource: tests/test_spec.py, last_modified: "2026-09-17T11:16:16+10:00", digest: 9986126757f36467 }
+  - { id: test_spec, resource: tests/test_spec.py, last_modified: "2026-09-17T11:16:28+10:00", digest: 9986126757f36467 }
 ---
 
 # Files

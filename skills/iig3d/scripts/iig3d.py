@@ -173,9 +173,16 @@ class Route:
     layout: str
     alternates: list[str]
     reason: str
+    style: str = UMBRELLA
 
     def as_dict(self) -> dict:
-        return {"member": self.member, "layout": self.layout, "alternates": list(self.alternates), "reason": self.reason}
+        return {
+            "member": self.member,
+            "layout": self.layout,
+            "style": self.style,
+            "alternates": list(self.alternates),
+            "reason": self.reason,
+        }
 
 
 def route(cat: Catalogue, layout: str | None, style: str | None) -> Route:
@@ -189,7 +196,7 @@ def route(cat: Catalogue, layout: str | None, style: str | None) -> Route:
         if style not in cat.members:
             raise UsageError(f"unknown style {style!r}; valid: {UMBRELLA}, {', '.join(sorted(cat.members))}")
         member = cat.member(style)
-        return Route(style, layout or style, list(member.alternates), f"explicit member style {style}")
+        return Route(style, layout or style, list(member.alternates), f"explicit member style {style}", style)
     if layout is None:
         layout = DEFAULT_LAYOUT
     if layout in cat.members:
@@ -502,6 +509,162 @@ def extract_palette(css_path: Path, vars: list[str] | None = None) -> list[Colou
 def palette_paragraph(colours: list[Colour]) -> str:
     listing = ", ".join(f"{c.name} {c.hex}" for c in colours)
     return f"Project palette override: cycle item colours in this order: {listing}; never repeat a colour on adjacent items; keep the family backdrop, neutrals, shadows and typography unchanged."
+
+
+# --- prompt ---
+
+SECRET_RE = re.compile(r"AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9_-]{20,}|(?<![A-Za-z0-9])[A-Za-z0-9_-]{40,}(?![A-Za-z0-9])")
+TEMPLATE_PATH = "templates/base-prompt.md"
+
+
+@dataclass
+class Prompt:
+    text: str
+    frontmatter: dict
+    warnings: list[str] = field(default_factory=list)
+
+
+def redact(text: str) -> str:
+    return SECRET_RE.sub("[redacted]", text)
+
+
+def slugify(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+def _bullets(lines: list[str]) -> str:
+    return "\n".join(f"- {line}" for line in lines)
+
+
+def render_layout_block(member: Member) -> str:
+    """The member's device layout as the markdown block the Layout Guidelines slot expects."""
+    layout = member.raw["layout"]
+    variants = "\n".join(f"| **{v['name']}** | {v['focus']} | {v['emphasis']} |" for v in layout["variants"])
+    return "\n\n".join(
+        [
+            f"# {member.name}",
+            member.raw["device"] + ".",
+            "## Structure\n\n" + _bullets(layout["structure"]),
+            "## Variants\n\n| Variant | Focus | Visual Emphasis |\n|---------|-------|-----------------|\n" + variants,
+            "## Best For\n\n" + _bullets(member.raw["best_for"]),
+            "## Visual Elements\n\n" + _bullets(layout["visual_elements"]),
+            "## Text Placement\n\n" + _bullets(layout["text_placement"]),
+        ]
+    )
+
+
+def content_block(spec: Spec) -> str:
+    lines = [f'Title: "{redact(spec.title)}"']
+    if spec.subtitle:
+        lines.append(f'Subtitle: "{redact(spec.subtitle)}"')
+    lines += ["", "Items (in order):"]
+    for index, item in enumerate(spec.items, 1):
+        entry = f'{index}. "{redact(item.label)}"'
+        if item.detail:
+            entry += f" - {redact(item.detail)}"
+        if item.value:
+            entry += f" ({redact(item.value)})"
+        if item.icon:
+            entry += f" [icon: {item.icon}]"
+        lines.append(entry)
+    if spec.stats:
+        lines += ["", "Stats:"]
+        for stat in spec.stats:
+            caption = stat.get("caption")
+            lines.append(f'- "{redact(str(stat.get("value", "")))}"' + (f" - {redact(str(caption))}" if caption else ""))
+    if spec.notes:
+        lines += ["", f"Design notes: {redact(spec.notes)}"]
+    return "\n".join(lines)
+
+
+def text_labels(spec: Spec) -> list[str]:
+    labels = [spec.title]
+    if spec.subtitle:
+        labels.append(spec.subtitle)
+    for index, item in enumerate(spec.items, 1):
+        labels.append(f"{index:02d} {item.label}")
+        if item.value:
+            labels.append(item.value)
+    labels += [str(stat.get("value", "")) for stat in spec.stats if stat.get("value")]
+    return [redact(label) for label in labels]
+
+
+def word_count(labels: list[str]) -> int:
+    return sum(len(label.split()) for label in labels)
+
+
+def assemble(
+    cat: Catalogue,
+    spec: Spec,
+    route_: Route,
+    ratio: str,
+    refs: list[Path] | None = None,
+    palette: list[Colour] | None = None,
+    palette_source: Path | None = None,
+    strict: bool = False,
+    aspect_snapped_from: str | None = None,
+) -> Prompt:
+    """Fill templates/base-prompt.md; warnings for text budget and item range; strict raises."""
+    member = cat.member(route_.member)
+    template = (cat.root / TEMPLATE_PATH).read_text(encoding="utf-8")
+    negative = cat.family["negative_list"]
+    style_block = member.prompt_fragment.strip()
+    if not style_block.endswith(negative.split(". ")[-1]):
+        style_block += "\n\n" + negative
+    if palette:
+        style_block += "\n\n" + palette_paragraph(palette)
+    labels = text_labels(spec)
+    slots = {
+        "{{LAYOUT}}": route_.layout,
+        "{{STYLE}}": route_.style,
+        "{{ASPECT_RATIO}}": ratio,
+        "{{LANGUAGE}}": spec.language,
+        "{{LAYOUT_GUIDELINES}}": render_layout_block(member),
+        "{{STYLE_GUIDELINES}}": style_block,
+        "{{CONTENT}}": content_block(spec),
+        "{{TEXT_LABELS}}": "\n".join(f'"{label}"' for label in labels),
+    }
+    text = template
+    for slot, value in slots.items():
+        text = text.replace(slot, value)
+    warnings: list[str] = []
+    orient = orientation(cat, ratio)
+    budget = cat.family["text_budget"][orient]
+    words = word_count(labels)
+    if words > budget:
+        warnings.append(f"on-image text is {words} words, over the {budget}-word budget for {orient} ({ratio}); shorten labels or split into two images")
+    lo, hi = member.items["min"], member.items["max"]
+    count = len(spec.items)
+    if not lo <= count <= hi:
+        hint = f"; consider {route_.alternates[0]}" if route_.alternates else ""
+        warnings.append(f"{count} items is outside the {member.name} range {lo} to {hi}{hint}")
+    if aspect_snapped_from:
+        warnings.append(f"aspect {aspect_snapped_from} snapped to {ratio}")
+    if strict and warnings:
+        raise UsageError("strict: " + "; ".join(warnings))
+    frontmatter: dict = {
+        "layout": route_.layout,
+        "style": route_.style,
+        "style_member": member.name,
+        "aspect": ratio,
+        "language": spec.language,
+        "references": [{"ref_id": f"{index:02d}", "filename": Path(ref).name, "usage": "direct"} for index, ref in enumerate(refs or [], 1)],
+    }
+    if palette:
+        frontmatter["palette"] = {"source": str(palette_source), "colours": [c.as_dict() for c in palette]}
+    return Prompt(text=text.rstrip() + "\n", frontmatter=frontmatter, warnings=warnings)
+
+
+def write_prompt(out_dir: Path, prompt: Prompt, slug: str) -> Path:
+    """prompts/NN-infographic-<slug>.md with NN the next free number; never overwrites."""
+    prompts_dir = Path(out_dir) / "prompts"
+    prompts_dir.mkdir(parents=True, exist_ok=True)
+    taken = [int(m.group(1)) for f in prompts_dir.iterdir() if (m := re.match(r"^(\d{2})-", f.name))]
+    number = max(taken, default=0) + 1
+    path = prompts_dir / f"{number:02d}-infographic-{slug}.md"
+    header = yaml.safe_dump(prompt.frontmatter, sort_keys=False, allow_unicode=True).rstrip()
+    path.write_text(f"---\n{header}\n---\n{prompt.text}", encoding="utf-8")
+    return path
 
 
 # --- cli ---

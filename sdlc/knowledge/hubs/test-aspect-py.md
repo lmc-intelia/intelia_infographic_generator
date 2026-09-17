@@ -4,19 +4,14 @@ title: test_aspect.py
 description: Graphify god node with degree 8 in tests/test_aspect.py
 resource: tests/test_aspect.py
 tags: [hub, graphify]
-status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:16:19Z" }
-stale_after: "2026-10-01T01:16:19Z"
-source_commit: b5f9d93b2d5e408ed343acec987b36518cafb135
+status: deprecated
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
+source_commit: c41d6d6a630903c77274cef3967923ec721af525
 sources:
   - { id: test_aspect, resource: tests/test_aspect.py, last_modified: "2026-09-17T11:16:16+10:00", digest: 3e9ae8c1fec4540b }
 ---
 
-# Where
-- `tests/test_aspect.py:L1`
+# Deprecated
+- sources removed by commit `c41d6d6a6309`: `tests/test_aspect.py`
+- replacement: [test_aspect.py](/modules/test-aspect-py.md)
 
-# Module
-- [test_aspect.py](/modules/test-aspect-py.md)
-
-# Why it matters
-- degree 8: many modules reach this symbol; changes here have a wide blast radius

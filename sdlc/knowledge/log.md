@@ -1,6 +1,18 @@
 # Knowledge Update Log
 
 ## 2026-09-17
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Creation**: [test_palette.py](/modules/test-palette-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Member](/hubs/member.md).
+* **Creation**: [test_palette.py](/hubs/test-palette-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [load_spec()](/hubs/load-spec.md).
+* **Update**: [select_refs()](/hubs/select-refs.md).
+* **Deprecation**: [test_aspect.py](/hubs/test-aspect-py.md).
 * **Update**: [Member](/modules/member.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [test_refs.py](/modules/test-refs-py.md).
