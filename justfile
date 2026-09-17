@@ -28,3 +28,30 @@ lint:
 # run the test suite
 test:
     @uv run pytest -q
+
+# symlink skills/iig3d into ~/.claude/skills and .claude/skills (refuses to replace a real directory)
+install-local:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    src="$(pwd)/skills/iig3d"
+    for target in "$HOME/.claude/skills/iig3d" ".claude/skills/iig3d"; do
+        if [ -e "$target" ] && [ ! -L "$target" ]; then
+            echo "refusing: $target is a real directory" >&2; exit 1
+        fi
+    done
+    mkdir -p "$HOME/.claude/skills" .claude/skills
+    ln -sfn "$src" "$HOME/.claude/skills/iig3d"
+    ln -sfn "../../skills/iig3d" ".claude/skills/iig3d"
+    echo "linked $HOME/.claude/skills/iig3d and .claude/skills/iig3d -> $src"
+
+# remove only the symlinks install-local made
+uninstall-local:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for target in "$HOME/.claude/skills/iig3d" ".claude/skills/iig3d"; do
+        if [ -L "$target" ]; then rm "$target"; echo "removed $target"; fi
+    done
+
+# validate the iig3d catalogue, refs and generated docs
+iig3d-check:
+    @uv run skills/iig3d/scripts/iig3d.py check

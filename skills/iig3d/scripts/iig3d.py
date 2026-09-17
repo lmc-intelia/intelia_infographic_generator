@@ -1248,8 +1248,98 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:  # extended in the check step
-    return stale_docs(cat)
+# --- check ---
+
+PEP723_DEP_RE = re.compile(r'^#\s*"([^"]+)",?\s*$', re.MULTILINE)
+
+
+def dependency_parity(skill_root: Path) -> list[str]:
+    """The PEP 723 header and the repository pyproject.toml must list the same runtime packages."""
+    script = Path(skill_root) / "scripts" / "iig3d.py"
+    if not script.exists():
+        return []
+    header = script.read_text(encoding="utf-8").split("# ///")[1]
+    inline = sorted(PEP723_DEP_RE.findall(header))
+    pyproject = Path(skill_root).parents[1] / "pyproject.toml"
+    if not pyproject.exists():
+        return []
+    import tomllib
+
+    declared = sorted(tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["dependencies"])
+    return [] if inline == declared else [f"dependency drift: script {inline} vs pyproject {declared}"]
+
+
+def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:
+    """Every catalogue rule in one pass; empty list means clean."""
+    problems: list[str] = []
+    negative_tail = cat.family["negative_list"].split(". ")[-1]
+    max_edge = cat.family["ref_rules"]["max_long_edge_px"]
+    layouts = set(cat.routing)
+    for layout, row in cat.routing.items():
+        for name in [row["primary"], *row["alternates"]]:
+            if name not in cat.members:
+                problems.append(f"routing {layout}: unknown member {name}")
+    for name, member in cat.members.items():
+        problems += [f"{name}: {p}" for p in validate_member(member.raw, cat.schema)]
+        if not member.prompt_fragment.strip().endswith(negative_tail):
+            problems.append(f"{name}: prompt fragment does not end with the family negative list")
+        if member.items["min"] > member.items["max"]:
+            problems.append(f"{name}: items min {member.items['min']} > max {member.items['max']}")
+        ids = set()
+        for ref in member.refs:
+            ids.add(ref["id"])
+            if not set(ref["flags"]) <= FLAG_VALUES:
+                problems.append(f"{name}/{ref['file']}: bad flags {ref['flags']}")
+            if "watermark" in ref["flags"] and not allow_watermark and not ref.get("source", {}).get("user_added"):
+                problems.append(f"{name}/{ref['file']}: vendored ref carries the watermark flag")
+            path = cat.ref_path(name, ref)
+            if not path.is_file():
+                problems.append(f"{name}/{ref['file']}: missing on disk")
+                continue
+            try:
+                from PIL import Image as PILImage
+
+                with PILImage.open(path) as image:
+                    if image.format != "JPEG":
+                        problems.append(f"{name}/{ref['file']}: not JPEG ({image.format})")
+                    if max(image.size) > max_edge:
+                        problems.append(f"{name}/{ref['file']}: long edge {max(image.size)} px over {max_edge}")
+            except OSError as err:
+                problems.append(f"{name}/{ref['file']}: unreadable ({err})")
+        for alt in member.alternates:
+            if alt not in cat.members or alt == name:
+                problems.append(f"{name}: bad alternate {alt}")
+        for layout, ref_ids in member.pairings.items():
+            if layout not in layouts and layout not in cat.members:
+                problems.append(f"{name}: pairing for unknown layout {layout}")
+            for rid in ref_ids:
+                if rid not in ids:
+                    problems.append(f"{name}: pairing {layout} names unknown ref {rid}")
+    problems += stale_docs(cat)
+    problems += dependency_parity(cat.root)
+    if not problems:
+        problems += _dry_assembly(cat)
+    return problems
+
+
+def _dry_assembly(cat: Catalogue) -> list[str]:
+    """Assemble a prompt for every member x pairing layout; report ref-rule violations."""
+    problems: list[str] = []
+    spec = Spec(title="CHECK", items=[Item(label=f"ITEM {i}") for i in range(1, 6)])
+    for name, member in cat.members.items():
+        for layout in list(member.pairings) or [name]:
+            try:
+                refs = select_refs(cat, name, layout)
+                flags = [next(r["flags"] for r in member.refs if r["file"] == p.name) for p in refs]
+                if sum("watermark" in f for f in flags) > 1:
+                    problems.append(f"{name}/{layout}: two watermarked refs selected")
+                if refs and all("low-res" in f for f in flags):
+                    problems.append(f"{name}/{layout}: only low-res refs selected")
+                route_ = Route(name, layout, member.alternates, "check", name)
+                assemble(cat, spec, route_, cat.family["aspect_map"][member.aspect_default], refs=refs)
+            except UsageError as err:
+                problems.append(f"{name}/{layout}: {err}")
+    return problems
 
 
 if __name__ == "__main__":

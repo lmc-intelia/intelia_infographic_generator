@@ -5,11 +5,11 @@ description: "Graphify community 9: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:25:36Z" }
-stale_after: "2026-10-01T01:25:36Z"
-source_commit: 68f1d44b8bd8981182c204343218b1eb73026578
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:27:40Z" }
+stale_after: "2026-10-01T01:27:40Z"
+source_commit: c0590ea9336d0d2c605441e9f556b3b3bd222024
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:25:30+10:00", digest: 22139f0e42a3c5f4 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:27:35+10:00", digest: 5f6bbb8037c83411 }
 ---
 
 # Files
@@ -17,18 +17,22 @@ sources:
 
 # Symbols
 - iig3d.py (skills/iig3d/scripts/iig3d.py:L1)
-- _split_vars() (skills/iig3d/scripts/iig3d.py:L1008)
-- cmd_list() (skills/iig3d/scripts/iig3d.py:L1012)
+- member_markdown() (skills/iig3d/scripts/iig3d.py:L1003)
 - read_yaml() (skills/iig3d/scripts/iig3d.py:L102)
-- prepare() (skills/iig3d/scripts/iig3d.py:L1028)
-- Shared front half of prompt and render: spec, route, aspect, refs, palette,… (skills/iig3d/scripts/iig3d.py:L1029)
-- cmd_render() (skills/iig3d/scripts/iig3d.py:L1057)
+- catalogue_markdown() (skills/iig3d/scripts/iig3d.py:L1034)
+- expected_docs() (skills/iig3d/scripts/iig3d.py:L1053)
+- render_docs() (skills/iig3d/scripts/iig3d.py:L1060)
+- stale_docs() (skills/iig3d/scripts/iig3d.py:L1069)
 - write_yaml() (skills/iig3d/scripts/iig3d.py:L107)
-- dispatch() (skills/iig3d/scripts/iig3d.py:L1077)
-- main() (skills/iig3d/scripts/iig3d.py:L1103)
-- check() (skills/iig3d/scripts/iig3d.py:L1119)
-- add_ref() (skills/iig3d/scripts/iig3d.py:L1123)
+- `docs stale: <path>` for every generated file that is missing or differs from… (skills/iig3d/scripts/iig3d.py:L1070)
 - load_catalogue() (skills/iig3d/scripts/iig3d.py:L113)
+- _split_vars() (skills/iig3d/scripts/iig3d.py:L1140)
+- cmd_list() (skills/iig3d/scripts/iig3d.py:L1144)
+- prepare() (skills/iig3d/scripts/iig3d.py:L1160)
+- Shared front half of prompt and render: spec, route, aspect, refs, palette,… (skills/iig3d/scripts/iig3d.py:L1161)
+- cmd_render() (skills/iig3d/scripts/iig3d.py:L1189)
+- dispatch() (skills/iig3d/scripts/iig3d.py:L1209)
+- check() (skills/iig3d/scripts/iig3d.py:L1251)
 - _check_type() (skills/iig3d/scripts/iig3d.py:L129)
 - Walk one schema node: a bare type name or {type, keys|items|values}. (skills/iig3d/scripts/iig3d.py:L130)
 - validate_member() (skills/iig3d/scripts/iig3d.py:L155)
@@ -85,7 +89,6 @@ sources:
 - .pairings() (skills/iig3d/scripts/iig3d.py:L69)
 - api_key() (skills/iig3d/scripts/iig3d.py:L698)
 - (key, source). Order: --api-key, ./.env in the calling directory, process… (skills/iig3d/scripts/iig3d.py:L699)
-- exit_code() (skills/iig3d/scripts/iig3d.py:L722)
 - load_prompt_text() (skills/iig3d/scripts/iig3d.py:L726)
 - .alternates() (skills/iig3d/scripts/iig3d.py:L73)
 - backup_existing() (skills/iig3d/scripts/iig3d.py:L735)
@@ -94,16 +97,16 @@ sources:
 - Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.… (skills/iig3d/scripts/iig3d.py:L763)
 - Catalogue (skills/iig3d/scripts/iig3d.py:L78)
 - .routing() (skills/iig3d/scripts/iig3d.py:L85)
-- _table() (skills/iig3d/scripts/iig3d.py:L864)
-- member_markdown() (skills/iig3d/scripts/iig3d.py:L871)
+- normalise_image() (skills/iig3d/scripts/iig3d.py:L865)
+- Copy `src` to `dest` as an RGB JPEG no larger than `max_edge` on its long side. (skills/iig3d/scripts/iig3d.py:L866)
+- _load_meta() (skills/iig3d/scripts/iig3d.py:L880)
 - .layouts() (skills/iig3d/scripts/iig3d.py:L89)
-- catalogue_markdown() (skills/iig3d/scripts/iig3d.py:L902)
+- _new_member_record() (skills/iig3d/scripts/iig3d.py:L907)
 - .member() (skills/iig3d/scripts/iig3d.py:L92)
-- expected_docs() (skills/iig3d/scripts/iig3d.py:L921)
-- render_docs() (skills/iig3d/scripts/iig3d.py:L928)
-- stale_docs() (skills/iig3d/scripts/iig3d.py:L937)
-- `docs stale: <path>` for every generated file that is missing or differs from… (skills/iig3d/scripts/iig3d.py:L938)
+- add_ref() (skills/iig3d/scripts/iig3d.py:L928)
+- Normalise an image into refs/<member>/, register it in the member YAML (or… (skills/iig3d/scripts/iig3d.py:L929)
 - .ref_path() (skills/iig3d/scripts/iig3d.py:L98)
+- _table() (skills/iig3d/scripts/iig3d.py:L996)
 
 # Depends on
 - [build_parser](/modules/build-parser.md)

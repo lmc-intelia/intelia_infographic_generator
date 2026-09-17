@@ -2,6 +2,19 @@
 
 ## 2026-09-17
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [build_parser](/modules/build-parser.md).
+* **Creation**: [test_add.py](/modules/test-add-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Creation**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [dispatch()](/hubs/dispatch.md).
+* **Update**: [prepare()](/hubs/prepare.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Deprecation**: [test_cli.py](/hubs/test-cli-py.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [test_prompt.py](/modules/test-prompt-py.md).

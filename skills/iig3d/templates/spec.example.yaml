@@ -1,0 +1,24 @@
+# Content spec for `iig3d.py prompt|render --spec <this>`; Claude writes one of these per infographic.
+title: OPENWIKI REFRESH PIPELINE
+subtitle: Five steps from commit to published wiki
+language: en                      # text language for all labels
+layout: linear-progression        # optional: a general layout or a 3d-* device name
+style: industrial-3d              # optional: industrial-3d (route by layout) or a 3d-* member
+aspect: landscape                 # optional: landscape | portrait | square | W:H (snapped to the Gemini set)
+# palette_css: ./brand.css        # optional: brand colours replace the item colours only
+# palette_vars: [--brand-primary, --brand-secondary]
+items:                            # one per step, tier, capsule, pill, cell, plate or cylinder
+  - label: COMMIT
+    detail: Developer pushes to main
+  - label: TRIGGER
+    detail: Scheduled GitHub Action starts
+  - label: ANALYSE
+    detail: Gemini reads changed source files
+  - label: GENERATE
+    detail: Wiki pages regenerated
+  - label: PUBLISH
+    detail: Pages committed to openwiki/
+# stats:
+#   - {value: "73%", caption: pages refreshed per run}
+# notes: keep the world map faint
+# refs: [./my-brand-reference.jpg]

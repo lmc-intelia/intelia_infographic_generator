@@ -62,7 +62,7 @@ def test_user_refs_appended_and_capped_at_six(iig3d, tmp_catalogue, tmp_path):
     assert len(picked) == 6
     assert picked[: len(base)] == base
     assert picked[len(base) :] == user[: 6 - len(base)]
-    assert names(base) == ["ref-05-rimmed-capsule-wheel.jpg", "ref-01-capsule-hub.jpg"]
+    assert names(base) == ["ref-01-capsule-hub.jpg", "ref-05-rimmed-capsule-wheel.jpg", "ref-02-central-disc-ribbon.jpg"]
 
 
 def test_missing_ref_file_raises(iig3d, tmp_catalogue):

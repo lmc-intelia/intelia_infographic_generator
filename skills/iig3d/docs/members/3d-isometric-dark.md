@@ -9,8 +9,8 @@ Member of the 3D corporate family. Isometric ribbon with 3D charts and glass tow
 | Ref | Shows | Flags |
 |-----|-------|-------|
 | `ref-01-ribbon-dataviz.jpg` | Tall portrait: a light blue isometric ribbon snakes down a navy field carrying 3D bar charts, stacked layer bars, a 3D printer model and an exploded ring chart, angled labels in white | clean |
-| `ref-02-isometric-city.jpg` | Isometric city blocks in teal, orange and magenta on a navy ground, street names on the roads, numbered circle markers with leader lines to labels | watermark |
-| `ref-03-glass-bar-towers.jpg` | Five striped glass 3D bar towers in gradient colours with dot-terminal leaders to hexagon-tabbed label bars on the right, flattened onto navy | watermark |
+| `ref-02-isometric-city.jpg` | Deep navy ground with a light steel-blue isometric ribbon stepping down the page, one glowing 3D prop module per stage in teal, orange, magenta, blue and lime, numbered circle markers with thin leader lines to white headings and grey descriptions, faint scattered cubes | clean |
+| `ref-03-glass-bar-towers.jpg` | Five glowing 3D modules on a steel-blue isometric ribbon crossing a navy field: stacked teal slabs, orange cubes, a magenta striped glass tower with a sphere cap, a blue exploded ring and lime hexagon prisms, each with a dot-terminal leader to a coloured label bar and thin line icon | clean |
 
 ## Colour palette
 

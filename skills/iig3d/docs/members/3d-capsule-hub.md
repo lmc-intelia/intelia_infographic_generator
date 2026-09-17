@@ -8,8 +8,8 @@ Member of the 3D corporate family. Central disc, pill capsules with rimmed circl
 
 | Ref | Shows | Flags |
 |-----|-------|-------|
-| `ref-01-capsule-hub.jpg` | Central white disc, eight outlined pill capsules in two columns, each with a rimmed circle and icon, thin connectors with coloured dot terminals on the hub | watermark |
-| `ref-02-central-disc-ribbon.jpg` | Large orange-to-magenta rimmed hub disc with dashed orbit lines, connectors to a vertical serpentine ribbon of five icon discs | watermark |
+| `ref-01-capsule-hub.jpg` | Large bevelled white central disc holding the title, five outlined pill capsules in two columns each anchored by a rimmed icon circle in red, orange, lime, teal and blue, thin grey connectors with coloured dot terminals on the hub ring, white studio | clean |
+| `ref-02-central-disc-ribbon.jpg` | Large bevelled white hub disc with the title, faint orbit rings behind it, five pill capsules fanning down the right side each anchored by a rimmed icon circle in red, orange, lime, teal and blue, grey connector stubs with coloured dot terminals on the hub rim, pale studio | clean |
 | `ref-03-segment-ring.jpg` | Seven-segment green to teal ring around a central disc, numbered wedges with icons and labels | low-res |
 | `ref-04-comparision.jpg` | Two-column comparison: two vertical section pillars with vertical titles, a VS diamond between them, five glossy dumbbell capsules per side (icon circle plus number circle), text outward in the whitespace, concentric rings behind | clean |
 | `ref-05-rimmed-capsule-wheel.jpg` | Eight white capsules in two columns of four around a bevelled hub, each capsule outlined in its own family colour with a thick coloured rim on the icon circle, thick blue connector stubs from the hub ring, icons in colour, hub title with a colour-dot progress strip | clean |

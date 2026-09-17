@@ -5,13 +5,13 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:25:36Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:27:40Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
-stale_after: "2026-10-01T01:25:36Z"
-source_commit: 68f1d44b8bd8981182c204343218b1eb73026578
+stale_after: "2026-10-01T01:27:40Z"
+source_commit: c0590ea9336d0d2c605441e9f556b3b3bd222024
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T11:13:02+10:00", digest: 4948ad7b23ac3a24 }
@@ -228,7 +228,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/fixtures/sample-prompt-industrial-3d.md`
 - `tests/fixtures/spec-pipeline.yaml`
 - `tests/fixtures/wide-3000px.jpg`
-- `tests/test_add.py`
+- `tests/test_add.py` in [test_add.py](/modules/test-add-py.md)
 - `tests/test_aspect.py` in [test_aspect.py](/modules/test-aspect-py.md)
 - `tests/test_catalogue.py` in [test_catalogue.py](/modules/test-catalogue-py.md)
 - `tests/test_cli.py` in [test_cli.py](/modules/test-cli-py.md)

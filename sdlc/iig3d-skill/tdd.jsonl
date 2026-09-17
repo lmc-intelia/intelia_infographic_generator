@@ -22,3 +22,7 @@
 {"phase": "green", "step": "docs", "exit": 0, "ts": "2026-09-17"}
 {"phase": "red", "step": "add", "exit": 1, "ts": "2026-09-17"}
 {"phase": "green", "step": "add", "exit": 0, "ts": "2026-09-17"}
+{"phase": "red", "step": "check-and-refs", "exit": 1, "ts": "2026-09-17"}
+{"phase": "red", "step": "skill-md", "exit": 1, "ts": "2026-09-17"}
+{"phase": "red", "step": "install", "exit": 1, "ts": "2026-09-17"}
+{"phase": "green", "step": "check-and-refs", "exit": 0, "ts": "2026-09-17"}

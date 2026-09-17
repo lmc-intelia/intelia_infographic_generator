@@ -9,7 +9,7 @@ Member of the 3D corporate family. Tilted glossy bullseye, tapered beams to numb
 | Ref | Shows | Flags |
 |-----|-------|-------|
 | `ref-01-target-four-pills.jpg` | Red bullseye disc on the left, four red pills stacked on the right, each with a numbered white circle at the inner end, tapered red beams converging on the bullseye, soft shadow under the disc | clean |
-| `ref-02-target-six-pills-symmetric.jpg` | Red bullseye disc centred, three pills either side (01 to 03 left, 04 to 06 right), numbered circles face the target, beams fan out symmetrically | watermark |
+| `ref-02-target-six-pills-symmetric.jpg` | Large glossy red bullseye target tilted toward the viewer on the left, five tapered red beams from the bullseye to rounded red pills stacked on the right, each pill anchored by a white rimmed circle with a red numeral, bold white caps titles, pale grey studio with a soft shadow | clean |
 
 ## Colour palette
 

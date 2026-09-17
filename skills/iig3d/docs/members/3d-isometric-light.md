@@ -9,7 +9,7 @@ Member of the 3D corporate family. Isometric platforms, roads, city and factory 
 | Ref | Shows | Flags |
 |-----|-------|-------|
 | `ref-01-smart-city-platform.jpg` | Portrait winding isometric platform with suburb, business towers, industrial plant and green energy zones, leader lines to four labelled sections | clean |
-| `ref-02-road-timeline-cubes.jpg` | Isometric zig-zag road with six coloured cube milestones, year labels and icons, alternating text blocks | watermark, low-res |
+| `ref-02-road-timeline-cubes.jpg` | Isometric S-shaped road with dashed centre line winding past five coloured cube platforms in teal, orange, blue, lime and magenta, each carrying a simple scene (monitor, servers and gear, cloud and documents, open book, globe), leader lines to numbered labels above and below, pale lavender studio | clean |
 | `ref-03-factory-workflow-scene.jpg` | Isometric factory floor on a rounded white card: machines on pedestals, dashed workflow paths, forklifts, trucks and workers in orange and blue | clean |
 | `ref-04-stacked-platform-tiers.jpg` | Three isometric island tiers floating vertically, each a different scene, leader lines to labels on both sides | clean |
 
