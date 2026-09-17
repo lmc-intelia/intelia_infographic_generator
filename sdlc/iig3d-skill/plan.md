@@ -140,7 +140,7 @@ Conventions for every step: write the test file first; `sdlc build red <step>` m
 - `uv run skills/iig3d/scripts/iig3d.py palette --css tests/fixtures/brand.css` → JSON `colours` list of 8 entries, no greys.
 - `cd /tmp && mkdir -p nokey && cd nokey && uv run <abs>/skills/iig3d/scripts/iig3d.py render --spec <abs>/skills/iig3d/templates/spec.example.yaml --out-dir out --dry-run` → exit 1, stdout JSON `error` = `no API key: expected GEMINI_API_KEY in /tmp/nokey/.env or the environment`.
 - With `./.env` present: `uv run skills/iig3d/scripts/iig3d.py render --spec skills/iig3d/templates/spec.example.yaml --out-dir infographic/smoke --dry-run` → `{"status":"dry-run",...,"prompt_file":".../prompts/01-infographic-openwiki-refresh-pipeline.md"}` and the prompt file exists; without `--dry-run` → `status: ok` and `infographic/smoke/infographic.png` exists.
-- `ls skills/iig3d/refs/*/ | wc -l` → 30 JPEG files; `grep -rl watermark skills/iig3d/catalogue/members/` → no output.
+- `ls skills/iig3d/refs/*/ | wc -l` → 30 JPEG files; `grep -rn -- '- watermark' skills/iig3d/catalogue/members/` → no output (prompt fragments legitimately contain the words "no watermarks").
 - `wc -l skills/iig3d/SKILL.md` → ≤ 80.
 - `ls -l ~/.claude/skills/iig3d .claude/skills/iig3d` → both symlinks resolve to `skills/iig3d`.
 - `sdlc build sync` → `{"ok": true, "unplanned": []}` after every step; `sdlc build check` → `ok: true`.

@@ -106,3 +106,20 @@ def test_live_smoke(iig3d, tmp_path, prompt_file):
     key, _ = iig3d.api_key(None)
     result = iig3d.render(prompt_file, tmp_path / "live.png", "16:9", resolution="1K", api_key=key)
     assert result["status"] == "ok"
+
+
+def test_bad_ref_image_is_error_not_traceback(iig3d, tmp_path, prompt_file, fake_client, monkeypatch):
+    """Review finding: failures before the API call must still yield the error record (exit 2)."""
+    monkeypatch.setattr(iig3d.time, "sleep", lambda s: None)
+    bad = tmp_path / "notes.txt"
+    bad.write_text("not an image")
+    result = iig3d.render(prompt_file, tmp_path / "i.png", "16:9", refs=[bad], retries=0, api_key="k", client_factory=fake_client)
+    assert result["status"] == "error" and "notes.txt" in result["error"] and iig3d.exit_code(result) == 2
+
+
+def test_client_factory_failure_is_error(iig3d, tmp_path, prompt_file):
+    def boom(_key):
+        raise RuntimeError("client refused")
+
+    result = iig3d.render(prompt_file, tmp_path / "i.png", "16:9", retries=0, api_key="k", client_factory=boom)
+    assert result["status"] == "error" and "client refused" in result["error"]

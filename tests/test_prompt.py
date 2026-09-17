@@ -151,3 +151,16 @@ def test_api_key_pattern_redacted(iig3d, cat, tmp_path):
     spec = iig3d.load_spec(path)
     prompt = iig3d.assemble(cat, spec, iig3d.route(cat, "dashboard", None), "16:9")
     assert "AIza" not in prompt.text and "[redacted]" in prompt.text
+
+
+def test_write_prompt_past_ninety_nine(iig3d, cat, spec, tmp_path):
+    """Review finding: numbering must keep climbing past two digits, never overwrite."""
+    prompts = tmp_path / "prompts"
+    prompts.mkdir()
+    for n in range(1, 100):
+        (prompts / f"{n:02d}-infographic-x.md").write_text("x")
+    prompt = iig3d.assemble(cat, spec, iig3d.route(cat, "linear-progression", "3d-disc-timeline"), "16:9")
+    first = iig3d.write_prompt(tmp_path, prompt, "x")
+    second = iig3d.write_prompt(tmp_path, prompt, "x")
+    assert first.name == "100-infographic-x.md" and second.name == "101-infographic-x.md"
+    assert len(list(prompts.iterdir())) == 101

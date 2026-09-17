@@ -114,3 +114,28 @@ def test_normalise_image_small_stays_small(iig3d, tmp_path):
     out = iig3d.normalise_image(src, tmp_path / "out.jpg")
     image = Image.open(out)
     assert image.size == (300, 200) and image.mode == "RGB" and image.format == "JPEG"
+
+
+@pytest.mark.parametrize("bad_name", ["3d-../../../pwned", "3d-Bad Name", "3d-", "3d-x/y"])
+def test_new_member_name_must_be_slug(iig3d, tmp_catalogue, fixtures, tmp_path, bad_name):
+    """Review finding: a member name is a path segment; only 3d-[a-z0-9-]+ is allowed."""
+    block = dict(tmp_catalogue.member("3d-hex-cluster").raw)
+    for key in ("refs", "pairings", "source"):
+        block.pop(key)
+    block["name"] = bad_name
+    meta = write_meta(tmp_path, new_member=block, shows="x", flags=["clean"], pairings=[])
+    with pytest.raises(iig3d.UsageError) as err:
+        iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
+    assert "name" in str(err.value)
+    assert not list(tmp_catalogue.root.glob("**/pwned*"))
+
+
+def test_user_added_watermark_is_reported(iig3d, tmp_catalogue, fixtures, tmp_path):
+    """Review finding (R21): a watermarked user image is registered but check must say so."""
+    iig3d.render_docs(tmp_catalogue)
+    meta = write_meta(tmp_path, member="3d-hex-cluster", shows="stock preview", flags=["watermark"], pairings=[])
+    result = iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
+    assert result["status"] == "violations"
+    assert any("watermark" in v and "ref-02-wide-3000px.jpg" in v for v in result["check"])
+    cat = iig3d.load_catalogue(tmp_catalogue.root)
+    assert iig3d.check(cat, allow_watermark=True) == []

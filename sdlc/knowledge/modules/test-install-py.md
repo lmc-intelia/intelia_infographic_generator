@@ -1,13 +1,13 @@
 ---
 type: Module
 title: test_install.py
-description: "Graphify community 36: tests/test_install.py"
+description: "Graphify community 41: tests/test_install.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:38:23Z" }
-stale_after: "2026-10-01T01:38:23Z"
-source_commit: 8f42a8df5cc43e4f5300f44b03d7007299e5d083
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:47:43Z" }
+stale_after: "2026-10-01T01:47:43Z"
+source_commit: 1d771a6e54b0997d70b05103a6a7a41fe3de7b8b
 sources:
   - { id: test_install, resource: tests/test_install.py, last_modified: "2026-09-17T11:38:15+10:00", digest: dccf82b998a27cee }
 ---

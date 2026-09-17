@@ -144,6 +144,11 @@ def test_check_reports_seeded_violations(iig3d, tmp_catalogue):
     iig3d.render_docs(seeded)
     violations = iig3d.check(seeded)
     assert any("watermark" in v for v in violations)
+    # --allow-watermark relaxes the rule for user-added refs only; a vendored watermark always fails
+    assert any("watermark" in v for v in iig3d.check(seeded, allow_watermark=True))
+    seeded.member("3d-hex-cluster").refs[0]["source"] = {"origin": "x", "added": "2026-09-17", "user_added": True}
+    iig3d.render_docs(seeded)
+    assert any("watermark" in v for v in iig3d.check(seeded))
     assert iig3d.check(seeded, allow_watermark=True) == []
     (tmp_catalogue.root / "refs" / "3d-hex-cluster" / "ref-01-honeycomb-hub.jpg").unlink()
     member_yaml = tmp_catalogue.root / "catalogue" / "members" / "3d-slab-stack.yaml"

@@ -45,6 +45,7 @@ class UsageError(Exception):
 # --- catalogue ---
 
 MEMBER_PREFIX = "3d-"
+MEMBER_NAME_RE = re.compile(r"^3d-[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 @dataclass
@@ -504,7 +505,7 @@ def extract_palette(css_path: Path, vars: list[str] | None = None) -> list[Colou
                 missing.append(var)
         if missing:
             raise UsageError(f"{css_path}: custom propert{'y' if len(missing) == 1 else 'ies'} not found: {', '.join(missing)}")
-        colours = chosen
+        colours = list({c.hex: c for c in chosen}.values())[:PALETTE_MAX]
     else:
         known = {c.hex for c in named}
         literals = [h for h in map(normalise_colour, COLOUR_RE.findall(CSS_VAR_RE.sub("", text))) if h and h not in known]
@@ -659,7 +660,7 @@ def assemble(
     warnings: list[str] = []
     orient = orientation(cat, ratio)
     budget = cat.family["text_budget"][orient]
-    words = word_count(labels)
+    words = word_count(labels + [item.detail for item in spec.items] + [str(s.get("caption", "")) for s in spec.stats])
     if words > budget:
         warnings.append(f"on-image text is {words} words, over the {budget}-word budget for {orient} ({ratio}); shorten labels or split into two images")
     lo, hi = member.items["min"], member.items["max"]
@@ -688,7 +689,7 @@ def write_prompt(out_dir: Path, prompt: Prompt, slug: str) -> Path:
     """prompts/NN-infographic-<slug>.md with NN the next free number; never overwrites."""
     prompts_dir = Path(out_dir) / "prompts"
     prompts_dir.mkdir(parents=True, exist_ok=True)
-    taken = [int(m.group(1)) for f in prompts_dir.iterdir() if (m := re.match(r"^(\d{2})-", f.name))]
+    taken = [int(m.group(1)) for f in prompts_dir.iterdir() if (m := re.match(r"^(\d+)-", f.name))]
     number = max(taken, default=0) + 1
     path = prompts_dir / f"{number:02d}-infographic-{slug}.md"
     header = yaml.dump(prompt.frontmatter, Dumper=YAML_DUMPER, sort_keys=False, allow_unicode=True).rstrip()
@@ -843,22 +844,35 @@ def render(
     if dry_run:
         return {"status": "dry-run", **base}
 
-    from google.genai import types
-    from PIL import Image as PILImage
-
-    client = (client_factory or _genai_client)(api_key)
-    contents: list = [PILImage.open(r) for r in ref_paths]
-    if contents:
-        contents.append(STYLE_NOTE)
-    contents.append(prompt)
-    image_cfg = types.ImageConfig(image_size=resolution, aspect_ratio=ratio)
-    config = types.GenerateContentConfig(
-        response_modalities=["TEXT", "IMAGE"],
-        image_config=image_cfg,
-        automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-    )
     started = time.time()
     last_error: Exception | None = None
+
+    def failure(attempts: int) -> dict:
+        return {"status": "error", **base, "attempts": attempts, "elapsed_seconds": round(time.time() - started, 1), "error": str(last_error)}
+
+    try:
+        from google.genai import types
+        from PIL import Image as PILImage
+
+        contents: list = []
+        for ref in ref_paths:
+            try:
+                contents.append(PILImage.open(ref))
+            except Exception as err:
+                raise RuntimeError(f"reference image {ref.name} is not a readable image: {err}") from err
+        if contents:
+            contents.append(STYLE_NOTE)
+        contents.append(prompt)
+        config = types.GenerateContentConfig(
+            response_modalities=["TEXT", "IMAGE"],
+            image_config=types.ImageConfig(image_size=resolution, aspect_ratio=ratio),
+            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+        )
+        client = (client_factory or _genai_client)(api_key)
+    except Exception as err:
+        last_error = err
+        print(f"Setup failed: {err}", file=sys.stderr)
+        return failure(0)
     for attempt in range(1, retries + 2):
         try:
             print(f"[{attempt}] {model} {ratio} {resolution} refs={len(ref_paths)}", file=sys.stderr)
@@ -884,13 +898,7 @@ def render(
             print(f"Attempt {attempt} failed: {err}", file=sys.stderr)
             if attempt <= retries:
                 time.sleep(2 * attempt)
-    return {
-        "status": "error",
-        **base,
-        "attempts": retries + 1,
-        "elapsed_seconds": round(time.time() - started, 1),
-        "error": str(last_error),
-    }
+    return failure(retries + 1)
 
 
 # --- add ---
@@ -941,9 +949,9 @@ def _load_meta(meta_path: Path, cat: Catalogue) -> dict:
 def _new_member_record(cat: Catalogue, block: dict, meta_path: Path) -> tuple[dict, list[str]]:
     block = dict(block)
     routing_rows = block.pop("routing", []) or []
-    name = block.get("name", "")
-    if not name.startswith(MEMBER_PREFIX):
-        raise UsageError(f"{meta_path}: new_member.name must start with {MEMBER_PREFIX}")
+    name = str(block.get("name", ""))
+    if not MEMBER_NAME_RE.match(name):
+        raise UsageError(f"{meta_path}: new_member.name must match {MEMBER_NAME_RE.pattern} (a path-safe slug), got {name!r}")
     if name in cat.members:
         raise UsageError(f"{meta_path}: member {name} already exists; use member: {name}")
     bad_rows = [row for row in routing_rows if row not in cat.routing]
@@ -1013,7 +1021,7 @@ def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
         write_yaml(cat.family_yaml, family)
     fresh = load_catalogue(cat.root)
     docs = render_docs(fresh)
-    problems = check(fresh, allow_watermark=True)
+    problems = check(fresh)
     return {
         "status": "ok" if not problems else "violations",
         "member": name,
@@ -1303,8 +1311,12 @@ def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:
         ids = set()
         for ref in member.refs:
             ids.add(ref["id"])
-            if "watermark" in ref["flags"] and not allow_watermark and not ref.get("source", {}).get("user_added"):
-                problems.append(f"{name}/{ref['file']}: vendored ref carries the watermark flag")
+            if "watermark" in ref["flags"]:
+                user_added = bool(ref.get("source", {}).get("user_added"))
+                if not (allow_watermark and user_added):
+                    kind = "user-added ref" if user_added else "vendored ref"
+                    hint = "; pass --allow-watermark to accept it" if user_added else ""
+                    problems.append(f"{name}/{ref['file']}: {kind} carries the watermark flag{hint}")
             path = cat.ref_path(name, ref)
             if not path.is_file():
                 problems.append(f"{name}/{ref['file']}: missing on disk")
@@ -1328,8 +1340,7 @@ def check(cat: Catalogue, allow_watermark: bool = False) -> list[str]:
                     problems.append(f"{name}: pairing {layout} names unknown ref {rid}")
     problems += stale_docs(cat)
     problems += dependency_parity(cat.root)
-    if not problems:
-        problems += _dry_assembly(cat)
+    problems += _dry_assembly(cat)
     return problems
 
 

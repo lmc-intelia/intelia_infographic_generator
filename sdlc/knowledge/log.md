@@ -1,6 +1,26 @@
 # Knowledge Update Log
 
 ## 2026-09-17
+* **Update**: [iig3d skill](/features/iig3d-skill.md) verified by process:sdlc-test.
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [conftest.py](/modules/conftest-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Creation**: [Path](/modules/path.md).
+* **Creation**: [UsageError](/modules/usageerror.md).
+* **Creation**: [_dry_assembly](/modules/dry-assembly.md).
+* **Update**: [test_install.py](/modules/test-install-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [Member](/hubs/member.md).
+* **Update**: [prepare()](/hubs/prepare.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Deprecation**: [dispatch()](/hubs/dispatch.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [conftest.py](/modules/conftest-py.md).
 * **Update**: [Path](/hubs/path.md).
