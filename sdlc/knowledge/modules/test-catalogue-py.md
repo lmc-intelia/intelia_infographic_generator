@@ -5,11 +5,11 @@ description: "Graphify community 3: tests/test_catalogue.py, tests/test_routing.
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:25:36Z" }
-stale_after: "2026-10-01T01:25:36Z"
-source_commit: 68f1d44b8bd8981182c204343218b1eb73026578
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:38:23Z" }
+stale_after: "2026-10-01T01:38:23Z"
+source_commit: 8f42a8df5cc43e4f5300f44b03d7007299e5d083
 sources:
-  - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T11:14:46+10:00", digest: ca5fb70a1d2a7057 }
+  - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T11:38:15+10:00", digest: 836700b6098f276c }
   - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-17T11:15:25+10:00", digest: 53a24b265e288942 }
 ---
 
@@ -21,6 +21,11 @@ sources:
 - test_catalogue.py (tests/test_catalogue.py:L1)
 - R3, R15: the YAML catalogue is complete, internally consistent and schema-valid. (tests/test_catalogue.py:L1)
 - test_schema_rejects_missing_fragment() (tests/test_catalogue.py:L103)
+- test_ref_files_on_disk() (tests/test_catalogue.py:L115)
+- test_no_vendored_watermark() (tests/test_catalogue.py:L127)
+- test_check_clean() (tests/test_catalogue.py:L133)
+- test_check_reports_seeded_violations() (tests/test_catalogue.py:L137)
+- test_check_dependency_parity() (tests/test_catalogue.py:L158)
 - cat() (tests/test_catalogue.py:L40)
 - test_twelve_members() (tests/test_catalogue.py:L44)
 - test_member_keys() (tests/test_catalogue.py:L49)

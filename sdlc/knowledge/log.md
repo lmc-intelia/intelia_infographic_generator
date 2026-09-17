@@ -2,6 +2,23 @@
 
 ## 2026-09-17
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_refs.py](/modules/test-refs-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Creation**: [test_install.py](/modules/test-install-py.md).
+* **Creation**: [test_skill_md.py](/modules/test-skill-md-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [dispatch()](/hubs/dispatch.md).
+* **Update**: [prepare()](/hubs/prepare.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [test_catalogue.py](/hubs/test-catalogue-py.md).
+* **Deprecation**: [conftest.py](/hubs/conftest-py.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [build_parser](/modules/build-parser.md).
 * **Creation**: [test_add.py](/modules/test-add-py.md).

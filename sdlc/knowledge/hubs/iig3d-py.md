@@ -1,15 +1,15 @@
 ---
 type: Hub
 title: iig3d.py
-description: Graphify god node with degree 61 in skills/iig3d/scripts/iig3d.py
+description: Graphify god node with degree 63 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:27:40Z" }
-stale_after: "2026-10-01T01:27:40Z"
-source_commit: c0590ea9336d0d2c605441e9f556b3b3bd222024
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:38:23Z" }
+stale_after: "2026-10-01T01:38:23Z"
+source_commit: 8f42a8df5cc43e4f5300f44b03d7007299e5d083
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:27:35+10:00", digest: 5f6bbb8037c83411 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:38:15+10:00", digest: 286202650799122b }
 ---
 
 # Where
@@ -19,4 +19,4 @@ sources:
 - [iig3d.py](/modules/iig3d-py.md)
 
 # Why it matters
-- degree 61: many modules reach this symbol; changes here have a wide blast radius
+- degree 63: many modules reach this symbol; changes here have a wide blast radius

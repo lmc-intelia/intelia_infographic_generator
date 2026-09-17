@@ -11,29 +11,31 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [iig3d skill](features/iig3d-skill.md) - The 3D corporate infographic capability built on 2026-09-15 to 2026-09-17 lives inside the
 
 # Modules
-* [build_parser](modules/build-parser.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
 * [conftest.py](modules/conftest-py.md) - Graphify community 5: tests/conftest.py, tests/test_render.py
 * [iig3d.py](modules/iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
+* [Member](modules/member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
 * [test_add.py](modules/test-add-py.md) - Graphify community 34: tests/test_add.py
 * [test_aspect.py](modules/test-aspect-py.md) - Graphify community 10: tests/test_aspect.py
 * [test_catalogue.py](modules/test-catalogue-py.md) - Graphify community 3: tests/test_catalogue.py, tests/test_routing.py
 * [test_cli.py](modules/test-cli-py.md) - Graphify community 7: tests/test_cli.py
 * [test_creds.py](modules/test-creds-py.md) - Graphify community 20: tests/test_creds.py
 * [test_docs.py](modules/test-docs-py.md) - Graphify community 32: tests/test_docs.py
+* [test_install.py](modules/test-install-py.md) - Graphify community 36: tests/test_install.py
 * [test_palette.py](modules/test-palette-py.md) - Graphify community 16: tests/test_palette.py
 * [test_prompt.py](modules/test-prompt-py.md) - Graphify community 19: tests/test_prompt.py
 * [test_refs.py](modules/test-refs-py.md) - Graphify community 12: tests/test_refs.py
+* [test_skill_md.py](modules/test-skill-md-py.md) - Graphify community 38: tests/test_skill_md.py
 * [test_spec.py](modules/test-spec-py.md) - Graphify community 11: tests/test_spec.py
 
 # Hubs
 * [add_ref()](hubs/add-ref.md) - Graphify god node with degree 18 in skills/iig3d/scripts/iig3d.py
-* [assemble()](hubs/assemble.md) - Graphify god node with degree 19 in skills/iig3d/scripts/iig3d.py
-* [Catalogue](hubs/catalogue.md) - Graphify god node with degree 23 in skills/iig3d/scripts/iig3d.py
-* [conftest.py](hubs/conftest-py.md) - Graphify god node with degree 14 in tests/conftest.py
+* [assemble()](hubs/assemble.md) - Graphify god node with degree 20 in skills/iig3d/scripts/iig3d.py
+* [Catalogue](hubs/catalogue.md) - Graphify god node with degree 24 in skills/iig3d/scripts/iig3d.py
 * [dispatch()](hubs/dispatch.md) - Graphify god node with degree 17 in skills/iig3d/scripts/iig3d.py
-* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 61 in skills/iig3d/scripts/iig3d.py
-* [Path](hubs/path.md) - Graphify god node with degree 23
+* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 63 in skills/iig3d/scripts/iig3d.py
+* [Path](hubs/path.md) - Graphify god node with degree 24
 * [prepare()](hubs/prepare.md) - Graphify god node with degree 17 in skills/iig3d/scripts/iig3d.py
+* [test_catalogue.py](hubs/test-catalogue-py.md) - Graphify god node with degree 17 in tests/test_catalogue.py
 * [test_prompt.py](hubs/test-prompt-py.md) - Graphify god node with degree 18 in tests/test_prompt.py
 * [UsageError](hubs/usageerror.md) - Graphify god node with degree 17 in skills/iig3d/scripts/iig3d.py
 
