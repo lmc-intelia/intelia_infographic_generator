@@ -6,6 +6,7 @@
 * [test_aspect.py](test-aspect-py.md) - Graphify community 10: tests/test_aspect.py
 * [test_catalogue.py](test-catalogue-py.md) - Graphify community 3: tests/test_catalogue.py
 * [test_palette.py](test-palette-py.md) - Graphify community 16: tests/test_palette.py
+* [test_prompt.py](test-prompt-py.md) - Graphify community 19: tests/test_prompt.py
 * [test_refs.py](test-refs-py.md) - Graphify community 12: tests/test_refs.py
 * [test_routing.py](test-routing-py.md) - Graphify community 14: tests/test_routing.py
 * [test_spec.py](test-spec-py.md) - Graphify community 11: tests/test_spec.py

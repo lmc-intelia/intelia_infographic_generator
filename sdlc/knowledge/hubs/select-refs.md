@@ -4,19 +4,14 @@ title: select_refs()
 description: Graphify god node with degree 8 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
-status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
-stale_after: "2026-10-01T01:19:06Z"
-source_commit: c41d6d6a630903c77274cef3967923ec721af525
+status: deprecated
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:21:04Z" }
+source_commit: fa6e99be0b4fc2a31b39a5a34c91b557f3e9e9a9
 sources:
   - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T11:19:03+10:00", digest: 1d9a9c105f180b7c }
 ---
 
-# Where
-- `skills/iig3d/scripts/iig3d.py:L343`
+# Deprecated
+- sources removed by commit `fa6e99be0b4f`: `skills/iig3d/scripts/iig3d.py`
+- no replacement concept; kept so incoming links still resolve
 
-# Module
-- [iig3d.py](/modules/iig3d-py.md)
-
-# Why it matters
-- degree 8: many modules reach this symbol; changes here have a wide blast radius

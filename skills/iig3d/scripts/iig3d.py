@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import colorsys
 import json
+import os
 import re
 import sys
 from dataclasses import dataclass, field
@@ -665,6 +666,48 @@ def write_prompt(out_dir: Path, prompt: Prompt, slug: str) -> Path:
     header = yaml.safe_dump(prompt.frontmatter, sort_keys=False, allow_unicode=True).rstrip()
     path.write_text(f"---\n{header}\n---\n{prompt.text}", encoding="utf-8")
     return path
+
+
+# --- creds ---
+
+KEY_NAMES = ("GEMINI_API_KEY", "GOOGLE_API_KEY")
+
+
+def parse_env_file(path: Path) -> dict[str, str]:
+    """Minimal .env parser: KEY=VALUE, optional `export `, quotes stripped, # comments ignored."""
+    found: dict[str, str] = {}
+    try:
+        lines = Path(path).read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return found
+    for raw in lines:
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        key, value = line.split("=", 1)
+        key, value = key.strip(), value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+        found[key] = value
+    return found
+
+
+def api_key(explicit: str | None, cwd: Path | None = None) -> tuple[str, str]:
+    """(key, source). Order: --api-key, ./.env in the calling directory, process environment.
+    No parent-directory walk. The source string never contains the key."""
+    if explicit:
+        return explicit, "--api-key"
+    env_path = Path(cwd or Path.cwd()) / ".env"
+    values = parse_env_file(env_path)
+    for name in KEY_NAMES:
+        if values.get(name):
+            return values[name], f"{env_path}:{name}"
+    for name in KEY_NAMES:
+        if os.environ.get(name):
+            return os.environ[name], f"env:{name}"
+    raise UsageError(f"no API key: expected GEMINI_API_KEY in {env_path} or the environment")
 
 
 # --- cli ---

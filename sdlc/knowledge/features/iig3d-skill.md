@@ -5,13 +5,13 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T01:19:06Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-17T01:21:04Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
-stale_after: "2026-10-01T01:19:06Z"
-source_commit: c41d6d6a630903c77274cef3967923ec721af525
+stale_after: "2026-10-01T01:21:04Z"
+source_commit: fa6e99be0b4fc2a31b39a5a34c91b557f3e9e9a9
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T11:13:02+10:00", digest: 4948ad7b23ac3a24 }
@@ -236,7 +236,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_docs.py`
 - `tests/test_install.py`
 - `tests/test_palette.py` in [test_palette.py](/modules/test-palette-py.md)
-- `tests/test_prompt.py`
+- `tests/test_prompt.py` in [test_prompt.py](/modules/test-prompt-py.md)
 - `tests/test_refs.py` in [test_refs.py](/modules/test-refs-py.md)
 - `tests/test_render.py`
 - `tests/test_routing.py` in [test_routing.py](/modules/test-routing-py.md)

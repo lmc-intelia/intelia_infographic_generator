@@ -1,7 +1,7 @@
 ---
 type: Hub
-title: Member
-description: Graphify god node with degree 12 in skills/iig3d/scripts/iig3d.py
+title: assemble()
+description: Graphify god node with degree 18 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: draft
@@ -13,10 +13,10 @@ sources:
 ---
 
 # Where
-- `skills/iig3d/scripts/iig3d.py:L43`
+- `skills/iig3d/scripts/iig3d.py:L596`
 
 # Module
-- [Member](/modules/member.md)
+- [iig3d.py](/modules/iig3d-py.md)
 
 # Why it matters
-- degree 12: many modules reach this symbol; changes here have a wide blast radius
+- degree 18: many modules reach this symbol; changes here have a wide blast radius
