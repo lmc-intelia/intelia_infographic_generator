@@ -25,6 +25,7 @@ import os
 import re
 import sys
 import time
+import urllib.parse
 import urllib.request
 from dataclasses import asdict, dataclass, field, fields
 from io import BytesIO
@@ -37,7 +38,7 @@ YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 YAML_DUMPER = getattr(yaml, "CSafeDumper", yaml.SafeDumper)
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-SUBCOMMANDS = ["list", "route", "refs", "prompt", "render", "add", "docs", "check", "palette"]
+SUBCOMMANDS = ["list", "route", "refs", "prompt", "render", "add", "docs", "check", "palette", "icons"]
 
 
 class UsageError(Exception):
@@ -642,7 +643,8 @@ def icon_svg(cat: Catalogue, pack: str, name: str, fetch: bool = True) -> Path:
         raise UsageError(f"icon {pack}:{name} not in {path.parent} and fetching is off (--no-icon-fetch or IIG3D_ICON_FETCH=0)")
     url = ICONIFY_URL.format(pack=pack, name=name)
     try:
-        with urllib.request.urlopen(url, timeout=10) as response:  # noqa: S310 # nosec B310 - https URL built from validated slugs
+        request = urllib.request.Request(url, headers=ICONIFY_HEADERS)  # noqa: S310 # nosec B310 - https URL built from validated slugs
+        with urllib.request.urlopen(request, timeout=10) as response:  # noqa: S310 # nosec B310
             body = response.read()
     except Exception as err:
         raise UsageError(f"icon {pack}:{name}: fetch failed from {url}: {err}") from err
@@ -663,12 +665,221 @@ def render_icon(svg_path: Path, size: int = ICON_GLYPH_PX):
 
 
 def spec_icons(spec: Spec) -> list[dict]:
-    """[{index, label, pack, name}] for every item whose icon resolves to a pack."""
+    """[{index, label, pack, name, via: spec}] for every item whose icon names a pack glyph."""
     found = []
     for index, item in enumerate(spec.items, 1):
         parsed = parse_icon(item.icon, spec.icon_pack)
         if parsed:
-            found.append({"index": index, "label": item.label, "pack": parsed[0], "name": parsed[1]})
+            found.append({"index": index, "label": item.label, "pack": parsed[0], "name": parsed[1], "via": "spec"})
+    return found
+
+
+ICONIFY_SEARCH_URL = "https://api.iconify.design/search?query={query}&prefix={pack}"
+ICONIFY_HEADERS = {"User-Agent": "iig3d/0.2 (+https://github.com/lmc-intelia/intelia_infographic_generator)", "Accept": "*/*"}
+
+# Business vocabulary to a Lucide-style glyph name; the deterministic first guess when an item
+# has no icon, or when a named icon does not exist. Keys are single lower-case words.
+ICON_SYNONYMS = {
+    "plan": "compass",
+    "planning": "compass",
+    "strategy": "compass",
+    "roadmap": "map",
+    "vision": "eye",
+    "goal": "target",
+    "goals": "target",
+    "target": "target",
+    "objective": "target",
+    "design": "pencil-ruler",
+    "architecture": "layers",
+    "build": "hammer",
+    "develop": "code",
+    "code": "code",
+    "engineering": "wrench",
+    "test": "circle-check",
+    "testing": "circle-check",
+    "quality": "badge-check",
+    "review": "search-check",
+    "launch": "rocket",
+    "deploy": "rocket",
+    "release": "rocket",
+    "ship": "rocket",
+    "go-live": "rocket",
+    "measure": "chart-line",
+    "metrics": "chart-line",
+    "analytics": "chart-bar",
+    "analyse": "chart-bar",
+    "analyze": "chart-bar",
+    "report": "file-chart-column",
+    "learn": "graduation-cap",
+    "training": "graduation-cap",
+    "insight": "lightbulb",
+    "idea": "lightbulb",
+    "innovate": "lightbulb",
+    "scale": "trending-up",
+    "growth": "trending-up",
+    "grow": "trending-up",
+    "optimise": "gauge",
+    "optimize": "gauge",
+    "performance": "gauge",
+    "govern": "shield-check",
+    "governance": "shield-check",
+    "compliance": "shield-check",
+    "policy": "scroll-text",
+    "secure": "lock",
+    "security": "lock",
+    "risk": "triangle-alert",
+    "renew": "refresh-cw",
+    "iterate": "refresh-cw",
+    "cycle": "refresh-cw",
+    "improve": "sparkles",
+    "data": "database",
+    "database": "database",
+    "storage": "hard-drive",
+    "cloud": "cloud",
+    "integrate": "plug",
+    "integration": "plug",
+    "api": "plug",
+    "automate": "workflow",
+    "automation": "workflow",
+    "process": "workflow",
+    "workflow": "workflow",
+    "people": "users",
+    "team": "users",
+    "customers": "users",
+    "customer": "user",
+    "user": "user",
+    "stakeholders": "users",
+    "talk": "message-circle",
+    "communicate": "message-circle",
+    "feedback": "message-square",
+    "support": "life-buoy",
+    "time": "clock",
+    "schedule": "calendar",
+    "deadline": "calendar-clock",
+    "money": "coins",
+    "cost": "coins",
+    "budget": "wallet",
+    "revenue": "banknote",
+    "finance": "landmark",
+    "document": "file-text",
+    "docs": "file-text",
+    "contract": "file-signature",
+    "email": "mail",
+    "search": "search",
+    "discover": "search",
+    "research": "microscope",
+    "settings": "settings",
+    "configure": "settings",
+    "monitor": "activity",
+    "observe": "activity",
+    "alert": "bell",
+    "notify": "bell",
+    "deliver": "package",
+    "delivery": "truck",
+    "store": "store",
+    "product": "box",
+    "service": "concierge-bell",
+    "network": "network",
+    "connect": "link",
+    "global": "globe",
+    "location": "map-pin",
+    "energy": "zap",
+    "power": "zap",
+    "health": "heart-pulse",
+    "medical": "stethoscope",
+    "education": "book-open",
+    "manufacture": "factory",
+    "factory": "factory",
+    "transport": "truck",
+    "shipping": "ship",
+    "commit": "git-commit-horizontal",
+    "trigger": "zap",
+    "generate": "sparkles",
+    "publish": "send",
+    "collaborate": "handshake",
+    "partner": "handshake",
+    "award": "award",
+    "success": "trophy",
+    "win": "trophy",
+    "start": "play",
+    "finish": "flag",
+    "milestone": "flag",
+    "phase": "milestone",
+}
+
+
+def search_icons(pack: str, query: str, fetch: bool = True, limit: int = 8) -> list[str]:
+    """Glyph names in `pack` whose Iconify name matches `query`; empty when fetching is off."""
+    if not fetch or not query.strip():
+        return []
+    url = ICONIFY_SEARCH_URL.format(query=urllib.parse.quote(query.strip().lower()), pack=pack)
+    try:
+        request = urllib.request.Request(url, headers=ICONIFY_HEADERS)  # noqa: S310 # nosec B310 - https URL built from validated slugs
+        with urllib.request.urlopen(request, timeout=10) as response:  # noqa: S310 # nosec B310
+            data = json.loads(response.read().decode("utf-8"))
+    except Exception:
+        return []
+    names = [entry.split(":", 1)[1] for entry in data.get("icons", []) if entry.startswith(f"{pack}:")]
+    return names[:limit]
+
+
+def _words(*texts: str) -> list[str]:
+    seen: list[str] = []
+    for text in texts:
+        for word in re.findall(r"[a-z][a-z-]+", text.lower()):
+            if len(word) > 2 and word not in seen:
+                seen.append(word)
+    return seen
+
+
+def suggest_icon(cat: Catalogue, pack: str, label: str, detail: str = "", fetch: bool = True) -> tuple[str, str] | None:
+    """(name, via) for an item from its text: the synonym table on the label, then the detail,
+    then an Iconify name search on each word. None when nothing fits."""
+    words = _words(label) + [w for w in _words(detail) if w not in _words(label)]
+    for word in words:
+        name = ICON_SYNONYMS.get(word)
+        if name:
+            try:
+                icon_svg(cat, pack, name, fetch=fetch)
+                return name, f"synonym:{word}"
+            except UsageError:
+                continue
+    for word in words:
+        hits = search_icons(pack, word, fetch=fetch)
+        if hits:
+            return hits[0], f"search:{word}"
+    return None
+
+
+def resolve_icons(cat: Catalogue, spec: Spec, fetch: bool = True) -> list[dict]:
+    """Every item's glyph: the spec's own name when it exists (a missing name falls back to a
+    suggestion and fails only when nothing fits), else a suggestion from the item text when
+    `icon_pack` is set. Items without a glyph keep their free-text hint or none."""
+    if not spec.icon_pack and not any(":" in (item.icon or "") for item in spec.items):
+        return []
+    named = {icon["index"]: icon for icon in spec_icons(spec)}
+    found: list[dict] = []
+    for index, item in enumerate(spec.items, 1):
+        icon = named.get(index)
+        if icon:
+            try:
+                icon_svg(cat, icon["pack"], icon["name"], fetch=fetch)
+                found.append(icon)
+                continue
+            except UsageError as err:
+                fallback = suggest_icon(cat, icon["pack"], f"{icon['name'].replace('-', ' ')} {item.label}", item.detail, fetch=fetch)
+                if not fallback:
+                    raise UsageError(f"item {index} ({item.label}): {err}") from None
+                found.append({**icon, "name": fallback[0], "via": f"fallback for {icon['name']} via {fallback[1]}"})
+                continue
+        if item.icon and not spec.icon_pack:
+            continue
+        if item.icon and parse_icon(item.icon, spec.icon_pack) is None:
+            continue  # free-text hint, left to the model
+        if spec.icon_pack:
+            suggestion = suggest_icon(cat, spec.icon_pack, item.label, item.detail, fetch=fetch)
+            if suggestion:
+                found.append({"index": index, "label": item.label, "pack": spec.icon_pack, "name": suggestion[0], "via": suggestion[1]})
     return found
 
 
@@ -678,7 +889,7 @@ def build_icon_sheet(cat: Catalogue, spec: Spec, out_path: Path, fetch: bool = T
     from PIL import Image as PILImage
     from PIL import ImageDraw, ImageFont
 
-    icons = spec_icons(spec)
+    icons = resolve_icons(cat, spec, fetch=fetch)
     if not icons:
         return None
     try:
@@ -913,7 +1124,7 @@ def assemble(
         "references": [{"ref_id": f"{index:02d}", "filename": Path(ref).name, "usage": "icons" if index == sheet_position else "replicate" if pinned and index == 1 else "direct"} for index, ref in enumerate(refs or [], 1)],
     }
     if sheet_position:
-        frontmatter["icons"] = [{"item": i["index"], "icon": f"{i['pack']}:{i['name']}"} for i in icons or []]
+        frontmatter["icons"] = [{"item": i["index"], "icon": f"{i['pack']}:{i['name']}", "via": i.get("via", "spec")} for i in icons or []]
     if pinned:
         frontmatter["pinned"] = {"ref": pinned["file"], "variant": pinned.get("variant")}
     if palette:
@@ -1413,6 +1624,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("docs", parents=[common], help="regenerate catalogue markdown")
     p_check = sub.add_parser("check", parents=[common], help="validate the catalogue, refs and docs")
     p_check.add_argument("--allow-watermark", action="store_true")
+    p_icons = sub.add_parser("icons", parents=[common], help="find or check glyph names in an Iconify pack")
+    p_icons.add_argument("--pack", default="lucide")
+    p_icons.add_argument("--query", default=None, help="word to search names for, e.g. rocket")
+    p_icons.add_argument("--label", default=None, help="item label to suggest a glyph for")
+    p_icons.add_argument("--detail", default="", help="item detail, used after the label")
+    p_icons.add_argument("--no-icon-fetch", action="store_true")
     p_palette = sub.add_parser("palette", help="preview colours extracted from a CSS file")
     p_palette.add_argument("--css", required=True)
     p_palette.add_argument("--vars", default=None, help="comma-separated custom properties")
@@ -1521,6 +1738,23 @@ def cmd_refs(cat: Catalogue, args: argparse.Namespace) -> dict:
     }
 
 
+def cmd_icons(cat: Catalogue, args: argparse.Namespace) -> dict:
+    """Name search and text-based suggestion in one call, so Claude can pick or verify a glyph."""
+    fetch = not args.no_icon_fetch and os.environ.get("IIG3D_ICON_FETCH", "1") != "0"
+    out: dict = {"status": "ok", "pack": args.pack}
+    if args.query:
+        out["query"] = args.query
+        out["matches"] = search_icons(args.pack, args.query, fetch=fetch)
+        out["synonym"] = ICON_SYNONYMS.get(args.query.strip().lower())
+    if args.label:
+        suggestion = suggest_icon(cat, args.pack, args.label, args.detail, fetch=fetch)
+        out["label"] = args.label
+        out["suggestion"] = {"name": suggestion[0], "via": suggestion[1]} if suggestion else None
+    if not args.query and not args.label:
+        raise UsageError("icons: give --query WORD and/or --label TEXT")
+    return out
+
+
 def cmd_palette(args: argparse.Namespace) -> dict:
     colours = extract_palette(Path(args.css), vars=_split_vars(args.vars) or None)
     return {"status": "ok", "source": str(Path(args.css).resolve()), "colours": [c.as_dict() for c in colours], "paragraph": palette_paragraph(colours)}
@@ -1540,6 +1774,7 @@ HANDLERS = {
     "add": lambda cat, args: add_ref(cat, Path(args.image), Path(args.meta)),
     "docs": lambda cat, args: {"status": "ok", "written": [str(p) for p in render_docs(cat)]},
     "check": cmd_check,
+    "icons": cmd_icons,
 }
 
 

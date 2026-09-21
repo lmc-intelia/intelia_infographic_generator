@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-SUBCOMMANDS = ["list", "route", "refs", "prompt", "render", "add", "docs", "check", "palette"]
+SUBCOMMANDS = ["list", "route", "refs", "prompt", "render", "add", "docs", "check", "palette", "icons"]
 
 
 def test_module_imports_and_has_main(iig3d):
@@ -170,3 +170,30 @@ def test_prompt_missing_icon_offline_exits_1(iig3d, capsys, tmp_path, tmp_catalo
     spec.write_text("title: T\nicon_pack: lucide\nitems:\n  - {label: A, icon: unicorn-horn}\n")
     code, data = run(iig3d, capsys, ["prompt", "--spec", str(spec), "--out-dir", str(tmp_path / "out"), "--skill-root", str(tmp_catalogue.root), "--no-icon-fetch"])
     assert code == 1 and "lucide:unicorn-horn" in data["error"]
+
+
+def test_icons_command_suggests_and_searches(iig3d, capsys, tmp_catalogue, monkeypatch):
+    import shutil
+
+    from tests.conftest import SKILL
+
+    shutil.copytree(SKILL / "icons", tmp_catalogue.root / "icons", dirs_exist_ok=True)
+    monkeypatch.setattr(iig3d, "search_icons", lambda pack, query, fetch=True, limit=8: ["rocket", "rocket-launch"] if query == "rocket" else [])
+    code, data = run(iig3d, capsys, ["icons", "--query", "rocket", "--label", "LAUNCH", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["matches"] == ["rocket", "rocket-launch"] and data["suggestion"] == {"name": "rocket", "via": "synonym:launch"}
+    code, data = run(iig3d, capsys, ["icons", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 1 and "--query" in data["error"]
+
+
+def test_prompt_suggests_icons_from_labels(iig3d, capsys, tmp_path, tmp_catalogue):
+    import shutil
+
+    from tests.conftest import SKILL
+
+    shutil.copytree(SKILL / "icons", tmp_catalogue.root / "icons", dirs_exist_ok=True)
+    spec = tmp_path / "s.yaml"
+    spec.write_text("title: T\nicon_pack: lucide\nstyle: 3d-slab-stack\nitems:\n  - {label: PLAN}\n  - {label: BUILD}\n  - {label: LAUNCH}\n")
+    code, data = run(iig3d, capsys, ["prompt", "--spec", str(spec), "--out-dir", str(tmp_path / "out"), "--skill-root", str(tmp_catalogue.root), "--no-icon-fetch"])
+    assert code == 0 and data["icons"] == ["lucide:compass", "lucide:hammer", "lucide:rocket"]
+    text = (tmp_path / "out" / "prompts" / "01-infographic-t.md").read_text()
+    assert "via: synonym:plan" in text

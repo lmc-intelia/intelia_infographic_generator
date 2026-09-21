@@ -18,9 +18,10 @@ description: Render 3D corporate-family infographics (industrial 3d look, fiftee
 1. Read the user's source. Write `spec.yaml` (shape below; copy `<skill>/templates/spec.example.yaml`). Items are verbatim from the source; strip secrets.
 2. Pick `style`: a `3d-*` member, or `industrial-3d` to route by `layout` (`route --layout L` shows the member and alternates; `list` shows all).
    To reproduce one catalogue JPEG with the user's content: `layout: <member>` (the `<skill>/refs/` folder name) and `style: <ref id or file>` from that folder (`refs --member M` lists them). Same thing as `pin: <member>/<ref>`. The image goes first to the model.
-3. **Confirm member, layout, aspect and language once before render** (AskUserQuestion), unless the request says `--no-confirm` or equivalent. Then state the assumed choices.
-4. `render --spec spec.yaml --out-dir infographic/<slug> [--no-confirm]`. Read the JSON: `status`, `path`, `prompt_file`, `warnings`. Report path and warnings. Do not read the PNG back unless asked.
-5. Text wrong or garbled: fix the spec, render again (new `prompts/NN-*.md`, old PNG kept as `infographic-backup-*.png`). Never paint over rendered text with code. Never emit SVG, HTML or canvas as a substitute for the raster image.
+3. Icons: set `icon_pack: lucide` and give each item an `icon:` from its label and detail (a concrete Lucide name such as `rocket`, `users`, `database`). Unsure: `icons --pack lucide --query WORD` lists names, `--label TEXT` suggests one. Items left without `icon:` get the script's own suggestion from their text; none fits, no icon.
+4. **Confirm member, layout, aspect and language once before render** (AskUserQuestion), unless the request says `--no-confirm` or equivalent. Then state the assumed choices.
+5. `render --spec spec.yaml --out-dir infographic/<slug> [--no-confirm]`. Read the JSON: `status`, `path`, `prompt_file`, `warnings`. Report path and warnings. Do not read the PNG back unless asked.
+6. Text wrong or garbled: fix the spec, render again (new `prompts/NN-*.md`, old PNG kept as `infographic-backup-*.png`). Never paint over rendered text with code. Never emit SVG, HTML or canvas as a substitute for the raster image.
 
 ```yaml
 title: OPENWIKI REFRESH PIPELINE      # required
@@ -45,6 +46,7 @@ pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub 
 | `iig3d.py list` | members (device, item range, aspect default, refs) and the 21 general layouts with their primary member |
 | `iig3d.py route --layout L [--style S]` | which member renders this layout; alternates; `pin` when style names a ref |
 | `iig3d.py refs --member M [--layout L] [--pin P]` | the 2 to 3 reference images the render will pass, plus every pin of the member |
+| `iig3d.py icons [--pack P] [--query WORD] [--label TEXT]` | glyph names matching a word; the suggestion for an item's text |
 | `iig3d.py palette --css PATH [--vars a,b]` | preview brand colours extracted from a CSS file |
 | `iig3d.py prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md` without calling the API |
 | `iig3d.py render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` |

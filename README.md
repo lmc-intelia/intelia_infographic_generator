@@ -247,6 +247,15 @@ items:
 `skills/iig3d/icons/<pack>/<name>.svg` and fetched from the Iconify API on a miss; `--no-icon-fetch`
 (or `IIG3D_ICON_FETCH=0`) uses the cache only. Browse names at https://icon-sets.iconify.design.
 
+Items without an `icon:` still get one when a pack is set: the script maps words in the label,
+then the detail, through a built-in business vocabulary (plan to compass, launch to rocket, data
+to database, and so on), then searches Iconify names for each word. The prompt frontmatter
+records how each glyph was chosen (`via: spec`, `synonym:launch`, `search:umbrella`). A named
+icon that does not exist falls back the same way and fails only when nothing fits.
+`icons --pack lucide --label "GOVERN" --detail "policy and control"` shows the pick without
+rendering; `--query shield` lists matching names. Claude, following SKILL.md, names an icon per
+item from the source text first and uses these suggestions to fill or check.
+
 The sheet is one white PNG with each glyph in black under its item number, saved as
 `icon-sheet.png` in the output directory and passed after the catalogue refs (before your own
 `refs:`, still six images at most). The prompt gains an "Icon Set" section telling the model to
@@ -263,6 +272,7 @@ Every command prints one JSON line on stdout; diagnostics go to stderr.
 | `list` | members (device, item range, aspect default, refs) and the 21 general layouts |
 | `refs --member M [--layout L] [--pin P] [--ref IMG]` | the 2 to 3 reference images a render would pass, plus every ref of the member with its pin token |
 | `route --layout L [--style S]` | which member renders this layout; alternates; `pin` when `--style` names a ref of the `--layout` member |
+| `icons [--pack P] [--query WORD] [--label TEXT] [--detail TEXT]` | glyph names matching a word in a pack; the glyph the script would pick for an item's text |
 | `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
 | `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
 | `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
