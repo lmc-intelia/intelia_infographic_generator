@@ -5,11 +5,11 @@ description: "Graphify community 7: tests/test_cli.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:06:16Z" }
-stale_after: "2026-10-05T05:06:16Z"
-source_commit: 6ac4d77c7d0e6ad62e60d2fa01cebbade71dc4ca
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:21:21Z" }
+stale_after: "2026-10-05T05:21:21Z"
+source_commit: 2efd6dab1b448f314234109aa7de72730da1239c
 sources:
-  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T15:06:12+10:00", digest: c36dbf09fe60c0d4 }
+  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T15:21:18+10:00", digest: d3c5979d54ea1efd }
 ---
 
 # Files
@@ -33,6 +33,7 @@ sources:
 - test_prompt_suggests_icons_from_labels() (tests/test_cli.py:L188)
 - test_render_quality_from_spec_and_flag() (tests/test_cli.py:L202)
 - test_list_reports_quality_levels() (tests/test_cli.py:L215)
+- test_render_logo_flags() (tests/test_cli.py:L221)
 - test_list_counts() (tests/test_cli.py:L25)
 - test_route_shape() (tests/test_cli.py:L34)
 - test_refs_shape() (tests/test_cli.py:L40)

@@ -2,6 +2,27 @@
 
 ## 2026-09-21
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [prepare](/modules/prepare.md).
+* **Creation**: [suggest_icon](/modules/suggest-icon.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [resolve_icons](/modules/resolve-icons.md).
+* **Update**: [normalise_image](/modules/normalise-image.md).
+* **Update**: [_dry_assembly](/modules/dry-assembly.md).
+* **Update**: [test_render.py](/modules/test-render-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [test_cli.py](/hubs/test-cli-py.md).
+* **Update**: [test_render.py](/hubs/test-render-py.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [run()](/hubs/run.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Deprecation**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [Member](/modules/member.md).
 * **Update**: [Path](/modules/path.md).

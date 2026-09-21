@@ -45,6 +45,7 @@ items:                                # 3 to 10 depending on member; one per ste
 stats: [{value: "73%", caption: pages refreshed}]   # optional
 notes: keep the world map faint       # optional design instructions
 icon_pack: lucide                     # optional; item `icon: rocket` (or tabler:rocket) then comes from an icon sheet the model copies
+icon_style: white line icons          # optional; how glyphs are finished (default: the member's own icon treatment, and the pinned ref's)
 pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub + style: 06
 ```
 

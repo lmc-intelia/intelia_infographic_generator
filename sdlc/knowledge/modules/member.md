@@ -5,19 +5,18 @@ description: "Graphify community 33: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:12:49Z" }
-stale_after: "2026-10-05T05:12:49Z"
-source_commit: 0dac1771abb0a241b787b37f99663e8da1c9a6f4
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:21:21Z" }
+stale_after: "2026-10-05T05:21:21Z"
+source_commit: 2efd6dab1b448f314234109aa7de72730da1239c
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:06:12+10:00", digest: 755d0eccdd75a015 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:21:18+10:00", digest: 92e1dac7df45de37 }
 ---
 
 # Files
 - `skills/iig3d/scripts/iig3d.py`
 
 # Symbols
-- member_markdown() (skills/iig3d/scripts/iig3d.py:L1528)
-- catalogue_markdown() (skills/iig3d/scripts/iig3d.py:L1551)
+- member_markdown() (skills/iig3d/scripts/iig3d.py:L1597)
 - _pairing() (skills/iig3d/scripts/iig3d.py:L412)
 - Ref ids paired with the layout; the member's first pairing when the layout has… (skills/iig3d/scripts/iig3d.py:L413)
 - Member (skills/iig3d/scripts/iig3d.py:L55)
@@ -32,6 +31,8 @@ sources:
 - _table() (skills/iig3d/scripts/iig3d.py:L961)
 - layout_sections() (skills/iig3d/scripts/iig3d.py:L968)
 - (heading, body) pairs of the member's device layout, shared by the prompt and… (skills/iig3d/scripts/iig3d.py:L969)
+- render_layout_block() (skills/iig3d/scripts/iig3d.py:L981)
+- The member's device layout as the markdown block the Layout Guidelines slot… (skills/iig3d/scripts/iig3d.py:L982)
 
 # Depends on
 - [Catalogue](/modules/catalogue.md)

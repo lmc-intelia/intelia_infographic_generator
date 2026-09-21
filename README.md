@@ -272,10 +272,14 @@ item from the source text first and uses these suggestions to fill or check.
 
 The sheet is one white PNG with each glyph in black under its item number, saved as
 `icon-sheet.png` in the output directory and passed after the catalogue refs (before your own
-`refs:`, still six images at most). The prompt gains an "Icon Set" section telling the model to
-copy each numbered glyph's line work onto its item and recolour it; the frontmatter marks the
-sheet `usage: icons` and lists the item-to-icon map. Expect faithful shapes and stroke weight,
-not pixel-exact glyphs.
+`refs:`, still six images at most). The prompt gains an "Icon Set" section: take only the shapes
+from the sheet, then finish each icon like the rest of the image. That section quotes the
+member's own icon lines from its catalogue YAML (white flat icons on the disc faces, dark flat
+icons on raised grey discs, and so on), tells the model to match the icons in the pinned
+reference when there is one, and appends `icon_style:` from the spec verbatim when you want a
+one-off finish ("embossed grey relief", "white line icons"). The frontmatter marks the sheet
+`usage: icons` and lists the item-to-icon map. Expect faithful shapes and stroke weight, not
+pixel-exact glyphs.
 
 ## Logo stamp
 

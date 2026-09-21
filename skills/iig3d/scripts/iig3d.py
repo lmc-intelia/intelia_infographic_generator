@@ -306,6 +306,7 @@ class Spec:
     refs: list[Path] = field(default_factory=list)
     pin: str | None = None
     icon_pack: str | None = None
+    icon_style: str | None = None
     quality: str | None = None
     path: Path | None = None
 
@@ -370,6 +371,7 @@ def load_spec(path: Path) -> Spec:
         refs=[(base / r).resolve() for r in raw.get("refs") or []],
         pin=_opt_str(raw.get("pin")),
         icon_pack=_opt_str(raw.get("icon_pack")),
+        icon_style=_opt_str(raw.get("icon_style")),
         quality=_opt_str(raw.get("quality")),
         path=path.resolve(),
     )
@@ -918,19 +920,38 @@ def build_icon_sheet(cat: Catalogue, spec: Spec, out_path: Path, fetch: bool = T
     return out_path, icons
 
 
-def icon_guidance(sheet_position: int, icons: list[dict]) -> str:
-    """The Icon Set section: copy each numbered glyph from the sheet onto its item."""
+def member_icon_treatment(member: Member, limit: int = 4) -> list[str]:
+    """The member's own lines about icons (layout and style visual_elements), in order, deduped."""
+    lines: list[str] = []
+    for source in (member["layout"]["visual_elements"], member["style"]["visual_elements"]):
+        for line in source:
+            text = str(line).strip().rstrip(".")
+            if "icon" in text.lower() and text not in lines:
+                lines.append(text)
+    return lines[:limit]
+
+
+def icon_guidance(sheet_position: int, icons: list[dict], treatment: list[str] | None = None, pinned: bool = False, icon_style: str | None = None) -> str:
+    """The Icon Set section: the sheet supplies each glyph's shapes; the member (and the pinned
+    reference, and any `icon_style` from the spec) supply how icons are finished, so the glyphs
+    sit in the image like every other element."""
     listing = ", ".join(f"glyph {i['index']:02d} on item {i['index']:02d} ({i['pack']}:{i['name']})" for i in icons)
-    return "\n".join(
-        [
-            "## Icon Set",
-            "",
-            f"Reference image {sheet_position} is an icon sheet, not a composition: black line glyphs on white, each labelled with its item number.",
-            f"Draw each item's icon by copying its glyph's line work exactly, same shapes, same stroke weight, same proportions: {listing}.",
-            "Recolour the glyph to suit the item (white on a coloured face, or the item colour on white) and render it flat, never as a photo or a 3D object.",
-            "Do not draw the sheet itself, its labels or its grid anywhere in the image.",
-        ]
-    )
+    lines = [
+        "## Icon Set",
+        "",
+        f"Reference image {sheet_position} is an icon sheet, not a composition: black line glyphs on white, each labelled with its item number.",
+        f"Take only the shapes from it: each item's icon repeats its glyph's outlines, proportions and stroke weight: {listing}.",
+        "Finish every icon exactly like the rest of the image, with the same material, depth, lighting, colour treatment and placement as the icons this device already uses;"
+        " a line icon in a flat-icon style stays a line icon, an embossed style embosses it, a glossy 3D style gives it the same gloss and depth.",
+    ]
+    if treatment:
+        lines.append("This device renders icons like this: " + "; ".join(treatment) + ".")
+    if pinned:
+        lines.append("Match the icons in reference image 1 for size, weight, colour and finish; only the glyph shapes change.")
+    if icon_style:
+        lines.append(f"Icon style for this image: {icon_style.strip().rstrip('.')}.")
+    lines.append("Do not draw the sheet itself, its labels or its grid anywhere in the image.")
+    return "\n".join(lines)
 
 
 # --- prompt ---
@@ -1088,7 +1109,7 @@ def assemble(
         "{{LAYOUT_GUIDELINES}}": render_layout_block(member),
         "{{STYLE_GUIDELINES}}": style_block,
         "{{REFERENCE_COMPOSITION}}": reference_composition(pinned) if pinned else "",
-        "{{ICON_GUIDANCE}}": icon_guidance(sheet_position, icons or []) if sheet_position else "",
+        "{{ICON_GUIDANCE}}": icon_guidance(sheet_position, icons or [], member_icon_treatment(member), pinned=bool(pinned), icon_style=spec.icon_style) if sheet_position else "",
         "{{CONTENT}}": content_block(spec, icon_slots),
         "{{TEXT_LABELS}}": "\n".join(f'"{label}"' for label in labels),
     }

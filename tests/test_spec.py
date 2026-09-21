@@ -88,3 +88,9 @@ def test_quality_key(iig3d, tmp_path):
     with pytest.raises(iig3d.UsageError) as err:
         iig3d.load_spec(path)
     assert "quality" in str(err.value) and "1K, 2K, 4K" in str(err.value)
+
+
+def test_icon_style_key(iig3d, tmp_path):
+    path = tmp_path / "s.yaml"
+    path.write_text("title: T\nicon_style: white line icons\nitems:\n  - label: A\n")
+    assert iig3d.load_spec(path).icon_style == "white line icons"

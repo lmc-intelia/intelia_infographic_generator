@@ -5,12 +5,12 @@ description: "Graphify community 53: tests/conftest.py, tests/test_render.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:06:16Z" }
-stale_after: "2026-10-05T05:06:16Z"
-source_commit: 6ac4d77c7d0e6ad62e60d2fa01cebbade71dc4ca
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:21:21Z" }
+stale_after: "2026-10-05T05:21:21Z"
+source_commit: 2efd6dab1b448f314234109aa7de72730da1239c
 sources:
   - { id: conftest, resource: tests/conftest.py, last_modified: "2026-09-17T11:22:55+10:00", digest: 889844ff3ec7d899 }
-  - { id: test_render, resource: tests/test_render.py, last_modified: "2026-09-21T15:06:12+10:00", digest: cc0a045b263b7107 }
+  - { id: test_render, resource: tests/test_render.py, last_modified: "2026-09-21T15:21:18+10:00", digest: 73572ed4236c33b6 }
 ---
 
 # Files
@@ -29,7 +29,14 @@ sources:
 - test_1k_uses_pro_model_with_image_size() (tests/test_render.py:L134)
 - test_4k_uses_pro_model_with_image_size() (tests/test_render.py:L143)
 - test_explicit_model_overrides_quality_model() (tests/test_render.py:L150)
+- test_logo_stamped_bottom_left_with_5px_padding() (tests/test_render.py:L155)
 - prompt_file() (tests/test_render.py:L16)
+- test_bundled_logo_exists_and_is_transparent() (tests/test_render.py:L169)
+- test_render_stamps_bundled_logo_by_default() (tests/test_render.py:L177)
+- test_render_without_logo() (tests/test_render.py:L192)
+- test_missing_logo_rejected() (tests/test_render.py:L201)
+- test_resolve_logo() (tests/test_render.py:L207)
+- test_logo_drop_shadow_darkens_below_right_only() (tests/test_render.py:L218)
 - test_dry_run_shape_and_no_file() (tests/test_render.py:L23)
 - test_saves_png_and_flattens_rgba() (tests/test_render.py:L32)
 - test_refs_passed_as_images_with_style_note() (tests/test_render.py:L48)
