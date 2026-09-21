@@ -156,12 +156,19 @@ Twelve members share one rendering language and differ in the structural device:
 | `3d-cylinder-column` | Stepped glossy cylinders with bent arrows | 3 to 6 | ranked steps, bar charts |
 | `3d-glass-layer` | Exploded stack of translucent plates | 3 to 7 | architecture layers |
 
-Two ways to pick:
+Three ways to pick, from most to least specific:
 
-- Name the member: `style: 3d-target-callout`. The layout defaults to the member's own device.
-- Route by layout: `style: industrial-3d` (or omit it) with one of the 21 general layouts
-  (`linear-progression`, `hub-spoke`, `hierarchical-layers`, `dashboard`, `bento-grid`,
-  `funnel`, `isometric-map`, ...). `route --layout L` shows the member and alternates.
+1. Folder and image: `layout: 3d-capsule-hub` names a folder under `skills/iig3d/refs/`,
+   `style: "06"` names an image in it. The render reproduces that image with your content.
+   See [Reproducing one reference image](#reproducing-one-reference-image).
+2. Member only: `style: 3d-target-callout` (or `layout: 3d-target-callout`). The script picks
+   two or three of that member's images by its pairings.
+3. General layout: `style: industrial-3d` (or omit it) with one of the 21 general layouts
+   (`linear-progression`, `hub-spoke`, `hierarchical-layers`, `dashboard`, `bento-grid`,
+   `funnel`, `isometric-map`, ...). The routing table in `catalogue/family.yaml` maps each to a
+   primary member and alternates; `route --layout L` shows them. These names are intent
+   vocabulary kept from the 2D infographic family; they are aliases for a member choice, and
+   `bento-grid` is the default when both keys are omitted.
 
 `list` prints every member and layout. The generated catalogue at
 `skills/iig3d/docs/CATALOGUE.md` and the per-member pages under `skills/iig3d/docs/members/`
