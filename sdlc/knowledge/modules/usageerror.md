@@ -1,35 +1,30 @@
 ---
 type: Module
 title: UsageError
-description: "Graphify community 36: skills/iig3d/scripts/iig3d.py"
+description: "Graphify community 41: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:05:37Z" }
-stale_after: "2026-10-05T04:05:37Z"
-source_commit: 7ba9fba7a655769a839ae420f00e5a62beab9810
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:12:49Z" }
+stale_after: "2026-10-05T05:12:49Z"
+source_commit: 0dac1771abb0a241b787b37f99663e8da1c9a6f4
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T13:02:34+10:00", digest: 48021e1d3120f54d }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:06:12+10:00", digest: 755d0eccdd75a015 }
 ---
 
 # Files
 - `skills/iig3d/scripts/iig3d.py`
 
 # Symbols
-- _check_variant() (skills/iig3d/scripts/iig3d.py:L1060)
-- _new_member_record() (skills/iig3d/scripts/iig3d.py:L1068)
-- _check_type() (skills/iig3d/scripts/iig3d.py:L182)
-- Walk one schema node: a bare type name or {type, keys|items|values}. (skills/iig3d/scripts/iig3d.py:L183)
-- validate_member() (skills/iig3d/scripts/iig3d.py:L208)
-- Problems with a member record against schema.yaml `member`; empty when valid. (skills/iig3d/scripts/iig3d.py:L209)
-- Route (skills/iig3d/scripts/iig3d.py:L226)
-- .as_dict() (skills/iig3d/scripts/iig3d.py:L233)
-- Resolve (layout, style) to a family member. Explicit 3d-* style wins; a 3d-*… (skills/iig3d/scripts/iig3d.py:L251)
-- _ratio_value() (skills/iig3d/scripts/iig3d.py:L374)
-- snap_aspect() (skills/iig3d/scripts/iig3d.py:L381)
-- Return (supported ratio, original when snapped). Presets and None use the… (skills/iig3d/scripts/iig3d.py:L382)
-- UsageError (skills/iig3d/scripts/iig3d.py:L41)
-- Bad input: exit code 1, message on stdout as JSON. (skills/iig3d/scripts/iig3d.py:L42)
+- _check_variant() (skills/iig3d/scripts/iig3d.py:L1415)
+- Route (skills/iig3d/scripts/iig3d.py:L229)
+- .as_dict() (skills/iig3d/scripts/iig3d.py:L236)
+- Resolve (layout, style) to a family member. Explicit 3d-* style wins; a 3d-*… (skills/iig3d/scripts/iig3d.py:L254)
+- _ratio_value() (skills/iig3d/scripts/iig3d.py:L383)
+- snap_aspect() (skills/iig3d/scripts/iig3d.py:L390)
+- Return (supported ratio, original when snapped). Presets and None use the… (skills/iig3d/scripts/iig3d.py:L391)
+- UsageError (skills/iig3d/scripts/iig3d.py:L44)
+- Bad input: exit code 1, message on stdout as JSON. (skills/iig3d/scripts/iig3d.py:L45)
 
 # Depends on
 - [Catalogue](/modules/catalogue.md)

@@ -1224,6 +1224,68 @@ def to_rgb(image, background=(255, 255, 255)):
     return image.convert("RGB")
 
 
+LOGO_PATH = SKILL_ROOT / "assets" / "trimmed_intellia_logo.png"
+LOGO_PAD_PX = 5
+LOGO_HEIGHT_FRACTION = 0.06
+LOGO_SHADOW = {"opacity": 0.35, "blur": 0.10, "offset": (0.04, 0.07)}  # fractions of the logo height
+
+
+def resolve_logo(value: str | None) -> Path | None:
+    """The logo to stamp: `--logo PATH`, else IIG3D_LOGO, else the bundled Intelia mark; `none`
+    or an empty value turns it off."""
+    raw = value if value is not None else os.environ.get("IIG3D_LOGO")
+    if raw is None:
+        return LOGO_PATH
+    if raw.strip().lower() in ("", "none", "off", "0", "false"):
+        return None
+    return Path(raw)
+
+
+def drop_shadow(logo, blur: int, offset: tuple[int, int], opacity: float):
+    """A blurred black copy of the logo's alpha, shifted by `offset`; the layer is padded by
+    2*blur on every side and returned with the padding so the caller can place it."""
+    from PIL import Image as PILImage
+    from PIL import ImageFilter
+
+    margin = 2 * blur
+    size = (logo.width + 2 * margin, logo.height + 2 * margin)
+    alpha = PILImage.new("L", size, 0)
+    alpha.paste(logo.getchannel("A"), (margin + offset[0], margin + offset[1]))
+    if blur:
+        alpha = alpha.filter(ImageFilter.GaussianBlur(blur))
+    alpha = alpha.point(lambda v: int(v * opacity))
+    shadow = PILImage.new("RGBA", size, (0, 0, 0, 0))
+    shadow.putalpha(alpha)
+    return shadow, margin
+
+
+def stamp_logo(image, logo_path: Path, pad: int = LOGO_PAD_PX, height_fraction: float = LOGO_HEIGHT_FRACTION, shadow: bool = True):
+    """Composite `logo_path` (RGBA) into the bottom-left corner of `image`, `pad` px from the
+    left and bottom edges, scaled to `height_fraction` of the image height, over a soft drop
+    shadow (LOGO_SHADOW) unless `shadow` is False. Returns RGB."""
+    from PIL import Image as PILImage
+
+    logo_path = Path(logo_path)
+    if not logo_path.is_file():
+        raise UsageError(f"logo not found: {logo_path}")
+    with PILImage.open(logo_path) as raw_logo:
+        logo = raw_logo.convert("RGBA")
+    target_h = max(1, round(image.height * height_fraction))
+    target_w = max(1, round(logo.width * target_h / logo.height))
+    logo = logo.resize((target_w, target_h), PILImage.LANCZOS)
+    base = image.convert("RGBA")
+    x, y = pad, max(0, base.height - pad - target_h)
+    if shadow:
+        blur = max(1, round(target_h * LOGO_SHADOW["blur"]))
+        offset = (round(target_h * LOGO_SHADOW["offset"][0]), round(target_h * LOGO_SHADOW["offset"][1]))
+        layer_shadow, margin = drop_shadow(logo, blur, offset, LOGO_SHADOW["opacity"])
+        layer = PILImage.new("RGBA", base.size, (0, 0, 0, 0))
+        layer.paste(layer_shadow, (x - margin, y - margin), layer_shadow)
+        base = PILImage.alpha_composite(base, layer)
+    base.alpha_composite(logo, (x, y))
+    return base.convert("RGB")
+
+
 def _image_from_response(response):
     """First inline image part of a Gemini response as an RGB PIL image; None when absent."""
     from PIL import Image as PILImage
@@ -1275,8 +1337,10 @@ def render(
     api_key: str | None = None,
     client_factory=None,
     prompt_warnings: list[str] | None = None,
+    logo: Path | None = LOGO_PATH,
 ) -> dict:
-    """Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.
+    """Call Nano Banana Pro with the persisted prompt file and save an RGB PNG, the logo stamped
+    bottom-left unless `logo` is None.
 
     Returns the single result record the CLI prints; status ok | dry-run | error."""
     if resolution not in RESOLUTIONS:
@@ -1302,7 +1366,10 @@ def render(
         "prompt_file": str(prompt_path.resolve()),
         "prompt_chars": len(prompt),
         "warnings": list(prompt_warnings or []),
+        "logo": str(Path(logo).resolve()) if logo else None,
     }
+    if logo and not Path(logo).is_file():
+        raise UsageError(f"logo not found: {logo}")
     if dry_run:
         return {"status": "dry-run", **base}
 
@@ -1342,6 +1409,8 @@ def render(
             image = _image_from_response(response)
             if image is None:
                 raise RuntimeError("no image part in response (content may have been refused)")
+            if logo:
+                image = stamp_logo(image, logo)
             out_png.parent.mkdir(parents=True, exist_ok=True)
             backup = backup_existing(out_png)
             image.save(str(out_png), "PNG")
@@ -1633,6 +1702,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_render.add_argument("--retries", type=int, default=1)
     p_render.add_argument("--api-key", default=None)
     p_render.add_argument("--no-confirm", action="store_true", help="accepted for parity with SKILL.md; no effect here")
+    p_render.add_argument("--logo", default=None, help="PNG stamped bottom-left (default: the bundled Intelia mark, or IIG3D_LOGO); `none` to skip")
+    p_render.add_argument("--no-logo", action="store_true", help="render without the logo (for reference images)")
     p_add = sub.add_parser("add", parents=[common], help="add a reference image to the catalogue")
     p_add.add_argument("--image", required=True)
     p_add.add_argument("--meta", required=True)
@@ -1727,6 +1798,7 @@ def cmd_render(cat: Catalogue, args: argparse.Namespace) -> dict:
         dry_run=args.dry_run,
         api_key=key,
         prompt_warnings=prepared["warnings"],
+        logo=None if args.no_logo else resolve_logo(args.logo),
     )
     result.update({k: prepared[k] for k in ("member", "layout", "style", "language", "palette")})
     return result

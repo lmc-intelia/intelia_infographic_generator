@@ -5,9 +5,9 @@ description: "Graphify community 49: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:06:16Z" }
-stale_after: "2026-10-05T05:06:16Z"
-source_commit: 6ac4d77c7d0e6ad62e60d2fa01cebbade71dc4ca
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:12:49Z" }
+stale_after: "2026-10-05T05:12:49Z"
+source_commit: 0dac1771abb0a241b787b37f99663e8da1c9a6f4
 sources:
   - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:06:12+10:00", digest: 755d0eccdd75a015 }
 ---
@@ -16,6 +16,8 @@ sources:
 - `skills/iig3d/scripts/iig3d.py`
 
 # Symbols
+- cmd_icons() (skills/iig3d/scripts/iig3d.py:L1757)
+- Name search and text-based suggestion in one call, so Claude can pick or verify… (skills/iig3d/scripts/iig3d.py:L1758)
 - parse_icon() (skills/iig3d/scripts/iig3d.py:L626)
 - (pack, name) for `pack:name`, or for `name` when a default pack is set;… (skills/iig3d/scripts/iig3d.py:L627)
 - icon_svg() (skills/iig3d/scripts/iig3d.py:L641)
@@ -35,9 +37,9 @@ sources:
 - One white PNG contact sheet: each item's glyph in black with its number and… (skills/iig3d/scripts/iig3d.py:L891)
 
 # Depends on
-- [assemble](/modules/assemble.md)
 - [Catalogue](/modules/catalogue.md)
-- [Path](/modules/path.md)
+- [iig3d.py](/modules/iig3d-py.md)
+- [UsageError](/modules/usageerror.md)
 
 # Inferred
 - no INFERRED edges; treat any that appear as hints

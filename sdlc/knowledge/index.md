@@ -11,14 +11,12 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [iig3d skill](features/iig3d-skill.md) - The 3D corporate infographic capability built on 2026-09-15 to 2026-09-17 lives inside the
 
 # Modules
-* [.items](modules/items.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
-* [assemble](modules/assemble.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
-* [Catalogue](modules/catalogue.md) - Graphify community 39: skills/iig3d/scripts/iig3d.py
+* [Catalogue](modules/catalogue.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [conftest.py](modules/conftest-py.md) - Graphify community 5: tests/conftest.py, tests/test_install.py
-* [iig3d.py](modules/iig3d-py.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
+* [iig3d.py](modules/iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
 * [Member](modules/member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
-* [normalise_image](modules/normalise-image.md) - Graphify community 50: skills/iig3d/scripts/iig3d.py
 * [Path](modules/path.md) - Graphify community 35: skills/iig3d/scripts/iig3d.py
+* [prepare](modules/prepare.md) - Graphify community 39: skills/iig3d/scripts/iig3d.py
 * [resolve_icons](modules/resolve-icons.md) - Graphify community 49: skills/iig3d/scripts/iig3d.py
 * [test_add.py](modules/test-add-py.md) - Graphify community 34: tests/test_add.py
 * [test_aspect.py](modules/test-aspect-py.md) - Graphify community 10: tests/test_aspect.py
@@ -33,6 +31,7 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [test_render.py](modules/test-render-py.md) - Graphify community 53: tests/conftest.py, tests/test_render.py
 * [test_skill_md.py](modules/test-skill-md-py.md) - Graphify community 38: tests/test_skill_md.py
 * [test_spec.py](modules/test-spec-py.md) - Graphify community 11: tests/test_spec.py
+* [UsageError](modules/usageerror.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
 
 # Hubs
 * [add_ref()](hubs/add-ref.md) - Graphify god node with degree 20 in skills/iig3d/scripts/iig3d.py

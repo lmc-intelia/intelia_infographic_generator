@@ -9,7 +9,7 @@ import pytest
 
 from tests.conftest import png_bytes
 
-KEYS = {"status", "path", "bytes", "model", "aspect_ratio", "resolution", "refs", "attempts", "elapsed_seconds", "prompt_file", "warnings"}
+KEYS = {"status", "path", "bytes", "model", "aspect_ratio", "resolution", "refs", "attempts", "elapsed_seconds", "prompt_file", "warnings", "logo"}
 
 
 @pytest.fixture
@@ -150,3 +150,84 @@ def test_4k_uses_pro_model_with_image_size(iig3d, tmp_path, prompt_file, fake_cl
 def test_explicit_model_overrides_quality_model(iig3d, tmp_path, prompt_file, fake_client):
     result = iig3d.render(prompt_file, tmp_path / "m.png", "16:9", resolution="1K", model="custom-image", dry_run=True, api_key="k", client_factory=fake_client)
     assert result["model"] == "custom-image" and result["quality"] == "1K"
+
+
+def test_logo_stamped_bottom_left_with_5px_padding(iig3d, tmp_path):
+    from PIL import Image
+
+    logo = tmp_path / "logo.png"
+    Image.new("RGBA", (40, 20), (255, 0, 0, 255)).save(logo)
+    canvas = Image.new("RGB", (400, 300), (255, 255, 255))
+    out = iig3d.stamp_logo(canvas, logo, pad=5, height_fraction=0.10, shadow=False)
+    assert out.mode == "RGB" and out.size == (400, 300)
+    # 10 percent of 300 = 30 px high, aspect kept: 60 px wide; box (5, 265) to (64, 294)
+    assert out.getpixel((5, 294)) == (255, 0, 0) and out.getpixel((64, 265)) == (255, 0, 0)
+    assert out.getpixel((4, 294)) == (255, 255, 255) and out.getpixel((5, 295)) == (255, 255, 255)
+    assert out.getpixel((65, 265)) == (255, 255, 255) and out.getpixel((5, 264)) == (255, 255, 255)
+
+
+def test_bundled_logo_exists_and_is_transparent(iig3d):
+    from PIL import Image
+
+    assert iig3d.LOGO_PATH.is_file()
+    with Image.open(iig3d.LOGO_PATH) as im:
+        assert im.mode == "RGBA" and im.getextrema()[3][0] == 0
+
+
+def test_render_stamps_bundled_logo_by_default(iig3d, tmp_path, prompt_file, fake_client):
+    from PIL import Image
+
+    fake_client.behaviour = [png_bytes("RGB", (400, 300))]
+    out = tmp_path / "infographic.png"
+    result = iig3d.render(prompt_file, out, "16:9", api_key="k", client_factory=fake_client)
+    assert result["status"] == "ok" and result["logo"] == str(iig3d.LOGO_PATH.resolve())
+    im = Image.open(out)
+    from PIL import ImageChops
+
+    box = im.crop((5, 300 - 5 - 18, 5 + 22, 295))  # 6 percent of 300 = 18 px high, logo aspect about 1.2
+    assert ImageChops.difference(box, Image.new("RGB", box.size, (10, 20, 30))).getbbox() is not None  # logo pixels in the corner box
+    assert im.getpixel((200, 150)) == (10, 20, 30) and im.getpixel((2, 298)) == (10, 20, 30)
+
+
+def test_render_without_logo(iig3d, tmp_path, prompt_file, fake_client):
+    from PIL import Image
+
+    fake_client.behaviour = [png_bytes("RGB", (400, 300))]
+    out = tmp_path / "plain.png"
+    result = iig3d.render(prompt_file, out, "16:9", api_key="k", client_factory=fake_client, logo=None)
+    assert result["logo"] is None and Image.open(out).getpixel((5, 294)) == (10, 20, 30)
+
+
+def test_missing_logo_rejected(iig3d, tmp_path, prompt_file, fake_client):
+    with pytest.raises(iig3d.UsageError) as err:
+        iig3d.render(prompt_file, tmp_path / "x.png", "16:9", api_key="k", client_factory=fake_client, logo=tmp_path / "nope.png")
+    assert "logo not found" in str(err.value)
+
+
+def test_resolve_logo(iig3d, monkeypatch, tmp_path):
+    monkeypatch.delenv("IIG3D_LOGO", raising=False)
+    assert iig3d.resolve_logo(None) == iig3d.LOGO_PATH
+    assert iig3d.resolve_logo("none") is None and iig3d.resolve_logo("") is None
+    assert iig3d.resolve_logo(str(tmp_path / "a.png")) == tmp_path / "a.png"
+    monkeypatch.setenv("IIG3D_LOGO", "none")
+    assert iig3d.resolve_logo(None) is None
+    monkeypatch.setenv("IIG3D_LOGO", str(tmp_path / "b.png"))
+    assert iig3d.resolve_logo(None) == tmp_path / "b.png"
+
+
+def test_logo_drop_shadow_darkens_below_right_only(iig3d, tmp_path):
+    from PIL import Image
+
+    logo = tmp_path / "logo.png"
+    Image.new("RGBA", (60, 60), (255, 0, 0, 255)).save(logo)
+    canvas = Image.new("RGB", (400, 300), (255, 255, 255))
+    plain = iig3d.stamp_logo(canvas, logo, pad=20, height_fraction=0.20, shadow=False)
+    shaded = iig3d.stamp_logo(canvas, logo, pad=20, height_fraction=0.20)
+    # logo box: (20, 220) to (79, 279); shadow falls a few px down and right of it
+    assert shaded.getpixel((50, 250)) == (255, 0, 0) == plain.getpixel((50, 250))
+    below = shaded.getpixel((50, 283))
+    right = shaded.getpixel((83, 250))
+    assert below[0] < 255 and right[0] < 255 and below == plain.getpixel((50, 283))[:0] + below
+    assert plain.getpixel((50, 283)) == (255, 255, 255) and plain.getpixel((83, 250)) == (255, 255, 255)
+    assert shaded.getpixel((10, 210)) == (255, 255, 255)  # far top-left of the logo stays untouched
+    assert shaded.getpixel((300, 100)) == (255, 255, 255)

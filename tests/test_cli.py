@@ -216,3 +216,15 @@ def test_list_reports_quality_levels(iig3d, capsys):
     code, data = run(iig3d, capsys, ["list"])
     assert code == 0 and list(data["quality"]) == ["1K", "2K", "4K"]
     assert all(v["model"] == iig3d.DEFAULT_MODEL and v["image_size"] == k for k, v in data["quality"].items())
+
+
+def test_render_logo_flags(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "k")
+    monkeypatch.delenv("IIG3D_LOGO", raising=False)
+    base = ["render", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--dry-run", "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, base)
+    assert code == 0 and data["logo"] == str(iig3d.LOGO_PATH.resolve())
+    code, data = run(iig3d, capsys, [*base, "--no-logo"])
+    assert data["logo"] is None
+    code, data = run(iig3d, capsys, [*base, "--logo", "none"])
+    assert data["logo"] is None

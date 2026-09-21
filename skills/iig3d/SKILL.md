@@ -58,7 +58,7 @@ pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub 
 | `iig3d.py icons [--pack P] [--query WORD] [--label TEXT]` | glyph names matching a word; the suggestion for an item's text |
 | `iig3d.py palette --css PATH [--vars a,b]` | preview brand colours extracted from a CSS file |
 | `iig3d.py prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md` without calling the API |
-| `iig3d.py render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` |
+| `iig3d.py render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--no-logo] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` with the Intelia logo and its drop shadow bottom-left (5 px in; `--no-logo` or `--logo PATH\|none` to change) |
 | `iig3d.py add --image IMG --meta meta.yaml` | register a user image as a reference (below) |
 | `iig3d.py docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `iig3d.py check` | validate catalogue, refs, docs; exit 1 with every violation |
@@ -69,5 +69,5 @@ Exit codes: 0 ok, 1 usage or credentials (JSON `error`), 2 API or output failure
 
 1. View the image. Decide: existing member (`member:`) or a new `3d-<name>` (`new_member:` full block; copy a member YAML from `<skill>/catalogue/members/` and drop `refs`, `pairings`, `source`).
 2. Write `meta.yaml` from `<skill>/templates/meta.example.yaml`: `shows` (what the image shows), `flags` (`clean`, `watermark`, `low-res`), `pairings` (layouts this ref suits), optional `variant` (a name from the member's `layout.variants`) and `item_count` (items the image holds; a pinned render warns on a mismatch).
-3. `iig3d.py add --image PATH --meta meta.yaml`; the script resizes to 1600 px JPEG, appends the YAML entry, regenerates docs and runs `check`. Rights for the image stay with the user. The JSON `pin` (`<member>/<id>`) is what a spec's `pin:` takes to reproduce this image straight away.
+3. Rendering an image to become a ref: pass `--no-logo`, so the model never learns to draw the mark. `iig3d.py add --image PATH --meta meta.yaml`; the script resizes to 1600 px JPEG, appends the YAML entry, regenerates docs and runs `check`. Rights for the image stay with the user. The JSON `pin` (`<member>/<id>`) is what a spec's `pin:` takes to reproduce this image straight away.
 4. Review `<skill>/docs/members/<member>.md` and report. Vendored entries are never edited by `add`, only extended.
