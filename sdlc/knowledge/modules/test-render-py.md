@@ -5,9 +5,9 @@ description: "Graphify community 53: tests/conftest.py, tests/test_render.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:21:21Z" }
-stale_after: "2026-10-05T05:21:21Z"
-source_commit: 2efd6dab1b448f314234109aa7de72730da1239c
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:30:03Z" }
+stale_after: "2026-10-05T05:30:03Z"
+source_commit: fae00c698effe61c7083ae8264ab6a14d68f8f09
 sources:
   - { id: conftest, resource: tests/conftest.py, last_modified: "2026-09-17T11:22:55+10:00", digest: 889844ff3ec7d899 }
   - { id: test_render, resource: tests/test_render.py, last_modified: "2026-09-21T15:21:18+10:00", digest: 73572ed4236c33b6 }

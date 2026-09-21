@@ -5,11 +5,11 @@ description: "Graphify community 11: tests/test_spec.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:06:16Z" }
-stale_after: "2026-10-05T05:06:16Z"
-source_commit: 6ac4d77c7d0e6ad62e60d2fa01cebbade71dc4ca
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:30:03Z" }
+stale_after: "2026-10-05T05:30:03Z"
+source_commit: fae00c698effe61c7083ae8264ab6a14d68f8f09
 sources:
-  - { id: test_spec, resource: tests/test_spec.py, last_modified: "2026-09-21T15:06:12+10:00", digest: c664223f0b98ae14 }
+  - { id: test_spec, resource: tests/test_spec.py, last_modified: "2026-09-21T15:29:58+10:00", digest: 60e7255dd28479a8 }
 ---
 
 # Files
@@ -26,6 +26,7 @@ sources:
 - test_pin_key() (tests/test_spec.py:L75)
 - test_fixture_loads() (tests/test_spec.py:L8)
 - test_quality_key() (tests/test_spec.py:L83)
+- test_icon_style_key() (tests/test_spec.py:L93)
 
 # Depends on
 - no EXTRACTED edges to other modules

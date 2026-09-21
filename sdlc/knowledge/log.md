@@ -2,6 +2,24 @@
 
 ## 2026-09-21
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_spec.py](/modules/test-spec-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [prepare](/modules/prepare.md).
+* **Update**: [test_icons.py](/modules/test-icons-py.md).
+* **Update**: [UsageError](/modules/usageerror.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [resolve_icons](/modules/resolve-icons.md).
+* **Update**: [normalise_image](/modules/normalise-image.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [test_render.py](/hubs/test-render-py.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_cli.py](/modules/test-cli-py.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [Member](/modules/member.md).

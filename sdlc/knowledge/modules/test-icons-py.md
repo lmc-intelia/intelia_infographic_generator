@@ -5,11 +5,11 @@ description: "Graphify community 36: tests/test_icons.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:52:20Z" }
-stale_after: "2026-10-05T04:52:20Z"
-source_commit: 8ed9020fab339416db7371697fc62e238ae2042e
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:30:03Z" }
+stale_after: "2026-10-05T05:30:03Z"
+source_commit: fae00c698effe61c7083ae8264ab6a14d68f8f09
 sources:
-  - { id: test_icons, resource: tests/test_icons.py, last_modified: "2026-09-21T14:48:35+10:00", digest: 054e7b28e9c61d60 }
+  - { id: test_icons, resource: tests/test_icons.py, last_modified: "2026-09-21T15:29:58+10:00", digest: aebc62e5ad588a41 }
 ---
 
 # Files
@@ -23,6 +23,9 @@ sources:
 - test_resolve_icons_mixes_spec_and_suggestions() (tests/test_icons.py:L116)
 - test_resolve_named_missing_icon_falls_back_then_fails() (tests/test_icons.py:L130)
 - test_no_pack_no_prefix_means_no_resolution() (tests/test_icons.py:L144)
+- test_member_icon_treatment_pulls_icon_lines() (tests/test_icons.py:L150)
+- test_icon_guidance_is_style_aware() (tests/test_icons.py:L157)
+- test_prompt_carries_member_treatment_and_icon_style() (tests/test_icons.py:L169)
 - test_parse_icon_forms() (tests/test_icons.py:L19)
 - test_spec_icons_resolve_only_pack_icons() (tests/test_icons.py:L31)
 - test_vendored_icon_renders_offline() (tests/test_icons.py:L36)
