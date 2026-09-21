@@ -5,11 +5,11 @@ description: "Graphify community 35: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T02:36:43Z" }
-stale_after: "2026-10-05T02:36:43Z"
-source_commit: 6de363a7f637fc903d43af9cfa93954eafdc5fc9
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:34:05+10:00", digest: 3579c45b24e4283a }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 67114822a3e7b1d9 }
 ---
 
 # Files
@@ -18,11 +18,11 @@ sources:
 # Symbols
 - normalise_image() (skills/iig3d/scripts/iig3d.py:L1016)
 - Copy `src` to `dest` as an RGB JPEG no larger than `max_edge` on its long side. (skills/iig3d/scripts/iig3d.py:L1017)
-- cmd_render() (skills/iig3d/scripts/iig3d.py:L1338)
-- pep723_dependencies() (skills/iig3d/scripts/iig3d.py:L1425)
-- Dependencies from the script's inline metadata block, parsed as TOML per PEP… (skills/iig3d/scripts/iig3d.py:L1426)
-- dependency_parity() (skills/iig3d/scripts/iig3d.py:L1434)
-- The PEP 723 header and the repository pyproject.toml must list the same runtime… (skills/iig3d/scripts/iig3d.py:L1435)
+- cmd_render() (skills/iig3d/scripts/iig3d.py:L1340)
+- pep723_dependencies() (skills/iig3d/scripts/iig3d.py:L1427)
+- Dependencies from the script's inline metadata block, parsed as TOML per PEP… (skills/iig3d/scripts/iig3d.py:L1428)
+- dependency_parity() (skills/iig3d/scripts/iig3d.py:L1436)
+- The PEP 723 header and the repository pyproject.toml must list the same runtime… (skills/iig3d/scripts/iig3d.py:L1437)
 - parse_env_file() (skills/iig3d/scripts/iig3d.py:L812)
 - Minimal .env parser: KEY=VALUE, optional `export `, quotes stripped, # comments… (skills/iig3d/scripts/iig3d.py:L813)
 - api_key() (skills/iig3d/scripts/iig3d.py:L833)
@@ -35,7 +35,6 @@ sources:
 - backup_existing() (skills/iig3d/scripts/iig3d.py:L899)
 - render() (skills/iig3d/scripts/iig3d.py:L914)
 - Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.… (skills/iig3d/scripts/iig3d.py:L927)
-- .family_yaml() (skills/iig3d/scripts/iig3d.py:L99)
 
 # Depends on
 - [Catalogue](/modules/catalogue.md)

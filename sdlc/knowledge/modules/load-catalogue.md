@@ -1,33 +1,37 @@
 ---
 type: Module
 title: load_catalogue
-description: "Graphify community 40: skills/iig3d/scripts/iig3d.py"
+description: "Graphify community 48: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T02:38:32Z" }
-stale_after: "2026-10-01T02:38:32Z"
-source_commit: d8412565305a2fce317384d37b5816a2bf81c8ac
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T12:38:26+10:00", digest: 4be94854c4daa288 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 67114822a3e7b1d9 }
 ---
 
 # Files
 - `skills/iig3d/scripts/iig3d.py`
 
 # Symbols
-- build_parser() (skills/iig3d/scripts/iig3d.py:L1115)
-- cmd_check() (skills/iig3d/scripts/iig3d.py:L1234)
-- dispatch() (skills/iig3d/scripts/iig3d.py:L1256)
-- main() (skills/iig3d/scripts/iig3d.py:L1262)
-- load_catalogue() (skills/iig3d/scripts/iig3d.py:L142)
-- exit_code() (skills/iig3d/scripts/iig3d.py:L753)
+- _new_member_record() (skills/iig3d/scripts/iig3d.py:L1068)
+- build_parser() (skills/iig3d/scripts/iig3d.py:L1240)
+- dispatch() (skills/iig3d/scripts/iig3d.py:L1404)
+- main() (skills/iig3d/scripts/iig3d.py:L1410)
+- read_yaml() (skills/iig3d/scripts/iig3d.py:L152)
+- load_catalogue() (skills/iig3d/scripts/iig3d.py:L166)
+- _check_type() (skills/iig3d/scripts/iig3d.py:L182)
+- Walk one schema node: a bare type name or {type, keys|items|values}. (skills/iig3d/scripts/iig3d.py:L183)
+- validate_member() (skills/iig3d/scripts/iig3d.py:L208)
+- Problems with a member record against schema.yaml `member`; empty when valid. (skills/iig3d/scripts/iig3d.py:L209)
+- exit_code() (skills/iig3d/scripts/iig3d.py:L857)
 
 # Depends on
-- [assemble](/modules/assemble.md)
 - [Catalogue](/modules/catalogue.md)
 - [Member](/modules/member.md)
-- [_new_member_record](/modules/new-member-record.md)
+- [prepare](/modules/prepare.md)
 - [UsageError](/modules/usageerror.md)
 
 # Inferred

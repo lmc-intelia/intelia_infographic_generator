@@ -1,6 +1,29 @@
 # Knowledge Update Log
 
 ## 2026-09-21
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [test_render.py](/modules/test-render-py.md).
+* **Update**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_refs.py](/modules/test-refs-py.md).
+* **Update**: [test_docs.py](/modules/test-docs-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [test_add.py](/modules/test-add-py.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [UsageError](/modules/usageerror.md).
+* **Update**: [prepare](/modules/prepare.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [load_catalogue](/modules/load-catalogue.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [test_refs.py](/hubs/test-refs-py.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [test_cli.py](/hubs/test-cli-py.md).
+* **Update**: [prepare()](/hubs/prepare.md).
 * **Update**: [iig3d.py](/modules/iig3d-py.md).
 * **Update**: [Member](/modules/member.md).
 * **Update**: [Path](/modules/path.md).

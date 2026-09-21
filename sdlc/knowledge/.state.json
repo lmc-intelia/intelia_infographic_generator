@@ -1,8 +1,8 @@
 {
-  "commit": "6de363a7f637fc903d43af9cfa93954eafdc5fc9",
-  "graph_commit": "6de363a7f637fc903d43af9cfa93954eafdc5fc9",
+  "commit": "2285898e55a2ed6720d292c1eb4bd34a1f6f1690",
+  "graph_commit": "2285898e55a2ed6720d292c1eb4bd34a1f6f1690",
   "updates": 1,
-  "ts": "2026-09-21T02:36:43Z",
+  "ts": "2026-09-21T02:47:44Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -11,6 +11,9 @@
       "modules/test-catalogue-py.md"
     ],
     "tests/conftest.py": [
+      "modules/test-render-py.md"
+    ],
+    "tests/test_install.py": [
       "modules/test-render-py.md"
     ],
     "tests/test_render.py": [
@@ -23,11 +26,10 @@
       "modules/iig3d-py.md",
       "modules/member.md",
       "modules/path.md",
-      "modules/select-refs.md",
-      "modules/assemble.md",
-      "modules/prepare.md",
       "modules/usageerror.md",
-      "modules/catalogue.md"
+      "modules/prepare.md",
+      "modules/catalogue.md",
+      "modules/load-catalogue.md"
     ],
     "tests/test_aspect.py": [
       "modules/test-aspect-py.md"
@@ -55,9 +57,6 @@
     ],
     "tests/test_skill_md.py": [
       "modules/test-skill-md-py.md"
-    ],
-    "tests/test_install.py": [
-      "modules/test-install-py.md"
     ]
   }
 }
