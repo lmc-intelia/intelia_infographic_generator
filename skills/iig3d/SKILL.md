@@ -46,6 +46,7 @@ stats: [{value: "73%", caption: pages refreshed}]   # optional
 notes: keep the world map faint       # optional design instructions
 icon_pack: lucide                     # optional; item `icon: rocket` (or tabler:rocket) then comes from an icon sheet the model copies
 icon_style: white line icons          # optional; how glyphs are finished (default: the member's own icon treatment, and the pinned ref's)
+fonts: {title: {family: Inter, weight: extrabold}, body: Inter}   # optional; per-role typography over family.yaml fonts (title, body, label, numeral)
 pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub + style: 06
 ```
 
@@ -59,7 +60,7 @@ pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub 
 | `iig3d.py icons [--pack P] [--query WORD] [--label TEXT]` | glyph names matching a word; the suggestion for an item's text |
 | `iig3d.py palette --css PATH [--vars a,b]` | preview brand colours extracted from a CSS file |
 | `iig3d.py prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md` without calling the API |
-| `iig3d.py render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--no-logo] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` with the Intelia logo and its drop shadow bottom-left (5 px in; `--no-logo` or `--logo PATH\|none` to change) |
+| `iig3d.py render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--no-logo] [--aspect A] [--style S] [--layout L] [--palette-css P] [--title-font F] [--body-font F] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` with the Intelia logo and its drop shadow bottom-left (5 px in; `--no-logo` or `--logo PATH\|none` to change) |
 | `iig3d.py add --image IMG --meta meta.yaml` | register a user image as a reference (below) |
 | `iig3d.py docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `iig3d.py check` | validate catalogue, refs, docs; exit 1 with every violation |

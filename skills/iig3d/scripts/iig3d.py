@@ -301,6 +301,7 @@ class Spec:
     aspect: str | None = None
     palette_css: Path | None = None
     palette_vars: list[str] = field(default_factory=list)
+    fonts: dict[str, dict[str, str]] = field(default_factory=dict)
     stats: list[dict] = field(default_factory=list)
     notes: str = ""
     refs: list[Path] = field(default_factory=list)
@@ -366,6 +367,7 @@ def load_spec(path: Path) -> Spec:
         aspect=_opt_str(raw.get("aspect")),
         palette_css=(base / css).resolve() if css else None,
         palette_vars=[str(v) for v in raw.get("palette_vars") or []],
+        fonts=parse_fonts(raw.get("fonts"), f"{path}: fonts"),
         stats=[dict(s) for s in raw.get("stats") or []],
         notes=_str(raw.get("notes")),
         refs=[(base / r).resolve() for r in raw.get("refs") or []],
@@ -375,6 +377,74 @@ def load_spec(path: Path) -> Spec:
         quality=_opt_str(raw.get("quality")),
         path=path.resolve(),
     )
+
+
+# --- typography ---
+
+FONT_ROLES = ("title", "body", "label", "numeral")
+FONT_FIELDS = ("family", "fallback", "weight", "case", "tracking", "colour", "size", "style")
+
+
+def parse_fonts(raw, where: str) -> dict[str, dict[str, str]]:
+    """{role: {field: value}} from a spec or family block; roles and fields are fixed names, values
+    free text. A bare string for a role means its family."""
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise UsageError(f"{where}: must be a mapping of roles {', '.join(FONT_ROLES)}")
+    fonts: dict[str, dict[str, str]] = {}
+    for role, spec in raw.items():
+        if role not in FONT_ROLES:
+            raise UsageError(f"{where}: unknown role {role!r}; roles: {', '.join(FONT_ROLES)}")
+        if isinstance(spec, str):
+            spec = {"family": spec}
+        if not isinstance(spec, dict):
+            raise UsageError(f"{where}.{role}: must be a mapping or a family name")
+        bad = sorted(set(spec) - set(FONT_FIELDS))
+        if bad:
+            raise UsageError(f"{where}.{role}: unknown field(s) {', '.join(bad)}; fields: {', '.join(FONT_FIELDS)}")
+        fonts[role] = {k: str(v) for k, v in spec.items() if v is not None and str(v).strip()}
+    return fonts
+
+
+def resolve_fonts(cat: Catalogue, overrides: dict[str, dict[str, str]] | None = None) -> dict[str, dict[str, str]]:
+    """The family's fonts with the spec's overrides merged per role and field."""
+    base = parse_fonts(cat.family.get("fonts"), "family.yaml: fonts")
+    merged = {role: dict(spec) for role, spec in base.items()}
+    for role, spec in (overrides or {}).items():
+        target = merged.setdefault(role, {})
+        if "family" in spec and "fallback" not in spec:
+            target.pop("fallback", None)  # a new family brings no inherited fallback
+        target.update(spec)
+    return merged
+
+
+def font_line(role: str, spec: dict[str, str]) -> str:
+    parts = []
+    if spec.get("family"):
+        parts.append(spec["family"] + (f" (or {spec['fallback']})" if spec.get("fallback") else ""))
+    for field_name in ("weight", "style"):
+        if spec.get(field_name):
+            parts.append(spec[field_name])
+    if spec.get("case") and spec["case"] != "none":
+        parts.append({"upper": "all caps", "lower": "lower case", "sentence": "sentence case", "title": "title case"}.get(spec["case"], spec["case"]))
+    if spec.get("tracking") and spec["tracking"] != "normal":
+        parts.append(f"{spec['tracking']} letter-spacing")
+    if spec.get("size"):
+        parts.append(f"size: {spec['size']}")
+    if spec.get("colour"):
+        parts.append(f"colour: {spec['colour']}")
+    return f"- **{role.capitalize()}**: " + ", ".join(parts)
+
+
+def typography_block(fonts: dict[str, dict[str, str]]) -> str:
+    """The Typography section: one line per role, title and body first."""
+    if not fonts:
+        return ""
+    order = [r for r in FONT_ROLES if r in fonts] + [r for r in fonts if r not in FONT_ROLES]
+    lines = ["## Typography", "", "Set every piece of text in these faces; no other typeface appears anywhere in the image."]
+    lines += [font_line(role, fonts[role]) for role in order]
+    return "\n".join(lines)
 
 
 # --- aspect ---
@@ -1097,6 +1167,7 @@ def assemble(
     if palette:
         style_block += "\n\n" + palette_paragraph(palette)
     labels = text_labels(spec)
+    fonts = resolve_fonts(cat, spec.fonts)
     sheet_position = None
     if icon_sheet is not None and refs:
         sheet_position = next((i for i, r in enumerate(refs, 1) if Path(r) == Path(icon_sheet)), None)
@@ -1112,6 +1183,7 @@ def assemble(
         "{{ICON_GUIDANCE}}": icon_guidance(sheet_position, icons or [], member_icon_treatment(member), pinned=bool(pinned), icon_style=spec.icon_style) if sheet_position else "",
         "{{CONTENT}}": content_block(spec, icon_slots),
         "{{TEXT_LABELS}}": "\n".join(f'"{label}"' for label in labels),
+        "{{TYPOGRAPHY}}": typography_block(fonts),
     }
     text = template
     for slot, value in slots.items():
@@ -1150,6 +1222,8 @@ def assemble(
     }
     if sheet_position:
         frontmatter["icons"] = [{"item": i["index"], "icon": f"{i['pack']}:{i['name']}", "via": i.get("via", "spec")} for i in icons or []]
+    if fonts:
+        frontmatter["fonts"] = fonts
     if pinned:
         frontmatter["pinned"] = {"ref": pinned["file"], "variant": pinned.get("variant")}
     if palette:
@@ -1697,6 +1771,8 @@ def build_parser() -> argparse.ArgumentParser:
     prepare_args.add_argument("--aspect", default=None, help="landscape | portrait | square | W:H")
     prepare_args.add_argument("--palette-css", default=None, help="CSS file whose colours replace the item colours")
     prepare_args.add_argument("--palette-vars", default=None, help="comma-separated custom properties to use, in order")
+    prepare_args.add_argument("--title-font", default=None, help="title typeface family, overriding the family and the spec")
+    prepare_args.add_argument("--body-font", default=None, help="body typeface family, overriding the family and the spec")
     prepare_args.add_argument("--ref", action="append", default=[], help="user reference image (repeatable)")
     prepare_args.add_argument("--pin", default=None, help="catalogue ref to reproduce: <member>/<id|file>, e.g. 3d-capsule-hub/06")
     prepare_args.add_argument("--no-style-refs", action="store_true", help="do not pass the member's bundled refs")
@@ -1766,6 +1842,9 @@ def cmd_list(cat: Catalogue) -> dict:
 def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
     """Shared front half of prompt and render: spec, route, aspect, refs, palette, prompt file."""
     spec = load_spec(Path(args.spec))
+    for role, value in (("title", args.title_font), ("body", args.body_font)):
+        if value:
+            spec.fonts.setdefault(role, {})["family"] = value
     layout = args.layout or spec.layout
     style, pin = split_style(cat, layout, args.style or spec.style, args.pin or spec.pin)
     pinned_member, pinned = cat.resolve_ref(pin, style) if pin else (None, None)
@@ -1797,6 +1876,7 @@ def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
         "refs": [str(r) for r in refs],
         "pin": cat.pin_token(member.name, pinned) if pinned else None,
         "quality": spec.quality or DEFAULT_QUALITY,
+        "fonts": prompt.frontmatter.get("fonts"),
         "icon_sheet": str(icon_sheet) if icon_sheet else None,
         "icons": [f"{i['pack']}:{i['name']}" for i in icons],
         "palette": [c.as_dict() for c in palette] if palette else None,

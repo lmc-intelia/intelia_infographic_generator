@@ -228,3 +228,12 @@ def test_render_logo_flags(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, mon
     assert data["logo"] is None
     code, data = run(iig3d, capsys, [*base, "--logo", "none"])
     assert data["logo"] is None
+
+
+def test_prompt_font_flags_override(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
+    args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root), "--title-font", "Bebas Neue", "--body-font", "Inter"]
+    code, data = run(iig3d, capsys, args)
+    assert code == 0 and data["fonts"]["title"]["family"] == "Bebas Neue" and data["fonts"]["body"]["family"] == "Inter"
+    assert data["fonts"]["title"]["case"] == "upper"
+    text = (tmp_path / "prompts" / "01-infographic-openwiki-refresh-pipeline.md").read_text()
+    assert "- **Title**: Bebas Neue" in text and "- **Body**: Inter" in text
