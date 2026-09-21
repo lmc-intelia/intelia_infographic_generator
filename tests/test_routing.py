@@ -85,3 +85,16 @@ def test_unknown_style_lists_valid_names(iig3d, cat):
     with pytest.raises(iig3d.UsageError) as err:
         iig3d.route(cat, "dashboard", "claymation")
     assert "claymation" in str(err.value) and "3d-paper-tile" in str(err.value)
+
+
+def test_pinned_member_sets_style_and_default_layout(iig3d, cat):
+    route = iig3d.route(cat, None, None, pinned_member="3d-capsule-hub")
+    assert route.member == "3d-capsule-hub" and route.layout == "3d-capsule-hub" and route.style == "3d-capsule-hub"
+    route = iig3d.route(cat, "hub-spoke", "industrial-3d", pinned_member="3d-paper-tile")
+    assert route.member == "3d-paper-tile" and route.layout == "hub-spoke"
+
+
+def test_pinned_member_conflicts_with_explicit_style(iig3d, cat):
+    with pytest.raises(iig3d.UsageError) as err:
+        iig3d.route(cat, None, "3d-slab-stack", pinned_member="3d-capsule-hub")
+    assert "conflicts" in str(err.value)

@@ -6,11 +6,13 @@ Member of the 3D corporate family. Isometric ribbon with 3D charts and glass tow
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-ribbon-dataviz.jpg` | Tall portrait: a light blue isometric ribbon snakes down a navy field carrying 3D bar charts, stacked layer bars, a 3D printer model and an exploded ring chart, angled labels in white | clean |
-| `ref-02-isometric-city.jpg` | Deep navy ground with a light steel-blue isometric ribbon stepping down the page, one glowing 3D prop module per stage in teal, orange, magenta, blue and lime, numbered circle markers with thin leader lines to white headings and grey descriptions, faint scattered cubes | clean |
-| `ref-03-glass-bar-towers.jpg` | Five glowing 3D modules on a steel-blue isometric ribbon crossing a navy field: stacked teal slabs, orange cubes, a magenta striped glass tower with a sphere cap, a blue exploded ring and lime hexagon prisms, each with a dot-terminal leader to a coloured label bar and thin line icon | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-isometric-dark/01` | `ref-01-ribbon-dataviz.jpg` | Tall portrait: a light blue isometric ribbon snakes down a navy field carrying 3D bar charts, stacked layer bars, a 3D printer model and an exploded ring chart, angled labels in white | Ribbon stages | clean |
+| `3d-isometric-dark/02` | `ref-02-isometric-city.jpg` | Deep navy ground with a light steel-blue isometric ribbon stepping down the page, one glowing 3D prop module per stage in teal, orange, magenta, blue and lime, numbered circle markers with thin leader lines to white headings and grey descriptions, faint scattered cubes | Navy city | clean |
+| `3d-isometric-dark/03` | `ref-03-glass-bar-towers.jpg` | Five glowing 3D modules on a steel-blue isometric ribbon crossing a navy field: stacked teal slabs, orange cubes, a magenta striped glass tower with a sphere cap, a blue exploded ring and lime hexagon prisms, each with a dot-terminal leader to a coloured label bar and thin line icon | Glass towers | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

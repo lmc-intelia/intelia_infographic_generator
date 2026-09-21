@@ -6,10 +6,12 @@ Member of the 3D corporate family. Fat 3D chevron arrows and folded ribbons carr
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-chevron-arrow-flow.jpg` | Eight interlocking 3D chevron arrows sweeping left to right in a purple to green gradient, icons on each arrow, leader lines to text above and below, dotted world map backdrop | clean |
-| `ref-02-folded-ribbon-tiers.jpg` | Five angled folded ribbon bands A to E, monochrome blue, hexagon letter tabs, icon column at right | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-arrow-ribbon/01` | `ref-01-chevron-arrow-flow.jpg` | Eight interlocking 3D chevron arrows sweeping left to right in a purple to green gradient, icons on each arrow, leader lines to text above and below, dotted world map backdrop | Chevron flow | clean |
+| `3d-arrow-ribbon/02` | `ref-02-folded-ribbon-tiers.jpg` | Five angled folded ribbon bands A to E, monochrome blue, hexagon letter tabs, icon column at right | Folded ribbon tiers | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

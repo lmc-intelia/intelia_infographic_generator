@@ -6,9 +6,11 @@ Member of the 3D corporate family. Isometric gradient pedestals with floating 3D
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-four-pedestals.jpg` | Four isometric pedestals in lime, teal, blue and purple gradients fading upward, white extruded numerals 1 to 4 lying on the tops, icon and text in the fade above | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-gradient-pedestal/01` | `ref-01-four-pedestals.jpg` | Four isometric pedestals in lime, teal, blue and purple gradients fading upward, white extruded numerals 1 to 4 lying on the tops, icon and text in the fade above | Pedestal row | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

@@ -60,14 +60,20 @@ refs:
     file: ref-01-tile-chart-set.jpg
     shows: "Six-panel set: ring chart with icons, line chart with disc markers, bar chart with percentage tiles on top, 3D pie with numbered wedges, hexagon step tabs, square step tiles in a grid"
     flags: [clean]
+    variant: Tile-capped charts
+    item_count: 6
   - id: "02"
     file: ref-02-semicircle-tabs.jpg
     shows: Semicircle segment wheel around a central disc plus five numbered bevelled tabs with coloured frames
     flags: [clean]
+    variant: Segment wheel
+    item_count: 5
   - id: "03"
     file: ref-03-hexagon-tree.jpg
     shows: One large four-colour hexagon parent, four single-colour hexagon children, thin coloured connectors and small hexagon terminals
     flags: [clean]
+    variant: Hexagon tree
+    item_count: 4
 pairings:
   dashboard: ["01"]
   bento-grid: ["01", "02"]

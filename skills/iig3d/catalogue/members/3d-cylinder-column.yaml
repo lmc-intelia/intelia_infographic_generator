@@ -76,6 +76,8 @@ refs:
     and description, flat dark icon on each face
   flags:
   - clean
+  variant: Ascending
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-cylinder-column-01/infographic.png
     added: '2026-09-17'

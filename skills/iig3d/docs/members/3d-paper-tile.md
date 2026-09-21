@@ -6,11 +6,13 @@ Member of the 3D corporate family. Embossed paper tiles, hexagons, tabs and tile
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-tile-chart-set.jpg` | Six-panel set: ring chart with icons, line chart with disc markers, bar chart with percentage tiles on top, 3D pie with numbered wedges, hexagon step tabs, square step tiles in a grid | clean |
-| `ref-02-semicircle-tabs.jpg` | Semicircle segment wheel around a central disc plus five numbered bevelled tabs with coloured frames | clean |
-| `ref-03-hexagon-tree.jpg` | One large four-colour hexagon parent, four single-colour hexagon children, thin coloured connectors and small hexagon terminals | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-paper-tile/01` | `ref-01-tile-chart-set.jpg` | Six-panel set: ring chart with icons, line chart with disc markers, bar chart with percentage tiles on top, 3D pie with numbered wedges, hexagon step tabs, square step tiles in a grid | Tile-capped charts | clean |
+| `3d-paper-tile/02` | `ref-02-semicircle-tabs.jpg` | Semicircle segment wheel around a central disc plus five numbered bevelled tabs with coloured frames | Segment wheel | clean |
+| `3d-paper-tile/03` | `ref-03-hexagon-tree.jpg` | One large four-colour hexagon parent, four single-colour hexagon children, thin coloured connectors and small hexagon terminals | Hexagon tree | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

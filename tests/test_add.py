@@ -139,3 +139,44 @@ def test_user_added_watermark_is_reported(iig3d, tmp_catalogue, fixtures, tmp_pa
     assert any("watermark" in v and "ref-02-wide-3000px.jpg" in v for v in result["check"])
     cat = iig3d.load_catalogue(tmp_catalogue.root)
     assert iig3d.check(cat, allow_watermark=True) == []
+
+
+def test_add_with_variant_and_item_count_returns_pin(iig3d, tmp_catalogue, fixtures, tmp_path):
+    iig3d.render_docs(tmp_catalogue)
+    meta = write_meta(tmp_path, member="3d-hex-cluster", shows="Ring of cells", flags=["clean"], pairings=["hub-spoke"], variant="Ring", item_count=12)
+    result = iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
+    assert result["status"] == "ok" and result["pin"] == "3d-hex-cluster/02"
+    cat = iig3d.load_catalogue(tmp_catalogue.root)
+    member, entry = cat.resolve_ref(result["pin"])
+    assert member.name == "3d-hex-cluster" and entry["variant"] == "Ring" and entry["item_count"] == 12
+    assert list(entry)[-1] == "source"
+    doc = (tmp_catalogue.root / "docs" / "members" / "3d-hex-cluster.md").read_text()
+    assert "`3d-hex-cluster/02`" in doc and "| Ring |" in doc
+    assert iig3d.stale_docs(cat) == [] and result["check"] == []
+
+
+def test_add_unknown_variant_rejected(iig3d, tmp_catalogue, fixtures, tmp_path):
+    meta = write_meta(tmp_path, member="3d-hex-cluster", shows="x", flags=["clean"], pairings=[], variant="Capsule hub")
+    with pytest.raises(iig3d.UsageError) as err:
+        iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
+    assert "Capsule hub" in str(err.value) and "Ring" in str(err.value)
+
+
+@pytest.mark.parametrize("bad", [0, -1, "8", 2.5, True])
+def test_add_bad_item_count_rejected(iig3d, tmp_catalogue, fixtures, tmp_path, bad):
+    meta = write_meta(tmp_path, member="3d-hex-cluster", shows="x", flags=["clean"], pairings=[], item_count=bad)
+    with pytest.raises(iig3d.UsageError) as err:
+        iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
+    assert "item_count" in str(err.value)
+
+
+def test_add_new_member_with_variant(iig3d, tmp_catalogue, fixtures, tmp_path):
+    block = dict(tmp_catalogue.member("3d-hex-cluster").raw)
+    for key in ("refs", "pairings", "source"):
+        block.pop(key)
+    block.update(name="3d-orbit-ring", device="Concentric orbit rings", alternates=[], routing=[])
+    meta = write_meta(tmp_path, new_member=block, shows="Orbit rings", flags=["clean"], pairings=[], variant="Ring", item_count=6)
+    result = iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
+    assert result["pin"] == "3d-orbit-ring/01"
+    entry = iig3d.load_catalogue(tmp_catalogue.root).member("3d-orbit-ring").refs[0]
+    assert entry["variant"] == "Ring" and entry["item_count"] == 6

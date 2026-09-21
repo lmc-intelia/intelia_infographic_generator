@@ -6,9 +6,11 @@ Member of the 3D corporate family. Stepped glossy cylinders with bent 3D arrows 
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-stepped-cylinders-arrows.jpg` | Five glossy cylinders of ascending height in yellow, orange, red-orange, red and crimson on a reflective white floor, a thick bent arrow rising from each open top and pointing right to a large numeral over a small caps word, bold caps title and description, flat dark icon on each face | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-cylinder-column/01` | `ref-01-stepped-cylinders-arrows.jpg` | Five glossy cylinders of ascending height in yellow, orange, red-orange, red and crimson on a reflective white floor, a thick bent arrow rising from each open top and pointing right to a large numeral over a small caps word, bold caps title and description, flat dark icon on each face | Ascending | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

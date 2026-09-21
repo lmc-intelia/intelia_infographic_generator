@@ -104,3 +104,32 @@ def test_render_requires_out_dir(iig3d, capsys, fixtures):
 def test_remaining_commands_print_one_json(iig3d, capsys, argv):
     code, data = run(iig3d, capsys, argv)
     assert "status" in data and code in (0, 1)
+
+
+def test_refs_lists_pins_and_layout_optional(iig3d, capsys, tmp_catalogue):
+    code, data = run(iig3d, capsys, ["refs", "--member", "3d-capsule-hub", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["layout"] == "3d-capsule-hub" and data["pin"] is None
+    pins = [a["pin"] for a in data["available"]]
+    assert pins == [f"3d-capsule-hub/{i:02d}" for i in range(1, 7)]
+    assert {"pin", "file", "shows", "variant", "item_count", "flags"} <= set(data["available"][0])
+
+
+def test_refs_with_pin(iig3d, capsys, tmp_catalogue):
+    code, data = run(iig3d, capsys, ["refs", "--member", "3d-capsule-hub", "--layout", "hub-spoke", "--pin", "06", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["pin"] == "3d-capsule-hub/06"
+    assert data["refs"][0].endswith("ref-06-capsule-hierarchy.jpg")
+
+
+def test_prompt_with_pin_flag(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
+    args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, [*args, "--pin", "3d-disc-timeline/03"])
+    assert code == 0 and data["pin"] == "3d-disc-timeline/03" and data["member"] == "3d-disc-timeline"
+    assert data["refs"][0].endswith("ref-03-disc-chain-track.jpg")
+    text = (tmp_path / "prompts" / "01-infographic-openwiki-refresh-pipeline.md").read_text()
+    assert "## Reference Composition" in text and "usage: replicate" in text
+
+
+def test_prompt_pin_conflicting_style_exits_1(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
+    args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, [*args, "--pin", "3d-capsule-hub/06"])  # spec style is 3d-disc-timeline
+    assert code == 1 and "conflicts" in data["error"]

@@ -6,10 +6,12 @@ Member of the 3D corporate family. Tilted glossy bullseye, tapered beams to numb
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-target-four-pills.jpg` | Red bullseye disc on the left, four red pills stacked on the right, each with a numbered white circle at the inner end, tapered red beams converging on the bullseye, soft shadow under the disc | clean |
-| `ref-02-target-six-pills-symmetric.jpg` | Large glossy red bullseye target tilted toward the viewer on the left, five tapered red beams from the bullseye to rounded red pills stacked on the right, each pill anchored by a white rimmed circle with a red numeral, bold white caps titles, pale grey studio with a soft shadow | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-target-callout/01` | `ref-01-target-four-pills.jpg` | Red bullseye disc on the left, four red pills stacked on the right, each with a numbered white circle at the inner end, tapered red beams converging on the bullseye, soft shadow under the disc | Side target | clean |
+| `3d-target-callout/02` | `ref-02-target-six-pills-symmetric.jpg` | Large glossy red bullseye target tilted toward the viewer on the left, five tapered red beams from the bullseye to rounded red pills stacked on the right, each pill anchored by a white rimmed circle with a red numeral, bold white caps titles, pale grey studio with a soft shadow | Side target | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

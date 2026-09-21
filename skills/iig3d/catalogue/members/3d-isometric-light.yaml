@@ -76,6 +76,8 @@ refs:
     lines to four labelled sections
   flags:
   - clean
+  variant: Winding platform
+  item_count: 4
 - id: '02'
   file: ref-02-road-timeline-cubes.jpg
   shows: Isometric S-shaped road with dashed centre line winding past five coloured cube platforms in teal, orange, blue,
@@ -83,6 +85,8 @@ refs:
     lines to numbered labels above and below, pale lavender studio
   flags:
   - clean
+  variant: Winding platform
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-isometric-light-02/infographic.png
     added: '2026-09-17'
@@ -94,11 +98,14 @@ refs:
     and workers in orange and blue'
   flags:
   - clean
+  variant: Factory floor
 - id: '04'
   file: ref-04-stacked-platform-tiers.jpg
   shows: Three isometric island tiers floating vertically, each a different scene, leader lines to labels on both sides
   flags:
   - clean
+  variant: Stacked tiers
+  item_count: 3
 pairings:
   isometric-map:
   - '01'

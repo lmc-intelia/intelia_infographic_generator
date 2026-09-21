@@ -81,6 +81,8 @@ refs:
     with dot terminals, two-tone blue title top-left, pure white backdrop
   flags:
   - clean
+  variant: Exploded stack
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-glass-layer-01/infographic.png
     added: '2026-09-17'

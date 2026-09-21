@@ -21,4 +21,5 @@ items:                            # one per step, tier, capsule, pill, cell, pla
 # stats:
 #   - {value: "73%", caption: pages refreshed per run}
 # notes: keep the world map faint
+# pin: 3d-capsule-hub/06         # optional: catalogue ref to reproduce with this content (<member>/<id|file>; `refs --member M` lists them)
 # refs: [./my-brand-reference.jpg]

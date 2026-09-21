@@ -76,6 +76,7 @@ refs:
     a 3D printer model and an exploded ring chart, angled labels in white'
   flags:
   - clean
+  variant: Ribbon stages
 - id: '02'
   file: ref-02-isometric-city.jpg
   shows: Deep navy ground with a light steel-blue isometric ribbon stepping down the page, one glowing 3D prop module per
@@ -83,6 +84,8 @@ refs:
     descriptions, faint scattered cubes
   flags:
   - clean
+  variant: Navy city
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-isometric-dark-02/infographic.png
     added: '2026-09-17'
@@ -95,6 +98,8 @@ refs:
     leader to a coloured label bar and thin line icon'
   flags:
   - clean
+  variant: Glass towers
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-isometric-dark-03/infographic.png
     added: '2026-09-17'

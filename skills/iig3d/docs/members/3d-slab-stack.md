@@ -6,11 +6,13 @@ Member of the 3D corporate family. Stacked extruded slabs, staircase treads, fol
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-stacked-slabs.jpg` | Six stacked extruded slabs A to F, each a different colour, lettered discs, stat column on the right | clean |
-| `ref-02-staircase-steps.jpg` | Zig-zag 3D staircase, six coloured treads, big step numerals alternating left and right | clean |
-| `ref-03-folded-ribbon-tiers.jpg` | Five stacked folded ribbons A to E in a monochrome blue gradient with hexagon letter tabs and icon column | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-slab-stack/01` | `ref-01-stacked-slabs.jpg` | Six stacked extruded slabs A to F, each a different colour, lettered discs, stat column on the right | Stacked slabs | clean |
+| `3d-slab-stack/02` | `ref-02-staircase-steps.jpg` | Zig-zag 3D staircase, six coloured treads, big step numerals alternating left and right | Staircase | clean |
+| `3d-slab-stack/03` | `ref-03-folded-ribbon-tiers.jpg` | Five stacked folded ribbons A to E in a monochrome blue gradient with hexagon letter tabs and icon column | Folded ribbon | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

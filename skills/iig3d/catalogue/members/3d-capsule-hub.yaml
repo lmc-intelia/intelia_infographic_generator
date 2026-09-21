@@ -82,6 +82,8 @@ refs:
     ring, white studio
   flags:
   - clean
+  variant: Capsule hub
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-capsule-hub-01/infographic.png
     added: '2026-09-17'
@@ -94,6 +96,8 @@ refs:
     terminals on the hub rim, pale studio
   flags:
   - clean
+  variant: Hub with ribbon
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-capsule-hub-02/infographic.png
     added: '2026-09-17'
@@ -104,12 +108,15 @@ refs:
   shows: Seven-segment green to teal ring around a central disc, numbered wedges with icons and labels
   flags:
   - low-res
+  variant: Segment ring
+  item_count: 7
 - id: '04'
   file: ref-04-comparision.jpg
   shows: 'Two-column comparison: two vertical section pillars with vertical titles, a VS diamond between them, five glossy
     dumbbell capsules per side (icon circle plus number circle), text outward in the whitespace, concentric rings behind'
   flags:
   - clean
+  item_count: 10
 - id: '05'
   file: ref-05-rimmed-capsule-wheel.jpg
   shows: Eight white capsules in two columns of four around a bevelled hub, each capsule outlined in its own family colour
@@ -117,6 +124,8 @@ refs:
     with a colour-dot progress strip
   flags:
   - clean
+  variant: Rimmed wheel
+  item_count: 8
 - id: '06'
   file: ref-06-capsule-hierarchy.jpg
   shows: 'Three-level capsule hierarchy: a chrome-rimmed central hub disc with the title, eight white pill capsules in two
@@ -125,6 +134,8 @@ refs:
     from each capsule''s outer end, faint orbit rings on a pale studio'
   flags:
   - clean
+  variant: Capsule hierarchy
+  item_count: 8
   source:
     path: CAPSULE-hierarchy.png
     added: '2026-09-17'

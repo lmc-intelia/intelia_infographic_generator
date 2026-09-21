@@ -164,3 +164,32 @@ def test_write_prompt_past_ninety_nine(iig3d, cat, spec, tmp_path):
     second = iig3d.write_prompt(tmp_path, prompt, "x")
     assert first.name == "100-infographic-x.md" and second.name == "101-infographic-x.md"
     assert len(list(prompts.iterdir())) == 101
+
+
+def test_pinned_ref_composition_section_and_frontmatter(iig3d, spec, tmp_catalogue):
+    _, pinned = tmp_catalogue.resolve_ref("3d-capsule-hub/06")
+    pinned["variant"], pinned["item_count"] = "Capsule hierarchy", 8
+    route_ = iig3d.route(tmp_catalogue, None, None, pinned_member="3d-capsule-hub")
+    refs = iig3d.select_refs(tmp_catalogue, "3d-capsule-hub", route_.layout, pinned=pinned)
+    prompt = iig3d.assemble(tmp_catalogue, spec, route_, "16:9", refs=refs, pinned=pinned)
+    body = section(prompt.text, "Reference Composition")
+    assert body.startswith("Reference image 1 is the composition to reproduce. It shows: Three-level capsule hierarchy")
+    assert "**Capsule hierarchy** variant" in body and "holds 8 items" in body
+    assert prompt.text.index("## Reference Composition") < prompt.text.index("## Layout Guidelines")
+    assert prompt.frontmatter["references"][0] == {"ref_id": "01", "filename": "ref-06-capsule-hierarchy.jpg", "usage": "replicate"}
+    assert all(r["usage"] == "direct" for r in prompt.frontmatter["references"][1:])
+    assert prompt.frontmatter["pinned"] == {"ref": "ref-06-capsule-hierarchy.jpg", "variant": "Capsule hierarchy"}
+    assert any("5 items but pinned ref" in w and "shows 8" in w for w in prompt.warnings)
+
+
+def test_no_pin_leaves_no_section_or_blank_run(iig3d, cat, spec):
+    prompt = iig3d.assemble(cat, spec, iig3d.route(cat, "linear-progression", "3d-disc-timeline"), "16:9")
+    assert "Reference Composition" not in prompt.text and "{{" not in prompt.text and "\n\n\n" not in prompt.text
+    assert "pinned" not in prompt.frontmatter
+
+
+def test_pinned_low_res_warns(iig3d, spec, tmp_catalogue):
+    _, pinned = tmp_catalogue.resolve_ref("3d-capsule-hub/03")  # low-res in the shipped catalogue
+    route_ = iig3d.route(tmp_catalogue, None, None, pinned_member="3d-capsule-hub")
+    prompt = iig3d.assemble(tmp_catalogue, spec, route_, "16:9", pinned=pinned)
+    assert any("low-res" in w for w in prompt.warnings)

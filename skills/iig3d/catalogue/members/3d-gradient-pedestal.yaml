@@ -56,6 +56,8 @@ refs:
     file: ref-01-four-pedestals.jpg
     shows: Four isometric pedestals in lime, teal, blue and purple gradients fading upward, white extruded numerals 1 to 4 lying on the tops, icon and text in the fade above
     flags: [clean]
+    variant: Pedestal row
+    item_count: 4
 pairings:
   linear-progression: ["01"]
   comparison-matrix: ["01"]

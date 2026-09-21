@@ -58,14 +58,20 @@ refs:
     file: ref-01-stacked-slabs.jpg
     shows: Six stacked extruded slabs A to F, each a different colour, lettered discs, stat column on the right
     flags: [clean]
+    variant: Stacked slabs
+    item_count: 6
   - id: "02"
     file: ref-02-staircase-steps.jpg
     shows: Zig-zag 3D staircase, six coloured treads, big step numerals alternating left and right
     flags: [clean]
+    variant: Staircase
+    item_count: 6
   - id: "03"
     file: ref-03-folded-ribbon-tiers.jpg
     shows: Five stacked folded ribbons A to E in a monochrome blue gradient with hexagon letter tabs and icon column
     flags: [clean]
+    variant: Folded ribbon
+    item_count: 5
 pairings:
   hierarchical-layers: ["01", "03"]
   linear-progression: ["02", "01"]

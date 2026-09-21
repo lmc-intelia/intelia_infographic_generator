@@ -75,6 +75,8 @@ refs:
     world map on a pale studio
   flags:
   - clean
+  variant: Straight track
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-disc-timeline-01/infographic.png
     added: '2026-09-17'
@@ -86,6 +88,8 @@ refs:
     changes per segment, labels alternating above and below, faint dot-grid world map
   flags:
   - clean
+  variant: S-curve or serpentine
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-disc-timeline-02/infographic.png
     added: '2026-09-17'
@@ -97,12 +101,16 @@ refs:
     beside each disc
   flags:
   - clean
+  variant: Chain track
+  item_count: 5
 - id: '04'
   file: ref-04-serpentine-ribbon.jpg
   shows: Five rimmed discs with icons on a horizontal serpentine ribbon, each disc paired with a bracketed step tab above
     or below and a dotted leader to its description, pale studio with a dot-grid corner
   flags:
   - clean
+  variant: S-curve or serpentine
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-disc-timeline-04/infographic.png
     added: '2026-09-17'
