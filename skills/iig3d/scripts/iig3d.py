@@ -651,7 +651,7 @@ def icon_svg(cat: Catalogue, pack: str, name: str, fetch: bool = True) -> Path:
     if b"<svg" not in body[:200]:
         raise UsageError(f"icon {pack}:{name}: not found on Iconify ({url}); check the pack and name at https://icon-sets.iconify.design")
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(body)
+    path.write_bytes(body.rstrip(b"\n") + b"\n")  # newline-terminated, so the end-of-file hook leaves cached glyphs alone
     return path
 
 
