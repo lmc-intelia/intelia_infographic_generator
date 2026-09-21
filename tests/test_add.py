@@ -180,3 +180,13 @@ def test_add_new_member_with_variant(iig3d, tmp_catalogue, fixtures, tmp_path):
     assert result["pin"] == "3d-orbit-ring/01"
     entry = iig3d.load_catalogue(tmp_catalogue.root).member("3d-orbit-ring").refs[0]
     assert entry["variant"] == "Ring" and entry["item_count"] == 6
+
+
+def test_regenerated_entry_keeps_key_order_and_origin(iig3d, tmp_catalogue, fixtures, tmp_path):
+    target = tmp_catalogue.root / "refs" / "3d-capsule-hub" / "ref-06-capsule-hierarchy.jpg"
+    target.unlink()
+    meta = write_meta(tmp_path, member="3d-capsule-hub", shows="regenerated", flags=["clean"], pairings=[], file="ref-06-capsule-hierarchy.jpg", variant="Capsule hierarchy", item_count=8)
+    iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
+    entry = next(r for r in iig3d.load_catalogue(tmp_catalogue.root).member("3d-capsule-hub").refs if r["id"] == "06")
+    assert list(entry) == ["id", "file", "shows", "flags", "variant", "item_count", "source"]
+    assert entry["source"]["regenerated"] is True and entry["source"]["derived_from"] == "CAPSULE-hierarchy.png"

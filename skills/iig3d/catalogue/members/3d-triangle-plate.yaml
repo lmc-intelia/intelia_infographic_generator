@@ -70,13 +70,15 @@ refs:
   shows: Four glossy triangular prisms in cyan, lime, orange and red-orange locked into one pyramid on a pale studio, bold
     labels on each face, thin leader lines with numerals 01 to 04 and small icons to text in the corners, title top right
   flags:
-  - watermark
+  - clean
   variant: Facet pyramid
   item_count: 4
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_16_04-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-01-facet-pyramid/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_16_04-Greenshot.png
 - id: '02'
   file: ref-02-corner-nodes.jpg
   shows: One silver-grey rounded triangular plate with a white inner bevel, a glossy circle node with a line icon at each

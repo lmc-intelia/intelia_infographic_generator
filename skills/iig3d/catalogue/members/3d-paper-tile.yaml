@@ -102,13 +102,15 @@ refs:
   shows: Three white paper segment wedges around a central white disc with a blue-to-green rim ring, each wedge lifted with
     a shadow and carrying a numeral, name, description and small line icon, title and count on the centre disc, square
   flags:
-  - watermark
+  - clean
   variant: Segment wheel
   item_count: 3
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_27_22-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-04-segment-wheel-three/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_27_22-Greenshot.png
 - id: '05'
   file: ref-05-hexagon-tab-list.jpg
   shows: Five horizontal hexagon-ended bars in navy and steel-blue shades stacked on the left carrying body text, each joined

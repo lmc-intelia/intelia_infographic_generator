@@ -11,9 +11,9 @@ Member of the 3D corporate family. Stacked extruded slabs, staircase treads, fol
 | `3d-slab-stack/01` | `ref-01-stacked-slabs.jpg` | Six stacked extruded slabs A to F, each a different colour, lettered discs, stat column on the right | Stacked slabs | clean |
 | `3d-slab-stack/02` | `ref-02-staircase-steps.jpg` | Zig-zag 3D staircase, six coloured treads, big step numerals alternating left and right | Staircase | clean |
 | `3d-slab-stack/03` | `ref-03-folded-ribbon-tiers.jpg` | Five stacked folded ribbons A to E in a monochrome blue gradient with hexagon letter tabs and icon column | Folded ribbon | clean |
-| `3d-slab-stack/04` | `ref-04-rounded-slab-column-eight.jpg` | Eight rounded-square extruded slabs stacked vertically with even gaps in cyan, sand, blue, orange, navy, wine, indigo and plum, dashed leader lines alternating left and right to icon, bold coloured label and description, title top left, pale backdrop | Stacked slabs | watermark |
+| `3d-slab-stack/04` | `ref-04-rounded-slab-column-eight.jpg` | Eight rounded-square extruded slabs stacked vertically with even gaps in cyan, sand, blue, orange, navy, wine, indigo and plum, dashed leader lines alternating left and right to icon, bold coloured label and description, title top left, pale backdrop | Stacked slabs | clean |
 | `3d-slab-stack/05` | `ref-05-rounded-slab-column-seven.jpg` | Seven rounded-square extruded slabs stacked vertically with even gaps stepping from orange through yellow and greens to blue, leader lines to labels on the left and grey icons on the right, title top left, pale backdrop | Stacked slabs | clean |
-| `3d-slab-stack/06` | `ref-06-pyramid-bars-dark.jpg` | Six rounded extruded bars stacked as a pyramid from a wide red base to a small yellow top, in perspective on a dark charcoal backdrop, leader lines to year labels and icon circles on the right, title top left | Stacked slabs | watermark |
+| `3d-slab-stack/06` | `ref-06-pyramid-bars-dark.jpg` | Six rounded extruded bars stacked as a pyramid from a wide red base to a small yellow top, in perspective on a dark charcoal backdrop, leader lines to year labels and icon circles on the right, title top left | Stacked slabs | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 

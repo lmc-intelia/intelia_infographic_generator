@@ -8,10 +8,10 @@ Member of the 3D corporate family. Neumorphic soft-embossed grey devices: jigsaw
 
 | Pin | File | Shows | Variant | Flags |
 |-----|------|-------|---------|-------|
-| `3d-soft-emboss/01` | `ref-01-jigsaw-ring-three.jpg` | Neumorphic light grey disc cut into three jigsaw pieces with knob edges and a recessed centre, a raised icon disc on each piece, three raised numbered text cards 01 to 03 stacked on the right, title centred at top between thin rules | Jigsaw ring | watermark |
-| `3d-soft-emboss/02` | `ref-02-jigsaw-ring-four.jpg` | Neumorphic light grey disc cut into four jigsaw quarters with a recessed centre, raised icon discs on each quarter, big light-grey numerals 01 to 04 with names and descriptions two per side of the disc | Jigsaw ring | watermark |
-| `3d-soft-emboss/03` | `ref-03-segment-ring-three.jpg` | Neumorphic light grey disc split into three wedges by thin grooves around a recessed centre, raised icon disc per wedge on the right, three raised numbered cards 01 to 03 on the left, title centred at top | Segment ring | watermark |
-| `3d-soft-emboss/04` | `ref-04-overlapping-circles.jpg` | Three raised translucent light-grey circles overlapping like a Venn diagram on the right, numerals 01 to 03 in the overlaps, a raised icon disc on each outer lobe, big numerals 1 to 3 with names and descriptions in a column on the left | Overlapping circles | watermark |
+| `3d-soft-emboss/01` | `ref-01-jigsaw-ring-three.jpg` | Neumorphic light grey disc cut into three jigsaw pieces with knob edges and a recessed centre, a raised icon disc on each piece, three raised numbered text cards 01 to 03 stacked on the right, title centred at top between thin rules | Jigsaw ring | clean |
+| `3d-soft-emboss/02` | `ref-02-jigsaw-ring-four.jpg` | Neumorphic light grey disc cut into four jigsaw quarters with a recessed centre, raised icon discs on each quarter, big light-grey numerals 01 to 04 with names and descriptions two per side of the disc | Jigsaw ring | clean |
+| `3d-soft-emboss/03` | `ref-03-segment-ring-three.jpg` | Neumorphic light grey disc split into three wedges by thin grooves around a recessed centre, raised icon disc per wedge on the right, three raised numbered cards 01 to 03 on the left, title centred at top | Segment ring | clean |
+| `3d-soft-emboss/04` | `ref-04-overlapping-circles.jpg` | Three raised translucent light-grey circles overlapping like a Venn diagram on the right, numerals 01 to 03 in the overlaps, a raised icon disc on each outer lobe, big numerals 1 to 3 with names and descriptions in a column on the left | Overlapping circles | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 

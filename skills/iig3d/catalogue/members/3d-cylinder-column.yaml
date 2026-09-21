@@ -89,26 +89,31 @@ refs:
     front, teal to lime to yellow gradient, thin leader lines to coloured icon circles and labels above, title and description
     top left, dark charcoal backdrop
   flags:
-  - watermark
+  - clean
   variant: Descending
   item_count: 5
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_28_06-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-02-perspective-cylinders-dark/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_28_06-Greenshot.png
 - id: '03'
   file: ref-03-isometric-arrow-cylinders.jpg
   shows: Five isometric bent arrows in magenta, orange, yellow, teal and blue rising from short glossy cylinder pedestals
     of stepped height marked 10 to 90 percent, labels along the base line, four white icon tiles on the left, text block top
     right
   flags:
-  - watermark
+  - clean
   variant: Bar chart
   item_count: 5
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/86-template-86(infographics)-comp (1).jpg
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-03-isometric-arrow-cylinders/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/86-template-86(infographics)-comp
+      (1).jpg
 pairings:
   linear-progression:
   - '01'

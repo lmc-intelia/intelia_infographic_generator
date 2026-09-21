@@ -133,13 +133,15 @@ refs:
   shows: Five white bevelled discs with line icons threaded on a vertical serpentine ribbon in navy to steel-blue shades,
     each disc paired with a wide coloured text band extending left or right, title top right, portrait
   flags:
-  - watermark
+  - clean
   variant: S-curve or serpentine
   item_count: 5
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_23_57-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-06-serpentine-disc-bands/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_23_57-Greenshot.png
 pairings:
   linear-progression:
   - '03'

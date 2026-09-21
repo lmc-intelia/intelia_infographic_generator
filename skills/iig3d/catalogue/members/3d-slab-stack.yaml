@@ -96,13 +96,15 @@ refs:
     and plum, dashed leader lines alternating left and right to icon, bold coloured label and description, title top left,
     pale backdrop
   flags:
-  - watermark
+  - clean
   variant: Stacked slabs
   item_count: 8
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_20_27-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-04-rounded-slab-column-eight/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_20_27-Greenshot.png
 - id: '05'
   file: ref-05-rounded-slab-column-seven.jpg
   shows: Seven rounded-square extruded slabs stacked vertically with even gaps stepping from orange through yellow and greens
@@ -120,13 +122,15 @@ refs:
   shows: Six rounded extruded bars stacked as a pyramid from a wide red base to a small yellow top, in perspective on a dark
     charcoal backdrop, leader lines to year labels and icon circles on the right, title top left
   flags:
-  - watermark
+  - clean
   variant: Stacked slabs
   item_count: 6
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_28_51-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-06-pyramid-bars-dark/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_28_51-Greenshot.png
 pairings:
   hierarchical-layers:
   - '01'

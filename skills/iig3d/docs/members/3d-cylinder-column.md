@@ -9,8 +9,8 @@ Member of the 3D corporate family. Stepped glossy cylinders with bent 3D arrows 
 | Pin | File | Shows | Variant | Flags |
 |-----|------|-------|---------|-------|
 | `3d-cylinder-column/01` | `ref-01-stepped-cylinders-arrows.jpg` | Five glossy cylinders of ascending height in yellow, orange, red-orange, red and crimson on a reflective white floor, a thick bent arrow rising from each open top and pointing right to a large numeral over a small caps word, bold caps title and description, flat dark icon on each face | Ascending | clean |
-| `3d-cylinder-column/02` | `ref-02-perspective-cylinders-dark.jpg` | Five glossy cylinders lying in perspective from a small dark teal disc at the back to a large yellow drum at the front, teal to lime to yellow gradient, thin leader lines to coloured icon circles and labels above, title and description top left, dark charcoal backdrop | Descending | watermark |
-| `3d-cylinder-column/03` | `ref-03-isometric-arrow-cylinders.jpg` | Five isometric bent arrows in magenta, orange, yellow, teal and blue rising from short glossy cylinder pedestals of stepped height marked 10 to 90 percent, labels along the base line, four white icon tiles on the left, text block top right | Bar chart | watermark |
+| `3d-cylinder-column/02` | `ref-02-perspective-cylinders-dark.jpg` | Five glossy cylinders lying in perspective from a small dark teal disc at the back to a large yellow drum at the front, teal to lime to yellow gradient, thin leader lines to coloured icon circles and labels above, title and description top left, dark charcoal backdrop | Descending | clean |
+| `3d-cylinder-column/03` | `ref-03-isometric-arrow-cylinders.jpg` | Five isometric bent arrows in magenta, orange, yellow, teal and blue rising from short glossy cylinder pedestals of stepped height marked 10 to 90 percent, labels along the base line, four white icon tiles on the left, text block top right | Bar chart | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 

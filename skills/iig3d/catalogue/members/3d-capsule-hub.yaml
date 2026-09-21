@@ -146,13 +146,15 @@ refs:
     circles in teal, magenta, orange, lime and purple in one row, each ring tapering to a pin point and a dotted drop to a
     caps label and description below
   flags:
-  - watermark
+  - clean
   variant: Capsule hub
   item_count: 5
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_29_37-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-07-hub-ring-children/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_29_37-Greenshot.png
 pairings:
   hub-spoke:
   - '01'

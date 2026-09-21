@@ -8,7 +8,7 @@ Member of the 3D corporate family. Glossy triangular plates: a pyramid of four f
 
 | Pin | File | Shows | Variant | Flags |
 |-----|------|-------|---------|-------|
-| `3d-triangle-plate/01` | `ref-01-facet-pyramid.jpg` | Four glossy triangular prisms in cyan, lime, orange and red-orange locked into one pyramid on a pale studio, bold labels on each face, thin leader lines with numerals 01 to 04 and small icons to text in the corners, title top right | Facet pyramid | watermark |
+| `3d-triangle-plate/01` | `ref-01-facet-pyramid.jpg` | Four glossy triangular prisms in cyan, lime, orange and red-orange locked into one pyramid on a pale studio, bold labels on each face, thin leader lines with numerals 01 to 04 and small icons to text in the corners, title top right | Facet pyramid | clean |
 | `3d-triangle-plate/02` | `ref-02-corner-nodes.jpg` | One silver-grey rounded triangular plate with a white inner bevel, a glossy circle node with a line icon at each corner, options 01 to 03 numbered along the edges, a small white arrow badge at the centre, descriptions in the surrounding corners of a square canvas | Corner nodes | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.

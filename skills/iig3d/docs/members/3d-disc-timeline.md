@@ -13,7 +13,7 @@ Member of the 3D corporate family. Rimmed bevelled discs on a track, ribbon or S
 | `3d-disc-timeline/03` | `ref-03-disc-chain-track.jpg` | Five embossed numbered discs (01 STEP) joined by a thick grey 3D track that snakes down the page, icon plus text beside each disc | Chain track | clean |
 | `3d-disc-timeline/04` | `ref-04-serpentine-ribbon.jpg` | Five rimmed discs with icons on a horizontal serpentine ribbon, each disc paired with a bracketed step tab above or below and a dotted leader to its description, pale studio with a dot-grid corner | S-curve or serpentine | clean |
 | `3d-disc-timeline/05` | `ref-05-gradient-ring-row.jpg` | Five overlapping gradient ring discs in teal, blue, purple, magenta and orange in one straight row, white face plates, dotted connectors from a white pill title block above, dotted drops to small colour dots and caps labels below | Straight track | clean |
-| `3d-disc-timeline/06` | `ref-06-serpentine-disc-bands.jpg` | Five white bevelled discs with line icons threaded on a vertical serpentine ribbon in navy to steel-blue shades, each disc paired with a wide coloured text band extending left or right, title top right, portrait | S-curve or serpentine | watermark |
+| `3d-disc-timeline/06` | `ref-06-serpentine-disc-bands.jpg` | Five white bevelled discs with line icons threaded on a vertical serpentine ribbon in navy to steel-blue shades, each disc paired with a wide coloured text band extending left or right, title top right, portrait | S-curve or serpentine | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 

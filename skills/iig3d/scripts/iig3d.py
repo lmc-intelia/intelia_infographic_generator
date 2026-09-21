@@ -1114,8 +1114,12 @@ def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
     source = {"path": str(image), "added": time.strftime("%Y-%m-%d"), "user_added": True}
     if existing is not None:
         source["regenerated"] = True
+        previous = (existing.get("source") or {}).get("path")
+        if previous and previous != str(image):
+            source["derived_from"] = previous
     _check_variant(meta_path, record, meta.get("variant"))
     entry = {**(existing or {}), "id": ref_id, "file": file_name, "shows": meta["shows"], "flags": list(meta["flags"])}
+    entry.pop("source", None)
     for key in ("variant", "item_count"):
         entry.pop(key, None)
         if meta.get(key) is not None:

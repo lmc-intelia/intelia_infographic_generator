@@ -72,49 +72,57 @@ refs:
   shows: Neumorphic light grey disc cut into three jigsaw pieces with knob edges and a recessed centre, a raised icon disc
     on each piece, three raised numbered text cards 01 to 03 stacked on the right, title centred at top between thin rules
   flags:
-  - watermark
+  - clean
   variant: Jigsaw ring
   item_count: 3
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_25_18-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-01-jigsaw-ring-three/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_25_18-Greenshot.png
 - id: '02'
   file: ref-02-jigsaw-ring-four.jpg
   shows: Neumorphic light grey disc cut into four jigsaw quarters with a recessed centre, raised icon discs on each quarter,
     big light-grey numerals 01 to 04 with names and descriptions two per side of the disc
   flags:
-  - watermark
+  - clean
   variant: Jigsaw ring
   item_count: 4
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_25_38-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-02-jigsaw-ring-four/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_25_38-Greenshot.png
 - id: '03'
   file: ref-03-segment-ring-three.jpg
   shows: Neumorphic light grey disc split into three wedges by thin grooves around a recessed centre, raised icon disc per
     wedge on the right, three raised numbered cards 01 to 03 on the left, title centred at top
   flags:
-  - watermark
+  - clean
   variant: Segment ring
   item_count: 3
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_08-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-03-segment-ring-three/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_08-Greenshot.png
 - id: '04'
   file: ref-04-overlapping-circles.jpg
   shows: Three raised translucent light-grey circles overlapping like a Venn diagram on the right, numerals 01 to 03 in the
     overlaps, a raised icon disc on each outer lobe, big numerals 1 to 3 with names and descriptions in a column on the left
   flags:
-  - watermark
+  - clean
   variant: Overlapping circles
   item_count: 3
   source:
-    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_37-Greenshot.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-04-overlapping-circles/infographic.png
     added: '2026-09-21'
     user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_37-Greenshot.png
 pairings:
   jigsaw:
   - '01'
