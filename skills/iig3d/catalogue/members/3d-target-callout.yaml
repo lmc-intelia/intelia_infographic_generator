@@ -74,6 +74,8 @@ refs:
     end, tapered red beams converging on the bullseye, soft shadow under the disc
   flags:
   - clean
+  variant: Side target
+  item_count: 4
 - id: '02'
   file: ref-02-target-six-pills-symmetric.jpg
   shows: Large glossy red bullseye target tilted toward the viewer on the left, five tapered red beams from the bullseye to
@@ -81,6 +83,8 @@ refs:
     titles, pale grey studio with a soft shadow
   flags:
   - clean
+  variant: Side target
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-target-callout-02/infographic.png
     added: '2026-09-17'

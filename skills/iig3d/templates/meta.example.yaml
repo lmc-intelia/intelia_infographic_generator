@@ -16,5 +16,7 @@ member: 3d-hex-cluster
 shows: Twelve outlined hexagon cells in a ring around a navy hub disc, line icons, thin connectors
 flags: [clean]                 # clean | watermark | low-res (one or more)
 pairings: [hub-spoke, bento-grid]   # layouts whose pairing list gains this ref (appended last)
+# variant: Ring              # optional; a name from the member's layout.variants, named when the ref is pinned
+# item_count: 8              # optional; items the image holds, so a pinned render warns on a mismatch
 # slug: honeycomb-ring         # optional; default is the image file stem
 # file: ref-01-honeycomb-hub.jpg   # optional; replace an existing catalogue entry whose file is missing on disk

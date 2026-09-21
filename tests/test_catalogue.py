@@ -17,6 +17,9 @@ MEMBERS = [
     "3d-hex-cluster",
     "3d-cylinder-column",
     "3d-glass-layer",
+    "3d-triangle-plate",
+    "3d-soft-emboss",
+    "3d-winding-road",
 ]
 MEMBER_KEYS = {
     "name",
@@ -41,7 +44,7 @@ def cat(iig3d, skill_root):
     return iig3d.load_catalogue(skill_root)
 
 
-def test_twelve_members(cat):
+def test_fifteen_members(cat):
     assert sorted(cat.members) == sorted(MEMBERS)
 
 
@@ -131,12 +134,15 @@ def test_no_vendored_watermark(cat, name):
 
 
 def test_check_clean(iig3d, cat):
-    assert iig3d.check(cat) == []
+    """Shipped catalogue is clean once user-added watermarks are accepted; every remaining
+    violation is a user-added watermark, never a vendored one, a missing file or stale docs."""
+    assert iig3d.check(cat, allow_watermark=True) == []
+    assert all("user-added ref carries the watermark flag" in v for v in iig3d.check(cat))
 
 
 def test_check_reports_seeded_violations(iig3d, tmp_catalogue):
     iig3d.render_docs(tmp_catalogue)
-    assert iig3d.check(tmp_catalogue) == []
+    assert iig3d.check(tmp_catalogue, allow_watermark=True) == []
     hex_yaml = tmp_catalogue.root / "catalogue" / "members" / "3d-hex-cluster.yaml"
     hex_yaml.write_text(hex_yaml.read_text().replace("flags:\n    - clean", "flags:\n    - watermark", 1).replace("flags: [clean]", "flags: [watermark]", 1))
     seeded = iig3d.load_catalogue(tmp_catalogue.root)

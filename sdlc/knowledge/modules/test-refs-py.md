@@ -5,11 +5,11 @@ description: "Graphify community 12: tests/test_refs.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
-  - { id: test_refs, resource: tests/test_refs.py, last_modified: "2026-09-17T12:19:34+10:00", digest: f438601cb14b26b0 }
+  - { id: test_refs, resource: tests/test_refs.py, last_modified: "2026-09-21T12:47:39+10:00", digest: cbb2eaa33b533f37 }
 ---
 
 # Files
@@ -21,8 +21,15 @@ sources:
 - test_missing_ref_file_raises() (tests/test_refs.py:L107)
 - test_missing_user_ref_raises() (tests/test_refs.py:L114)
 - test_style_refs_disabled() (tests/test_refs.py:L119)
+- test_resolve_ref_forms() (tests/test_refs.py:L126)
 - flagged() (tests/test_refs.py:L13)
 - The shipped catalogue carries no watermark flags any more; restore the source… (tests/test_refs.py:L14)
+- test_resolve_ref_rejects() (tests/test_refs.py:L147)
+- test_pinned_ref_first_with_company() (tests/test_refs.py:L153)
+- test_pinned_ref_dedupes_against_pairing() (tests/test_refs.py:L161)
+- test_pinned_watermark_blocks_second_watermark() (tests/test_refs.py:L169)
+- test_pinned_alone_when_style_refs_off() (tests/test_refs.py:L176)
+- test_pinned_then_user_refs_capped() (tests/test_refs.py:L181)
 - test_never_two_watermarks_even_when_pairing_names_two() (tests/test_refs.py:L27)
 - test_low_res_alone_gets_company() (tests/test_refs.py:L40)
 - test_pairing_order_and_existence() (tests/test_refs.py:L49)

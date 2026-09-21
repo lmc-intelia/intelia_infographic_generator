@@ -6,12 +6,16 @@ Member of the 3D corporate family. Rimmed bevelled discs on a track, ribbon or S
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-rimmed-disc-timeline.jpg` | Five rimmed bevelled discs in teal, orange, magenta, blue and lime on a straight colour-gradient bar, flat icons on white face plates, dotted leader lines to labels alternating above and below, big step numerals under each disc, ghosted world map on a pale studio | clean |
-| `ref-02-s-curve-ribbon-discs.jpg` | Five bevelled discs with numerals and icons on white face plates threaded by a horizontal S-curve ribbon whose colour changes per segment, labels alternating above and below, faint dot-grid world map | clean |
-| `ref-03-disc-chain-track.jpg` | Five embossed numbered discs (01 STEP) joined by a thick grey 3D track that snakes down the page, icon plus text beside each disc | clean |
-| `ref-04-serpentine-ribbon.jpg` | Five rimmed discs with icons on a horizontal serpentine ribbon, each disc paired with a bracketed step tab above or below and a dotted leader to its description, pale studio with a dot-grid corner | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-disc-timeline/01` | `ref-01-rimmed-disc-timeline.jpg` | Five rimmed bevelled discs in teal, orange, magenta, blue and lime on a straight colour-gradient bar, flat icons on white face plates, dotted leader lines to labels alternating above and below, big step numerals under each disc, ghosted world map on a pale studio | Straight track | clean |
+| `3d-disc-timeline/02` | `ref-02-s-curve-ribbon-discs.jpg` | Five bevelled discs with numerals and icons on white face plates threaded by a horizontal S-curve ribbon whose colour changes per segment, labels alternating above and below, faint dot-grid world map | S-curve or serpentine | clean |
+| `3d-disc-timeline/03` | `ref-03-disc-chain-track.jpg` | Five embossed numbered discs (01 STEP) joined by a thick grey 3D track that snakes down the page, icon plus text beside each disc | Chain track | clean |
+| `3d-disc-timeline/04` | `ref-04-serpentine-ribbon.jpg` | Five rimmed discs with icons on a horizontal serpentine ribbon, each disc paired with a bracketed step tab above or below and a dotted leader to its description, pale studio with a dot-grid corner | S-curve or serpentine | clean |
+| `3d-disc-timeline/05` | `ref-05-gradient-ring-row.jpg` | Five overlapping gradient ring discs in teal, blue, purple, magenta and orange in one straight row, white face plates, dotted connectors from a white pill title block above, dotted drops to small colour dots and caps labels below | Straight track | clean |
+| `3d-disc-timeline/06` | `ref-06-serpentine-disc-bands.jpg` | Five white bevelled discs with line icons threaded on a vertical serpentine ribbon in navy to steel-blue shades, each disc paired with a wide coloured text band extending left or right, title top right, portrait | S-curve or serpentine | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 
@@ -88,10 +92,11 @@ Render as a polished corporate 3D infographic where each item is a bevelled disc
 
 ## Recommended pairings
 
-- `linear-progression`: refs 03, 01
-- `winding-roadmap`: refs 03, 04
+- `linear-progression`: refs 03, 01, 05, 06
+- `winding-roadmap`: refs 03, 04, 06
 - `circular-flow`: refs 03, 04
 - `bridge`: refs 01, 03
+- `hub-spoke`: refs 05
 
 Alternates: `3d-arrow-ribbon`, `3d-isometric-light`
 

@@ -115,6 +115,30 @@ class Catalogue:
         """A general routing layout or a member's own device name."""
         return name in self.routing or name in self.members
 
+    def resolve_ref(self, token: str, style: str | None = None) -> tuple[Member, dict]:
+        """A catalogue ref named by the user: `<member>/<id|file|stem>`, a `refs/<member>/<file>`
+        path, or a bare id/file when `style` already names the member. Only YAML records match."""
+        parts = [p for p in str(token).strip().replace("\\", "/").split("/") if p]
+        if parts and parts[0] == "refs":
+            parts = parts[1:]
+        if len(parts) == 2:
+            member_name, key = parts
+        elif len(parts) == 1 and style in self.members:
+            member_name, key = style, parts[0]
+        elif len(parts) == 1:
+            raise UsageError(f"pin {token!r} needs a member: use <member>/<ref>, e.g. 3d-capsule-hub/06, or set style to a 3d-* member")
+        else:
+            raise UsageError(f"pin {token!r} is not <member>/<ref>")
+        member = self.member(member_name)
+        for ref in member.refs:
+            if key in (ref["id"], ref["file"], Path(ref["file"]).stem):
+                return member, ref
+        choices = ", ".join(f"{r['id']} ({r['file']})" for r in member.refs)
+        raise UsageError(f"unknown ref {key!r} for {member_name}; valid: {choices}")
+
+    def pin_token(self, member: str, ref: dict) -> str:
+        return f"{member}/{ref['id']}"
+
     @property
     def negative_tail(self) -> str:
         """Last sentence of the family negative list; a fragment that ends with it already carries the list."""
@@ -210,13 +234,32 @@ class Route:
         return asdict(self)
 
 
-def route(cat: Catalogue, layout: str | None, style: str | None) -> Route:
+def split_style(cat: Catalogue, layout: str | None, style: str | None, pin: str | None = None) -> tuple[str | None, str | None]:
+    """(style, pin) after reading a ref name out of `style`: with `layout` naming a member,
+    `style: 06` or `style: ref-06-x.jpg` means that member's ref; `style: 3d-x/06` works with
+    any layout. A member name or the umbrella pass through; an explicit pin is left alone."""
+    if pin or style in (None, UMBRELLA) or style in cat.members:
+        return style, pin
+    if "/" in style:
+        return None, style
+    if layout in cat.members:
+        return None, f"{layout}/{style}"
+    raise UsageError(f"unknown style {style!r}; valid: {UMBRELLA}, a 3d-* member, or a ref of the member named by layout (e.g. layout: 3d-capsule-hub, style: 06)")
+
+
+def route(cat: Catalogue, layout: str | None, style: str | None, pinned_member: str | None = None) -> Route:
     """Resolve (layout, style) to a family member.
 
     Explicit 3d-* style wins; a 3d-* layout names its own member; otherwise the family routing
     table maps a general layout to its primary member. Style omitted or `industrial-3d` both
-    mean "route by layout".
+    mean "route by layout". A pinned catalogue ref names its member: it becomes the style when
+    style is omitted or the umbrella, the default layout, and must agree with an explicit style.
     """
+    if pinned_member:
+        if style not in (None, UMBRELLA, pinned_member):
+            raise UsageError(f"style {style} conflicts with pinned ref member {pinned_member}")
+        style = pinned_member
+        layout = layout or pinned_member
     if style and style != UMBRELLA:
         if style not in cat.members:
             raise UsageError(f"unknown style {style!r}; valid: {UMBRELLA}, {', '.join(sorted(cat.members))}")
@@ -258,6 +301,7 @@ class Spec:
     stats: list[dict] = field(default_factory=list)
     notes: str = ""
     refs: list[Path] = field(default_factory=list)
+    pin: str | None = None
     path: Path | None = None
 
 
@@ -317,6 +361,7 @@ def load_spec(path: Path) -> Spec:
         stats=[dict(s) for s in raw.get("stats") or []],
         notes=_str(raw.get("notes")),
         refs=[(base / r).resolve() for r in raw.get("refs") or []],
+        pin=_opt_str(raw.get("pin")),
         path=path.resolve(),
     )
 
@@ -404,17 +449,43 @@ def ref_rule_violations(refs: list[dict]) -> list[str]:
     return problems
 
 
+def pick_pinned_refs(cat: Catalogue, member: Member, layout: str, pinned: dict, style_refs: bool = True) -> list[dict]:
+    """The pinned ref first, then the layout's style refs as company up to per_render high,
+    never a second watermark. Style refs off: the pinned ref alone."""
+    picked = [pinned]
+    if not style_refs:
+        return picked
+    _, high = cat.family["ref_rules"]["per_render"]
+    for ref in pick_style_refs(cat, member, layout):
+        if len(picked) >= high:
+            break
+        if ref["id"] == pinned["id"]:
+            continue
+        if "watermark" in ref["flags"] and any("watermark" in r["flags"] for r in picked):
+            continue
+        picked.append(ref)
+    return picked
+
+
 def select_refs(
     cat: Catalogue,
     member_name: str,
     layout: str,
     user_refs: list[Path] | None = None,
     style_refs: bool = True,
+    pinned: dict | None = None,
 ) -> list[Path]:
-    """Style refs as paths (see pick_style_refs), user refs appended, capped by ref_rules.max_total."""
+    """Style refs as paths (see pick_style_refs), user refs appended, capped by ref_rules.max_total.
+    A pinned catalogue ref (see Catalogue.resolve_ref) always comes first."""
     member = cat.member(member_name)
     paths: list[Path] = []
-    for ref in pick_style_refs(cat, member, layout) if style_refs else []:
+    if pinned is not None:
+        catalogue_refs = pick_pinned_refs(cat, member, layout, pinned, style_refs=style_refs)
+    elif style_refs:
+        catalogue_refs = pick_style_refs(cat, member, layout)
+    else:
+        catalogue_refs = []
+    for ref in catalogue_refs:
         path = cat.ref_path(member.name, ref)
         if not path.is_file():
             raise UsageError(f"reference image missing: {path}")
@@ -627,6 +698,25 @@ def word_count(labels: list[str]) -> int:
     return sum(len(label.split()) for label in labels)
 
 
+def reference_composition(pinned: dict) -> str:
+    """The Reference Composition section: reproduce reference image 1, swap in the content."""
+    lines = [
+        "## Reference Composition",
+        "",
+        f"Reference image 1 is the composition to reproduce. It shows: {pinned['shows'].strip().rstrip('.')}.",
+    ]
+    if pinned.get("variant"):
+        lines.append(f"It is the **{pinned['variant']}** variant of this device; follow that variant's emphasis.")
+    if pinned.get("item_count"):
+        lines.append(f"It holds {pinned['item_count']} items; keep the same slots, filled in order from the content below.")
+    lines += [
+        "Match its structure, element placement, connector style, depth, lighting and text positions exactly.",
+        "Replace every piece of its text with the content below; add or drop nothing else.",
+        "Any further reference images are style support only, not compositions to copy.",
+    ]
+    return "\n".join(lines)
+
+
 def assemble(
     cat: Catalogue,
     spec: Spec,
@@ -637,8 +727,10 @@ def assemble(
     palette_source: Path | None = None,
     strict: bool = False,
     aspect_snapped_from: str | None = None,
+    pinned: dict | None = None,
 ) -> Prompt:
-    """Fill templates/base-prompt.md; warnings for text budget and item range; strict raises."""
+    """Fill templates/base-prompt.md; warnings for text budget and item range; strict raises.
+    A pinned ref adds the Reference Composition section and is reference image 1."""
     member = cat.member(route_.member)
     template = (cat.root / TEMPLATE_PATH).read_text(encoding="utf-8")
     style_block = member.prompt_fragment.strip()
@@ -654,13 +746,23 @@ def assemble(
         "{{LANGUAGE}}": spec.language,
         "{{LAYOUT_GUIDELINES}}": render_layout_block(member),
         "{{STYLE_GUIDELINES}}": style_block,
+        "{{REFERENCE_COMPOSITION}}": reference_composition(pinned) if pinned else "",
         "{{CONTENT}}": content_block(spec),
         "{{TEXT_LABELS}}": "\n".join(f'"{label}"' for label in labels),
     }
     text = template
     for slot, value in slots.items():
         text = text.replace(slot, value)
+    text = re.sub(r"\n{3,}", "\n\n", text)
     warnings: list[str] = []
+    if pinned:
+        if "low-res" in pinned["flags"]:
+            warnings.append(f"pinned ref {pinned['file']} is low-res; expect a soft composition guide")
+        if "watermark" in pinned["flags"]:
+            warnings.append(f"pinned ref {pinned['file']} carries a watermark; check the render for stray marks")
+        expected = pinned.get("item_count")
+        if expected and len(spec.items) != expected:
+            warnings.append(f"{len(spec.items)} items but pinned ref {pinned['file']} shows {expected}; match the count or expect the model to improvise")
     orient = orientation(cat, ratio)
     budget = cat.family["text_budget"][orient]
     words = word_count(labels + [item.detail for item in spec.items] + [str(s.get("caption", "")) for s in spec.stats])
@@ -681,8 +783,10 @@ def assemble(
         "style_member": member.name,
         "aspect": ratio,
         "language": spec.language,
-        "references": [{"ref_id": f"{index:02d}", "filename": Path(ref).name, "usage": "direct"} for index, ref in enumerate(refs or [], 1)],
+        "references": [{"ref_id": f"{index:02d}", "filename": Path(ref).name, "usage": "replicate" if pinned and index == 1 else "direct"} for index, ref in enumerate(refs or [], 1)],
     }
+    if pinned:
+        frontmatter["pinned"] = {"ref": pinned["file"], "variant": pinned.get("variant")}
     if palette:
         frontmatter["palette"] = {"source": str(palette_source), "colours": [c.as_dict() for c in palette]}
     return Prompt(text=text.rstrip() + "\n", frontmatter=frontmatter, warnings=warnings)
@@ -906,7 +1010,7 @@ def render(
 
 # --- add ---
 
-META_KEYS = {"member", "new_member", "shows", "flags", "pairings", "slug", "file"}
+META_KEYS = {"member", "new_member", "shows", "flags", "pairings", "slug", "file", "variant", "item_count"}
 
 
 def normalise_image(src: Path, dest: Path, max_edge: int = 1600, quality: int = 88) -> Path:
@@ -946,7 +1050,19 @@ def _load_meta(meta_path: Path, cat: Catalogue) -> dict:
     if bad:
         raise UsageError(f"{meta_path}: unknown pairing layout(s) {', '.join(bad)}")
     meta["pairings"] = pairings
+    if "item_count" in meta and (not isinstance(meta["item_count"], int) or isinstance(meta["item_count"], bool) or meta["item_count"] < 1):
+        raise UsageError(f"{meta_path}: item_count must be a positive integer")
+    if "variant" in meta and not isinstance(meta["variant"], str):
+        raise UsageError(f"{meta_path}: variant must be a variant name from the member's layout.variants")
     return meta
+
+
+def _check_variant(meta_path: Path, record: dict, variant: str | None) -> None:
+    if variant is None:
+        return
+    names = [v["name"] for v in record["layout"]["variants"]]
+    if variant not in names:
+        raise UsageError(f"{meta_path}: unknown variant {variant!r} for {record['name']}; valid: {', '.join(names)}")
 
 
 def _new_member_record(cat: Catalogue, block: dict, meta_path: Path) -> tuple[dict, list[str]]:
@@ -998,7 +1114,17 @@ def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
     source = {"path": str(image), "added": time.strftime("%Y-%m-%d"), "user_added": True}
     if existing is not None:
         source["regenerated"] = True
-    entry = {**(existing or {}), "id": ref_id, "file": file_name, "shows": meta["shows"], "flags": list(meta["flags"]), "source": source}
+        previous = (existing.get("source") or {}).get("path")
+        if previous and previous != str(image):
+            source["derived_from"] = previous
+    _check_variant(meta_path, record, meta.get("variant"))
+    entry = {**(existing or {}), "id": ref_id, "file": file_name, "shows": meta["shows"], "flags": list(meta["flags"])}
+    entry.pop("source", None)
+    for key in ("variant", "item_count"):
+        entry.pop(key, None)
+        if meta.get(key) is not None:
+            entry[key] = meta[key]
+    entry["source"] = source
     dest = cat.ref_path(name, entry)
     if dest.exists():
         raise UsageError(f"{meta_path}: {file_name} already exists on disk; add never overwrites a vendored ref")
@@ -1024,12 +1150,15 @@ def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
         write_yaml(cat.family_yaml, family)
     fresh = load_catalogue(cat.root)
     docs = render_docs(fresh)
-    problems = check(fresh)
+    # Report the new ref's own watermark (R21) and every other rule, but not watermarks the user
+    # accepted on earlier refs; those are `check --allow-watermark` business.
+    problems = [p for p in check(fresh) if "carries the watermark flag" not in p or file_name in p]
     return {
         "status": "ok" if not problems else "violations",
         "member": name,
         "ref_id": ref_id,
         "ref_file": str(dest),
+        "pin": fresh.pin_token(name, entry),
         "yaml": str(member_yaml),
         "docs": [str(d) for d in docs],
         "check": problems,
@@ -1043,14 +1172,14 @@ GENERATED_NOTE = "<!-- Generated by `iig3d.py docs` from catalogue/*.yaml. Do no
 
 def member_markdown(member: Member) -> str:
     style = member["style"]
-    refs_rows = [[f"`{r['file']}`", r["shows"].replace("|", "\\|"), ", ".join(r["flags"])] for r in member.refs]
+    refs_rows = [[f"`{member.name}/{r['id']}`", f"`{r['file']}`", r["shows"].replace("|", "\\|"), r.get("variant") or "-", ", ".join(r["flags"])] for r in member.refs]
     pairings = [f"- `{layout_name}`: refs {', '.join(ids)}" for layout_name, ids in member.pairings.items()]
     layout = "\n\n".join(f"### {heading}\n\n{body}" for heading, body in layout_sections(member) if heading != "Best For")
     parts = [
         f"# {member.name}",
         GENERATED_NOTE,
         f"Member of the 3D corporate family. {member['device']}. Backdrop: {member['backdrop']}. Items: {member.items['min']} to {member.items['max']}. Default aspect: {member.aspect_default}.",
-        "## Reference images\n\n" + _table(["Ref", "Shows", "Flags"], refs_rows),
+        "## Reference images\n\n" + _table(["Pin", "File", "Shows", "Variant", "Flags"], refs_rows) + "\n\nPin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.",
         "## Colour palette\n\n" + _bullets(style["palette"]),
         "## Visual elements\n\n" + _bullets(style["visual_elements"]),
         "## Typography\n\n" + _bullets(style["typography"]),
@@ -1119,11 +1248,12 @@ def build_parser() -> argparse.ArgumentParser:
     prepare_args.add_argument("--spec", required=True, help="YAML content spec")
     prepare_args.add_argument("--out-dir", required=True, help="output directory (prompts/ and infographic.png)")
     prepare_args.add_argument("--layout", default=None)
-    prepare_args.add_argument("--style", default=None, help="3d-* member or industrial-3d")
+    prepare_args.add_argument("--style", default=None, help="3d-* member, industrial-3d, or a ref id/file of the member named by --layout")
     prepare_args.add_argument("--aspect", default=None, help="landscape | portrait | square | W:H")
     prepare_args.add_argument("--palette-css", default=None, help="CSS file whose colours replace the item colours")
     prepare_args.add_argument("--palette-vars", default=None, help="comma-separated custom properties to use, in order")
     prepare_args.add_argument("--ref", action="append", default=[], help="user reference image (repeatable)")
+    prepare_args.add_argument("--pin", default=None, help="catalogue ref to reproduce: <member>/<id|file>, e.g. 3d-capsule-hub/06")
     prepare_args.add_argument("--no-style-refs", action="store_true", help="do not pass the member's bundled refs")
     prepare_args.add_argument("--strict", action="store_true", help="turn prompt warnings into exit 1")
 
@@ -1132,11 +1262,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("list", parents=[common], help="members and layouts")
     p_route = sub.add_parser("route", parents=[common], help="resolve layout and style to a member")
     p_route.add_argument("--layout", default=None)
-    p_route.add_argument("--style", default=None)
+    p_route.add_argument("--style", default=None, help="3d-* member, industrial-3d, or a ref of the --layout member")
     p_refs = sub.add_parser("refs", parents=[common], help="reference images for a member and layout")
     p_refs.add_argument("--member", required=True)
-    p_refs.add_argument("--layout", required=True)
+    p_refs.add_argument("--layout", default=None, help="default: the member's own device layout")
     p_refs.add_argument("--ref", action="append", default=[])
+    p_refs.add_argument("--pin", default=None, help="catalogue ref to put first: <member>/<id|file> or <id|file>")
     sub.add_parser("prompt", parents=[common, prepare_args], help="assemble and persist the prompt file")
     p_render = sub.add_parser("render", parents=[common, prepare_args], help="assemble the prompt and render with Nano Banana Pro")
     p_render.add_argument("--dry-run", action="store_true")
@@ -1180,17 +1311,20 @@ def cmd_list(cat: Catalogue) -> dict:
 def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
     """Shared front half of prompt and render: spec, route, aspect, refs, palette, prompt file."""
     spec = load_spec(Path(args.spec))
-    route_ = route(cat, args.layout or spec.layout, args.style or spec.style)
+    layout = args.layout or spec.layout
+    style, pin = split_style(cat, layout, args.style or spec.style, args.pin or spec.pin)
+    pinned_member, pinned = cat.resolve_ref(pin, style) if pin else (None, None)
+    route_ = route(cat, layout, style, pinned_member=pinned_member.name if pinned_member else None)
     member = cat.member(route_.member)
     ratio, snapped_from = snap_aspect(cat, args.aspect or spec.aspect, member.aspect_default)
     user_refs = [Path(r) for r in args.ref] + spec.refs
-    refs = select_refs(cat, member.name, route_.layout, user_refs=user_refs, style_refs=not args.no_style_refs)
+    refs = select_refs(cat, member.name, route_.layout, user_refs=user_refs, style_refs=not args.no_style_refs, pinned=pinned)
     css = Path(args.palette_css).resolve() if args.palette_css else spec.palette_css
     palette = None
     if css:
         vars_ = _split_vars(args.palette_vars) or spec.palette_vars
         palette = extract_palette(css, vars=vars_ or None)
-    prompt = assemble(cat, spec, route_, ratio, refs=refs, palette=palette, palette_source=css, strict=args.strict, aspect_snapped_from=snapped_from)
+    prompt = assemble(cat, spec, route_, ratio, refs=refs, palette=palette, palette_source=css, strict=args.strict, aspect_snapped_from=snapped_from, pinned=pinned)
     prompt_file = write_prompt(Path(args.out_dir), prompt, slugify(spec.title))
     return {
         "status": "ok",
@@ -1201,6 +1335,7 @@ def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
         "aspect_ratio": ratio,
         "language": spec.language,
         "refs": [str(r) for r in refs],
+        "pin": cat.pin_token(member.name, pinned) if pinned else None,
         "palette": [c.as_dict() for c in palette] if palette else None,
         "warnings": prompt.warnings,
     }
@@ -1226,6 +1361,28 @@ def cmd_render(cat: Catalogue, args: argparse.Namespace) -> dict:
     return result
 
 
+def cmd_route(cat: Catalogue, args: argparse.Namespace) -> dict:
+    style, pin = split_style(cat, args.layout, args.style)
+    pinned_member, pinned = cat.resolve_ref(pin, style) if pin else (None, None)
+    route_ = route(cat, args.layout, style, pinned_member=pinned_member.name if pinned_member else None)
+    return {"status": "ok", **route_.as_dict(), "pin": cat.pin_token(pinned_member.name, pinned) if pinned else None}
+
+
+def cmd_refs(cat: Catalogue, args: argparse.Namespace) -> dict:
+    """The refs a render would pass, plus every catalogue ref of the member with its pin token."""
+    member = cat.member(args.member)
+    layout = args.layout or member.name
+    pinned = cat.resolve_ref(args.pin, member.name)[1] if args.pin else None
+    return {
+        "status": "ok",
+        "member": member.name,
+        "layout": layout,
+        "pin": cat.pin_token(member.name, pinned) if pinned else None,
+        "refs": [str(r) for r in select_refs(cat, member.name, layout, user_refs=[Path(r) for r in args.ref], pinned=pinned)],
+        "available": [{"pin": cat.pin_token(member.name, r), "file": r["file"], "shows": r["shows"], "variant": r.get("variant"), "item_count": r.get("item_count"), "flags": r["flags"]} for r in member.refs],
+    }
+
+
 def cmd_palette(args: argparse.Namespace) -> dict:
     colours = extract_palette(Path(args.css), vars=_split_vars(args.vars) or None)
     return {"status": "ok", "source": str(Path(args.css).resolve()), "colours": [c.as_dict() for c in colours], "paragraph": palette_paragraph(colours)}
@@ -1238,13 +1395,8 @@ def cmd_check(cat: Catalogue, args: argparse.Namespace) -> dict:
 
 HANDLERS = {
     "list": lambda cat, args: cmd_list(cat),
-    "route": lambda cat, args: {"status": "ok", **route(cat, args.layout, args.style).as_dict()},
-    "refs": lambda cat, args: {
-        "status": "ok",
-        "member": args.member,
-        "layout": args.layout,
-        "refs": [str(r) for r in select_refs(cat, args.member, args.layout, user_refs=[Path(r) for r in args.ref])],
-    },
+    "route": cmd_route,
+    "refs": cmd_refs,
     "prompt": prepare,
     "render": cmd_render,
     "add": lambda cat, args: add_ref(cat, Path(args.image), Path(args.meta)),

@@ -5,15 +5,15 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:08:40Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:19:41Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 6ae2d676b3b13706 }
@@ -224,7 +224,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `skills/iig3d/refs/3d-slab-stack/ref-03-folded-ribbon-tiers.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-01-target-four-pills.jpg`
 - `skills/iig3d/refs/3d-target-callout/ref-02-target-six-pills-symmetric.jpg`
-- `skills/iig3d/scripts/iig3d.py` in [_dry_assembly](/modules/dry-assembly.md)
+- `skills/iig3d/scripts/iig3d.py` in [load_catalogue](/modules/load-catalogue.md)
 - `skills/iig3d/templates/base-prompt.md`
 - `skills/iig3d/templates/meta.example.yaml`
 - `skills/iig3d/templates/spec.example.yaml`
@@ -241,7 +241,7 @@ Each requirement traces to intent.md (I-outcome, I-success, I-constraints, I-dec
 - `tests/test_cli.py` in [test_cli.py](/modules/test-cli-py.md)
 - `tests/test_creds.py` in [test_creds.py](/modules/test-creds-py.md)
 - `tests/test_docs.py` in [test_docs.py](/modules/test-docs-py.md)
-- `tests/test_install.py` in [test_install.py](/modules/test-install-py.md)
+- `tests/test_install.py` in [test_render.py](/modules/test-render-py.md)
 - `tests/test_palette.py` in [test_palette.py](/modules/test-palette-py.md)
 - `tests/test_prompt.py` in [test_prompt.py](/modules/test-prompt-py.md)
 - `tests/test_refs.py` in [test_refs.py](/modules/test-refs-py.md)

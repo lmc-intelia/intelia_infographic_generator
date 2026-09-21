@@ -76,22 +76,60 @@ refs:
     and description, flat dark icon on each face
   flags:
   - clean
+  variant: Ascending
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-cylinder-column-01/infographic.png
     added: '2026-09-17'
     user_added: true
     regenerated: true
+- id: '02'
+  file: ref-02-perspective-cylinders-dark.jpg
+  shows: Five glossy cylinders lying in perspective from a small dark teal disc at the back to a large yellow drum at the
+    front, teal to lime to yellow gradient, thin leader lines to coloured icon circles and labels above, title and description
+    top left, dark charcoal backdrop
+  flags:
+  - clean
+  variant: Descending
+  item_count: 5
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-02-perspective-cylinders-dark/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_28_06-Greenshot.png
+- id: '03'
+  file: ref-03-isometric-arrow-cylinders.jpg
+  shows: Five isometric bent arrows in magenta, orange, yellow, teal and blue rising from short glossy cylinder pedestals
+    of stepped height marked 10 to 90 percent, labels along the base line, four white icon tiles on the left, text block top
+    right
+  flags:
+  - clean
+  variant: Bar chart
+  item_count: 5
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-03-isometric-arrow-cylinders/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/86-template-86(infographics)-comp
+      (1).jpg
 pairings:
   linear-progression:
   - '01'
+  - '02'
   funnel:
   - '01'
+  - '02'
+  - '03'
   hierarchical-layers:
   - '01'
   dashboard:
   - '01'
   story-mountain:
   - '01'
+  comparison-matrix:
+  - '03'
 alternates:
 - 3d-slab-stack
 - 3d-arrow-ribbon

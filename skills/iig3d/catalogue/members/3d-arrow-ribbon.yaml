@@ -58,10 +58,14 @@ refs:
     file: ref-01-chevron-arrow-flow.jpg
     shows: Eight interlocking 3D chevron arrows sweeping left to right in a purple to green gradient, icons on each arrow, leader lines to text above and below, dotted world map backdrop
     flags: [clean]
+    variant: Chevron flow
+    item_count: 8
   - id: "02"
     file: ref-02-folded-ribbon-tiers.jpg
     shows: Five angled folded ribbon bands A to E, monochrome blue, hexagon letter tabs, icon column at right
     flags: [clean]
+    variant: Folded ribbon tiers
+    item_count: 5
 pairings:
   linear-progression: ["01"]
   bridge: ["01"]

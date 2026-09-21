@@ -6,9 +6,11 @@ Member of the 3D corporate family. Honeycomb of outlined hexagon cells around a 
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-honeycomb-hub.jpg` | Ten white hexagon cells in two honeycomb columns of five, layered navy and teal outline rims, line icon at the top of each cell, central white disc with a grey bevel ring and a two-line teal title, thin connectors with dot terminals | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-hex-cluster/01` | `ref-01-honeycomb-hub.jpg` | Ten white hexagon cells in two honeycomb columns of five, layered navy and teal outline rims, line icon at the top of each cell, central white disc with a grey bevel ring and a two-line teal title, thin connectors with dot terminals | Twin columns | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

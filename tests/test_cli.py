@@ -25,7 +25,7 @@ def run(iig3d, capsys, argv):
 def test_list_counts(iig3d, capsys):
     code, data = run(iig3d, capsys, ["list"])
     assert code == 0
-    assert len(data["members"]) == 12 and len(data["layouts"]) == 21
+    assert len(data["members"]) == 15 and len(data["layouts"]) == 21
     member = data["members"][0]
     assert set(member) >= {"name", "device", "items", "aspect_default", "refs"}
     assert data["layouts"][0]["primary"] in {m["name"] for m in data["members"]}
@@ -52,7 +52,7 @@ def test_prompt_writes_file(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
     assert code == 0 and data["status"] == "ok"
     assert data["prompt_file"].endswith("prompts/01-infographic-openwiki-refresh-pipeline.md")
     assert data["member"] == "3d-disc-timeline" and data["aspect_ratio"] == "16:9" and data["warnings"] == []
-    assert len(data["refs"]) == 2
+    assert len(data["refs"]) == 3
 
 
 def test_render_dry_run(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkeypatch):
@@ -65,7 +65,7 @@ def test_render_dry_run(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkey
     assert code == 0 and data["status"] == "dry-run"
     assert data["prompt_file"].endswith("01-infographic-openwiki-refresh-pipeline.md")
     assert (tmp_path / "prompts" / "01-infographic-openwiki-refresh-pipeline.md").exists()
-    assert data["refs"] == 2 and data["member"] == "3d-disc-timeline"
+    assert data["refs"] == 3 and data["member"] == "3d-disc-timeline"
 
 
 def test_render_without_key_exits_1(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkeypatch):
@@ -104,3 +104,46 @@ def test_render_requires_out_dir(iig3d, capsys, fixtures):
 def test_remaining_commands_print_one_json(iig3d, capsys, argv):
     code, data = run(iig3d, capsys, argv)
     assert "status" in data and code in (0, 1)
+
+
+def test_refs_lists_pins_and_layout_optional(iig3d, capsys, tmp_catalogue):
+    code, data = run(iig3d, capsys, ["refs", "--member", "3d-capsule-hub", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["layout"] == "3d-capsule-hub" and data["pin"] is None
+    pins = [a["pin"] for a in data["available"]]
+    assert pins == [f"3d-capsule-hub/{i:02d}" for i in range(1, 8)]
+    assert {"pin", "file", "shows", "variant", "item_count", "flags"} <= set(data["available"][0])
+
+
+def test_refs_with_pin(iig3d, capsys, tmp_catalogue):
+    code, data = run(iig3d, capsys, ["refs", "--member", "3d-capsule-hub", "--layout", "hub-spoke", "--pin", "06", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["pin"] == "3d-capsule-hub/06"
+    assert data["refs"][0].endswith("ref-06-capsule-hierarchy.jpg")
+
+
+def test_prompt_with_pin_flag(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
+    args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, [*args, "--pin", "3d-disc-timeline/03"])
+    assert code == 0 and data["pin"] == "3d-disc-timeline/03" and data["member"] == "3d-disc-timeline"
+    assert data["refs"][0].endswith("ref-03-disc-chain-track.jpg")
+    text = (tmp_path / "prompts" / "01-infographic-openwiki-refresh-pipeline.md").read_text()
+    assert "## Reference Composition" in text and "usage: replicate" in text
+
+
+def test_prompt_pin_conflicting_style_exits_1(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
+    args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, [*args, "--pin", "3d-capsule-hub/06"])  # spec style is 3d-disc-timeline
+    assert code == 1 and "conflicts" in data["error"]
+
+
+def test_prompt_layout_member_style_ref(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
+    args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, [*args, "--layout", "3d-capsule-hub", "--style", "06"])
+    assert code == 0 and data["pin"] == "3d-capsule-hub/06" and data["member"] == "3d-capsule-hub" and data["style"] == "3d-capsule-hub"
+    assert data["refs"][0].endswith("ref-06-capsule-hierarchy.jpg")
+
+
+def test_route_layout_member_style_ref(iig3d, capsys, tmp_catalogue):
+    code, data = run(iig3d, capsys, ["route", "--layout", "3d-capsule-hub", "--style", "ref-06-capsule-hierarchy", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["member"] == "3d-capsule-hub" and data["pin"] == "3d-capsule-hub/06"
+    code, data = run(iig3d, capsys, ["route", "--layout", "hub-spoke", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["pin"] is None

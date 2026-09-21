@@ -1,20 +1,22 @@
 ---
 type: Module
 title: test_render.py
-description: "Graphify community 5: tests/conftest.py, tests/test_render.py"
+description: "Graphify community 5: tests/conftest.py, tests/test_install.py, tests/test_render.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
   - { id: conftest, resource: tests/conftest.py, last_modified: "2026-09-17T11:22:55+10:00", digest: 889844ff3ec7d899 }
+  - { id: test_install, resource: tests/test_install.py, last_modified: "2026-09-17T11:38:15+10:00", digest: dccf82b998a27cee }
   - { id: test_render, resource: tests/test_render.py, last_modified: "2026-09-17T12:19:34+10:00", digest: d54b01519bd25a08 }
 ---
 
 # Files
 - `tests/conftest.py`
+- `tests/test_install.py`
 - `tests/test_render.py`
 
 # Symbols
@@ -41,6 +43,12 @@ sources:
 - FakeClient (tests/conftest.py:L94)
 - .__init__() (tests/conftest.py:L95)
 - png_bytes() (tests/conftest.py:L99)
+- test_install.py (tests/test_install.py:L1)
+- R17: just install-local / uninstall-local manage the two symlinks and refuse… (tests/test_install.py:L1)
+- repo_copy() (tests/test_install.py:L17)
+- just() (tests/test_install.py:L28)
+- test_install_and_uninstall() (tests/test_install.py:L33)
+- test_refuses_real_directory() (tests/test_install.py:L48)
 - test_render.py (tests/test_render.py:L1)
 - R11: dry-run shape, PNG save, backup rename, retries, exit codes; live smoke… (tests/test_render.py:L1)
 - test_live_smoke() (tests/test_render.py:L105)

@@ -1,15 +1,15 @@
 ---
 type: Hub
 title: Catalogue
-description: Graphify god node with degree 30 in skills/iig3d/scripts/iig3d.py
+description: Graphify god node with degree 36 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T12:38:26+10:00", digest: 4be94854c4daa288 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 67114822a3e7b1d9 }
 ---
 
 # Where
@@ -19,4 +19,4 @@ sources:
 - [Catalogue](/modules/catalogue.md)
 
 # Why it matters
-- degree 30: many modules reach this symbol; changes here have a wide blast radius
+- degree 36: many modules reach this symbol; changes here have a wide blast radius

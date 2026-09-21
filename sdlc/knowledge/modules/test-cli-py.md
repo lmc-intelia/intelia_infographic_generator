@@ -5,11 +5,11 @@ description: "Graphify community 7: tests/test_cli.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
-  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-17T11:24:21+10:00", digest: 93b8aa057c422b47 }
+  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 37fdf5c91e4a4f4e }
 ---
 
 # Files
@@ -19,7 +19,13 @@ sources:
 - test_cli.py (tests/test_cli.py:L1)
 - R1, R11, R16: the script imports as a module and exposes the subcommand table. (tests/test_cli.py:L1)
 - test_remaining_commands_print_one_json() (tests/test_cli.py:L104)
+- test_refs_lists_pins_and_layout_optional() (tests/test_cli.py:L109)
+- test_refs_with_pin() (tests/test_cli.py:L117)
 - test_module_imports_and_has_main() (tests/test_cli.py:L12)
+- test_prompt_with_pin_flag() (tests/test_cli.py:L123)
+- test_prompt_pin_conflicting_style_exits_1() (tests/test_cli.py:L132)
+- test_prompt_layout_member_style_ref() (tests/test_cli.py:L138)
+- test_route_layout_member_style_ref() (tests/test_cli.py:L145)
 - run() (tests/test_cli.py:L17)
 - test_list_counts() (tests/test_cli.py:L25)
 - test_route_shape() (tests/test_cli.py:L34)

@@ -25,6 +25,8 @@ Create a professional infographic following these specifications:
 - Labels should be clear and appropriately sized
 - Use the specified language for all text content
 
+{{REFERENCE_COMPOSITION}}
+
 ## Layout Guidelines
 
 {{LAYOUT_GUIDELINES}}

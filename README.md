@@ -18,6 +18,7 @@ environment (tests, pre-commit, sdlc stage records) and can be ignored by users.
 - [Quick start](#quick-start)
 - [The content spec](#the-content-spec)
 - [Choosing a member and layout](#choosing-a-member-and-layout)
+- [Reproducing one reference image](#reproducing-one-reference-image)
 - [Brand colours from a CSS file](#brand-colours-from-a-css-file)
 - [Commands](#commands)
 - [Adding your own reference images](#adding-your-own-reference-images)
@@ -110,8 +111,8 @@ One YAML file per infographic. Only `title` and `items` are required.
 title: OPENWIKI REFRESH PIPELINE          # on-image title, verbatim
 subtitle: Five steps from commit to published wiki
 language: en                              # language of every label (default en)
-layout: linear-progression                # a general layout or a 3d-* device name
-style: industrial-3d                      # industrial-3d routes by layout; or name a 3d-* member
+layout: linear-progression                # a general layout or a 3d-* device name (a refs/ folder)
+style: industrial-3d                      # industrial-3d routes by layout; a 3d-* member; or a ref of the layout member
 aspect: landscape                         # landscape | portrait | square | W:H such as 4:3
 palette_css: ./brand.css                  # optional, see Brand colours
 palette_vars: [--brand-primary, --brand-secondary]   # optional, restricts and orders the colours
@@ -123,6 +124,7 @@ items:                                    # one per step, tier, capsule, pill, c
 stats:                                    # optional headline numbers
   - {value: "12x", caption: faster refresh}
 notes: keep the world map faint           # optional design instructions
+pin: 3d-capsule-hub/06                    # optional, same as layout: 3d-capsule-hub + style: 06
 refs: [./my-brand-reference.jpg]          # optional extra reference images (max 6 total)
 ```
 
@@ -137,7 +139,7 @@ supported one. `--strict` turns warnings into exit 1.
 
 ## Choosing a member and layout
 
-Twelve members share one rendering language and differ in the structural device:
+Fifteen members share one rendering language and differ in the structural device:
 
 | Style | Device | Items | Best for |
 |-------|--------|-------|----------|
@@ -153,17 +155,61 @@ Twelve members share one rendering language and differ in the structural device:
 | `3d-hex-cluster` | Honeycomb of outlined hexagons around a hub | 6 to 10 | inventories, taxonomies |
 | `3d-cylinder-column` | Stepped glossy cylinders with bent arrows | 3 to 6 | ranked steps, bar charts |
 | `3d-glass-layer` | Exploded stack of translucent plates | 3 to 7 | architecture layers |
+| `3d-triangle-plate` | Facet pyramid of four prisms, or one triangle with corner nodes | 3 to 4 | pillars, triads, trade-offs |
+| `3d-soft-emboss` | Neumorphic grey jigsaw ring, segment ring or overlapping circles | 3 to 4 | small frameworks, cycles, overlaps |
+| `3d-winding-road` | Asphalt road ribbon with numbered map pins | 4 to 8 | roadmaps, journeys, phased programmes |
 
-Two ways to pick:
+Three ways to pick, from most to least specific:
 
-- Name the member: `style: 3d-target-callout`. The layout defaults to the member's own device.
-- Route by layout: `style: industrial-3d` (or omit it) with one of the 21 general layouts
-  (`linear-progression`, `hub-spoke`, `hierarchical-layers`, `dashboard`, `bento-grid`,
-  `funnel`, `isometric-map`, ...). `route --layout L` shows the member and alternates.
+1. Folder and image: `layout: 3d-capsule-hub` names a folder under `skills/iig3d/refs/`,
+   `style: "06"` names an image in it. The render reproduces that image with your content.
+   See [Reproducing one reference image](#reproducing-one-reference-image).
+2. Member only: `style: 3d-target-callout` (or `layout: 3d-target-callout`). The script picks
+   two or three of that member's images by its pairings.
+3. General layout: `style: industrial-3d` (or omit it) with one of the 21 general layouts
+   (`linear-progression`, `hub-spoke`, `hierarchical-layers`, `dashboard`, `bento-grid`,
+   `funnel`, `isometric-map`, ...). The routing table in `catalogue/family.yaml` maps each to a
+   primary member and alternates; `route --layout L` shows them. These names are intent
+   vocabulary kept from the 2D infographic family; they are aliases for a member choice, and
+   `bento-grid` is the default when both keys are omitted.
 
 `list` prints every member and layout. The generated catalogue at
 `skills/iig3d/docs/CATALOGUE.md` and the per-member pages under `skills/iig3d/docs/members/`
 describe each device, its reference images, palette and composition rules.
+
+## Reproducing one reference image
+
+Every member ships a folder of reference JPEGs under `skills/iig3d/refs/<member>/`. By default
+the script picks two or three of them by layout pairing and passes them as style guidance.
+To have the render reproduce one specific image's composition with your content, name the
+folder as the layout and the image as the style:
+
+```yaml
+layout: 3d-capsule-hub                    # the folder under refs/
+style: "06"                               # the ref id, or ref-06-capsule-hierarchy.jpg, or its stem
+```
+
+`--layout 3d-capsule-hub --style 06` on `prompt`, `render` or `route` does the same. The
+one-key form `pin: 3d-capsule-hub/06` (also `--pin`) is equivalent and works with any layout;
+it also accepts `refs/3d-capsule-hub/ref-06-capsule-hierarchy.jpg` as you see the path.
+List a member's refs with `refs --member 3d-capsule-hub`; each entry carries `pin`, `file`,
+`shows`, `variant`, `item_count` and `flags`. The per-member pages under `docs/members/` show
+the same table.
+
+What a pin changes:
+
+- The pinned member becomes the style member, and the layout defaults to the member's own
+  device. A `pin:` whose member differs from an explicit `3d-*` style is an error.
+- The pinned image is reference image 1. Up to two pairing refs follow as style support,
+  never a second watermarked one. Your own `refs:` still append, six images in total at most.
+- The prompt gains a "Reference Composition" section: what the image shows, its variant and
+  item count, and the instruction to reproduce the structure and replace only the text. The
+  prompt file's frontmatter marks the first reference `usage: replicate` and records the pin.
+- Warnings when the pinned image is `low-res` or `watermark`, and when your item count differs
+  from the image's `item_count`.
+
+Pins resolve against the catalogue YAML only; a path that is not a registered ref is an error
+listing the valid ids.
 
 ## Brand colours from a CSS file
 
@@ -189,11 +235,11 @@ Every command prints one JSON line on stdout; diagnostics go to stderr.
 | Command | Purpose |
 |---------|---------|
 | `list` | members (device, item range, aspect default, refs) and the 21 general layouts |
-| `route --layout L [--style S]` | which member renders this layout; alternates |
-| `refs --member M --layout L [--ref IMG]` | the 2 to 3 reference images a render would pass |
+| `refs --member M [--layout L] [--pin P] [--ref IMG]` | the 2 to 3 reference images a render would pass, plus every ref of the member with its pin token |
+| `route --layout L [--style S]` | which member renders this layout; alternates; `pin` when `--style` names a ref of the `--layout` member |
 | `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
 | `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
-| `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
+| `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
 | `add --image IMG --meta meta.yaml` | register an image as a reference (below) |
 | `docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `check [--allow-watermark]` | validate catalogue, refs and docs; exit 1 with every violation |
@@ -216,6 +262,8 @@ Any image can become a first-class reference with the same build-out as the ship
    shows: "Three-level capsule hierarchy: hub disc, eight capsules, sub-capsules per capsule"
    flags: [clean]                         # clean | watermark | low-res
    pairings: [hub-spoke, tree-branching]  # layouts this reference suits
+   variant: Capsule hierarchy             # optional; a name from the member's layout.variants
+   item_count: 8                          # optional; items the image holds
    slug: capsule-hierarchy                # optional file name stem
    ```
 
@@ -227,14 +275,19 @@ Any image can become a first-class reference with the same build-out as the ship
 
 The script resizes to at most 1600 px as an RGB JPEG at `refs/<member>/ref-NN-<slug>.jpg`,
 appends the entry to the member YAML with `source: {path, added, user_added: true}`, extends
-the pairings, regenerates the docs and runs `check`. Vendored entries are never edited by
-`add`, only extended. A new member needs its full block in `new_member` (copy a file from
+the pairings, regenerates the docs and runs `check`. The result's `pin` (here
+`3d-capsule-hub/07`) is what a spec's `pin:` takes to reproduce the new image straight away;
+`variant` and `item_count` feed that prompt's Reference Composition section. Vendored entries
+are never edited by `add`, only extended. A new member needs its full block in `new_member` (copy a file from
 `skills/iig3d/catalogue/members/` and drop `refs`, `pairings`, `source`); `routing:` lists the
 general layouts whose alternates gain the member. Member names must match
 `3d-[a-z0-9-]+`.
 
 A `watermark` flag is reported as a violation until you pass `--allow-watermark` to `check`;
-the selector never passes two watermarked references together. Rights for images you add stay
+the selector never passes two watermarked references together, and a pinned watermarked ref
+renders with a warning. To clean one up, render it with itself pinned, delete the JPEG and
+`add` the render with `file:` set to the old name; the entry records `regenerated: true` and
+`derived_from` (the original image). The shipped user-added refs were cleaned this way. Rights for images you add stay
 with you.
 
 ## Using the skill from Claude Code
@@ -255,7 +308,7 @@ follows `skills/iig3d/SKILL.md`:
 ```
 infographic/<slug>/
   prompts/01-infographic-<title-slug>.md   # frontmatter: layout, style, style_member, aspect,
-                                           #   language, references[, palette]; body: the full prompt
+                                           #   language, references[, pinned][, palette]; body: the full prompt
   infographic.png                          # RGB PNG at the requested resolution
   infographic-backup-YYYYMMDD-HHMMSS.png   # previous render, when you render again
 ```
@@ -274,6 +327,9 @@ the reproducibility record.
 | `429` in the error | Quota. The script already retried once; wait and rerun. |
 | Garbled text in the PNG | Fix the spec (shorter labels, fewer items) and render again; the old PNG is kept as a backup. |
 | `reference image missing: ...` | A catalogue ref file is absent; run `check` and restore the file. |
+| `unknown ref '07' for 3d-capsule-hub; valid: ...` | The style or pin names no registered ref; pick one from `refs --member M` or `add` the image first. |
+| `unknown style '06'; valid: industrial-3d, a 3d-* member, or a ref of the member named by layout` | A ref id as `style:` needs `layout:` set to that ref's `3d-*` folder. |
+| `style 3d-slab-stack conflicts with pinned ref member 3d-capsule-hub` | Drop `style:` or set it to the pinned member. |
 | `not valid YAML: ...` | A colon inside an unquoted value is the usual cause; quote the string. |
 
 ## Development
@@ -302,8 +358,7 @@ skills/iig3d/
 ```
 
 The catalogue is the source of truth; markdown under `docs/` is generated and `check` fails
-when it is stale. Adding a thirteenth member is one YAML file plus one refs folder; no Python
-changes.
+when it is stale. Adding a member is one YAML file plus one refs folder; no Python changes.
 
 The repository is developed with the `sdlc` Claude Code plugin; stage records live under
 `sdlc/`. `evals/` holds a headless eval that drives the skill from a brief to a prompt file.

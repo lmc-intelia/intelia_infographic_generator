@@ -5,11 +5,11 @@ description: "Graphify community 34: tests/test_add.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
-  - { id: test_add, resource: tests/test_add.py, last_modified: "2026-09-17T12:38:26+10:00", digest: 5efc1c5b34f891c3 }
+  - { id: test_add, resource: tests/test_add.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 260bb104a9671b18 }
 ---
 
 # Files
@@ -25,7 +25,11 @@ sources:
 - Review finding: a member name is a path segment; only 3d-[a-z0-9-]+ is allowed. (tests/test_add.py:L121)
 - test_user_added_watermark_is_reported() (tests/test_add.py:L133)
 - Review finding (R21): a watermarked user image is registered but check must say… (tests/test_add.py:L134)
+- test_add_with_variant_and_item_count_returns_pin() (tests/test_add.py:L144)
+- test_add_unknown_variant_rejected() (tests/test_add.py:L158)
 - test_add_to_existing_member() (tests/test_add.py:L16)
+- test_add_bad_item_count_rejected() (tests/test_add.py:L166)
+- test_add_new_member_with_variant() (tests/test_add.py:L173)
 - test_new_member() (tests/test_add.py:L37)
 - test_replace_missing_file_entry() (tests/test_add.py:L59)
 - test_existing_entry_with_file_on_disk_rejected() (tests/test_add.py:L72)

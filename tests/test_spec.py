@@ -70,3 +70,11 @@ def test_invalid_yaml_is_usage_error(iig3d, tmp_path):
     with pytest.raises(iig3d.UsageError) as err:
         iig3d.load_spec(path)
     assert "not valid YAML" in str(err.value) and "s.yaml" in str(err.value)
+
+
+def test_pin_key(iig3d, tmp_path):
+    path = tmp_path / "s.yaml"
+    path.write_text("title: T\npin: 3d-capsule-hub/06\nitems:\n  - label: A\n")
+    assert iig3d.load_spec(path).pin == "3d-capsule-hub/06"
+    path.write_text("title: T\nitems:\n  - label: A\n")
+    assert iig3d.load_spec(path).pin is None

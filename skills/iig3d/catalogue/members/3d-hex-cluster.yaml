@@ -57,6 +57,8 @@ refs:
     file: ref-01-honeycomb-hub.jpg
     shows: Ten white hexagon cells in two honeycomb columns of five, layered navy and teal outline rims, line icon at the top of each cell, central white disc with a grey bevel ring and a two-line teal title, thin connectors with dot terminals
     flags: [clean]
+    variant: Twin columns
+    item_count: 10
 pairings:
   hub-spoke: ["01"]
   jigsaw: ["01"]

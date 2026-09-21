@@ -1,0 +1,107 @@
+name: 3d-triangle-plate
+device: 'Glossy triangular plates: a pyramid of four facet prisms, or one rounded triangle with circle nodes at its corners'
+backdrop: White to pale grey
+items:
+  min: 3
+  max: 4
+aspect_default: square
+layout:
+  structure:
+  - One triangle fills 55 to 70 percent of the shorter canvas side, centred
+  - 'Facet pyramid: four triangular prisms, one point-up at the apex, three below (centre one point-down), each a different
+    colour'
+  - 'Corner nodes: one rounded triangular plate, a glossy circle node at each corner, numbered option labels along each edge'
+  - Leader lines from each facet or node to its text block outside the triangle
+  - Optional small centre element (icon or apex arrow) on the corner-node plate
+  variants:
+  - name: Facet pyramid
+    focus: Four parts that build one whole
+    emphasis: Four coloured prisms locked into one triangle, thick bevelled edges
+  - name: Corner nodes
+    focus: Three options, peers
+    emphasis: One monochrome plate, three circle nodes with icons at the corners, option text along the edges
+  visual_elements:
+  - Extruded triangle edges 6 to 10 percent of the triangle height, glossy top-left highlight on every face
+  - Facet prisms in four family colours; corner-node plate in soft grey with a white inner bevel
+  - 'Circle nodes: rimmed glossy discs with a flat line icon'
+  - Thin dark leader lines with a small numeral at the outer end
+  - Soft drop shadow under the whole triangle
+  text_placement:
+  - Title at top right or top left, outside the triangle
+  - Facet label in bold caps on the face; description outside via the leader line
+  - 'Corner nodes: option numeral and name along the edge nearest the node, description outside the plate'
+  - Numerals 01 to 04 at the outer end of each leader line
+style:
+  palette:
+  - 'Facet pyramid: four family colours (teal, lime, orange, red-orange), darker shade on the extruded side faces'
+  - 'Corner nodes: silver to pale grey monochrome #E3E7ED to #A9B1BC, near-white face, dark charcoal text'
+  - White to pale grey studio backdrop, soft shadow under the plate
+  visual_elements:
+  - Triangle 55 to 70 percent of the shorter canvas side, thick extruded edges with a glossy highlight
+  - 'Facets: four prisms, thin white gap between them so each reads as its own block'
+  - 'Corner nodes: glossy rimmed discs 12 to 16 percent of the triangle height, flat line icons'
+  - Leader lines thin and dark, ending in a small numeral or icon
+  - No text inside the centre of the facet pyramid except the facet labels
+  typography:
+  - Family typography; facet labels bold white caps, option names bold caps in charcoal, descriptions light charcoal
+  composition:
+  - Square canvas by default; triangle centred with text blocks in the four surrounding corners
+  - 'Facet pyramid: exactly four items, apex first'
+  - 'Corner nodes: exactly three items, numbered clockwise from the top right'
+  - More than four items, switch to 3d-hex-cluster or 3d-paper-tile
+prompt_fragment: 'Render as a polished corporate 3D infographic built on one glossy triangular plate: either four extruded
+  triangular prisms in four family colours locked into one pyramid with thin white gaps, or a single soft-grey rounded triangle
+  with a glossy rimmed circle node at each corner and numbered option names running along the edges. Thick bevelled edges,
+  top-left highlights, a soft shadow beneath. Thin dark leader lines carry each item''s description to the surrounding corners
+  of the canvas. White to pale grey studio backdrop. Geometric sans-serif type. No hand-drawn lines, no paper texture, no
+  cartoon characters, no photographic realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template
+  3D.'
+best_for:
+- Three or four pillars that form one whole
+- Option triangles and trade-off triads
+- Compact square social tiles
+alternates:
+- 3d-hex-cluster
+- 3d-paper-tile
+- 3d-capsule-hub
+refs:
+- id: '01'
+  file: ref-01-facet-pyramid.jpg
+  shows: Four glossy triangular prisms in cyan, lime, orange and red-orange locked into one pyramid on a pale studio, bold
+    labels on each face, thin leader lines with numerals 01 to 04 and small icons to text in the corners, title top right
+  flags:
+  - clean
+  variant: Facet pyramid
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-01-facet-pyramid/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_16_04-Greenshot.png
+- id: '02'
+  file: ref-02-corner-nodes.jpg
+  shows: One silver-grey rounded triangular plate with a white inner bevel, a glossy circle node with a line icon at each
+    corner, options 01 to 03 numbered along the edges, a small white arrow badge at the centre, descriptions in the surrounding
+    corners of a square canvas
+  flags:
+  - clean
+  variant: Corner nodes
+  item_count: 3
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_24_55-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+pairings:
+  tree-branching:
+  - '01'
+  3d-triangle-plate:
+  - '01'
+  - '02'
+  venn-diagram:
+  - '02'
+  binary-comparison:
+  - '02'
+source:
+  origin: user-added via iig3d.py add (01-triangle-facets.yaml)
+  added: '2026-09-21'

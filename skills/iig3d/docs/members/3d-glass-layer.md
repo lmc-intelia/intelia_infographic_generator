@@ -6,9 +6,11 @@ Member of the 3D corporate family. Exploded stack of translucent isometric plate
 
 ## Reference images
 
-| Ref | Shows | Flags |
-|-----|-------|-------|
-| `ref-01-five-glass-layers.jpg` | Five translucent isometric glass plates stacked with even gaps from frosted white through lavender, cyan and teal to royal blue, white pill tabs outlined in navy with tinted numeral circles alternating left and right, thin navy connectors with dot terminals, two-tone blue title top-left, pure white backdrop | clean |
+| Pin | File | Shows | Variant | Flags |
+|-----|------|-------|---------|-------|
+| `3d-glass-layer/01` | `ref-01-five-glass-layers.jpg` | Five translucent isometric glass plates stacked with even gaps from frosted white through lavender, cyan and teal to royal blue, white pill tabs outlined in navy with tinted numeral circles alternating left and right, thin navy connectors with dot terminals, two-tone blue title top-left, pure white backdrop | Exploded stack | clean |
+
+Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
 ## Colour palette
 

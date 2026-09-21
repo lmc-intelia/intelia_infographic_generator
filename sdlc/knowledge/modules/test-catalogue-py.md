@@ -5,12 +5,12 @@ description: "Graphify community 3: tests/test_catalogue.py, tests/test_routing.
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
+stale_after: "2026-10-05T02:47:44Z"
+source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
 sources:
-  - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T12:19:34+10:00", digest: 395385c4ca4fb714 }
-  - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-17T11:15:25+10:00", digest: 53a24b265e288942 }
+  - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 47594ced5e7dd9e2 }
+  - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-21T12:34:05+10:00", digest: 68018c1e94cbf3f7 }
 ---
 
 # Files
@@ -20,23 +20,26 @@ sources:
 # Symbols
 - test_catalogue.py (tests/test_catalogue.py:L1)
 - R3, R15: the YAML catalogue is complete, internally consistent and schema-valid. (tests/test_catalogue.py:L1)
-- test_schema_rejects_missing_fragment() (tests/test_catalogue.py:L103)
-- test_ref_files_on_disk() (tests/test_catalogue.py:L115)
-- test_no_vendored_watermark() (tests/test_catalogue.py:L127)
-- test_check_clean() (tests/test_catalogue.py:L133)
-- test_check_reports_seeded_violations() (tests/test_catalogue.py:L137)
-- test_check_dependency_parity() (tests/test_catalogue.py:L163)
-- cat() (tests/test_catalogue.py:L40)
-- test_twelve_members() (tests/test_catalogue.py:L44)
-- test_member_keys() (tests/test_catalogue.py:L49)
-- test_fragment_ends_with_negative_list() (tests/test_catalogue.py:L57)
-- test_routing_rows() (tests/test_catalogue.py:L62)
-- test_pairings_resolve() (tests/test_catalogue.py:L71)
-- test_ref_flags() (tests/test_catalogue.py:L82)
-- test_alternates_exist() (tests/test_catalogue.py:L90)
-- test_family_constants() (tests/test_catalogue.py:L95)
+- test_schema_rejects_missing_fragment() (tests/test_catalogue.py:L106)
+- test_ref_files_on_disk() (tests/test_catalogue.py:L118)
+- test_no_vendored_watermark() (tests/test_catalogue.py:L130)
+- test_check_clean() (tests/test_catalogue.py:L136)
+- Shipped catalogue is clean once user-added watermarks are accepted; every… (tests/test_catalogue.py:L137)
+- test_check_reports_seeded_violations() (tests/test_catalogue.py:L143)
+- test_check_dependency_parity() (tests/test_catalogue.py:L169)
+- cat() (tests/test_catalogue.py:L43)
+- test_fifteen_members() (tests/test_catalogue.py:L47)
+- test_member_keys() (tests/test_catalogue.py:L52)
+- test_fragment_ends_with_negative_list() (tests/test_catalogue.py:L60)
+- test_routing_rows() (tests/test_catalogue.py:L65)
+- test_pairings_resolve() (tests/test_catalogue.py:L74)
+- test_ref_flags() (tests/test_catalogue.py:L85)
+- test_alternates_exist() (tests/test_catalogue.py:L93)
+- test_family_constants() (tests/test_catalogue.py:L98)
 - test_routing.py (tests/test_routing.py:L1)
 - R4: industrial-3d routes by layout; a named member skips the table; unknown… (tests/test_routing.py:L1)
+- test_split_style() (tests/test_routing.py:L115)
+- test_split_style_ref_without_member_layout_fails() (tests/test_routing.py:L119)
 - cat() (tests/test_routing.py:L35)
 - test_general_layout_routes_to_primary() (tests/test_routing.py:L41)
 - test_device_layout_returns_member() (tests/test_routing.py:L51)
@@ -45,6 +48,8 @@ sources:
 - test_no_layout_no_style_defaults_to_bento_grid() (tests/test_routing.py:L72)
 - test_unknown_layout_lists_valid_names() (tests/test_routing.py:L78)
 - test_unknown_style_lists_valid_names() (tests/test_routing.py:L84)
+- test_pinned_member_sets_style_and_default_layout() (tests/test_routing.py:L90)
+- test_pinned_member_conflicts_with_explicit_style() (tests/test_routing.py:L97)
 
 # Depends on
 - no EXTRACTED edges to other modules

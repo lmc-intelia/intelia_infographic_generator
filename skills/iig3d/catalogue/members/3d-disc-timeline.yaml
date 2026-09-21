@@ -75,6 +75,8 @@ refs:
     world map on a pale studio
   flags:
   - clean
+  variant: Straight track
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-disc-timeline-01/infographic.png
     added: '2026-09-17'
@@ -86,6 +88,8 @@ refs:
     changes per segment, labels alternating above and below, faint dot-grid world map
   flags:
   - clean
+  variant: S-curve or serpentine
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-disc-timeline-02/infographic.png
     added: '2026-09-17'
@@ -97,30 +101,65 @@ refs:
     beside each disc
   flags:
   - clean
+  variant: Chain track
+  item_count: 5
 - id: '04'
   file: ref-04-serpentine-ribbon.jpg
   shows: Five rimmed discs with icons on a horizontal serpentine ribbon, each disc paired with a bracketed step tab above
     or below and a dotted leader to its description, pale studio with a dot-grid corner
   flags:
   - clean
+  variant: S-curve or serpentine
+  item_count: 5
   source:
     path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/884e062e-f35c-468e-80a3-400e365c7fac/scratchpad/regen/3d-disc-timeline-04/infographic.png
     added: '2026-09-17'
     user_added: true
     regenerated: true
+- id: '05'
+  file: ref-05-gradient-ring-row.jpg
+  shows: Five overlapping gradient ring discs in teal, blue, purple, magenta and orange in one straight row, white face plates,
+    dotted connectors from a white pill title block above, dotted drops to small colour dots and caps labels below
+  flags:
+  - clean
+  variant: Straight track
+  item_count: 5
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_19_52-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+- id: '06'
+  file: ref-06-serpentine-disc-bands.jpg
+  shows: Five white bevelled discs with line icons threaded on a vertical serpentine ribbon in navy to steel-blue shades,
+    each disc paired with a wide coloured text band extending left or right, title top right, portrait
+  flags:
+  - clean
+  variant: S-curve or serpentine
+  item_count: 5
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen/ref-06-serpentine-disc-bands/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_23_57-Greenshot.png
 pairings:
   linear-progression:
   - '03'
   - '01'
+  - '05'
+  - '06'
   winding-roadmap:
   - '03'
   - '04'
+  - '06'
   circular-flow:
   - '03'
   - '04'
   bridge:
   - '01'
   - '03'
+  hub-spoke:
+  - '05'
 alternates:
 - 3d-arrow-ribbon
 - 3d-isometric-light
