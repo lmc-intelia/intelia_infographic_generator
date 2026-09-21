@@ -116,19 +116,48 @@ refs:
     added: '2026-09-17'
     user_added: true
     regenerated: true
+- id: '05'
+  file: ref-05-gradient-ring-row.jpg
+  shows: Five overlapping gradient ring discs in teal, blue, purple, magenta and orange in one straight row, white face plates,
+    dotted connectors from a white pill title block above, dotted drops to small colour dots and caps labels below
+  flags:
+  - clean
+  variant: Straight track
+  item_count: 5
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_19_52-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+- id: '06'
+  file: ref-06-serpentine-disc-bands.jpg
+  shows: Five white bevelled discs with line icons threaded on a vertical serpentine ribbon in navy to steel-blue shades,
+    each disc paired with a wide coloured text band extending left or right, title top right, portrait
+  flags:
+  - watermark
+  variant: S-curve or serpentine
+  item_count: 5
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_23_57-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
 pairings:
   linear-progression:
   - '03'
   - '01'
+  - '05'
+  - '06'
   winding-roadmap:
   - '03'
   - '04'
+  - '06'
   circular-flow:
   - '03'
   - '04'
   bridge:
   - '01'
   - '03'
+  hub-spoke:
+  - '05'
 alternates:
 - 3d-arrow-ribbon
 - 3d-isometric-light

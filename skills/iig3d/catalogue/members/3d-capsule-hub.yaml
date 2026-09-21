@@ -140,12 +140,26 @@ refs:
     path: CAPSULE-hierarchy.png
     added: '2026-09-17'
     user_added: true
+- id: '07'
+  file: ref-07-hub-ring-children.jpg
+  shows: Large white bevelled hub disc with a five-colour rim holding the title, dotted connectors down to five rimmed ring
+    circles in teal, magenta, orange, lime and purple in one row, each ring tapering to a pin point and a dotted drop to a
+    caps label and description below
+  flags:
+  - watermark
+  variant: Capsule hub
+  item_count: 5
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_29_37-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
 pairings:
   hub-spoke:
   - '01'
   - '05'
   - '02'
   - '06'
+  - '07'
   circular-flow:
   - '03'
   - '01'
@@ -153,6 +167,7 @@ pairings:
   - '01'
   - '05'
   - '06'
+  - '07'
   venn-diagram:
   - '02'
   - '01'

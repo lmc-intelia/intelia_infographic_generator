@@ -85,7 +85,7 @@ def test_fallback_when_layout_has_no_pairing(iig3d, tmp_catalogue):
 
 def test_device_layout_uses_first_pairing(iig3d, tmp_catalogue):
     picked = names(iig3d.select_refs(tmp_catalogue, "3d-slab-stack", "3d-slab-stack"))
-    assert picked == ["ref-01-stacked-slabs.jpg", "ref-03-folded-ribbon-tiers.jpg"]
+    assert picked == ["ref-01-stacked-slabs.jpg", "ref-03-folded-ribbon-tiers.jpg", "ref-04-rounded-slab-column-eight.jpg"]
 
 
 def test_user_refs_appended_and_capped_at_six(iig3d, tmp_catalogue, tmp_path):

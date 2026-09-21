@@ -19,7 +19,7 @@ def test_render_docs_writes_catalogue_and_members(iig3d, tmp_catalogue):
     written = iig3d.render_docs(tmp_catalogue)
     names = sorted(p.relative_to(tmp_catalogue.root).as_posix() for p in written)
     assert names[0] == "docs/CATALOGUE.md"
-    assert len(names) == 13 and all(n.startswith("docs/members/3d-") for n in names[1:])
+    assert len(names) == 16 and all(n.startswith("docs/members/3d-") for n in names[1:])
     catalogue = (tmp_catalogue.root / "docs" / "CATALOGUE.md").read_text()
     assert "| `3d-slab-stack` |" in catalogue and "| `linear-progression` | `3d-disc-timeline` |" in catalogue
     assert "#1FB5C8" in catalogue and "industrial-3d" in catalogue
@@ -61,4 +61,4 @@ def test_missing_docs_are_stale(iig3d, tmp_catalogue):
 
     shutil.rmtree(tmp_catalogue.root / "docs", ignore_errors=True)
     stale = iig3d.stale_docs(tmp_catalogue)
-    assert len(stale) == 13
+    assert len(stale) == 16

@@ -25,7 +25,7 @@ def run(iig3d, capsys, argv):
 def test_list_counts(iig3d, capsys):
     code, data = run(iig3d, capsys, ["list"])
     assert code == 0
-    assert len(data["members"]) == 12 and len(data["layouts"]) == 21
+    assert len(data["members"]) == 15 and len(data["layouts"]) == 21
     member = data["members"][0]
     assert set(member) >= {"name", "device", "items", "aspect_default", "refs"}
     assert data["layouts"][0]["primary"] in {m["name"] for m in data["members"]}
@@ -52,7 +52,7 @@ def test_prompt_writes_file(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
     assert code == 0 and data["status"] == "ok"
     assert data["prompt_file"].endswith("prompts/01-infographic-openwiki-refresh-pipeline.md")
     assert data["member"] == "3d-disc-timeline" and data["aspect_ratio"] == "16:9" and data["warnings"] == []
-    assert len(data["refs"]) == 2
+    assert len(data["refs"]) == 3
 
 
 def test_render_dry_run(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkeypatch):
@@ -65,7 +65,7 @@ def test_render_dry_run(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkey
     assert code == 0 and data["status"] == "dry-run"
     assert data["prompt_file"].endswith("01-infographic-openwiki-refresh-pipeline.md")
     assert (tmp_path / "prompts" / "01-infographic-openwiki-refresh-pipeline.md").exists()
-    assert data["refs"] == 2 and data["member"] == "3d-disc-timeline"
+    assert data["refs"] == 3 and data["member"] == "3d-disc-timeline"
 
 
 def test_render_without_key_exits_1(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkeypatch):
@@ -110,7 +110,7 @@ def test_refs_lists_pins_and_layout_optional(iig3d, capsys, tmp_catalogue):
     code, data = run(iig3d, capsys, ["refs", "--member", "3d-capsule-hub", "--skill-root", str(tmp_catalogue.root)])
     assert code == 0 and data["layout"] == "3d-capsule-hub" and data["pin"] is None
     pins = [a["pin"] for a in data["available"]]
-    assert pins == [f"3d-capsule-hub/{i:02d}" for i in range(1, 7)]
+    assert pins == [f"3d-capsule-hub/{i:02d}" for i in range(1, 8)]
     assert {"pin", "file", "shows", "variant", "item_count", "flags"} <= set(data["available"][0])
 
 

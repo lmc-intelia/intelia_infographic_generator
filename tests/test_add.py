@@ -66,7 +66,7 @@ def test_replace_missing_file_entry(iig3d, tmp_catalogue, fixtures, tmp_path):
     entry = cat.member("3d-disc-timeline").refs[0]
     assert entry["id"] == "01" and entry["flags"] == ["clean"] and entry["shows"] == "Clean regenerated disc timeline"
     assert entry["source"]["regenerated"] is True
-    assert cat.member("3d-disc-timeline").pairings["linear-progression"] == ["03", "01"]
+    assert cat.member("3d-disc-timeline").pairings["linear-progression"] == ["03", "01", "05", "06"]
 
 
 def test_existing_entry_with_file_on_disk_rejected(iig3d, tmp_catalogue, fixtures, tmp_path):
@@ -105,7 +105,7 @@ def test_member_and_new_member_exclusive(iig3d, tmp_catalogue, fixtures, tmp_pat
 def test_ids_increment_past_highest(iig3d, tmp_catalogue, fixtures, tmp_path):
     meta = write_meta(tmp_path, member="3d-capsule-hub", shows="x", flags=["clean"], pairings=[])
     result = iig3d.add_ref(tmp_catalogue, fixtures / "wide-3000px.jpg", meta)
-    assert result["ref_id"] == "07"
+    assert result["ref_id"] == "08"
 
 
 def test_normalise_image_small_stays_small(iig3d, tmp_path):

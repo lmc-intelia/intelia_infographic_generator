@@ -1,82 +1,155 @@
 name: 3d-slab-stack
 device: Stacked extruded slabs, staircase treads, folded ribbon tiers
 backdrop: Light studio
-items: {min: 3, max: 7}
+items:
+  min: 3
+  max: 7
 aspect_default: landscape
 layout:
   structure:
-    - Vertical stack of thick extruded slabs, one slab per item
-    - Each slab wider or narrower than its neighbour so the stack reads as tiers
-    - Lettered or numbered disc set into the front face of every slab
-    - Text column beside the stack, one block per slab
-    - Optional base slab or stat column anchoring the stack
+  - Vertical stack of thick extruded slabs, one slab per item
+  - Each slab wider or narrower than its neighbour so the stack reads as tiers
+  - Lettered or numbered disc set into the front face of every slab
+  - Text column beside the stack, one block per slab
+  - Optional base slab or stat column anchoring the stack
   variants:
-    - {name: Stacked slabs, focus: "Tiers, layers, ranked lists", emphasis: One colour per slab, widest slab at the base}
-    - {name: Staircase, focus: Step sequences with progression, emphasis: "Treads rise bottom-left to top-right, numeral on each tread"}
-    - {name: Folded ribbon, focus: "Funnels, narrowing stages", emphasis: "Angled bands overlap, hexagon tab carries the letter"}
+  - name: Stacked slabs
+    focus: Tiers, layers, ranked lists
+    emphasis: One colour per slab
+    widest slab at the base: null
+  - name: Staircase
+    focus: Step sequences with progression
+    emphasis: Treads rise bottom-left to top-right, numeral on each tread
+  - name: Folded ribbon
+    focus: Funnels, narrowing stages
+    emphasis: Angled bands overlap, hexagon tab carries the letter
   visual_elements:
-    - Slabs extruded 8 to 12 percent of their width, seen from a slight top-left angle
-    - Side faces one shade darker than top faces, single light source
-    - Large numeral or letter on each slab as the wayfinding cue
-    - Short leader lines or plain proximity linking slab to text
-    - "Monochrome option: one hue stepped light to dark across tiers"
+  - Slabs extruded 8 to 12 percent of their width, seen from a slight top-left angle
+  - Side faces one shade darker than top faces, single light source
+  - Large numeral or letter on each slab as the wayfinding cue
+  - Short leader lines or plain proximity linking slab to text
+  - 'Monochrome option: one hue stepped light to dark across tiers'
   text_placement:
-    - Title at top, left-aligned
-    - Tier name bold beside each slab, description below the name
-    - Stack occupies the left 45 to 55 percent of a landscape canvas, text on the right
-    - "Portrait: stack centred, text alternating left and right"
-    - Closing line or stat on the base slab top face
+  - Title at top, left-aligned
+  - Tier name bold beside each slab, description below the name
+  - Stack occupies the left 45 to 55 percent of a landscape canvas, text on the right
+  - 'Portrait: stack centred, text alternating left and right'
+  - Closing line or stat on the base slab top face
 style:
   palette:
-    - Family item colours, one per slab, cycled top to bottom
-    - "Monochrome variant (ref-03): one hue stepped from light to dark across tiers, for ranked or funnel content"
-    - Light studio backdrop; slab side faces one shade darker than the top face
+  - Family item colours, one per slab, cycled top to bottom
+  - 'Monochrome variant (ref-03): one hue stepped from light to dark across tiers, for ranked or funnel content'
+  - Light studio backdrop; slab side faces one shade darker than the top face
   visual_elements:
-    - Slabs extruded 8 to 12 percent of their width, seen from a slight top-left angle
-    - Lettered or numbered disc set into each slab's front face
-    - "Staircase variant: treads step up and to the side, one icon per tread, big numeral outside the tread"
-    - "Ribbon variant: angled folded bands that overlap, with a hexagon tab carrying the letter"
-    - Text sits beside the stack in the whitespace, linked by short leader lines or simple proximity
-    - "Optional stat column: oversized number in item colour with a two-line caption"
+  - Slabs extruded 8 to 12 percent of their width, seen from a slight top-left angle
+  - Lettered or numbered disc set into each slab's front face
+  - 'Staircase variant: treads step up and to the side, one icon per tread, big numeral outside the tread'
+  - 'Ribbon variant: angled folded bands that overlap, with a hexagon tab carrying the letter'
+  - Text sits beside the stack in the whitespace, linked by short leader lines or simple proximity
+  - 'Optional stat column: oversized number in item colour with a two-line caption'
   typography:
-    - Family typography; letters and numerals on slabs are the largest text on the page
-    - Tier names bold caps beside each slab, description light charcoal below the name
+  - Family typography; letters and numerals on slabs are the largest text on the page
+  - Tier names bold caps beside each slab, description light charcoal below the name
   composition:
-    - Stack occupies the left 45 to 55 percent of a landscape canvas, text column on the right
-    - "Portrait: stack centred, text alternating left and right"
-    - Three to seven tiers; more than seven, switch to 3d-paper-tile
-    - Staircase reads bottom-left to top-right (01 at the bottom)
-prompt_fragment: >-
-  Render as a polished corporate 3D infographic built from stacked extruded slabs: each item is a thick glossy block with visible side faces one shade darker than its top, stacked in reading order with a lettered or numbered disc set into its face. Alternatives for step content: a zig-zag 3D staircase with one coloured tread per step, or overlapping folded ribbon tiers with hexagon tabs. Light off-white to grey studio backdrop, soft offset drop shadows, subtle top-left highlights. One saturated colour per item cycling through teal, orange, magenta, royal blue, lime green, purple. Labels sit in the whitespace beside the stack in geometric sans-serif: bold all-caps names, light charcoal descriptions, oversized stat numerals in the item colour. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder text. Clean premium business-template 3D.
+  - Stack occupies the left 45 to 55 percent of a landscape canvas, text column on the right
+  - 'Portrait: stack centred, text alternating left and right'
+  - Three to seven tiers; more than seven, switch to 3d-paper-tile
+  - Staircase reads bottom-left to top-right (01 at the bottom)
+prompt_fragment: 'Render as a polished corporate 3D infographic built from stacked extruded slabs: each item is a thick glossy
+  block with visible side faces one shade darker than its top, stacked in reading order with a lettered or numbered disc set
+  into its face. Alternatives for step content: a zig-zag 3D staircase with one coloured tread per step, or overlapping folded
+  ribbon tiers with hexagon tabs. Light off-white to grey studio backdrop, soft offset drop shadows, subtle top-left highlights.
+  One saturated colour per item cycling through teal, orange, magenta, royal blue, lime green, purple. Labels sit in the whitespace
+  beside the stack in geometric sans-serif: bold all-caps names, light charcoal descriptions, oversized stat numerals in the
+  item colour. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder
+  text. Clean premium business-template 3D.'
 best_for:
-  - Tiered architectures and technology stacks
-  - Priority levels and ranked lists
-  - Funnel stages
-  - Step sequences with a strong sense of climb
+- Tiered architectures and technology stacks
+- Priority levels and ranked lists
+- Funnel stages
+- Step sequences with a strong sense of climb
 refs:
-  - id: "01"
-    file: ref-01-stacked-slabs.jpg
-    shows: Six stacked extruded slabs A to F, each a different colour, lettered discs, stat column on the right
-    flags: [clean]
-    variant: Stacked slabs
-    item_count: 6
-  - id: "02"
-    file: ref-02-staircase-steps.jpg
-    shows: Zig-zag 3D staircase, six coloured treads, big step numerals alternating left and right
-    flags: [clean]
-    variant: Staircase
-    item_count: 6
-  - id: "03"
-    file: ref-03-folded-ribbon-tiers.jpg
-    shows: Five stacked folded ribbons A to E in a monochrome blue gradient with hexagon letter tabs and icon column
-    flags: [clean]
-    variant: Folded ribbon
-    item_count: 5
+- id: '01'
+  file: ref-01-stacked-slabs.jpg
+  shows: Six stacked extruded slabs A to F, each a different colour, lettered discs, stat column on the right
+  flags:
+  - clean
+  variant: Stacked slabs
+  item_count: 6
+- id: '02'
+  file: ref-02-staircase-steps.jpg
+  shows: Zig-zag 3D staircase, six coloured treads, big step numerals alternating left and right
+  flags:
+  - clean
+  variant: Staircase
+  item_count: 6
+- id: '03'
+  file: ref-03-folded-ribbon-tiers.jpg
+  shows: Five stacked folded ribbons A to E in a monochrome blue gradient with hexagon letter tabs and icon column
+  flags:
+  - clean
+  variant: Folded ribbon
+  item_count: 5
+- id: '04'
+  file: ref-04-rounded-slab-column-eight.jpg
+  shows: Eight rounded-square extruded slabs stacked vertically with even gaps in cyan, sand, blue, orange, navy, wine, indigo
+    and plum, dashed leader lines alternating left and right to icon, bold coloured label and description, title top left,
+    pale backdrop
+  flags:
+  - watermark
+  variant: Stacked slabs
+  item_count: 8
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_20_27-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+- id: '05'
+  file: ref-05-rounded-slab-column-seven.jpg
+  shows: Seven rounded-square extruded slabs stacked vertically with even gaps stepping from orange through yellow and greens
+    to blue, leader lines to labels on the left and grey icons on the right, title top left, pale backdrop
+  flags:
+  - clean
+  variant: Stacked slabs
+  item_count: 7
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_23_21-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+- id: '06'
+  file: ref-06-pyramid-bars-dark.jpg
+  shows: Six rounded extruded bars stacked as a pyramid from a wide red base to a small yellow top, in perspective on a dark
+    charcoal backdrop, leader lines to year labels and icon circles on the right, title top left
+  flags:
+  - watermark
+  variant: Stacked slabs
+  item_count: 6
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_28_51-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
 pairings:
-  hierarchical-layers: ["01", "03"]
-  linear-progression: ["02", "01"]
-  funnel: ["03", "01"]
-  iceberg: ["01"]
-  story-mountain: ["02"]
-alternates: [3d-gradient-pedestal, 3d-paper-tile]
-source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-slab-stack.md, added: "2026-09-17"}
+  hierarchical-layers:
+  - '01'
+  - '03'
+  - '04'
+  - '05'
+  - '06'
+  linear-progression:
+  - '02'
+  - '01'
+  funnel:
+  - '03'
+  - '01'
+  - '05'
+  - '06'
+  iceberg:
+  - '01'
+  - '04'
+  story-mountain:
+  - '02'
+alternates:
+- 3d-gradient-pedestal
+- 3d-paper-tile
+source:
+  origin: baoyu-infographic 2.1.0-lmc references/styles/3d-slab-stack.md
+  added: '2026-09-17'

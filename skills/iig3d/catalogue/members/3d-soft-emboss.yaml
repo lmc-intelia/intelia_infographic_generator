@@ -1,0 +1,133 @@
+name: 3d-soft-emboss
+device: 'Neumorphic soft-embossed grey devices: jigsaw ring, segment ring or overlapping circles pressed into a matte grey
+  field'
+backdrop: Matte light grey
+items:
+  min: 3
+  max: 4
+aspect_default: landscape
+layout:
+  structure:
+  - One ring device 55 to 70 percent of the canvas height, on the right or centred
+  - 'Jigsaw ring: a disc cut into three or four puzzle pieces with knob-and-socket edges, one icon disc per piece'
+  - 'Segment ring: a disc cut into three or four wedges by thin grooves, one icon disc per wedge'
+  - 'Overlapping circles: three translucent circles overlapping like a Venn, numerals in the overlaps, icon disc on each outer
+    lobe'
+  - Numbered text cards or big numerals in a column beside the device, one per item
+  variants:
+  - name: Jigsaw ring
+    focus: Parts that lock into one whole
+    emphasis: Puzzle-cut disc, pieces separated by fine grooves
+  - name: Segment ring
+    focus: Cycles and phases
+    emphasis: Wedge-cut disc around a recessed centre
+  - name: Overlapping circles
+    focus: Shared ground between three areas
+    emphasis: Three raised circles with numerals in the overlaps
+  visual_elements:
+  - Every shape is the same light grey as the backdrop, raised by a soft light-top-left shadow and a darker bottom-right shadow
+  - Icon discs raised a second level above the piece, dark grey flat icons
+  - Recessed centre disc on the ring devices
+  - 'Text cards: raised rounded rectangles with a large light-grey numeral and dark text'
+  - No colour, no outlines, no gloss; depth comes from shadow only
+  text_placement:
+  - Title centred at top between two thin rules
+  - Item numerals 01 to 04 large and light grey on the cards or beside the device
+  - Item name bold caps in dark grey, description light grey below
+  - No text on the device except numerals in the overlaps
+style:
+  palette:
+  - 'Monochrome: field and shapes #E6E8EB, highlight shadow white at 80 percent, low shadow #B9BEC5, icons and text #4A4F57'
+  - A brand colour override tints only the icons and item names; shapes stay grey
+  visual_elements:
+  - Ring device 55 to 70 percent of the canvas height, edge shadows 3 to 5 percent of its diameter
+  - Grooves between pieces as thin dark-then-light shadow pairs
+  - Icon discs raised, 14 to 18 percent of the device diameter, flat dark icons
+  - Text cards raised the same way, aligned in one column
+  - Matte finish everywhere; no gloss highlights
+  typography:
+  - Family typography; numerals thin and large in light grey, names bold caps dark grey, body light grey
+  composition:
+  - 'Landscape: device right, cards left (ref 01) or device centred with items either side (ref 02)'
+  - 'Three items: segment ring or overlapping circles; four items: jigsaw or segment ring'
+  - More than four items, switch to 3d-paper-tile or 3d-capsule-hub
+prompt_fragment: 'Render as a polished corporate 3D infographic in a neumorphic soft-embossed style: every shape is the same
+  matte light grey as the backdrop and stands out only through a soft white highlight at the top left and a darker shadow
+  at the bottom right. One ring device, a disc cut into puzzle pieces or wedges, or three overlapping raised circles, with
+  a raised icon disc on each part and a recessed centre. Numbered raised text cards beside it. No colour, no outlines, no
+  gloss. Geometric sans-serif type in dark grey. No hand-drawn lines, no paper texture, no cartoon characters, no photographic
+  realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template 3D.'
+best_for:
+- Three or four part frameworks
+- Cycles with few phases
+- Shared responsibilities and overlaps
+- Understated monochrome decks
+alternates:
+- 3d-paper-tile
+- 3d-capsule-hub
+- 3d-triangle-plate
+refs:
+- id: '01'
+  file: ref-01-jigsaw-ring-three.jpg
+  shows: Neumorphic light grey disc cut into three jigsaw pieces with knob edges and a recessed centre, a raised icon disc
+    on each piece, three raised numbered text cards 01 to 03 stacked on the right, title centred at top between thin rules
+  flags:
+  - watermark
+  variant: Jigsaw ring
+  item_count: 3
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_25_18-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+- id: '02'
+  file: ref-02-jigsaw-ring-four.jpg
+  shows: Neumorphic light grey disc cut into four jigsaw quarters with a recessed centre, raised icon discs on each quarter,
+    big light-grey numerals 01 to 04 with names and descriptions two per side of the disc
+  flags:
+  - watermark
+  variant: Jigsaw ring
+  item_count: 4
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_25_38-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+- id: '03'
+  file: ref-03-segment-ring-three.jpg
+  shows: Neumorphic light grey disc split into three wedges by thin grooves around a recessed centre, raised icon disc per
+    wedge on the right, three raised numbered cards 01 to 03 on the left, title centred at top
+  flags:
+  - watermark
+  variant: Segment ring
+  item_count: 3
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_08-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+- id: '04'
+  file: ref-04-overlapping-circles.jpg
+  shows: Three raised translucent light-grey circles overlapping like a Venn diagram on the right, numerals 01 to 03 in the
+    overlaps, a raised icon disc on each outer lobe, big numerals 1 to 3 with names and descriptions in a column on the left
+  flags:
+  - watermark
+  variant: Overlapping circles
+  item_count: 3
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_37-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+pairings:
+  jigsaw:
+  - '01'
+  - '02'
+  3d-soft-emboss:
+  - '01'
+  - '02'
+  - '03'
+  - '04'
+  circular-flow:
+  - '03'
+  venn-diagram:
+  - '04'
+source:
+  origin: user-added via iig3d.py add (03-emboss-jigsaw3.yaml)
+  added: '2026-09-21'

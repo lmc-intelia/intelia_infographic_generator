@@ -14,6 +14,7 @@ Member of the 3D corporate family. Central disc, pill capsules with rimmed circl
 | `3d-capsule-hub/04` | `ref-04-comparision.jpg` | Two-column comparison: two vertical section pillars with vertical titles, a VS diamond between them, five glossy dumbbell capsules per side (icon circle plus number circle), text outward in the whitespace, concentric rings behind | - | clean |
 | `3d-capsule-hub/05` | `ref-05-rimmed-capsule-wheel.jpg` | Eight white capsules in two columns of four around a bevelled hub, each capsule outlined in its own family colour with a thick coloured rim on the icon circle, thick blue connector stubs from the hub ring, icons in colour, hub title with a colour-dot progress strip | Rimmed wheel | clean |
 | `3d-capsule-hub/06` | `ref-06-capsule-hierarchy.jpg` | Three-level capsule hierarchy: a chrome-rimmed central hub disc with the title, eight white pill capsules in two columns each anchored by a rimmed icon circle in red, orange, lime, teal, blue, purple, magenta and yellow, thin grey connectors with coloured dot terminals on the hub ring, and two or three small colour-filled sub-capsules fanning out from each capsule's outer end, faint orbit rings on a pale studio | Capsule hierarchy | clean |
+| `3d-capsule-hub/07` | `ref-07-hub-ring-children.jpg` | Large white bevelled hub disc with a five-colour rim holding the title, dotted connectors down to five rimmed ring circles in teal, magenta, orange, lime and purple in one row, each ring tapering to a pin point and a dotted drop to a caps label and description below | Capsule hub | watermark |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
@@ -94,9 +95,9 @@ Render as a polished corporate 3D infographic organised around a large bevelled 
 
 ## Recommended pairings
 
-- `hub-spoke`: refs 01, 05, 02, 06
+- `hub-spoke`: refs 01, 05, 02, 06, 07
 - `circular-flow`: refs 03, 01
-- `tree-branching`: refs 01, 05, 06
+- `tree-branching`: refs 01, 05, 06, 07
 - `venn-diagram`: refs 02, 01
 - `binary-comparison`: refs 04
 - `comparison-matrix`: refs 04, 01

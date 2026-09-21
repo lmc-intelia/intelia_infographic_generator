@@ -1,0 +1,83 @@
+name: 3d-winding-road
+device: A dark asphalt road ribbon with pale kerbs snaking across the canvas, numbered location pins at each bend
+backdrop: White
+items:
+  min: 4
+  max: 8
+aspect_default: landscape
+layout:
+  structure:
+  - One continuous road from the right edge to the top left, three to four S bends, tapering toward the far end for perspective
+  - One numbered location pin per item planted on the road at a bend or straight, order following the road from the near end
+  - Labels and descriptions beside each pin, alternating above and below the road
+  - Road never crosses itself; pins never overlap
+  - Optional destination marker at the far end
+  variants:
+  - name: Road with pins
+    focus: Journeys, roadmaps, phases in order
+    emphasis: Plain road, glossy map pins with numerals
+  - name: Road with stops
+    focus: Milestones with dates
+    emphasis: Small discs on the road edge with date tabs
+  visual_elements:
+  - 'Road: dark charcoal asphalt, thin dashed white centre line, thick pale grey kerb on the outer edge for depth'
+  - 'Pins: glossy teardrop map pins in one family colour, white numeral, small shadow on the road'
+  - Road thickness 6 to 9 percent of the canvas height, soft shadow under the kerb
+  - No cars, buildings or scenery
+  text_placement:
+  - Title at top right or top left, clear of the road
+  - Numeral in each pin
+  - Item name bold caps beside the pin, description light charcoal below it
+  - Alternate text above and below the road so nothing crosses it
+style:
+  palette:
+  - 'Road asphalt #2E3238, centre line white, kerb #D9DDE2, pins family blue #1F8BD6 or one brand colour, text charcoal'
+  - Pins may step through the family cycle when items are categories rather than a sequence
+  - White studio backdrop, faint shadow under the road
+  visual_elements:
+  - 'Road drawn in perspective: wide near the bottom right, narrower toward the top left'
+  - Kerb on the outer edge only, 15 to 25 percent of the road width
+  - Pins 10 to 14 percent of the canvas height, glossy top highlight, numeral centred
+  - Dashed centre line continuous through every bend
+  typography:
+  - Family typography; pin numerals bold white, item names bold caps, descriptions light charcoal
+  composition:
+  - 'Landscape: road enters from the right, three bends, exits top left (ref 01)'
+  - 'Portrait: road enters bottom, snakes upward, four bends'
+  - Four to eight items; fewer than four, use 3d-disc-timeline; more, split into two images
+prompt_fragment: 'Render as a polished corporate 3D infographic of one winding road: a dark asphalt ribbon with a dashed white
+  centre line and a thick pale kerb on its outer edge, drawn in perspective so it is wide at the near end and narrows into
+  the distance, snaking through smooth S bends. Glossy teardrop map pins in one saturated colour stand on the road at each
+  stage, each with a bold white numeral, labels alternating above and below the road. No vehicles or scenery. White studio
+  backdrop, soft shadow under the road. Geometric sans-serif type. No hand-drawn lines, no paper texture, no cartoon characters,
+  no photographic realism, no watermarks, no placeholder or lorem ipsum text. Clean premium business-template 3D.'
+best_for:
+- Roadmaps and journeys
+- Phased programmes
+- Customer or onboarding paths
+alternates:
+- 3d-disc-timeline
+- 3d-isometric-light
+- 3d-arrow-ribbon
+refs:
+- id: '01'
+  file: ref-01-road-six-pins.jpg
+  shows: Dark asphalt road with a dashed white centre line and a pale kerb, entering from the right and snaking through three
+    S bends toward the top left in perspective, six glossy blue teardrop map pins numbered 1 to 6 planted on the road, title
+    top right, white backdrop
+  flags:
+  - clean
+  variant: Road with pins
+  item_count: 6
+  source:
+    path: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_19_18-Greenshot.png
+    added: '2026-09-21'
+    user_added: true
+pairings:
+  winding-roadmap:
+  - '01'
+  3d-winding-road:
+  - '01'
+source:
+  origin: user-added via iig3d.py add (07-road-pins.yaml)
+  added: '2026-09-21'

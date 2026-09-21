@@ -11,6 +11,8 @@ Member of the 3D corporate family. Embossed paper tiles, hexagons, tabs and tile
 | `3d-paper-tile/01` | `ref-01-tile-chart-set.jpg` | Six-panel set: ring chart with icons, line chart with disc markers, bar chart with percentage tiles on top, 3D pie with numbered wedges, hexagon step tabs, square step tiles in a grid | Tile-capped charts | clean |
 | `3d-paper-tile/02` | `ref-02-semicircle-tabs.jpg` | Semicircle segment wheel around a central disc plus five numbered bevelled tabs with coloured frames | Segment wheel | clean |
 | `3d-paper-tile/03` | `ref-03-hexagon-tree.jpg` | One large four-colour hexagon parent, four single-colour hexagon children, thin coloured connectors and small hexagon terminals | Hexagon tree | clean |
+| `3d-paper-tile/04` | `ref-04-segment-wheel-three.jpg` | Three white paper segment wedges around a central white disc with a blue-to-green rim ring, each wedge lifted with a shadow and carrying a numeral, name, description and small line icon, title and count on the centre disc, square | Segment wheel | watermark |
+| `3d-paper-tile/05` | `ref-05-hexagon-tab-list.jpg` | Five horizontal hexagon-ended bars in navy and steel-blue shades stacked on the left carrying body text, each joined to a white embossed tab on the right holding a hexagon icon badge and a bold numbered title, title bottom centre, white backdrop | Tab panels | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
@@ -92,15 +94,16 @@ Render as a polished corporate 3D infographic built from embossed paper-cut tile
 
 ## Recommended pairings
 
-- `dashboard`: refs 01
+- `dashboard`: refs 01, 05
 - `bento-grid`: refs 01, 02
 - `periodic-table`: refs 01
 - `hub-spoke`: refs 02, 03
 - `tree-branching`: refs 03, 01
-- `circular-flow`: refs 02
-- `jigsaw`: refs 01
+- `circular-flow`: refs 02, 04
+- `jigsaw`: refs 01, 04
 - `comic-strip`: refs 01
 - `comparison-matrix`: refs 01
+- `linear-progression`: refs 05
 
 Alternates: `3d-slab-stack`, `3d-capsule-hub`
 

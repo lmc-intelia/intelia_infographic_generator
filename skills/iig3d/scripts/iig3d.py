@@ -1146,7 +1146,9 @@ def add_ref(cat: Catalogue, image: Path, meta_path: Path) -> dict:
         write_yaml(cat.family_yaml, family)
     fresh = load_catalogue(cat.root)
     docs = render_docs(fresh)
-    problems = check(fresh)
+    # Report the new ref's own watermark (R21) and every other rule, but not watermarks the user
+    # accepted on earlier refs; those are `check --allow-watermark` business.
+    problems = [p for p in check(fresh) if "carries the watermark flag" not in p or file_name in p]
     return {
         "status": "ok" if not problems else "violations",
         "member": name,

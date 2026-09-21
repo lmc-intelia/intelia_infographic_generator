@@ -1,7 +1,7 @@
 ---
 name: iig3d
 version: 0.2.0
-description: Render 3D corporate-family infographics (industrial 3d look, twelve 3d-* members such as disc timelines, slab stacks, capsule hubs, glass layers) with Google Nano Banana Pro through one Python CLI. Use when the user asks for a "3d infographic", "industrial 3d", "iig3d", a corporate 3D timeline, stack, hub, target or isometric map, or wants to add a reference image to the 3D catalogue.
+description: Render 3D corporate-family infographics (industrial 3d look, fifteen 3d-* members such as disc timelines, slab stacks, capsule hubs, glass layers, winding roads) with Google Nano Banana Pro through one Python CLI. Use when the user asks for a "3d infographic", "industrial 3d", "iig3d", a corporate 3D timeline, stack, hub, target or isometric map, or wants to add a reference image to the 3D catalogue.
 ---
 
 # iig3d
