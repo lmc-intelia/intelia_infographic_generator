@@ -111,8 +111,8 @@ One YAML file per infographic. Only `title` and `items` are required.
 title: OPENWIKI REFRESH PIPELINE          # on-image title, verbatim
 subtitle: Five steps from commit to published wiki
 language: en                              # language of every label (default en)
-layout: linear-progression                # a general layout or a 3d-* device name
-style: industrial-3d                      # industrial-3d routes by layout; or name a 3d-* member
+layout: linear-progression                # a general layout or a 3d-* device name (a refs/ folder)
+style: industrial-3d                      # industrial-3d routes by layout; a 3d-* member; or a ref of the layout member
 aspect: landscape                         # landscape | portrait | square | W:H such as 4:3
 palette_css: ./brand.css                  # optional, see Brand colours
 palette_vars: [--brand-primary, --brand-secondary]   # optional, restricts and orders the colours
@@ -124,7 +124,7 @@ items:                                    # one per step, tier, capsule, pill, c
 stats:                                    # optional headline numbers
   - {value: "12x", caption: faster refresh}
 notes: keep the world map faint           # optional design instructions
-pin: 3d-capsule-hub/06                    # optional, see Reproducing one reference image
+pin: 3d-capsule-hub/06                    # optional, same as layout: 3d-capsule-hub + style: 06
 refs: [./my-brand-reference.jpg]          # optional extra reference images (max 6 total)
 ```
 
@@ -171,23 +171,25 @@ describe each device, its reference images, palette and composition rules.
 
 Every member ships a folder of reference JPEGs under `skills/iig3d/refs/<member>/`. By default
 the script picks two or three of them by layout pairing and passes them as style guidance.
-To have the render reproduce one specific image's composition with your content, pin it:
+To have the render reproduce one specific image's composition with your content, name the
+folder as the layout and the image as the style:
 
 ```yaml
-pin: 3d-capsule-hub/06                              # <member>/<ref id>
-pin: 3d-capsule-hub/ref-06-capsule-hierarchy.jpg    # <member>/<file name>, extension optional
-pin: refs/3d-capsule-hub/ref-06-capsule-hierarchy   # the path as you see it in the folder
-pin: "06"                                           # id alone, when style: names the member
+layout: 3d-capsule-hub                    # the folder under refs/
+style: "06"                               # the ref id, or ref-06-capsule-hierarchy.jpg, or its stem
 ```
 
-`--pin 3d-capsule-hub/06` on `prompt` or `render` does the same. List a member's pins with
-`refs --member 3d-capsule-hub`; each entry carries `pin`, `file`, `shows`, `variant`,
-`item_count` and `flags`. The per-member pages under `docs/members/` show the same table.
+`--layout 3d-capsule-hub --style 06` on `prompt`, `render` or `route` does the same. The
+one-key form `pin: 3d-capsule-hub/06` (also `--pin`) is equivalent and works with any layout;
+it also accepts `refs/3d-capsule-hub/ref-06-capsule-hierarchy.jpg` as you see the path.
+List a member's refs with `refs --member 3d-capsule-hub`; each entry carries `pin`, `file`,
+`shows`, `variant`, `item_count` and `flags`. The per-member pages under `docs/members/` show
+the same table.
 
 What a pin changes:
 
-- The pinned member becomes the style, and the layout defaults to the member's own device.
-  A `style:` that names a different member is an error.
+- The pinned member becomes the style member, and the layout defaults to the member's own
+  device. A `pin:` whose member differs from an explicit `3d-*` style is an error.
 - The pinned image is reference image 1. Up to two pairing refs follow as style support,
   never a second watermarked one. Your own `refs:` still append, six images in total at most.
 - The prompt gains a "Reference Composition" section: what the image shows, its variant and
@@ -223,8 +225,8 @@ Every command prints one JSON line on stdout; diagnostics go to stderr.
 | Command | Purpose |
 |---------|---------|
 | `list` | members (device, item range, aspect default, refs) and the 21 general layouts |
-| `route --layout L [--style S]` | which member renders this layout; alternates |
 | `refs --member M [--layout L] [--pin P] [--ref IMG]` | the 2 to 3 reference images a render would pass, plus every ref of the member with its pin token |
+| `route --layout L [--style S]` | which member renders this layout; alternates; `pin` when `--style` names a ref of the `--layout` member |
 | `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
 | `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
 | `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
@@ -312,7 +314,8 @@ the reproducibility record.
 | `429` in the error | Quota. The script already retried once; wait and rerun. |
 | Garbled text in the PNG | Fix the spec (shorter labels, fewer items) and render again; the old PNG is kept as a backup. |
 | `reference image missing: ...` | A catalogue ref file is absent; run `check` and restore the file. |
-| `unknown ref '07' for 3d-capsule-hub; valid: ...` | The pin names no registered ref; pick one from `refs --member M` or `add` the image first. |
+| `unknown ref '07' for 3d-capsule-hub; valid: ...` | The style or pin names no registered ref; pick one from `refs --member M` or `add` the image first. |
+| `unknown style '06'; valid: industrial-3d, a 3d-* member, or a ref of the member named by layout` | A ref id as `style:` needs `layout:` set to that ref's `3d-*` folder. |
 | `style 3d-slab-stack conflicts with pinned ref member 3d-capsule-hub` | Drop `style:` or set it to the pinned member. |
 | `not valid YAML: ...` | A colon inside an unquoted value is the usual cause; quote the string. |
 

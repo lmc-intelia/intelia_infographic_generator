@@ -133,3 +133,17 @@ def test_prompt_pin_conflicting_style_exits_1(iig3d, capsys, fixtures, tmp_path,
     args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root)]
     code, data = run(iig3d, capsys, [*args, "--pin", "3d-capsule-hub/06"])  # spec style is 3d-disc-timeline
     assert code == 1 and "conflicts" in data["error"]
+
+
+def test_prompt_layout_member_style_ref(iig3d, capsys, fixtures, tmp_path, tmp_catalogue):
+    args = ["prompt", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, [*args, "--layout", "3d-capsule-hub", "--style", "06"])
+    assert code == 0 and data["pin"] == "3d-capsule-hub/06" and data["member"] == "3d-capsule-hub" and data["style"] == "3d-capsule-hub"
+    assert data["refs"][0].endswith("ref-06-capsule-hierarchy.jpg")
+
+
+def test_route_layout_member_style_ref(iig3d, capsys, tmp_catalogue):
+    code, data = run(iig3d, capsys, ["route", "--layout", "3d-capsule-hub", "--style", "ref-06-capsule-hierarchy", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["member"] == "3d-capsule-hub" and data["pin"] == "3d-capsule-hub/06"
+    code, data = run(iig3d, capsys, ["route", "--layout", "hub-spoke", "--skill-root", str(tmp_catalogue.root)])
+    assert code == 0 and data["pin"] is None

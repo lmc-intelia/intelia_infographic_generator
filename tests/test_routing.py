@@ -98,3 +98,27 @@ def test_pinned_member_conflicts_with_explicit_style(iig3d, cat):
     with pytest.raises(iig3d.UsageError) as err:
         iig3d.route(cat, None, "3d-slab-stack", pinned_member="3d-capsule-hub")
     assert "conflicts" in str(err.value)
+
+
+@pytest.mark.parametrize(
+    "layout,style,pin,expect",
+    [
+        ("3d-capsule-hub", "06", None, (None, "3d-capsule-hub/06")),
+        ("3d-capsule-hub", "ref-06-capsule-hierarchy.jpg", None, (None, "3d-capsule-hub/ref-06-capsule-hierarchy.jpg")),
+        ("hub-spoke", "3d-capsule-hub/06", None, (None, "3d-capsule-hub/06")),
+        ("3d-capsule-hub", "3d-capsule-hub", None, ("3d-capsule-hub", None)),
+        ("hub-spoke", "industrial-3d", None, ("industrial-3d", None)),
+        ("hub-spoke", None, None, (None, None)),
+        ("3d-capsule-hub", "06", "3d-paper-tile/01", ("06", "3d-paper-tile/01")),
+    ],
+)
+def test_split_style(iig3d, cat, layout, style, pin, expect):
+    assert iig3d.split_style(cat, layout, style, pin) == expect
+
+
+def test_split_style_ref_without_member_layout_fails(iig3d, cat):
+    with pytest.raises(iig3d.UsageError) as err:
+        iig3d.split_style(cat, "hub-spoke", "06")
+    assert "layout: 3d-capsule-hub, style: 06" in str(err.value)
+    with pytest.raises(iig3d.UsageError):
+        iig3d.split_style(cat, None, "claymation")

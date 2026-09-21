@@ -2,8 +2,8 @@
 title: OPENWIKI REFRESH PIPELINE
 subtitle: Five steps from commit to published wiki
 language: en                      # text language for all labels
-layout: linear-progression        # optional: a general layout or a 3d-* device name
-style: industrial-3d              # optional: industrial-3d (route by layout) or a 3d-* member
+layout: linear-progression        # optional: a general layout or a 3d-* device name (a refs/ folder)
+style: industrial-3d              # optional: industrial-3d (route by layout), a 3d-* member, or a ref id/file of the layout member (e.g. 06)
 aspect: landscape                 # optional: landscape | portrait | square | W:H (snapped to the Gemini set)
 # palette_css: ./brand.css        # optional: brand colours replace the item colours only
 # palette_vars: [--brand-primary, --brand-secondary]
@@ -21,5 +21,5 @@ items:                            # one per step, tier, capsule, pill, cell, pla
 # stats:
 #   - {value: "73%", caption: pages refreshed per run}
 # notes: keep the world map faint
-# pin: 3d-capsule-hub/06         # optional: catalogue ref to reproduce with this content (<member>/<id|file>; `refs --member M` lists them)
+# pin: 3d-capsule-hub/06         # optional: same as layout: 3d-capsule-hub + style: 06; `refs --member M` lists refs
 # refs: [./my-brand-reference.jpg]

@@ -234,6 +234,19 @@ class Route:
         return asdict(self)
 
 
+def split_style(cat: Catalogue, layout: str | None, style: str | None, pin: str | None = None) -> tuple[str | None, str | None]:
+    """(style, pin) after reading a ref name out of `style`: with `layout` naming a member,
+    `style: 06` or `style: ref-06-x.jpg` means that member's ref; `style: 3d-x/06` works with
+    any layout. A member name or the umbrella pass through; an explicit pin is left alone."""
+    if pin or style in (None, UMBRELLA) or style in cat.members:
+        return style, pin
+    if "/" in style:
+        return None, style
+    if layout in cat.members:
+        return None, f"{layout}/{style}"
+    raise UsageError(f"unknown style {style!r}; valid: {UMBRELLA}, a 3d-* member, or a ref of the member named by layout (e.g. layout: 3d-capsule-hub, style: 06)")
+
+
 def route(cat: Catalogue, layout: str | None, style: str | None, pinned_member: str | None = None) -> Route:
     """Resolve (layout, style) to a family member.
 
@@ -1229,7 +1242,7 @@ def build_parser() -> argparse.ArgumentParser:
     prepare_args.add_argument("--spec", required=True, help="YAML content spec")
     prepare_args.add_argument("--out-dir", required=True, help="output directory (prompts/ and infographic.png)")
     prepare_args.add_argument("--layout", default=None)
-    prepare_args.add_argument("--style", default=None, help="3d-* member or industrial-3d")
+    prepare_args.add_argument("--style", default=None, help="3d-* member, industrial-3d, or a ref id/file of the member named by --layout")
     prepare_args.add_argument("--aspect", default=None, help="landscape | portrait | square | W:H")
     prepare_args.add_argument("--palette-css", default=None, help="CSS file whose colours replace the item colours")
     prepare_args.add_argument("--palette-vars", default=None, help="comma-separated custom properties to use, in order")
@@ -1243,7 +1256,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("list", parents=[common], help="members and layouts")
     p_route = sub.add_parser("route", parents=[common], help="resolve layout and style to a member")
     p_route.add_argument("--layout", default=None)
-    p_route.add_argument("--style", default=None)
+    p_route.add_argument("--style", default=None, help="3d-* member, industrial-3d, or a ref of the --layout member")
     p_refs = sub.add_parser("refs", parents=[common], help="reference images for a member and layout")
     p_refs.add_argument("--member", required=True)
     p_refs.add_argument("--layout", default=None, help="default: the member's own device layout")
@@ -1292,10 +1305,10 @@ def cmd_list(cat: Catalogue) -> dict:
 def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
     """Shared front half of prompt and render: spec, route, aspect, refs, palette, prompt file."""
     spec = load_spec(Path(args.spec))
-    style = args.style or spec.style
-    pin = args.pin or spec.pin
+    layout = args.layout or spec.layout
+    style, pin = split_style(cat, layout, args.style or spec.style, args.pin or spec.pin)
     pinned_member, pinned = cat.resolve_ref(pin, style) if pin else (None, None)
-    route_ = route(cat, args.layout or spec.layout, style, pinned_member=pinned_member.name if pinned_member else None)
+    route_ = route(cat, layout, style, pinned_member=pinned_member.name if pinned_member else None)
     member = cat.member(route_.member)
     ratio, snapped_from = snap_aspect(cat, args.aspect or spec.aspect, member.aspect_default)
     user_refs = [Path(r) for r in args.ref] + spec.refs
@@ -1342,6 +1355,13 @@ def cmd_render(cat: Catalogue, args: argparse.Namespace) -> dict:
     return result
 
 
+def cmd_route(cat: Catalogue, args: argparse.Namespace) -> dict:
+    style, pin = split_style(cat, args.layout, args.style)
+    pinned_member, pinned = cat.resolve_ref(pin, style) if pin else (None, None)
+    route_ = route(cat, args.layout, style, pinned_member=pinned_member.name if pinned_member else None)
+    return {"status": "ok", **route_.as_dict(), "pin": cat.pin_token(pinned_member.name, pinned) if pinned else None}
+
+
 def cmd_refs(cat: Catalogue, args: argparse.Namespace) -> dict:
     """The refs a render would pass, plus every catalogue ref of the member with its pin token."""
     member = cat.member(args.member)
@@ -1369,7 +1389,7 @@ def cmd_check(cat: Catalogue, args: argparse.Namespace) -> dict:
 
 HANDLERS = {
     "list": lambda cat, args: cmd_list(cat),
-    "route": lambda cat, args: {"status": "ok", **route(cat, args.layout, args.style).as_dict()},
+    "route": cmd_route,
     "refs": cmd_refs,
     "prompt": prepare,
     "render": cmd_render,

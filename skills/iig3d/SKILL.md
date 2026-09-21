@@ -17,7 +17,7 @@ description: Render 3D corporate-family infographics (industrial 3d look, twelve
 
 1. Read the user's source. Write `spec.yaml` (shape below; copy `<skill>/templates/spec.example.yaml`). Items are verbatim from the source; strip secrets.
 2. Pick `style`: a `3d-*` member, or `industrial-3d` to route by `layout` (`route --layout L` shows the member and alternates; `list` shows all).
-   To reproduce one catalogue image with the user's content, set `pin: <member>/<id|file>` (`refs --member M` lists pins; the JPEGs live in `<skill>/refs/<member>/`). The pin fixes the member and goes first to the model.
+   To reproduce one catalogue JPEG with the user's content: `layout: <member>` (the `<skill>/refs/` folder name) and `style: <ref id or file>` from that folder (`refs --member M` lists them). Same thing as `pin: <member>/<ref>`. The image goes first to the model.
 3. **Confirm member, layout, aspect and language once before render** (AskUserQuestion), unless the request says `--no-confirm` or equivalent. Then state the assumed choices.
 4. `render --spec spec.yaml --out-dir infographic/<slug> [--no-confirm]`. Read the JSON: `status`, `path`, `prompt_file`, `warnings`. Report path and warnings. Do not read the PNG back unless asked.
 5. Text wrong or garbled: fix the spec, render again (new `prompts/NN-*.md`, old PNG kept as `infographic-backup-*.png`). Never paint over rendered text with code. Never emit SVG, HTML or canvas as a substitute for the raster image.
@@ -26,15 +26,15 @@ description: Render 3D corporate-family infographics (industrial 3d look, twelve
 title: OPENWIKI REFRESH PIPELINE      # required
 subtitle: Five steps from commit to published wiki
 language: en
-layout: linear-progression            # general layout or 3d-* device name
-style: industrial-3d                  # or a 3d-* member
+layout: linear-progression            # general layout or 3d-* device name (a refs/ folder)
+style: industrial-3d                  # or a 3d-* member; or a ref id/file when layout names a member
 aspect: landscape                     # landscape | portrait | square | W:H
 palette_css: ./brand.css              # optional; brand colours replace item colours only
 items:                                # 3 to 10 depending on member; one per step/tier/cell
   - {label: COMMIT, detail: Developer pushes to main}
 stats: [{value: "73%", caption: pages refreshed}]   # optional
 notes: keep the world map faint       # optional design instructions
-pin: 3d-capsule-hub/06               # optional; reproduce this catalogue image's composition
+pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub + style: 06
 ```
 
 ## Commands
@@ -42,7 +42,7 @@ pin: 3d-capsule-hub/06               # optional; reproduce this catalogue image'
 | Command | Purpose |
 |---------|---------|
 | `iig3d.py list` | members (device, item range, aspect default, refs) and the 21 general layouts with their primary member |
-| `iig3d.py route --layout L [--style S]` | which member renders this layout; alternates |
+| `iig3d.py route --layout L [--style S]` | which member renders this layout; alternates; `pin` when style names a ref |
 | `iig3d.py refs --member M [--layout L] [--pin P]` | the 2 to 3 reference images the render will pass, plus every pin of the member |
 | `iig3d.py palette --css PATH [--vars a,b]` | preview brand colours extracted from a CSS file |
 | `iig3d.py prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md` without calling the API |
