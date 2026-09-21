@@ -1,6 +1,74 @@
 # Knowledge Update Log
 
 ## 2026-09-21
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [prepare](/modules/prepare.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [resolve_icons](/modules/resolve-icons.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [test_icons.py](/modules/test-icons-py.md).
+* **Update**: [prepare](/modules/prepare.md).
+* **Update**: [select_refs](/modules/select-refs.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Creation**: [resolve_icons](/modules/resolve-icons.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [test_cli.py](/hubs/test-cli-py.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Creation**: [run()](/hubs/run.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Deprecation**: [prepare()](/hubs/prepare.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Path](/modules/path.md).
+* **Creation**: [test_icons.py](/modules/test-icons-py.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Update**: [.items](/modules/items.md).
+* **Creation**: [build_icon_sheet](/modules/build-icon-sheet.md).
+* **Update**: [normalise_image](/modules/normalise-image.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [test_cli.py](/hubs/test-cli-py.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [prepare()](/hubs/prepare.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [test_add.py](/modules/test-add-py.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [UsageError](/modules/usageerror.md).
+* **Update**: [prepare](/modules/prepare.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [select_refs](/modules/select-refs.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [prepare()](/hubs/prepare.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
 * **Update**: [test_render.py](/modules/test-render-py.md).

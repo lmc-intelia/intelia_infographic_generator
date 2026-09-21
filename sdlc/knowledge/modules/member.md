@@ -5,47 +5,48 @@ description: "Graphify community 33: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
-stale_after: "2026-10-05T02:47:44Z"
-source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
+generated: { by: sdlc/0.3.5, at: "2026-09-21T04:49:58Z" }
+stale_after: "2026-10-05T04:49:58Z"
+source_commit: 6197c1b39e2b704463349bd9e1b4033182bc40ce
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 67114822a3e7b1d9 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T14:48:56+10:00", digest: 05b5aa06590e0558 }
 ---
 
 # Files
 - `skills/iig3d/scripts/iig3d.py`
 
 # Symbols
-- member_markdown() (skills/iig3d/scripts/iig3d.py:L1169)
-- catalogue_markdown() (skills/iig3d/scripts/iig3d.py:L1192)
-- expected_docs() (skills/iig3d/scripts/iig3d.py:L1211)
-- render_docs() (skills/iig3d/scripts/iig3d.py:L1218)
-- stale_docs() (skills/iig3d/scripts/iig3d.py:L1227)
-- `docs stale: <path>` for every generated file that is missing or differs from… (skills/iig3d/scripts/iig3d.py:L1228)
-- _pairing() (skills/iig3d/scripts/iig3d.py:L403)
-- Ref ids paired with the layout; the member's first pairing when the layout has… (skills/iig3d/scripts/iig3d.py:L404)
-- pick_style_refs() (skills/iig3d/scripts/iig3d.py:L408)
-- Pairing refs for the layout (2 to 3), padded from the member pool when short,… (skills/iig3d/scripts/iig3d.py:L409)
-- pick_pinned_refs() (skills/iig3d/scripts/iig3d.py:L452)
-- The pinned ref first, then the layout's style refs as company up to per_render… (skills/iig3d/scripts/iig3d.py:L453)
-- Member (skills/iig3d/scripts/iig3d.py:L52)
-- .name() (skills/iig3d/scripts/iig3d.py:L56)
-- .items() (skills/iig3d/scripts/iig3d.py:L60)
-- _bullets() (skills/iig3d/scripts/iig3d.py:L626)
-- _table() (skills/iig3d/scripts/iig3d.py:L630)
-- layout_sections() (skills/iig3d/scripts/iig3d.py:L637)
-- (heading, body) pairs of the member's device layout, shared by the prompt and… (skills/iig3d/scripts/iig3d.py:L638)
-- .aspect_default() (skills/iig3d/scripts/iig3d.py:L64)
-- render_layout_block() (skills/iig3d/scripts/iig3d.py:L650)
-- The member's device layout as the markdown block the Layout Guidelines slot… (skills/iig3d/scripts/iig3d.py:L651)
-- .prompt_fragment() (skills/iig3d/scripts/iig3d.py:L68)
-- .refs() (skills/iig3d/scripts/iig3d.py:L72)
-- .pairings() (skills/iig3d/scripts/iig3d.py:L76)
-- .alternates() (skills/iig3d/scripts/iig3d.py:L80)
-- .__getitem__() (skills/iig3d/scripts/iig3d.py:L83)
+- .member() (skills/iig3d/scripts/iig3d.py:L108)
+- .resolve_ref() (skills/iig3d/scripts/iig3d.py:L121)
+- A catalogue ref named by the user: `<member>/<id|file|stem>`, a… (skills/iig3d/scripts/iig3d.py:L122)
+- cmd_refs() (skills/iig3d/scripts/iig3d.py:L1726)
+- The refs a render would pass, plus every catalogue ref of the member with its… (skills/iig3d/scripts/iig3d.py:L1727)
+- Route (skills/iig3d/scripts/iig3d.py:L229)
+- .as_dict() (skills/iig3d/scripts/iig3d.py:L236)
+- Resolve (layout, style) to a family member. Explicit 3d-* style wins; a 3d-*… (skills/iig3d/scripts/iig3d.py:L254)
+- _pairing() (skills/iig3d/scripts/iig3d.py:L408)
+- Ref ids paired with the layout; the member's first pairing when the layout has… (skills/iig3d/scripts/iig3d.py:L409)
+- pick_style_refs() (skills/iig3d/scripts/iig3d.py:L413)
+- Pairing refs for the layout (2 to 3), padded from the member pool when short,… (skills/iig3d/scripts/iig3d.py:L414)
+- pick_pinned_refs() (skills/iig3d/scripts/iig3d.py:L457)
+- The pinned ref first, then the layout's style refs as company up to per_render… (skills/iig3d/scripts/iig3d.py:L458)
+- select_refs() (skills/iig3d/scripts/iig3d.py:L475)
+- Style refs as paths (see pick_style_refs), then the icon sheet, then user refs,… (skills/iig3d/scripts/iig3d.py:L484)
+- Member (skills/iig3d/scripts/iig3d.py:L55)
+- .name() (skills/iig3d/scripts/iig3d.py:L59)
+- .aspect_default() (skills/iig3d/scripts/iig3d.py:L67)
+- .prompt_fragment() (skills/iig3d/scripts/iig3d.py:L71)
+- .refs() (skills/iig3d/scripts/iig3d.py:L75)
+- .pairings() (skills/iig3d/scripts/iig3d.py:L79)
+- .alternates() (skills/iig3d/scripts/iig3d.py:L83)
+- .__getitem__() (skills/iig3d/scripts/iig3d.py:L86)
+- render_layout_block() (skills/iig3d/scripts/iig3d.py:L977)
+- The member's device layout as the markdown block the Layout Guidelines slot… (skills/iig3d/scripts/iig3d.py:L978)
 
 # Depends on
 - [Catalogue](/modules/catalogue.md)
+- [Path](/modules/path.md)
+- [prepare](/modules/prepare.md)
 
 # Inferred
 - no INFERRED edges; treat any that appear as hints

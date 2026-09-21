@@ -1,22 +1,17 @@
 ---
 type: Hub
 title: prepare()
-description: Graphify god node with degree 19 in skills/iig3d/scripts/iig3d.py
+description: Graphify god node with degree 20 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
-status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
-stale_after: "2026-10-05T02:47:44Z"
-source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
+status: deprecated
+generated: { by: sdlc/0.3.5, at: "2026-09-21T04:48:39Z" }
+source_commit: fc98b7651e28bcb666f0776fc2f24f2441f4e765
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 67114822a3e7b1d9 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T14:30:49+10:00", digest: fe9bead68c7c4cae }
 ---
 
-# Where
-- `skills/iig3d/scripts/iig3d.py:L1307`
+# Deprecated
+- sources removed by commit `fc98b7651e28`: `skills/iig3d/scripts/iig3d.py`
+- no replacement concept; kept so incoming links still resolve
 
-# Module
-- [prepare](/modules/prepare.md)
-
-# Why it matters
-- degree 19: many modules reach this symbol; changes here have a wide blast radius

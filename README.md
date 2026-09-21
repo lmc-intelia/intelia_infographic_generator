@@ -20,6 +20,7 @@ environment (tests, pre-commit, sdlc stage records) and can be ignored by users.
 - [Choosing a member and layout](#choosing-a-member-and-layout)
 - [Reproducing one reference image](#reproducing-one-reference-image)
 - [Brand colours from a CSS file](#brand-colours-from-a-css-file)
+- [Icons from a named pack](#icons-from-a-named-pack)
 - [Commands](#commands)
 - [Adding your own reference images](#adding-your-own-reference-images)
 - [Using the skill from Claude Code](#using-the-skill-from-claude-code)
@@ -116,11 +117,12 @@ style: industrial-3d                      # industrial-3d routes by layout; a 3d
 aspect: landscape                         # landscape | portrait | square | W:H such as 4:3
 palette_css: ./brand.css                  # optional, see Brand colours
 palette_vars: [--brand-primary, --brand-secondary]   # optional, restricts and orders the colours
+icon_pack: lucide                         # optional, see Icons from a named pack
 items:                                    # one per step, tier, capsule, pill, cell, plate or cylinder
   - label: COMMIT                         # required; rendered as "01 COMMIT"
     detail: Developer pushes to main      # one line under the label
     value: "73%"                          # optional stat shown with the item
-    icon: git-branch                      # optional hint for the icon
+    icon: git-branch                      # optional; a hint, or a glyph name when icon_pack is set
 stats:                                    # optional headline numbers
   - {value: "12x", caption: faster refresh}
 notes: keep the world map faint           # optional design instructions
@@ -144,7 +146,7 @@ Fifteen members share one rendering language and differ in the structural device
 | Style | Device | Items | Best for |
 |-------|--------|-------|----------|
 | `3d-slab-stack` | Stacked extruded slabs, staircase, folded ribbons | 3 to 7 | tiers, ranked lists, funnels |
-| `3d-arrow-ribbon` | Fat chevron arrows carrying a sequence | 5 to 8 | pipelines, journeys |
+| `3d-arrow-ribbon` | Fat chevron arrows, arrow bars, angled banners, folded ribbons | 4 to 8 | pipelines, journeys, ranked options |
 | `3d-disc-timeline` | Rimmed discs on a track, chain or S-curve | 4 to 8 | timelines, procedures |
 | `3d-paper-tile` | Embossed tiles, hexagons, tabs, tile-capped charts | 6 to 16 | dashboards, grids |
 | `3d-gradient-pedestal` | Isometric gradient pedestals with 3D numerals | 3 to 5 | short summaries, comparisons |
@@ -156,7 +158,7 @@ Fifteen members share one rendering language and differ in the structural device
 | `3d-cylinder-column` | Stepped glossy cylinders with bent arrows | 3 to 6 | ranked steps, bar charts |
 | `3d-glass-layer` | Exploded stack of translucent plates | 3 to 7 | architecture layers |
 | `3d-triangle-plate` | Facet pyramid of four prisms, or one triangle with corner nodes | 3 to 4 | pillars, triads, trade-offs |
-| `3d-soft-emboss` | Neumorphic grey jigsaw ring, segment ring or overlapping circles | 3 to 4 | small frameworks, cycles, overlaps |
+| `3d-soft-emboss` | Neumorphic grey jigsaw ring, segment ring, overlapping circles or chevron row | 3 to 6 | small frameworks, cycles, overlaps, short sequences |
 | `3d-winding-road` | Asphalt road ribbon with numbered map pins | 4 to 8 | roadmaps, journeys, phased programmes |
 
 Three ways to pick, from most to least specific:
@@ -228,6 +230,39 @@ spec) restricts and orders the extraction to named properties. Fewer than 3 usab
 an error. The prompt gains a "Project palette override" paragraph and the prompt file's
 frontmatter records the source and colours.
 
+## Icons from a named pack
+
+Without a pack, `icon:` on an item is a free-text hint and the model draws its own idea of it.
+Name a pack and the script builds an icon sheet the model copies from:
+
+```yaml
+icon_pack: lucide                         # any Iconify pack: lucide, tabler, ph, mdi, fa6-solid, ...
+items:
+  - {label: PLAN, icon: compass}          # lucide:compass
+  - {label: SHIP, icon: tabler:rocket}    # a prefix overrides the pack for one item
+  - {label: TALK, icon: a speech bubble}  # not a slug: stays a free-text hint
+```
+
+`--icon-pack lucide` on `prompt` or `render` sets the default pack. Glyphs are cached under
+`skills/iig3d/icons/<pack>/<name>.svg` and fetched from the Iconify API on a miss; `--no-icon-fetch`
+(or `IIG3D_ICON_FETCH=0`) uses the cache only. Browse names at https://icon-sets.iconify.design.
+
+Items without an `icon:` still get one when a pack is set: the script maps words in the label,
+then the detail, through a built-in business vocabulary (plan to compass, launch to rocket, data
+to database, and so on), then searches Iconify names for each word. The prompt frontmatter
+records how each glyph was chosen (`via: spec`, `synonym:launch`, `search:umbrella`). A named
+icon that does not exist falls back the same way and fails only when nothing fits.
+`icons --pack lucide --label "GOVERN" --detail "policy and control"` shows the pick without
+rendering; `--query shield` lists matching names. Claude, following SKILL.md, names an icon per
+item from the source text first and uses these suggestions to fill or check.
+
+The sheet is one white PNG with each glyph in black under its item number, saved as
+`icon-sheet.png` in the output directory and passed after the catalogue refs (before your own
+`refs:`, still six images at most). The prompt gains an "Icon Set" section telling the model to
+copy each numbered glyph's line work onto its item and recolour it; the frontmatter marks the
+sheet `usage: icons` and lists the item-to-icon map. Expect faithful shapes and stroke weight,
+not pixel-exact glyphs.
+
 ## Commands
 
 Every command prints one JSON line on stdout; diagnostics go to stderr.
@@ -237,9 +272,10 @@ Every command prints one JSON line on stdout; diagnostics go to stderr.
 | `list` | members (device, item range, aspect default, refs) and the 21 general layouts |
 | `refs --member M [--layout L] [--pin P] [--ref IMG]` | the 2 to 3 reference images a render would pass, plus every ref of the member with its pin token |
 | `route --layout L [--style S]` | which member renders this layout; alternates; `pin` when `--style` names a ref of the `--layout` member |
+| `icons [--pack P] [--query WORD] [--label TEXT] [--detail TEXT]` | glyph names matching a word in a pack; the glyph the script would pick for an item's text |
 | `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
 | `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
-| `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
+| `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
 | `add --image IMG --meta meta.yaml` | register an image as a reference (below) |
 | `docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `check [--allow-watermark]` | validate catalogue, refs and docs; exit 1 with every violation |
@@ -354,6 +390,7 @@ skills/iig3d/
   catalogue/schema.yaml       # walked by validate_member
   refs/<member>/ref-NN-*.jpg  # reference images, all clean renders or clean originals
   templates/                  # base-prompt.md, spec.example.yaml, meta.example.yaml
+  icons/<pack>/<name>.svg     # icon cache for icon sheets; a few Lucide glyphs vendored for tests
   docs/                       # generated by `iig3d.py docs`; do not edit by hand
 ```
 

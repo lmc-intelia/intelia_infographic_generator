@@ -5,11 +5,11 @@ description: "Graphify community 34: tests/test_add.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T02:47:44Z" }
-stale_after: "2026-10-05T02:47:44Z"
-source_commit: 2285898e55a2ed6720d292c1eb4bd34a1f6f1690
+generated: { by: sdlc/0.3.5, at: "2026-09-21T04:05:37Z" }
+stale_after: "2026-10-05T04:05:37Z"
+source_commit: 7ba9fba7a655769a839ae420f00e5a62beab9810
 sources:
-  - { id: test_add, resource: tests/test_add.py, last_modified: "2026-09-21T12:47:39+10:00", digest: 260bb104a9671b18 }
+  - { id: test_add, resource: tests/test_add.py, last_modified: "2026-09-21T13:02:34+10:00", digest: 712ddea1b5e34cf8 }
 ---
 
 # Files
@@ -30,6 +30,7 @@ sources:
 - test_add_to_existing_member() (tests/test_add.py:L16)
 - test_add_bad_item_count_rejected() (tests/test_add.py:L166)
 - test_add_new_member_with_variant() (tests/test_add.py:L173)
+- test_regenerated_entry_keeps_key_order_and_origin() (tests/test_add.py:L185)
 - test_new_member() (tests/test_add.py:L37)
 - test_replace_missing_file_entry() (tests/test_add.py:L59)
 - test_existing_entry_with_file_on_disk_rejected() (tests/test_add.py:L72)

@@ -1,75 +1,210 @@
 name: 3d-arrow-ribbon
 device: Fat 3D chevron arrows and folded ribbons carrying a sequence
 backdrop: Light studio, dotted world map
-items: {min: 5, max: 8}
+items:
+  min: 4
+  max: 8
 aspect_default: landscape
 layout:
   structure:
-    - Single flow of chevron arrows nesting point-into-notch, left to right
-    - One arrow per step, coloured in order
-    - Flow rises, dips or curves; never a flat bar
-    - Labels hang off thin leader lines alternating above and below the flow
-    - Optional spurs leaving an arrow for side outputs
-    - Optional goal marker at the end of the flow
+  - Single flow of chevron arrows nesting point-into-notch, left to right
+  - One arrow per step, coloured in order
+  - Flow rises, dips or curves; never a flat bar
+  - Labels hang off thin leader lines alternating above and below the flow
+  - Optional spurs leaving an arrow for side outputs
+  - Optional goal marker at the end of the flow
   variants:
-    - {name: Chevron flow, focus: "Pipelines, journeys, momentum", emphasis: "Interlocking arrows, gradient along the flow"}
-    - {name: Folded ribbon tiers, focus: "Stacked stages, funnels", emphasis: Angled bands stacked vertically with hexagon tabs}
+  - name: Chevron flow
+    focus: Pipelines, journeys, momentum
+    emphasis: Interlocking arrows, gradient along the flow
+  - name: Folded ribbon tiers
+    focus: Stacked stages, funnels
+    emphasis: Angled bands stacked vertically with hexagon tabs
+  - name: Arrow bars
+    focus: Options ranked or compared
+    emphasis: Horizontal arrows stacked from a left spine, stepped lengths, numeral at the head or on the spine
+  - name: Angled banners
+    focus: Numbered option list
+    emphasis: Stacked horizontal banners, diagonal colour split, big numeral left, title and icon right
   visual_elements:
-    - Arrows with visible thickness, top faces lighter, side faces darker
-    - One flat icon or numeral riding on each arrow top face
-    - Leader lines with dot terminals to text blocks
-    - Thin parallel rail under the flow for cross-cutting items
-    - "Ribbon variant: hexagon letter tab and slim chevron pointer per band"
+  - Arrows with visible thickness, top faces lighter, side faces darker
+  - One flat icon or numeral riding on each arrow top face
+  - Leader lines with dot terminals to text blocks
+  - Thin parallel rail under the flow for cross-cutting items
+  - 'Ribbon variant: hexagon letter tab and slim chevron pointer per band'
+  - 'Arrow bars: one arrow per option from a pale left spine, lengths stepped, numerals 01 to 04 on the spine or in the arrow
+    head'
+  - 'Angled banners: one banner per option, left third in the item colour cut on a diagonal, white right part with title,
+    body and icon'
   text_placement:
-    - Title at top
-    - Step names above the flow, detail lines below, alternating per arrow
-    - Rail labels along the rail
-    - Flow spans 85 to 90 percent of the canvas width
-    - Landscape only for the chevron variant
+  - Title at top
+  - Step names above the flow, detail lines below, alternating per arrow
+  - Rail labels along the rail
+  - Flow spans 85 to 90 percent of the canvas width
+  - Landscape only for the chevron variant
 style:
   palette:
-    - Family item colours applied as a smooth gradient along the flow (purple, blue, teal, green) or as discrete blocks per arrow
-    - Light studio backdrop with an optional dotted world map at 5 to 8 percent opacity
-    - Arrow top faces lighter, side faces darker, giving the chevrons visible thickness
+  - Family item colours applied as a smooth gradient along the flow (purple, blue, teal, green) or as discrete blocks per
+    arrow
+  - Light studio backdrop with an optional dotted world map at 5 to 8 percent opacity
+  - Arrow top faces lighter, side faces darker, giving the chevrons visible thickness
   visual_elements:
-    - Chevron arrows nest into each other, the point of one entering the notch of the next
-    - The flow rises, dips or curves; it is never a flat straight bar
-    - One flat icon per arrow sits on the top face, in white or in the arrow colour
-    - Leader lines drop from each icon to a text block alternating above and below the flow
-    - "Ribbon variant: angled folded bands stacked vertically, each with a hexagon tab and a slim chevron pointer to an icon"
-    - Optional small figure or object at the end of the flow as the goal marker
+  - Chevron arrows nest into each other, the point of one entering the notch of the next
+  - The flow rises, dips or curves; it is never a flat straight bar
+  - One flat icon per arrow sits on the top face, in white or in the arrow colour
+  - Leader lines drop from each icon to a text block alternating above and below the flow
+  - 'Ribbon variant: angled folded bands stacked vertically, each with a hexagon tab and a slim chevron pointer to an icon'
+  - Optional small figure or object at the end of the flow as the goal marker
   typography:
-    - Family typography; step names bold caps, descriptions light charcoal in two to four short lines
-    - Title top-centre, two-tone (bold word plus light word)
+  - Family typography; step names bold caps, descriptions light charcoal in two to four short lines
+  - Title top-centre, two-tone (bold word plus light word)
   composition:
-    - Landscape only for the chevron variant; the flow spans 85 to 90 percent of the width
-    - Five to eight arrows; fewer than five, use 3d-disc-timeline
-    - Text blocks alternate above and below so no two adjacent labels collide
-    - Ribbon variant works in portrait and square
-prompt_fragment: >-
-  Render as a polished corporate 3D infographic whose spine is one continuous flow of fat glossy 3D chevron arrows: each arrow is one step, nesting point-into-notch with the next, sweeping left to right with a gentle rise or curve, top faces lighter and side faces darker to show thickness. Colours run in order along the flow from purple through royal blue and teal to lime green (or one saturated colour per arrow). A flat white icon rides on each arrow; a thin leader line with a dot terminal drops to its label, alternating above and below the flow. Light off-white studio backdrop with a faint dotted world map. Geometric sans-serif: bold all-caps step names, light charcoal descriptions, two-tone title. No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder text. Clean premium business-template 3D.
+  - Landscape only for the chevron variant; the flow spans 85 to 90 percent of the width
+  - Five to eight arrows; fewer than five, use 3d-disc-timeline
+  - Text blocks alternate above and below so no two adjacent labels collide
+  - Ribbon variant works in portrait and square
+prompt_fragment: 'Render as a polished corporate 3D infographic whose spine is one continuous flow of fat glossy 3D chevron
+  arrows: each arrow is one step, nesting point-into-notch with the next, sweeping left to right with a gentle rise or curve,
+  top faces lighter and side faces darker to show thickness. Colours run in order along the flow from purple through royal
+  blue and teal to lime green (or one saturated colour per arrow). A flat white icon rides on each arrow; a thin leader line
+  with a dot terminal drops to its label, alternating above and below the flow. Light off-white studio backdrop with a faint
+  dotted world map. Geometric sans-serif: bold all-caps step names, light charcoal descriptions, two-tone title. No hand-drawn
+  lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder text. Clean premium
+  business-template 3D.'
 best_for:
-  - Process flows with momentum
-  - Transformation journeys and pipelines
-  - Problem-to-solution paths
-  - Growth narratives
+- Process flows with momentum
+- Transformation journeys and pipelines
+- Problem-to-solution paths
+- Growth narratives
 refs:
-  - id: "01"
-    file: ref-01-chevron-arrow-flow.jpg
-    shows: Eight interlocking 3D chevron arrows sweeping left to right in a purple to green gradient, icons on each arrow, leader lines to text above and below, dotted world map backdrop
-    flags: [clean]
-    variant: Chevron flow
-    item_count: 8
-  - id: "02"
-    file: ref-02-folded-ribbon-tiers.jpg
-    shows: Five angled folded ribbon bands A to E, monochrome blue, hexagon letter tabs, icon column at right
-    flags: [clean]
-    variant: Folded ribbon tiers
-    item_count: 5
+- id: '01'
+  file: ref-01-chevron-arrow-flow.jpg
+  shows: Eight interlocking 3D chevron arrows sweeping left to right in a purple to green gradient, icons on each arrow, leader
+    lines to text above and below, dotted world map backdrop
+  flags:
+  - clean
+  variant: Chevron flow
+  item_count: 8
+- id: '02'
+  file: ref-02-folded-ribbon-tiers.jpg
+  shows: Five angled folded ribbon bands A to E, monochrome blue, hexagon letter tabs, icon column at right
+  flags:
+  - clean
+  variant: Folded ribbon tiers
+  item_count: 5
+- id: '03'
+  file: ref-03-nested-chevron-blocks.jpg
+  shows: Four thick isometric chevron blocks nested left to right in blue, orange, teal and magenta, top faces lighter and
+    side faces darker, thin leader lines with dot terminals to numbered circles 1 to 4 and text blocks in the four corners,
+    pale studio backdrop
+  flags:
+  - clean
+  variant: Chevron flow
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen-arrows/ref-03-nested-chevron-blocks/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_arrows/2026-09-21 12_28_51-Greenshot.png
+- id: '04'
+  file: ref-04-arrow-bars-spine.jpg
+  shows: Four horizontal 3D arrows in orange, grey, cyan and charcoal of stepped lengths shooting right from a pale vertical
+    spine, option name and one-line body on each arrow, numerals 01 to 04 with short text on the spine, light studio backdrop
+  flags:
+  - clean
+  variant: Arrow bars
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen-arrows/ref-04-arrow-bars-spine/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_arrows/2026-09-21 13_55_47-Greenshot.png
+- id: '05'
+  file: ref-05-arrow-bars-shrinking.jpg
+  shows: Four horizontal 3D arrows shrinking from top to bottom, one blue then three magenta, numerals 01 to 04 in white at
+    the arrow heads, body text on each shaft, line icons and short text on a pale left spine, light studio backdrop
+  flags:
+  - clean
+  variant: Arrow bars
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen-arrows/ref-05-arrow-bars-shrinking/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_arrows/2026-09-21 13_56_10-Greenshot.png
+- id: '06'
+  file: ref-06-flat-chevron-row.jpg
+  shows: Four flat chevron arrows nesting left to right in mint, navy, lime and teal, each with a large white numeral 100
+    to 400, a headline and two lines of body text, soft shadow between arrows, pale backdrop
+  flags:
+  - clean
+  variant: Chevron flow
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen-arrows/ref-06-flat-chevron-row/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_arrows/2026-09-21 13_56_46-Greenshot.png
+- id: '07'
+  file: ref-07-six-chevron-row.jpg
+  shows: Six bevelled chevron labels in a single row from crimson through red, orange, cyan and blue to navy, each with a
+    bold title and body text, a row of line icons with captions beneath, title centred at top, white backdrop
+  flags:
+  - clean
+  variant: Chevron flow
+  item_count: 6
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen-arrows/ref-07-six-chevron-row/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_arrows/2026-09-21 13_57_16-Greenshot.png
+- id: 08
+  file: ref-08-angled-banners-five.jpg
+  shows: Five stacked horizontal banners in red, orange, yellow, green and blue, each cut on a diagonal with a big white numeral
+    01 to 05 on the coloured left part and a bold coloured title, body text and small icon on the white right part, soft shadows,
+    grey backdrop
+  flags:
+  - clean
+  variant: Angled banners
+  item_count: 5
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/regen-arrows/ref-08-angled-banners-five/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_arrows/2026-09-21 13_58_09-Greenshot.png
 pairings:
-  linear-progression: ["01"]
-  bridge: ["01"]
-  funnel: ["02"]
-  story-mountain: ["01"]
-alternates: [3d-disc-timeline, 3d-slab-stack]
-source: {origin: baoyu-infographic 2.1.0-lmc references/styles/3d-arrow-ribbon.md, added: "2026-09-17"}
+  linear-progression:
+  - '01'
+  - '03'
+  - '04'
+  - '06'
+  - '07'
+  bridge:
+  - '01'
+  - '03'
+  - '06'
+  funnel:
+  - '02'
+  - '05'
+  story-mountain:
+  - '01'
+  - '07'
+  comparison-matrix:
+  - '04'
+  - '05'
+  hierarchical-layers:
+  - 08
+  dashboard:
+  - 08
+alternates:
+- 3d-disc-timeline
+- 3d-slab-stack
+source:
+  origin: baoyu-infographic 2.1.0-lmc references/styles/3d-arrow-ribbon.md
+  added: '2026-09-17'

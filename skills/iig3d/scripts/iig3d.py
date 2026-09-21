@@ -5,12 +5,13 @@
 #     "google-genai>=1.0.0",
 #     "pillow>=10.0.0",
 #     "pyyaml>=6.0",
+#     "resvg-py>=0.5.0",
 # ]
 # ///
 """iig3d: 3D corporate-family infographics through Google Nano Banana Pro.
 
 One file, sectioned in the order of the design: catalogue, routing, refs, spec, aspect,
-palette, prompt, creds, render, add, docs, check, cli. Every subcommand prints exactly one
+palette, icons, prompt, creds, render, add, docs, check, cli. Every subcommand prints exactly one
 JSON object on stdout; diagnostics go to stderr.
 """
 
@@ -24,6 +25,8 @@ import os
 import re
 import sys
 import time
+import urllib.parse
+import urllib.request
 from dataclasses import asdict, dataclass, field, fields
 from io import BytesIO
 from pathlib import Path
@@ -35,7 +38,7 @@ YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 YAML_DUMPER = getattr(yaml, "CSafeDumper", yaml.SafeDumper)
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-SUBCOMMANDS = ["list", "route", "refs", "prompt", "render", "add", "docs", "check", "palette"]
+SUBCOMMANDS = ["list", "route", "refs", "prompt", "render", "add", "docs", "check", "palette", "icons"]
 
 
 class UsageError(Exception):
@@ -302,6 +305,7 @@ class Spec:
     notes: str = ""
     refs: list[Path] = field(default_factory=list)
     pin: str | None = None
+    icon_pack: str | None = None
     path: Path | None = None
 
 
@@ -362,6 +366,7 @@ def load_spec(path: Path) -> Spec:
         notes=_str(raw.get("notes")),
         refs=[(base / r).resolve() for r in raw.get("refs") or []],
         pin=_opt_str(raw.get("pin")),
+        icon_pack=_opt_str(raw.get("icon_pack")),
         path=path.resolve(),
     )
 
@@ -474,9 +479,10 @@ def select_refs(
     user_refs: list[Path] | None = None,
     style_refs: bool = True,
     pinned: dict | None = None,
+    icon_sheet: Path | None = None,
 ) -> list[Path]:
-    """Style refs as paths (see pick_style_refs), user refs appended, capped by ref_rules.max_total.
-    A pinned catalogue ref (see Catalogue.resolve_ref) always comes first."""
+    """Style refs as paths (see pick_style_refs), then the icon sheet, then user refs, capped by
+    ref_rules.max_total. A pinned catalogue ref (see Catalogue.resolve_ref) always comes first."""
     member = cat.member(member_name)
     paths: list[Path] = []
     if pinned is not None:
@@ -490,6 +496,8 @@ def select_refs(
         if not path.is_file():
             raise UsageError(f"reference image missing: {path}")
         paths.append(path)
+    if icon_sheet is not None:
+        paths.append(Path(icon_sheet))
     for extra_path in user_refs or []:
         extra_path = Path(extra_path)
         if not extra_path.is_file():
@@ -602,6 +610,325 @@ def palette_paragraph(colours: list[Colour]) -> str:
     return f"Project palette override: cycle item colours in this order: {listing}; never repeat a colour on adjacent items; keep the family backdrop, neutrals, shadows and typography unchanged."
 
 
+# --- icons ---
+
+ICONIFY_URL = "https://api.iconify.design/{pack}/{name}.svg"
+ICON_TOKEN_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+ICON_GLYPH_PX = 200
+ICON_CELL = (320, 400)
+ICON_COLUMNS = 4
+
+
+def parse_icon(value: str | None, default_pack: str | None) -> tuple[str, str] | None:
+    """(pack, name) for `pack:name`, or for `name` when a default pack is set; otherwise None,
+    which leaves the icon as a free-text hint in the prompt."""
+    if not value:
+        return None
+    if ":" in value:
+        pack, _, name = value.partition(":")
+        if not (ICON_TOKEN_RE.match(pack) and ICON_TOKEN_RE.match(name)):
+            raise UsageError(f"icon {value!r}: pack and name must be lower-case slugs, e.g. lucide:rocket")
+        return pack, name
+    if default_pack and ICON_TOKEN_RE.match(value):
+        return default_pack, value
+    return None
+
+
+def icon_svg(cat: Catalogue, pack: str, name: str, fetch: bool = True) -> Path:
+    """The cached SVG under icons/<pack>/<name>.svg, fetched from Iconify on a miss when allowed."""
+    path = cat.root / "icons" / pack / f"{name}.svg"
+    if path.is_file():
+        return path
+    if not fetch:
+        raise UsageError(f"icon {pack}:{name} not in {path.parent} and fetching is off (--no-icon-fetch or IIG3D_ICON_FETCH=0)")
+    url = ICONIFY_URL.format(pack=pack, name=name)
+    try:
+        request = urllib.request.Request(url, headers=ICONIFY_HEADERS)  # noqa: S310 # nosec B310 - https URL built from validated slugs
+        with urllib.request.urlopen(request, timeout=10) as response:  # noqa: S310 # nosec B310
+            body = response.read()
+    except Exception as err:
+        raise UsageError(f"icon {pack}:{name}: fetch failed from {url}: {err}") from err
+    if b"<svg" not in body[:200]:
+        raise UsageError(f"icon {pack}:{name}: not found on Iconify ({url}); check the pack and name at https://icon-sets.iconify.design")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(body.rstrip(b"\n") + b"\n")  # newline-terminated, so the end-of-file hook leaves cached glyphs alone
+    return path
+
+
+def render_icon(svg_path: Path, size: int = ICON_GLYPH_PX):
+    """Rasterise one SVG to an RGBA PIL image of `size` px; currentColor renders black."""
+    import resvg_py
+    from PIL import Image as PILImage
+
+    png = resvg_py.svg_to_bytes(svg_path=str(svg_path), width=size, height=size)
+    return PILImage.open(BytesIO(bytes(png))).convert("RGBA")
+
+
+def spec_icons(spec: Spec) -> list[dict]:
+    """[{index, label, pack, name, via: spec}] for every item whose icon names a pack glyph."""
+    found = []
+    for index, item in enumerate(spec.items, 1):
+        parsed = parse_icon(item.icon, spec.icon_pack)
+        if parsed:
+            found.append({"index": index, "label": item.label, "pack": parsed[0], "name": parsed[1], "via": "spec"})
+    return found
+
+
+ICONIFY_SEARCH_URL = "https://api.iconify.design/search?query={query}&prefix={pack}"
+ICONIFY_HEADERS = {"User-Agent": "iig3d/0.2 (+https://github.com/lmc-intelia/intelia_infographic_generator)", "Accept": "*/*"}
+
+# Business vocabulary to a Lucide-style glyph name; the deterministic first guess when an item
+# has no icon, or when a named icon does not exist. Keys are single lower-case words.
+ICON_SYNONYMS = {
+    "plan": "compass",
+    "planning": "compass",
+    "strategy": "compass",
+    "roadmap": "map",
+    "vision": "eye",
+    "goal": "target",
+    "goals": "target",
+    "target": "target",
+    "objective": "target",
+    "design": "pencil-ruler",
+    "architecture": "layers",
+    "build": "hammer",
+    "develop": "code",
+    "code": "code",
+    "engineering": "wrench",
+    "test": "circle-check",
+    "testing": "circle-check",
+    "quality": "badge-check",
+    "review": "search-check",
+    "launch": "rocket",
+    "deploy": "rocket",
+    "release": "rocket",
+    "ship": "rocket",
+    "go-live": "rocket",
+    "measure": "chart-line",
+    "metrics": "chart-line",
+    "analytics": "chart-bar",
+    "analyse": "chart-bar",
+    "analyze": "chart-bar",
+    "report": "file-chart-column",
+    "learn": "graduation-cap",
+    "training": "graduation-cap",
+    "insight": "lightbulb",
+    "idea": "lightbulb",
+    "innovate": "lightbulb",
+    "scale": "trending-up",
+    "growth": "trending-up",
+    "grow": "trending-up",
+    "optimise": "gauge",
+    "optimize": "gauge",
+    "performance": "gauge",
+    "govern": "shield-check",
+    "governance": "shield-check",
+    "compliance": "shield-check",
+    "policy": "scroll-text",
+    "secure": "lock",
+    "security": "lock",
+    "risk": "triangle-alert",
+    "renew": "refresh-cw",
+    "iterate": "refresh-cw",
+    "cycle": "refresh-cw",
+    "improve": "sparkles",
+    "data": "database",
+    "database": "database",
+    "storage": "hard-drive",
+    "cloud": "cloud",
+    "integrate": "plug",
+    "integration": "plug",
+    "api": "plug",
+    "automate": "workflow",
+    "automation": "workflow",
+    "process": "workflow",
+    "workflow": "workflow",
+    "people": "users",
+    "team": "users",
+    "customers": "users",
+    "customer": "user",
+    "user": "user",
+    "stakeholders": "users",
+    "talk": "message-circle",
+    "communicate": "message-circle",
+    "feedback": "message-square",
+    "support": "life-buoy",
+    "time": "clock",
+    "schedule": "calendar",
+    "deadline": "calendar-clock",
+    "money": "coins",
+    "cost": "coins",
+    "budget": "wallet",
+    "revenue": "banknote",
+    "finance": "landmark",
+    "document": "file-text",
+    "docs": "file-text",
+    "contract": "file-signature",
+    "email": "mail",
+    "search": "search",
+    "discover": "search",
+    "research": "microscope",
+    "settings": "settings",
+    "configure": "settings",
+    "monitor": "activity",
+    "observe": "activity",
+    "alert": "bell",
+    "notify": "bell",
+    "deliver": "package",
+    "delivery": "truck",
+    "store": "store",
+    "product": "box",
+    "service": "concierge-bell",
+    "network": "network",
+    "connect": "link",
+    "global": "globe",
+    "location": "map-pin",
+    "energy": "zap",
+    "power": "zap",
+    "health": "heart-pulse",
+    "medical": "stethoscope",
+    "education": "book-open",
+    "manufacture": "factory",
+    "factory": "factory",
+    "transport": "truck",
+    "shipping": "ship",
+    "commit": "git-commit-horizontal",
+    "trigger": "zap",
+    "generate": "sparkles",
+    "publish": "send",
+    "collaborate": "handshake",
+    "partner": "handshake",
+    "award": "award",
+    "success": "trophy",
+    "win": "trophy",
+    "start": "play",
+    "finish": "flag",
+    "milestone": "flag",
+    "phase": "milestone",
+}
+
+
+def search_icons(pack: str, query: str, fetch: bool = True, limit: int = 8) -> list[str]:
+    """Glyph names in `pack` whose Iconify name matches `query`; empty when fetching is off."""
+    if not fetch or not query.strip():
+        return []
+    url = ICONIFY_SEARCH_URL.format(query=urllib.parse.quote(query.strip().lower()), pack=pack)
+    try:
+        request = urllib.request.Request(url, headers=ICONIFY_HEADERS)  # noqa: S310 # nosec B310 - https URL built from validated slugs
+        with urllib.request.urlopen(request, timeout=10) as response:  # noqa: S310 # nosec B310
+            data = json.loads(response.read().decode("utf-8"))
+    except Exception:
+        return []
+    names = [entry.split(":", 1)[1] for entry in data.get("icons", []) if entry.startswith(f"{pack}:")]
+    return names[:limit]
+
+
+def _words(*texts: str) -> list[str]:
+    seen: list[str] = []
+    for text in texts:
+        for word in re.findall(r"[a-z][a-z-]+", text.lower()):
+            if len(word) > 2 and word not in seen:
+                seen.append(word)
+    return seen
+
+
+def suggest_icon(cat: Catalogue, pack: str, label: str, detail: str = "", fetch: bool = True) -> tuple[str, str] | None:
+    """(name, via) for an item from its text: the synonym table on the label, then the detail,
+    then an Iconify name search on each word. None when nothing fits."""
+    words = _words(label) + [w for w in _words(detail) if w not in _words(label)]
+    for word in words:
+        name = ICON_SYNONYMS.get(word)
+        if name:
+            try:
+                icon_svg(cat, pack, name, fetch=fetch)
+                return name, f"synonym:{word}"
+            except UsageError:
+                continue
+    for word in words:
+        hits = search_icons(pack, word, fetch=fetch)
+        if hits:
+            return hits[0], f"search:{word}"
+    return None
+
+
+def resolve_icons(cat: Catalogue, spec: Spec, fetch: bool = True) -> list[dict]:
+    """Every item's glyph: the spec's own name when it exists (a missing name falls back to a
+    suggestion and fails only when nothing fits), else a suggestion from the item text when
+    `icon_pack` is set. Items without a glyph keep their free-text hint or none."""
+    if not spec.icon_pack and not any(":" in (item.icon or "") for item in spec.items):
+        return []
+    named = {icon["index"]: icon for icon in spec_icons(spec)}
+    found: list[dict] = []
+    for index, item in enumerate(spec.items, 1):
+        icon = named.get(index)
+        if icon:
+            try:
+                icon_svg(cat, icon["pack"], icon["name"], fetch=fetch)
+                found.append(icon)
+                continue
+            except UsageError as err:
+                fallback = suggest_icon(cat, icon["pack"], f"{icon['name'].replace('-', ' ')} {item.label}", item.detail, fetch=fetch)
+                if not fallback:
+                    raise UsageError(f"item {index} ({item.label}): {err}") from None
+                found.append({**icon, "name": fallback[0], "via": f"fallback for {icon['name']} via {fallback[1]}"})
+                continue
+        if item.icon and not spec.icon_pack:
+            continue
+        if item.icon and parse_icon(item.icon, spec.icon_pack) is None:
+            continue  # free-text hint, left to the model
+        if spec.icon_pack:
+            suggestion = suggest_icon(cat, spec.icon_pack, item.label, item.detail, fetch=fetch)
+            if suggestion:
+                found.append({"index": index, "label": item.label, "pack": spec.icon_pack, "name": suggestion[0], "via": suggestion[1]})
+    return found
+
+
+def build_icon_sheet(cat: Catalogue, spec: Spec, out_path: Path, fetch: bool = True) -> tuple[Path, list[dict]] | None:
+    """One white PNG contact sheet: each item's glyph in black with its number and pack:name
+    beneath, so the model can copy the line work. None when no item names a pack icon."""
+    from PIL import Image as PILImage
+    from PIL import ImageDraw, ImageFont
+
+    icons = resolve_icons(cat, spec, fetch=fetch)
+    if not icons:
+        return None
+    try:
+        font_big, font_small = ImageFont.load_default(size=30), ImageFont.load_default(size=20)
+    except TypeError:  # Pillow < 10.1
+        font_big = font_small = ImageFont.load_default()
+    columns = min(ICON_COLUMNS, len(icons))
+    rows = -(-len(icons) // columns)
+    cell_w, cell_h = ICON_CELL
+    sheet = PILImage.new("RGB", (columns * cell_w, rows * cell_h), "white")
+    draw = ImageDraw.Draw(sheet)
+    for slot, icon in enumerate(icons):
+        glyph = render_icon(icon_svg(cat, icon["pack"], icon["name"], fetch=fetch))
+        x0, y0 = (slot % columns) * cell_w, (slot // columns) * cell_h
+        sheet.paste(glyph, (x0 + (cell_w - ICON_GLYPH_PX) // 2, y0 + 40), glyph)
+        tag = f"{icon['index']:02d} {icon['label']}"
+        draw.text((x0 + cell_w / 2, y0 + 275), tag, fill="black", font=font_big, anchor="mt")
+        draw.text((x0 + cell_w / 2, y0 + 320), f"{icon['pack']}:{icon['name']}", fill="#555555", font=font_small, anchor="mt")
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    sheet.save(out_path, "PNG")
+    return out_path, icons
+
+
+def icon_guidance(sheet_position: int, icons: list[dict]) -> str:
+    """The Icon Set section: copy each numbered glyph from the sheet onto its item."""
+    listing = ", ".join(f"glyph {i['index']:02d} on item {i['index']:02d} ({i['pack']}:{i['name']})" for i in icons)
+    return "\n".join(
+        [
+            "## Icon Set",
+            "",
+            f"Reference image {sheet_position} is an icon sheet, not a composition: black line glyphs on white, each labelled with its item number.",
+            f"Draw each item's icon by copying its glyph's line work exactly, same shapes, same stroke weight, same proportions: {listing}.",
+            "Recolour the glyph to suit the item (white on a coloured face, or the item colour on white) and render it flat, never as a photo or a 3D object.",
+            "Do not draw the sheet itself, its labels or its grid anywhere in the image.",
+        ]
+    )
+
+
 # --- prompt ---
 
 SECRET_RE = re.compile(r"AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9_-]{20,}|(?<![A-Za-z0-9])[A-Za-z0-9_-]{40,}(?![A-Za-z0-9])")
@@ -658,7 +985,8 @@ def has_negative_list(fragment: str, cat: Catalogue) -> bool:
     return fragment.strip().endswith(cat.negative_tail)
 
 
-def content_block(spec: Spec) -> str:
+def content_block(spec: Spec, icon_slots: dict[int, str] | None = None) -> str:
+    """The content section; `icon_slots` maps item index to a sheet glyph note replacing the hint."""
     lines = [f'Title: "{redact(spec.title)}"']
     if spec.subtitle:
         lines.append(f'Subtitle: "{redact(spec.subtitle)}"')
@@ -669,7 +997,9 @@ def content_block(spec: Spec) -> str:
             entry += f" - {redact(item.detail)}"
         if item.value:
             entry += f" ({redact(item.value)})"
-        if item.icon:
+        if icon_slots and index in icon_slots:
+            entry += f" [icon: {icon_slots[index]}]"
+        elif item.icon:
             entry += f" [icon: {item.icon}]"
         lines.append(entry)
     if spec.stats:
@@ -728,9 +1058,12 @@ def assemble(
     strict: bool = False,
     aspect_snapped_from: str | None = None,
     pinned: dict | None = None,
+    icon_sheet: Path | None = None,
+    icons: list[dict] | None = None,
 ) -> Prompt:
     """Fill templates/base-prompt.md; warnings for text budget and item range; strict raises.
-    A pinned ref adds the Reference Composition section and is reference image 1."""
+    A pinned ref adds the Reference Composition section and is reference image 1. An icon
+    sheet adds the Icon Set section and is marked `usage: icons` in the frontmatter."""
     member = cat.member(route_.member)
     template = (cat.root / TEMPLATE_PATH).read_text(encoding="utf-8")
     style_block = member.prompt_fragment.strip()
@@ -739,6 +1072,10 @@ def assemble(
     if palette:
         style_block += "\n\n" + palette_paragraph(palette)
     labels = text_labels(spec)
+    sheet_position = None
+    if icon_sheet is not None and refs:
+        sheet_position = next((i for i, r in enumerate(refs, 1) if Path(r) == Path(icon_sheet)), None)
+    icon_slots = {i["index"]: f"sheet glyph {i['index']:02d}, {i['pack']}:{i['name']}" for i in icons or []} if sheet_position else None
     slots = {
         "{{LAYOUT}}": route_.layout,
         "{{STYLE}}": route_.style,
@@ -747,7 +1084,8 @@ def assemble(
         "{{LAYOUT_GUIDELINES}}": render_layout_block(member),
         "{{STYLE_GUIDELINES}}": style_block,
         "{{REFERENCE_COMPOSITION}}": reference_composition(pinned) if pinned else "",
-        "{{CONTENT}}": content_block(spec),
+        "{{ICON_GUIDANCE}}": icon_guidance(sheet_position, icons or []) if sheet_position else "",
+        "{{CONTENT}}": content_block(spec, icon_slots),
         "{{TEXT_LABELS}}": "\n".join(f'"{label}"' for label in labels),
     }
     text = template
@@ -783,8 +1121,10 @@ def assemble(
         "style_member": member.name,
         "aspect": ratio,
         "language": spec.language,
-        "references": [{"ref_id": f"{index:02d}", "filename": Path(ref).name, "usage": "replicate" if pinned and index == 1 else "direct"} for index, ref in enumerate(refs or [], 1)],
+        "references": [{"ref_id": f"{index:02d}", "filename": Path(ref).name, "usage": "icons" if index == sheet_position else "replicate" if pinned and index == 1 else "direct"} for index, ref in enumerate(refs or [], 1)],
     }
+    if sheet_position:
+        frontmatter["icons"] = [{"item": i["index"], "icon": f"{i['pack']}:{i['name']}", "via": i.get("via", "spec")} for i in icons or []]
     if pinned:
         frontmatter["pinned"] = {"ref": pinned["file"], "variant": pinned.get("variant")}
     if palette:
@@ -1255,6 +1595,8 @@ def build_parser() -> argparse.ArgumentParser:
     prepare_args.add_argument("--ref", action="append", default=[], help="user reference image (repeatable)")
     prepare_args.add_argument("--pin", default=None, help="catalogue ref to reproduce: <member>/<id|file>, e.g. 3d-capsule-hub/06")
     prepare_args.add_argument("--no-style-refs", action="store_true", help="do not pass the member's bundled refs")
+    prepare_args.add_argument("--icon-pack", default=None, help="Iconify pack for item icons without a prefix, e.g. lucide, tabler, ph")
+    prepare_args.add_argument("--no-icon-fetch", action="store_true", help="use only icons already under icons/; never call Iconify")
     prepare_args.add_argument("--strict", action="store_true", help="turn prompt warnings into exit 1")
 
     parser = argparse.ArgumentParser(prog="iig3d", description=__doc__.splitlines()[0])
@@ -1282,6 +1624,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("docs", parents=[common], help="regenerate catalogue markdown")
     p_check = sub.add_parser("check", parents=[common], help="validate the catalogue, refs and docs")
     p_check.add_argument("--allow-watermark", action="store_true")
+    p_icons = sub.add_parser("icons", parents=[common], help="find or check glyph names in an Iconify pack")
+    p_icons.add_argument("--pack", default="lucide")
+    p_icons.add_argument("--query", default=None, help="word to search names for, e.g. rocket")
+    p_icons.add_argument("--label", default=None, help="item label to suggest a glyph for")
+    p_icons.add_argument("--detail", default="", help="item detail, used after the label")
+    p_icons.add_argument("--no-icon-fetch", action="store_true")
     p_palette = sub.add_parser("palette", help="preview colours extracted from a CSS file")
     p_palette.add_argument("--css", required=True)
     p_palette.add_argument("--vars", default=None, help="comma-separated custom properties")
@@ -1318,13 +1666,18 @@ def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
     member = cat.member(route_.member)
     ratio, snapped_from = snap_aspect(cat, args.aspect or spec.aspect, member.aspect_default)
     user_refs = [Path(r) for r in args.ref] + spec.refs
-    refs = select_refs(cat, member.name, route_.layout, user_refs=user_refs, style_refs=not args.no_style_refs, pinned=pinned)
+    if args.icon_pack:
+        spec.icon_pack = args.icon_pack
+    fetch = not args.no_icon_fetch and os.environ.get("IIG3D_ICON_FETCH", "1") != "0"
+    sheet = build_icon_sheet(cat, spec, Path(args.out_dir) / "icon-sheet.png", fetch=fetch)
+    icon_sheet, icons = sheet if sheet else (None, [])
+    refs = select_refs(cat, member.name, route_.layout, user_refs=user_refs, style_refs=not args.no_style_refs, pinned=pinned, icon_sheet=icon_sheet)
     css = Path(args.palette_css).resolve() if args.palette_css else spec.palette_css
     palette = None
     if css:
         vars_ = _split_vars(args.palette_vars) or spec.palette_vars
         palette = extract_palette(css, vars=vars_ or None)
-    prompt = assemble(cat, spec, route_, ratio, refs=refs, palette=palette, palette_source=css, strict=args.strict, aspect_snapped_from=snapped_from, pinned=pinned)
+    prompt = assemble(cat, spec, route_, ratio, refs=refs, palette=palette, palette_source=css, strict=args.strict, aspect_snapped_from=snapped_from, pinned=pinned, icon_sheet=icon_sheet, icons=icons)
     prompt_file = write_prompt(Path(args.out_dir), prompt, slugify(spec.title))
     return {
         "status": "ok",
@@ -1336,6 +1689,8 @@ def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
         "language": spec.language,
         "refs": [str(r) for r in refs],
         "pin": cat.pin_token(member.name, pinned) if pinned else None,
+        "icon_sheet": str(icon_sheet) if icon_sheet else None,
+        "icons": [f"{i['pack']}:{i['name']}" for i in icons],
         "palette": [c.as_dict() for c in palette] if palette else None,
         "warnings": prompt.warnings,
     }
@@ -1383,6 +1738,23 @@ def cmd_refs(cat: Catalogue, args: argparse.Namespace) -> dict:
     }
 
 
+def cmd_icons(cat: Catalogue, args: argparse.Namespace) -> dict:
+    """Name search and text-based suggestion in one call, so Claude can pick or verify a glyph."""
+    fetch = not args.no_icon_fetch and os.environ.get("IIG3D_ICON_FETCH", "1") != "0"
+    out: dict = {"status": "ok", "pack": args.pack}
+    if args.query:
+        out["query"] = args.query
+        out["matches"] = search_icons(args.pack, args.query, fetch=fetch)
+        out["synonym"] = ICON_SYNONYMS.get(args.query.strip().lower())
+    if args.label:
+        suggestion = suggest_icon(cat, args.pack, args.label, args.detail, fetch=fetch)
+        out["label"] = args.label
+        out["suggestion"] = {"name": suggestion[0], "via": suggestion[1]} if suggestion else None
+    if not args.query and not args.label:
+        raise UsageError("icons: give --query WORD and/or --label TEXT")
+    return out
+
+
 def cmd_palette(args: argparse.Namespace) -> dict:
     colours = extract_palette(Path(args.css), vars=_split_vars(args.vars) or None)
     return {"status": "ok", "source": str(Path(args.css).resolve()), "colours": [c.as_dict() for c in colours], "paragraph": palette_paragraph(colours)}
@@ -1402,6 +1774,7 @@ HANDLERS = {
     "add": lambda cat, args: add_ref(cat, Path(args.image), Path(args.meta)),
     "docs": lambda cat, args: {"status": "ok", "written": [str(p) for p in render_docs(cat)]},
     "check": cmd_check,
+    "icons": cmd_icons,
 }
 
 

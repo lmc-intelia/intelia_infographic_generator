@@ -27,6 +27,8 @@ Create a professional infographic following these specifications:
 
 {{REFERENCE_COMPOSITION}}
 
+{{ICON_GUIDANCE}}
+
 ## Layout Guidelines
 
 {{LAYOUT_GUIDELINES}}

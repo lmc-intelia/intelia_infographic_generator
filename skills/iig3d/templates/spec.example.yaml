@@ -7,9 +7,11 @@ style: industrial-3d              # optional: industrial-3d (route by layout), a
 aspect: landscape                 # optional: landscape | portrait | square | W:H (snapped to the Gemini set)
 # palette_css: ./brand.css        # optional: brand colours replace the item colours only
 # palette_vars: [--brand-primary, --brand-secondary]
+# icon_pack: lucide              # optional: Iconify pack; item icons then name a glyph (rocket, or tabler:rocket) copied from an icon sheet
 items:                            # one per step, tier, capsule, pill, cell, plate or cylinder
   - label: COMMIT
     detail: Developer pushes to main
+    # icon: git-branch             # free-text hint; with icon_pack set, an Iconify glyph name
   - label: TRIGGER
     detail: Scheduled GitHub Action starts
   - label: ANALYSE
