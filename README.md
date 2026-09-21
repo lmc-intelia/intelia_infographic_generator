@@ -156,7 +156,7 @@ Fifteen members share one rendering language and differ in the structural device
 | `3d-cylinder-column` | Stepped glossy cylinders with bent arrows | 3 to 6 | ranked steps, bar charts |
 | `3d-glass-layer` | Exploded stack of translucent plates | 3 to 7 | architecture layers |
 | `3d-triangle-plate` | Facet pyramid of four prisms, or one triangle with corner nodes | 3 to 4 | pillars, triads, trade-offs |
-| `3d-soft-emboss` | Neumorphic grey jigsaw ring, segment ring or overlapping circles | 3 to 4 | small frameworks, cycles, overlaps |
+| `3d-soft-emboss` | Neumorphic grey jigsaw ring, segment ring, overlapping circles or chevron row | 3 to 6 | small frameworks, cycles, overlaps, short sequences |
 | `3d-winding-road` | Asphalt road ribbon with numbered map pins | 4 to 8 | roadmaps, journeys, phased programmes |
 
 Three ways to pick, from most to least specific:

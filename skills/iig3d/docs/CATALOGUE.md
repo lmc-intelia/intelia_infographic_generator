@@ -19,7 +19,7 @@
 | `3d-isometric-light` | Isometric platforms, roads, city and factory blocks, small people | White / pale | 4-6 | 4 |
 | `3d-paper-tile` | Embossed paper tiles, hexagons, tabs and tile-capped charts | Blue-grey studio | 6-16 | 5 |
 | `3d-slab-stack` | Stacked extruded slabs, staircase treads, folded ribbon tiers | Light studio | 3-7 | 6 |
-| `3d-soft-emboss` | Neumorphic soft-embossed grey devices: jigsaw ring, segment ring or overlapping circles pressed into a matte grey field | Matte light grey | 3-4 | 4 |
+| `3d-soft-emboss` | Neumorphic soft-embossed grey devices: jigsaw ring, segment ring or overlapping circles pressed into a matte grey field | Matte light grey | 3-6 | 5 |
 | `3d-target-callout` | Tilted glossy bullseye, tapered beams to numbered pills, single hue | White to pale grey | 3-6 | 2 |
 | `3d-triangle-plate` | Glossy triangular plates: a pyramid of four facet prisms, or one rounded triangle with circle nodes at its corners | White to pale grey | 3-4 | 2 |
 | `3d-winding-road` | A dark asphalt road ribbon with pale kerbs snaking across the canvas, numbered location pins at each bend | White | 4-8 | 1 |

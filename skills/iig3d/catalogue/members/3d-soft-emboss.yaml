@@ -4,7 +4,7 @@ device: 'Neumorphic soft-embossed grey devices: jigsaw ring, segment ring or ove
 backdrop: Matte light grey
 items:
   min: 3
-  max: 4
+  max: 6
 aspect_default: landscape
 layout:
   structure:
@@ -14,6 +14,8 @@ layout:
   - 'Overlapping circles: three translucent circles overlapping like a Venn, numerals in the overlaps, icon disc on each outer
     lobe'
   - Numbered text cards or big numerals in a column beside the device, one per item
+  - Chevron row: five or six raised chevron arrows nesting left to right in one row, numeral and name on each, a raised icon
+      disc with a caption under each chevron
   variants:
   - name: Jigsaw ring
     focus: Parts that lock into one whole
@@ -24,6 +26,9 @@ layout:
   - name: Overlapping circles
     focus: Shared ground between three areas
     emphasis: Three raised circles with numerals in the overlaps
+  - name: Chevron row
+    focus: Sequences of five or six steps
+    emphasis: Raised chevrons in a row, icon discs and captions beneath, title between thin rules
   visual_elements:
   - Every shape is the same light grey as the backdrop, raised by a soft light-top-left shadow and a darker bottom-right shadow
   - Icon discs raised a second level above the piece, dark grey flat icons
@@ -50,7 +55,8 @@ style:
   composition:
   - 'Landscape: device right, cards left (ref 01) or device centred with items either side (ref 02)'
   - 'Three items: segment ring or overlapping circles; four items: jigsaw or segment ring'
-  - More than four items, switch to 3d-paper-tile or 3d-capsule-hub
+  - Five or six items: chevron row, landscape only
+  - More than six items, switch to 3d-paper-tile or 3d-capsule-hub
 prompt_fragment: 'Render as a polished corporate 3D infographic in a neumorphic soft-embossed style: every shape is the same
   matte light grey as the backdrop and stands out only through a soft white highlight at the top left and a darker shadow
   at the bottom right. One ring device, a disc cut into puzzle pieces or wedges, or three overlapping raised circles, with
@@ -123,6 +129,20 @@ refs:
     user_added: true
     regenerated: true
     derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_37-Greenshot.png
+- id: '05'
+  file: ref-05-chevron-row-six.jpg
+  shows: Six raised neumorphic chevron arrows nesting left to right in one row, all the same matte light grey as the backdrop
+    with white top-left highlights and soft bottom-right shadows, a large light-grey numeral and a bold dark name on each
+    chevron, a raised icon disc with a two-line caption under each one, title centred at top between two thin rules
+  flags:
+  - clean
+  variant: Chevron row
+  item_count: 6
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/emboss-chevron/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    derived_from: skills/iig3d/refs/3d-arrow-ribbon/ref-07-six-chevron-row.jpg (composition, restyled)
 pairings:
   jigsaw:
   - '01'
@@ -132,10 +152,13 @@ pairings:
   - '02'
   - '03'
   - '04'
+  - '05'
   circular-flow:
   - '03'
   venn-diagram:
   - '04'
+  linear-progression:
+  - '05'
 source:
   origin: user-added via iig3d.py add (03-emboss-jigsaw3.yaml)
   added: '2026-09-21'
