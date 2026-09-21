@@ -197,3 +197,34 @@ def test_prompt_suggests_icons_from_labels(iig3d, capsys, tmp_path, tmp_catalogu
     assert code == 0 and data["icons"] == ["lucide:compass", "lucide:hammer", "lucide:rocket"]
     text = (tmp_path / "out" / "prompts" / "01-infographic-t.md").read_text()
     assert "via: synonym:plan" in text
+
+
+def test_render_quality_from_spec_and_flag(iig3d, capsys, tmp_path, tmp_catalogue, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "k")
+    spec = tmp_path / "s.yaml"
+    spec.write_text("title: T\nstyle: 3d-slab-stack\nquality: 1K\nitems:\n  - {label: A}\n")
+    base = ["render", "--spec", str(spec), "--out-dir", str(tmp_path / "o"), "--dry-run", "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, base)
+    assert code == 0 and data["quality"] == "1K" and data["model"] == iig3d.DEFAULT_MODEL and data["image_size"] == "1K"
+    code, data = run(iig3d, capsys, [*base, "--quality", "4K"])
+    assert data["quality"] == "4K" and data["model"] == iig3d.DEFAULT_MODEL and data["image_size"] == "4K"
+    code, data = run(iig3d, capsys, [*base, "--resolution", "2K"])  # old flag name still accepted
+    assert data["quality"] == "2K"
+
+
+def test_list_reports_quality_levels(iig3d, capsys):
+    code, data = run(iig3d, capsys, ["list"])
+    assert code == 0 and list(data["quality"]) == ["1K", "2K", "4K"]
+    assert all(v["model"] == iig3d.DEFAULT_MODEL and v["image_size"] == k for k, v in data["quality"].items())
+
+
+def test_render_logo_flags(iig3d, capsys, fixtures, tmp_path, tmp_catalogue, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "k")
+    monkeypatch.delenv("IIG3D_LOGO", raising=False)
+    base = ["render", "--spec", str(fixtures / "spec-pipeline.yaml"), "--out-dir", str(tmp_path), "--dry-run", "--skill-root", str(tmp_catalogue.root)]
+    code, data = run(iig3d, capsys, base)
+    assert code == 0 and data["logo"] == str(iig3d.LOGO_PATH.resolve())
+    code, data = run(iig3d, capsys, [*base, "--no-logo"])
+    assert data["logo"] is None
+    code, data = run(iig3d, capsys, [*base, "--logo", "none"])
+    assert data["logo"] is None

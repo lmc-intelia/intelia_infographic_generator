@@ -78,3 +78,19 @@ def test_pin_key(iig3d, tmp_path):
     assert iig3d.load_spec(path).pin == "3d-capsule-hub/06"
     path.write_text("title: T\nitems:\n  - label: A\n")
     assert iig3d.load_spec(path).pin is None
+
+
+def test_quality_key(iig3d, tmp_path):
+    path = tmp_path / "s.yaml"
+    path.write_text("title: T\nquality: 4K\nitems:\n  - label: A\n")
+    assert iig3d.load_spec(path).quality == "4K"
+    path.write_text("title: T\nquality: 8K\nitems:\n  - label: A\n")
+    with pytest.raises(iig3d.UsageError) as err:
+        iig3d.load_spec(path)
+    assert "quality" in str(err.value) and "1K, 2K, 4K" in str(err.value)
+
+
+def test_icon_style_key(iig3d, tmp_path):
+    path = tmp_path / "s.yaml"
+    path.write_text("title: T\nicon_style: white line icons\nitems:\n  - label: A\n")
+    assert iig3d.load_spec(path).icon_style == "white line icons"

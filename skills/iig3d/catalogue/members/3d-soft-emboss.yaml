@@ -28,7 +28,7 @@ layout:
     emphasis: Three raised circles with numerals in the overlaps
   - name: Chevron row
     focus: Sequences of five or six steps
-    emphasis: Raised chevrons in a row, icon discs and captions beneath, title between thin rules
+    emphasis: Raised chevrons in a row with one rolled glossy edge each and flat gaps between, icon discs and captions beneath, title between thin rules
   visual_elements:
   - Every shape is the same light grey as the backdrop, raised by a soft light-top-left shadow and a darker bottom-right shadow
   - Icon discs raised a second level above the piece, dark grey flat icons
@@ -131,18 +131,20 @@ refs:
     derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_samples/2026-09-21 12_26_37-Greenshot.png
 - id: '05'
   file: ref-05-chevron-row-six.jpg
-  shows: Six raised neumorphic chevron arrows nesting left to right in one row, all the same matte light grey as the backdrop
-    with white top-left highlights and soft bottom-right shadows, a large light-grey numeral and a bold dark name on each
-    chevron, a raised icon disc with a two-line caption under each one, title centred at top between two thin rules
+  shows: Six matte light-grey chevron arrows in one row, each a single smooth slab with a rolled glossy plastic edge, one
+    soft highlight along the top edge and one soft shadow beneath, flat backdrop between them with no grooves or secondary
+    outlines, a large light-grey numeral and a bold dark name on each chevron, a raised icon disc with a two-line caption
+    under each one, title centred at top between two thin rules
   flags:
   - clean
   variant: Chevron row
   item_count: 6
   source:
-    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/emboss-chevron/infographic.png
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/1d1d0d87-7b98-4f15-8a2d-45af41cf15a2/scratchpad/emboss-chevron-v2/infographic.png
     added: '2026-09-21'
     user_added: true
-    derived_from: skills/iig3d/refs/3d-arrow-ribbon/ref-07-six-chevron-row.jpg (composition, restyled)
+    regenerated: true
+    derived_from: skills/iig3d/refs/3d-arrow-ribbon/ref-07-six-chevron-row.jpg (composition, restyled in grey relief, then edges rolled)
 pairings:
   jigsaw:
   - '01'

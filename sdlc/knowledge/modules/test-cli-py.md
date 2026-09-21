@@ -5,11 +5,11 @@ description: "Graphify community 7: tests/test_cli.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:48:39Z" }
-stale_after: "2026-10-05T04:48:39Z"
-source_commit: fc98b7651e28bcb666f0776fc2f24f2441f4e765
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:30:03Z" }
+stale_after: "2026-10-05T05:30:03Z"
+source_commit: fae00c698effe61c7083ae8264ab6a14d68f8f09
 sources:
-  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T14:48:35+10:00", digest: a321f9144afb70f7 }
+  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T15:21:18+10:00", digest: d3c5979d54ea1efd }
 ---
 
 # Files
@@ -31,6 +31,9 @@ sources:
 - run() (tests/test_cli.py:L17)
 - test_icons_command_suggests_and_searches() (tests/test_cli.py:L175)
 - test_prompt_suggests_icons_from_labels() (tests/test_cli.py:L188)
+- test_render_quality_from_spec_and_flag() (tests/test_cli.py:L202)
+- test_list_reports_quality_levels() (tests/test_cli.py:L215)
+- test_render_logo_flags() (tests/test_cli.py:L221)
 - test_list_counts() (tests/test_cli.py:L25)
 - test_route_shape() (tests/test_cli.py:L34)
 - test_refs_shape() (tests/test_cli.py:L40)

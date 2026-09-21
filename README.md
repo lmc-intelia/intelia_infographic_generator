@@ -21,6 +21,7 @@ environment (tests, pre-commit, sdlc stage records) and can be ignored by users.
 - [Reproducing one reference image](#reproducing-one-reference-image)
 - [Brand colours from a CSS file](#brand-colours-from-a-css-file)
 - [Icons from a named pack](#icons-from-a-named-pack)
+- [Logo stamp](#logo-stamp)
 - [Commands](#commands)
 - [Adding your own reference images](#adding-your-own-reference-images)
 - [Using the skill from Claude Code](#using-the-skill-from-claude-code)
@@ -95,14 +96,26 @@ Output:
 
 ```json
 {"status": "ok", "path": ".../infographic/my-topic/infographic.png", "bytes": 3013940,
- "model": "gemini-3-pro-image", "aspect_ratio": "16:9", "resolution": "2K", "refs": 1,
+ "model": "gemini-3-pro-image", "aspect_ratio": "16:9", "quality": "2K", "image_size": "2K", "refs": 1,
  "attempts": 1, "elapsed_seconds": 31.0,
  "prompt_file": ".../infographic/my-topic/prompts/01-infographic-my-title.md",
  "warnings": [], "member": "3d-glass-layer", "layout": "hierarchical-layers", ...}
 ```
 
 A render takes about 30 seconds at 2K. Add `--dry-run` to write the prompt file and skip the
-API call; add `--resolution 4K` for print.
+API call. Pick the quality with `quality:` in the spec or `--quality` on the command line. Every
+level uses `gemini-3-pro-image`, so the rendering style never changes between levels; the level
+is the `image_size` value the model accepts (it has no others):
+
+| Level | `image_size` | Output | Use |
+|-------|--------------|--------|-----|
+| `1K` | `1K` | 1024 px long edge | drafts, slides, chat |
+| `2K` | `2K` | 2048 px long edge | documents, web (default) |
+| `4K` | `4K` | 4096 px long edge | print, posters |
+
+`--model ID` or `IIG3D_MODEL` overrides the model. Claude asks for the level once per session
+("Render quality?") unless the request names one. `--resolution` is still accepted as an alias of
+`--quality`.
 
 ## The content spec
 
@@ -115,6 +128,7 @@ language: en                              # language of every label (default en)
 layout: linear-progression                # a general layout or a 3d-* device name (a refs/ folder)
 style: industrial-3d                      # industrial-3d routes by layout; a 3d-* member; or a ref of the layout member
 aspect: landscape                         # landscape | portrait | square | W:H such as 4:3
+quality: 2K                               # 1K | 2K | 4K, see Quick start
 palette_css: ./brand.css                  # optional, see Brand colours
 palette_vars: [--brand-primary, --brand-secondary]   # optional, restricts and orders the colours
 icon_pack: lucide                         # optional, see Icons from a named pack
@@ -258,10 +272,28 @@ item from the source text first and uses these suggestions to fill or check.
 
 The sheet is one white PNG with each glyph in black under its item number, saved as
 `icon-sheet.png` in the output directory and passed after the catalogue refs (before your own
-`refs:`, still six images at most). The prompt gains an "Icon Set" section telling the model to
-copy each numbered glyph's line work onto its item and recolour it; the frontmatter marks the
-sheet `usage: icons` and lists the item-to-icon map. Expect faithful shapes and stroke weight,
-not pixel-exact glyphs.
+`refs:`, still six images at most). The prompt gains an "Icon Set" section: take only the shapes
+from the sheet, then finish each icon like the rest of the image. That section quotes the
+member's own icon lines from its catalogue YAML (white flat icons on the disc faces, dark flat
+icons on raised grey discs, and so on), tells the model to match the icons in the pinned
+reference when there is one, and appends `icon_style:` from the spec verbatim when you want a
+one-off finish ("embossed grey relief", "white line icons"). The frontmatter marks the sheet
+`usage: icons` and lists the item-to-icon map. Expect faithful shapes and stroke weight, not
+pixel-exact glyphs.
+
+## Logo stamp
+
+Every render gets the Intelia mark (`skills/iig3d/assets/trimmed_intellia_logo.png`) composited
+into the bottom-left corner after the model returns: 5 px from the left and bottom edges, scaled
+to 6 percent of the image height, alpha-blended over a soft drop shadow (35 percent black,
+blurred, offset down and right), so it is the same at 1K, 2K and 4K. The result JSON reports
+the `logo` path used.
+
+- `--logo PATH` stamps another PNG (transparent background recommended); `IIG3D_LOGO=PATH` sets
+  a default for the shell.
+- `--no-logo`, `--logo none` or `IIG3D_LOGO=none` render without it.
+- Always use `--no-logo` when a render is going back into the catalogue as a reference image,
+  otherwise the model learns to draw the mark.
 
 ## Commands
 
@@ -269,13 +301,13 @@ Every command prints one JSON line on stdout; diagnostics go to stderr.
 
 | Command | Purpose |
 |---------|---------|
-| `list` | members (device, item range, aspect default, refs) and the 21 general layouts |
+| `list` | members (device, item range, aspect default, refs), the 21 general layouts, the quality levels |
 | `refs --member M [--layout L] [--pin P] [--ref IMG]` | the 2 to 3 reference images a render would pass, plus every ref of the member with its pin token |
 | `route --layout L [--style S]` | which member renders this layout; alternates; `pin` when `--style` names a ref of the `--layout` member |
 | `icons [--pack P] [--query WORD] [--label TEXT] [--detail TEXT]` | glyph names matching a word in a pack; the glyph the script would pick for an item's text |
 | `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
 | `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
-| `render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
+| `render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--logo PATH\|none] [--no-logo] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
 | `add --image IMG --meta meta.yaml` | register an image as a reference (below) |
 | `docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `check [--allow-watermark]` | validate catalogue, refs and docs; exit 1 with every violation |
@@ -332,7 +364,8 @@ With the skill installed, ask for a "3d infographic", "industrial 3d", or `/iig3
 follows `skills/iig3d/SKILL.md`:
 
 1. Once per session it asks "Load a CSS file for brand colours?" (skip by naming a CSS file
-   in the request, setting `palette_css`, or saying `--no-confirm`).
+   in the request, setting `palette_css`, or saying `--no-confirm`) and "Render quality?"
+   (1K, 2K or 4K; skip by naming a level or setting `quality`).
 2. It writes `spec.yaml` from your source, verbatim labels, secrets stripped.
 3. It confirms member, layout, aspect and language once, then runs `render`.
 4. It reports the PNG path, the prompt file and any warnings. It never patches rendered text
@@ -345,7 +378,7 @@ follows `skills/iig3d/SKILL.md`:
 infographic/<slug>/
   prompts/01-infographic-<title-slug>.md   # frontmatter: layout, style, style_member, aspect,
                                            #   language, references[, pinned][, palette]; body: the full prompt
-  infographic.png                          # RGB PNG at the requested resolution
+  infographic.png                          # RGB PNG at the requested resolution, logo bottom-left
   infographic-backup-YYYYMMDD-HHMMSS.png   # previous render, when you render again
 ```
 
@@ -390,6 +423,7 @@ skills/iig3d/
   catalogue/schema.yaml       # walked by validate_member
   refs/<member>/ref-NN-*.jpg  # reference images, all clean renders or clean originals
   templates/                  # base-prompt.md, spec.example.yaml, meta.example.yaml
+  assets/                     # trimmed_intellia_logo.png, stamped on every render
   icons/<pack>/<name>.svg     # icon cache for icon sheets; a few Lucide glyphs vendored for tests
   docs/                       # generated by `iig3d.py docs`; do not edit by hand
 ```

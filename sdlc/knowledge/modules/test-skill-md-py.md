@@ -5,9 +5,9 @@ description: "Graphify community 38: tests/test_skill_md.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:05:37Z" }
-stale_after: "2026-10-05T04:05:37Z"
-source_commit: 7ba9fba7a655769a839ae420f00e5a62beab9810
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:30:03Z" }
+stale_after: "2026-10-05T05:30:03Z"
+source_commit: fae00c698effe61c7083ae8264ab6a14d68f8f09
 sources:
   - { id: test_skill_md, resource: tests/test_skill_md.py, last_modified: "2026-09-17T11:38:15+10:00", digest: c57b2eb3662031e9 }
 ---

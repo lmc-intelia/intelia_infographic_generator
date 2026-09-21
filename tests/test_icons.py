@@ -145,3 +145,41 @@ def test_no_pack_no_prefix_means_no_resolution(iig3d, offline_cat, tmp_path):
     path = tmp_path / "s.yaml"
     path.write_text("title: T\nitems:\n  - {label: LAUNCH}\n  - {label: PLAN, icon: compass}\n")
     assert iig3d.resolve_icons(offline_cat, iig3d.load_spec(path), fetch=False) == []
+
+
+def test_member_icon_treatment_pulls_icon_lines(iig3d, tmp_catalogue):
+    lines = iig3d.member_icon_treatment(tmp_catalogue.member("3d-soft-emboss"))
+    assert lines and all("icon" in line.lower() for line in lines)
+    assert any("flat dark icons" in line for line in lines) or any("dark grey flat icons" in line for line in lines)
+    assert len(lines) <= 4 and len(set(lines)) == len(lines)
+
+
+def test_icon_guidance_is_style_aware(iig3d):
+    icons = [{"index": 1, "label": "PLAN", "pack": "lucide", "name": "compass"}]
+    plain = iig3d.icon_guidance(2, icons)
+    assert "Take only the shapes" in plain and "same material, depth, lighting" in plain and "never as a photo" not in plain
+    assert "This device renders icons" not in plain and "reference image 1" not in plain
+    rich = iig3d.icon_guidance(2, icons, ["Flat icons in white on the coloured circles"], pinned=True, icon_style="embossed grey relief")
+    assert "This device renders icons like this: Flat icons in white on the coloured circles." in rich
+    assert "Match the icons in reference image 1" in rich
+    assert "Icon style for this image: embossed grey relief." in rich
+    assert rich.rstrip().endswith("anywhere in the image.")
+
+
+def test_prompt_carries_member_treatment_and_icon_style(iig3d, offline_cat, tmp_path):
+    path = tmp_path / "s.yaml"
+    path.write_text(
+        "title: T\nicon_pack: lucide\nlayout: 3d-soft-emboss\nstyle: '03'\nicon_style: pressed into the grey, no colour\nitems:\n  - {label: PLAN, icon: compass}\n  - {label: BUILD, icon: hammer}\n  - {label: LAUNCH, icon: rocket}\n"
+    )
+    spec = iig3d.load_spec(path)
+    assert spec.icon_style == "pressed into the grey, no colour"
+    style, pin = iig3d.split_style(offline_cat, spec.layout, spec.style)
+    member, pinned = offline_cat.resolve_ref(pin, style)
+    route_ = iig3d.route(offline_cat, spec.layout, style, pinned_member=member.name)
+    sheet, icons = iig3d.build_icon_sheet(offline_cat, spec, tmp_path / "sheet.png", fetch=False)
+    refs = iig3d.select_refs(offline_cat, member.name, route_.layout, pinned=pinned, icon_sheet=sheet)
+    prompt = iig3d.assemble(offline_cat, spec, route_, "16:9", refs=refs, pinned=pinned, icon_sheet=sheet, icons=icons)
+    body = prompt.text
+    assert "This device renders icons like this:" in body and "icon" in body.split("This device renders icons like this:")[1][:200].lower()
+    assert "Match the icons in reference image 1" in body
+    assert "Icon style for this image: pressed into the grey, no colour." in body

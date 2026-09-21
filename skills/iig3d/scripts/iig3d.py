@@ -306,6 +306,8 @@ class Spec:
     refs: list[Path] = field(default_factory=list)
     pin: str | None = None
     icon_pack: str | None = None
+    icon_style: str | None = None
+    quality: str | None = None
     path: Path | None = None
 
 
@@ -351,6 +353,8 @@ def load_spec(path: Path) -> Spec:
             )
         )
     base = path.resolve().parent
+    if raw.get("quality") is not None and str(raw["quality"]) not in RESOLUTIONS:
+        raise UsageError(f"{path}: quality must be one of {', '.join(RESOLUTIONS)}, got {raw['quality']!r}")
     css = raw.get("palette_css")
     return Spec(
         title=_str(raw["title"]),
@@ -367,6 +371,8 @@ def load_spec(path: Path) -> Spec:
         refs=[(base / r).resolve() for r in raw.get("refs") or []],
         pin=_opt_str(raw.get("pin")),
         icon_pack=_opt_str(raw.get("icon_pack")),
+        icon_style=_opt_str(raw.get("icon_style")),
+        quality=_opt_str(raw.get("quality")),
         path=path.resolve(),
     )
 
@@ -914,19 +920,38 @@ def build_icon_sheet(cat: Catalogue, spec: Spec, out_path: Path, fetch: bool = T
     return out_path, icons
 
 
-def icon_guidance(sheet_position: int, icons: list[dict]) -> str:
-    """The Icon Set section: copy each numbered glyph from the sheet onto its item."""
+def member_icon_treatment(member: Member, limit: int = 4) -> list[str]:
+    """The member's own lines about icons (layout and style visual_elements), in order, deduped."""
+    lines: list[str] = []
+    for source in (member["layout"]["visual_elements"], member["style"]["visual_elements"]):
+        for line in source:
+            text = str(line).strip().rstrip(".")
+            if "icon" in text.lower() and text not in lines:
+                lines.append(text)
+    return lines[:limit]
+
+
+def icon_guidance(sheet_position: int, icons: list[dict], treatment: list[str] | None = None, pinned: bool = False, icon_style: str | None = None) -> str:
+    """The Icon Set section: the sheet supplies each glyph's shapes; the member (and the pinned
+    reference, and any `icon_style` from the spec) supply how icons are finished, so the glyphs
+    sit in the image like every other element."""
     listing = ", ".join(f"glyph {i['index']:02d} on item {i['index']:02d} ({i['pack']}:{i['name']})" for i in icons)
-    return "\n".join(
-        [
-            "## Icon Set",
-            "",
-            f"Reference image {sheet_position} is an icon sheet, not a composition: black line glyphs on white, each labelled with its item number.",
-            f"Draw each item's icon by copying its glyph's line work exactly, same shapes, same stroke weight, same proportions: {listing}.",
-            "Recolour the glyph to suit the item (white on a coloured face, or the item colour on white) and render it flat, never as a photo or a 3D object.",
-            "Do not draw the sheet itself, its labels or its grid anywhere in the image.",
-        ]
-    )
+    lines = [
+        "## Icon Set",
+        "",
+        f"Reference image {sheet_position} is an icon sheet, not a composition: black line glyphs on white, each labelled with its item number.",
+        f"Take only the shapes from it: each item's icon repeats its glyph's outlines, proportions and stroke weight: {listing}.",
+        "Finish every icon exactly like the rest of the image, with the same material, depth, lighting, colour treatment and placement as the icons this device already uses;"
+        " a line icon in a flat-icon style stays a line icon, an embossed style embosses it, a glossy 3D style gives it the same gloss and depth.",
+    ]
+    if treatment:
+        lines.append("This device renders icons like this: " + "; ".join(treatment) + ".")
+    if pinned:
+        lines.append("Match the icons in reference image 1 for size, weight, colour and finish; only the glyph shapes change.")
+    if icon_style:
+        lines.append(f"Icon style for this image: {icon_style.strip().rstrip('.')}.")
+    lines.append("Do not draw the sheet itself, its labels or its grid anywhere in the image.")
+    return "\n".join(lines)
 
 
 # --- prompt ---
@@ -1084,7 +1109,7 @@ def assemble(
         "{{LAYOUT_GUIDELINES}}": render_layout_block(member),
         "{{STYLE_GUIDELINES}}": style_block,
         "{{REFERENCE_COMPOSITION}}": reference_composition(pinned) if pinned else "",
-        "{{ICON_GUIDANCE}}": icon_guidance(sheet_position, icons or []) if sheet_position else "",
+        "{{ICON_GUIDANCE}}": icon_guidance(sheet_position, icons or [], member_icon_treatment(member), pinned=bool(pinned), icon_style=spec.icon_style) if sheet_position else "",
         "{{CONTENT}}": content_block(spec, icon_slots),
         "{{TEXT_LABELS}}": "\n".join(f'"{label}"' for label in labels),
     }
@@ -1189,7 +1214,15 @@ def api_key(explicit: str | None, cwd: Path | None = None) -> tuple[str, str]:
 # --- render ---
 
 DEFAULT_MODEL = "gemini-3-pro-image"
-RESOLUTIONS = ("1K", "2K", "4K")
+# Quality levels: one model for every level so the look stays the same, and the level is exactly
+# the `image_size` value gemini-3-pro-image accepts (ImageConfig). The model has no fourth size.
+QUALITY = {
+    "1K": {"model": DEFAULT_MODEL, "image_size": "1K", "about": "1024 px long edge; drafts, slides, chat"},
+    "2K": {"model": DEFAULT_MODEL, "image_size": "2K", "about": "2048 px long edge; documents and web (default)"},
+    "4K": {"model": DEFAULT_MODEL, "image_size": "4K", "about": "4096 px long edge; print and posters"},
+}
+RESOLUTIONS = tuple(QUALITY)
+DEFAULT_QUALITY = "2K"
 STYLE_NOTE = "The images above are style references only. Match their rendering style, depth, lighting, palette treatment and typography. Do not copy their text or data."
 EXIT_CODES = {"ok": 0, "dry-run": 0, "violations": 1, "error": 2}
 
@@ -1210,6 +1243,68 @@ def to_rgb(image, background=(255, 255, 255)):
         flat.paste(image, mask=image.getchannel("A"))
         return flat
     return image.convert("RGB")
+
+
+LOGO_PATH = SKILL_ROOT / "assets" / "trimmed_intellia_logo.png"
+LOGO_PAD_PX = 5
+LOGO_HEIGHT_FRACTION = 0.06
+LOGO_SHADOW = {"opacity": 0.35, "blur": 0.10, "offset": (0.04, 0.07)}  # fractions of the logo height
+
+
+def resolve_logo(value: str | None) -> Path | None:
+    """The logo to stamp: `--logo PATH`, else IIG3D_LOGO, else the bundled Intelia mark; `none`
+    or an empty value turns it off."""
+    raw = value if value is not None else os.environ.get("IIG3D_LOGO")
+    if raw is None:
+        return LOGO_PATH
+    if raw.strip().lower() in ("", "none", "off", "0", "false"):
+        return None
+    return Path(raw)
+
+
+def drop_shadow(logo, blur: int, offset: tuple[int, int], opacity: float):
+    """A blurred black copy of the logo's alpha, shifted by `offset`; the layer is padded by
+    2*blur on every side and returned with the padding so the caller can place it."""
+    from PIL import Image as PILImage
+    from PIL import ImageFilter
+
+    margin = 2 * blur
+    size = (logo.width + 2 * margin, logo.height + 2 * margin)
+    alpha = PILImage.new("L", size, 0)
+    alpha.paste(logo.getchannel("A"), (margin + offset[0], margin + offset[1]))
+    if blur:
+        alpha = alpha.filter(ImageFilter.GaussianBlur(blur))
+    alpha = alpha.point(lambda v: int(v * opacity))
+    shadow = PILImage.new("RGBA", size, (0, 0, 0, 0))
+    shadow.putalpha(alpha)
+    return shadow, margin
+
+
+def stamp_logo(image, logo_path: Path, pad: int = LOGO_PAD_PX, height_fraction: float = LOGO_HEIGHT_FRACTION, shadow: bool = True):
+    """Composite `logo_path` (RGBA) into the bottom-left corner of `image`, `pad` px from the
+    left and bottom edges, scaled to `height_fraction` of the image height, over a soft drop
+    shadow (LOGO_SHADOW) unless `shadow` is False. Returns RGB."""
+    from PIL import Image as PILImage
+
+    logo_path = Path(logo_path)
+    if not logo_path.is_file():
+        raise UsageError(f"logo not found: {logo_path}")
+    with PILImage.open(logo_path) as raw_logo:
+        logo = raw_logo.convert("RGBA")
+    target_h = max(1, round(image.height * height_fraction))
+    target_w = max(1, round(logo.width * target_h / logo.height))
+    logo = logo.resize((target_w, target_h), PILImage.LANCZOS)
+    base = image.convert("RGBA")
+    x, y = pad, max(0, base.height - pad - target_h)
+    if shadow:
+        blur = max(1, round(target_h * LOGO_SHADOW["blur"]))
+        offset = (round(target_h * LOGO_SHADOW["offset"][0]), round(target_h * LOGO_SHADOW["offset"][1]))
+        layer_shadow, margin = drop_shadow(logo, blur, offset, LOGO_SHADOW["opacity"])
+        layer = PILImage.new("RGBA", base.size, (0, 0, 0, 0))
+        layer.paste(layer_shadow, (x - margin, y - margin), layer_shadow)
+        base = PILImage.alpha_composite(base, layer)
+    base.alpha_composite(logo, (x, y))
+    return base.convert("RGB")
 
 
 def _image_from_response(response):
@@ -1263,13 +1358,16 @@ def render(
     api_key: str | None = None,
     client_factory=None,
     prompt_warnings: list[str] | None = None,
+    logo: Path | None = LOGO_PATH,
 ) -> dict:
-    """Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.
+    """Call Nano Banana Pro with the persisted prompt file and save an RGB PNG, the logo stamped
+    bottom-left unless `logo` is None.
 
     Returns the single result record the CLI prints; status ok | dry-run | error."""
     if resolution not in RESOLUTIONS:
-        raise UsageError(f"resolution must be one of {', '.join(RESOLUTIONS)}, got {resolution!r}")
-    model = model or os.environ.get("IIG3D_MODEL") or DEFAULT_MODEL
+        raise UsageError(f"quality must be one of {', '.join(RESOLUTIONS)}, got {resolution!r}")
+    level = QUALITY[resolution]
+    model = model or os.environ.get("IIG3D_MODEL") or level["model"]
     prompt_path, out_png = Path(prompt_path), Path(out_png)
     prompt = load_prompt_text(prompt_path)
     if not prompt:
@@ -1281,13 +1379,18 @@ def render(
         "model": model,
         "aspect_ratio": ratio,
         "resolution": resolution,
+        "quality": resolution,
+        "image_size": level["image_size"],
         "refs": len(ref_paths),
         "attempts": 0,
         "elapsed_seconds": 0.0,
         "prompt_file": str(prompt_path.resolve()),
         "prompt_chars": len(prompt),
         "warnings": list(prompt_warnings or []),
+        "logo": str(Path(logo).resolve()) if logo else None,
     }
+    if logo and not Path(logo).is_file():
+        raise UsageError(f"logo not found: {logo}")
     if dry_run:
         return {"status": "dry-run", **base}
 
@@ -1312,7 +1415,7 @@ def render(
         contents.append(prompt)
         config = types.GenerateContentConfig(
             response_modalities=["TEXT", "IMAGE"],
-            image_config=types.ImageConfig(image_size=resolution, aspect_ratio=ratio),
+            image_config=types.ImageConfig(aspect_ratio=ratio, image_size=level["image_size"]),
             automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
         )
         client = (client_factory or _genai_client)(api_key)
@@ -1327,6 +1430,8 @@ def render(
             image = _image_from_response(response)
             if image is None:
                 raise RuntimeError("no image part in response (content may have been refused)")
+            if logo:
+                image = stamp_logo(image, logo)
             out_png.parent.mkdir(parents=True, exist_ok=True)
             backup = backup_existing(out_png)
             image.save(str(out_png), "PNG")
@@ -1613,11 +1718,13 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("prompt", parents=[common, prepare_args], help="assemble and persist the prompt file")
     p_render = sub.add_parser("render", parents=[common, prepare_args], help="assemble the prompt and render with Nano Banana Pro")
     p_render.add_argument("--dry-run", action="store_true")
-    p_render.add_argument("--resolution", default="2K", choices=RESOLUTIONS)
+    p_render.add_argument("--quality", "--resolution", dest="quality", default=None, choices=RESOLUTIONS, help="1K | 2K | 4K (default 2K, or the spec's quality)")
     p_render.add_argument("--model", default=None)
     p_render.add_argument("--retries", type=int, default=1)
     p_render.add_argument("--api-key", default=None)
     p_render.add_argument("--no-confirm", action="store_true", help="accepted for parity with SKILL.md; no effect here")
+    p_render.add_argument("--logo", default=None, help="PNG stamped bottom-left (default: the bundled Intelia mark, or IIG3D_LOGO); `none` to skip")
+    p_render.add_argument("--no-logo", action="store_true", help="render without the logo (for reference images)")
     p_add = sub.add_parser("add", parents=[common], help="add a reference image to the catalogue")
     p_add.add_argument("--image", required=True)
     p_add.add_argument("--meta", required=True)
@@ -1653,7 +1760,7 @@ def cmd_list(cat: Catalogue) -> dict:
         for m in cat.members.values()
     ]
     layouts = [{"layout": layout, "primary": row["primary"], "alternates": row["alternates"]} for layout, row in cat.routing.items()]
-    return {"status": "ok", "members": members, "layouts": layouts, "umbrella": UMBRELLA}
+    return {"status": "ok", "members": members, "layouts": layouts, "umbrella": UMBRELLA, "quality": {k: {"model": v["model"], "image_size": v["image_size"], "about": v["about"]} for k, v in QUALITY.items()}}
 
 
 def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
@@ -1689,6 +1796,7 @@ def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
         "language": spec.language,
         "refs": [str(r) for r in refs],
         "pin": cat.pin_token(member.name, pinned) if pinned else None,
+        "quality": spec.quality or DEFAULT_QUALITY,
         "icon_sheet": str(icon_sheet) if icon_sheet else None,
         "icons": [f"{i['pack']}:{i['name']}" for i in icons],
         "palette": [c.as_dict() for c in palette] if palette else None,
@@ -1704,13 +1812,14 @@ def cmd_render(cat: Catalogue, args: argparse.Namespace) -> dict:
         Path(prepared["prompt_file"]),
         Path(args.out_dir) / "infographic.png",
         prepared["aspect_ratio"],
-        resolution=args.resolution,
+        resolution=args.quality or prepared["quality"],
         model=args.model,
         refs=[Path(r) for r in prepared["refs"]],
         retries=args.retries,
         dry_run=args.dry_run,
         api_key=key,
         prompt_warnings=prepared["warnings"],
+        logo=None if args.no_logo else resolve_logo(args.logo),
     )
     result.update({k: prepared[k] for k in ("member", "layout", "style", "language", "palette")})
     return result

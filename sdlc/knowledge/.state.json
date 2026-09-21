@@ -1,8 +1,8 @@
 {
-  "commit": "6197c1b39e2b704463349bd9e1b4033182bc40ce",
-  "graph_commit": "6197c1b39e2b704463349bd9e1b4033182bc40ce",
-  "updates": 5,
-  "ts": "2026-09-21T04:49:58Z",
+  "commit": "fae00c698effe61c7083ae8264ab6a14d68f8f09",
+  "graph_commit": "fae00c698effe61c7083ae8264ab6a14d68f8f09",
+  "updates": 1,
+  "ts": "2026-09-21T05:30:03Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -11,13 +11,11 @@
       "modules/test-catalogue-py.md"
     ],
     "tests/conftest.py": [
+      "modules/conftest-py.md",
       "modules/test-render-py.md"
     ],
     "tests/test_install.py": [
-      "modules/test-render-py.md"
-    ],
-    "tests/test_render.py": [
-      "modules/test-render-py.md"
+      "modules/conftest-py.md"
     ],
     "tests/test_cli.py": [
       "modules/test-cli-py.md"
@@ -25,10 +23,13 @@
     "skills/iig3d/scripts/iig3d.py": [
       "modules/iig3d-py.md",
       "modules/member.md",
-      "modules/path.md",
       "modules/prepare.md",
+      "modules/usageerror.md",
       "modules/catalogue.md",
-      "modules/resolve-icons.md"
+      "modules/resolve-icons.md",
+      "modules/normalise-image.md",
+      "modules/assemble.md",
+      "modules/path.md"
     ],
     "tests/test_aspect.py": [
       "modules/test-aspect-py.md"
@@ -59,6 +60,9 @@
     ],
     "tests/test_skill_md.py": [
       "modules/test-skill-md-py.md"
+    ],
+    "tests/test_render.py": [
+      "modules/test-render-py.md"
     ]
   }
 }
