@@ -87,4 +87,4 @@ def test_quality_key(iig3d, tmp_path):
     path.write_text("title: T\nquality: 8K\nitems:\n  - label: A\n")
     with pytest.raises(iig3d.UsageError) as err:
         iig3d.load_spec(path)
-    assert "quality" in str(err.value) and "draft, 1K, 2K, 4K" in str(err.value)
+    assert "quality" in str(err.value) and "1K, 2K, 4K" in str(err.value)

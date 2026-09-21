@@ -5,11 +5,11 @@ description: Graphify god node with degree 41 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:52:20Z" }
-stale_after: "2026-10-05T04:52:20Z"
-source_commit: 8ed9020fab339416db7371697fc62e238ae2042e
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:03:47Z" }
+stale_after: "2026-10-05T05:03:47Z"
+source_commit: b59f3451dc0b77b589cbafd9812f581df6f10352
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T14:48:56+10:00", digest: 05b5aa06590e0558 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:03:44+10:00", digest: 1eab83aa7c95cc71 }
 ---
 
 # Where

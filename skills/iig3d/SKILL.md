@@ -13,13 +13,12 @@ description: Render 3D corporate-family infographics (industrial 3d look, fiftee
 1. Credentials: the user keeps `GEMINI_API_KEY=...` in `./.env` in the directory they call from (or exported). Never read or print `.env`; the script reports the source and exits 1 with the expected path when missing.
 2. Once per session, before reading the source, ask: **"Load a CSS file for brand colours?"** (AskUserQuestion: a path, or "no, family palette"). On a path run `palette --css PATH`, show the colours, and put `palette_css:` in every spec this session. Skip the question when the request already names a CSS file, sets `palette_css`, or says `--no-confirm`.
 
-3. Once per session, before the first render, ask: **"Render quality?"** (AskUserQuestion, one of four; each row is the exact Gemini model and `image_size` used):
-   | Level | Gemini parameters | Use |
-   |-------|-------------------|-----|
-   | `draft` | `gemini-2.5-flash-image`, no `image_size` (about 1024 px) | fastest and cheapest; layout checks |
-   | `1K` | `gemini-3-pro-image`, `image_size: "1K"` | slides, chat |
-   | `2K` | `gemini-3-pro-image`, `image_size: "2K"` | documents, web (default) |
-   | `4K` | `gemini-3-pro-image`, `image_size: "4K"` | print, posters |
+3. Once per session, before the first render, ask: **"Render quality?"** (AskUserQuestion, one of three). Every level is `gemini-3-pro-image` so the look never changes; the level is the model's `image_size` value:
+   | Level | `image_size` | Output | Use |
+   |-------|--------------|--------|-----|
+   | `1K` | `"1K"` | 1024 px long edge | drafts, slides, chat |
+   | `2K` | `"2K"` | 2048 px long edge | documents, web (default) |
+   | `4K` | `"4K"` | 4096 px long edge | print, posters |
    Put the answer in every spec this session as `quality:`. Skip the question when the request names a level, sets `quality`, or says `--no-confirm` (then use `2K`).
 
 ## Workflow
@@ -39,7 +38,7 @@ language: en
 layout: linear-progression            # general layout or 3d-* device name (a refs/ folder)
 style: industrial-3d                  # or a 3d-* member; or a ref id/file when layout names a member
 aspect: landscape                     # landscape | portrait | square | W:H
-quality: 2K                           # draft | 1K | 2K | 4K, from the session question
+quality: 2K                           # 1K | 2K | 4K, from the session question
 palette_css: ./brand.css              # optional; brand colours replace item colours only
 items:                                # 3 to 10 depending on member; one per step/tier/cell
   - {label: COMMIT, detail: Developer pushes to main, icon: git-branch}
@@ -53,13 +52,13 @@ pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub 
 
 | Command | Purpose |
 |---------|---------|
-| `iig3d.py list` | members (device, item range, aspect default, refs), the 21 general layouts with their primary member, the four quality levels |
+| `iig3d.py list` | members (device, item range, aspect default, refs), the 21 general layouts with their primary member, the quality levels |
 | `iig3d.py route --layout L [--style S]` | which member renders this layout; alternates; `pin` when style names a ref |
 | `iig3d.py refs --member M [--layout L] [--pin P]` | the 2 to 3 reference images the render will pass, plus every pin of the member |
 | `iig3d.py icons [--pack P] [--query WORD] [--label TEXT]` | glyph names matching a word; the suggestion for an item's text |
 | `iig3d.py palette --css PATH [--vars a,b]` | preview brand colours extracted from a CSS file |
 | `iig3d.py prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md` without calling the API |
-| `iig3d.py render --spec F --out-dir D [--dry-run] [--quality draft\|1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` |
+| `iig3d.py render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` |
 | `iig3d.py add --image IMG --meta meta.yaml` | register a user image as a reference (below) |
 | `iig3d.py docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `iig3d.py check` | validate catalogue, refs, docs; exit 1 with every violation |

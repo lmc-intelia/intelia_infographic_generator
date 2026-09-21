@@ -125,20 +125,19 @@ def test_client_factory_failure_is_error(iig3d, tmp_path, prompt_file):
     assert result["status"] == "error" and "client refused" in result["error"]
 
 
-def test_quality_levels_map_to_gemini_parameters(iig3d):
-    assert tuple(iig3d.QUALITY) == ("draft", "1K", "2K", "4K") == iig3d.RESOLUTIONS
-    assert iig3d.QUALITY["draft"] == {**iig3d.QUALITY["draft"], "model": iig3d.DRAFT_MODEL, "image_size": None}
-    for level in ("1K", "2K", "4K"):
+def test_quality_levels_are_one_model_and_its_image_sizes(iig3d):
+    assert tuple(iig3d.QUALITY) == ("1K", "2K", "4K") == iig3d.RESOLUTIONS
+    for level in iig3d.RESOLUTIONS:
         assert iig3d.QUALITY[level]["model"] == iig3d.DEFAULT_MODEL and iig3d.QUALITY[level]["image_size"] == level
 
 
-def test_draft_uses_flash_model_without_image_size(iig3d, tmp_path, prompt_file, fake_client):
+def test_1k_uses_pro_model_with_image_size(iig3d, tmp_path, prompt_file, fake_client):
     fake_client.behaviour = [png_bytes("RGB")]
-    result = iig3d.render(prompt_file, tmp_path / "d.png", "16:9", resolution="draft", api_key="k", client_factory=fake_client)
-    assert result["status"] == "ok" and result["quality"] == "draft" and result["image_size"] is None
+    result = iig3d.render(prompt_file, tmp_path / "d.png", "16:9", resolution="1K", api_key="k", client_factory=fake_client)
+    assert result["status"] == "ok" and result["quality"] == "1K" and result["image_size"] == "1K"
     call = fake_client.calls[0]
-    assert call["model"] == iig3d.DRAFT_MODEL
-    assert call["config"].image_config.aspect_ratio == "16:9" and call["config"].image_config.image_size is None
+    assert call["model"] == iig3d.DEFAULT_MODEL
+    assert call["config"].image_config.aspect_ratio == "16:9" and call["config"].image_config.image_size == "1K"
 
 
 def test_4k_uses_pro_model_with_image_size(iig3d, tmp_path, prompt_file, fake_client):
@@ -149,5 +148,5 @@ def test_4k_uses_pro_model_with_image_size(iig3d, tmp_path, prompt_file, fake_cl
 
 
 def test_explicit_model_overrides_quality_model(iig3d, tmp_path, prompt_file, fake_client):
-    result = iig3d.render(prompt_file, tmp_path / "m.png", "16:9", resolution="draft", model="custom-image", dry_run=True, api_key="k", client_factory=fake_client)
-    assert result["model"] == "custom-image" and result["quality"] == "draft"
+    result = iig3d.render(prompt_file, tmp_path / "m.png", "16:9", resolution="1K", model="custom-image", dry_run=True, api_key="k", client_factory=fake_client)
+    assert result["model"] == "custom-image" and result["quality"] == "1K"

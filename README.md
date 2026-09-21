@@ -102,19 +102,19 @@ Output:
 ```
 
 A render takes about 30 seconds at 2K. Add `--dry-run` to write the prompt file and skip the
-API call. Pick the quality with `quality:` in the spec or `--quality` on the command line; each
-level is the exact Gemini model and `image_size` the script sends:
+API call. Pick the quality with `quality:` in the spec or `--quality` on the command line. Every
+level uses `gemini-3-pro-image`, so the rendering style never changes between levels; the level
+is the `image_size` value the model accepts (it has no others):
 
-| Level | Model | `image_size` | Output | Use |
-|-------|-------|--------------|--------|-----|
-| `draft` | `gemini-2.5-flash-image` | none (the model has no size parameter) | about 1024 px | layout checks, fastest and cheapest |
-| `1K` | `gemini-3-pro-image` | `1K` | 1024 px long edge | slides, chat |
-| `2K` | `gemini-3-pro-image` | `2K` | 2048 px long edge | documents, web (default) |
-| `4K` | `gemini-3-pro-image` | `4K` | 4096 px long edge | print, posters |
+| Level | `image_size` | Output | Use |
+|-------|--------------|--------|-----|
+| `1K` | `1K` | 1024 px long edge | drafts, slides, chat |
+| `2K` | `2K` | 2048 px long edge | documents, web (default) |
+| `4K` | `4K` | 4096 px long edge | print, posters |
 
-`--model ID` or `IIG3D_MODEL` overrides the model for any level. Claude asks for the level once
-per session ("Render quality?") unless the request names one. `--resolution` is still accepted
-as an alias of `--quality`.
+`--model ID` or `IIG3D_MODEL` overrides the model. Claude asks for the level once per session
+("Render quality?") unless the request names one. `--resolution` is still accepted as an alias of
+`--quality`.
 
 ## The content spec
 
@@ -127,7 +127,7 @@ language: en                              # language of every label (default en)
 layout: linear-progression                # a general layout or a 3d-* device name (a refs/ folder)
 style: industrial-3d                      # industrial-3d routes by layout; a 3d-* member; or a ref of the layout member
 aspect: landscape                         # landscape | portrait | square | W:H such as 4:3
-quality: 2K                               # draft | 1K | 2K | 4K, see Quick start
+quality: 2K                               # 1K | 2K | 4K, see Quick start
 palette_css: ./brand.css                  # optional, see Brand colours
 palette_vars: [--brand-primary, --brand-secondary]   # optional, restricts and orders the colours
 icon_pack: lucide                         # optional, see Icons from a named pack
@@ -282,13 +282,13 @@ Every command prints one JSON line on stdout; diagnostics go to stderr.
 
 | Command | Purpose |
 |---------|---------|
-| `list` | members (device, item range, aspect default, refs), the 21 general layouts, the four quality levels |
+| `list` | members (device, item range, aspect default, refs), the 21 general layouts, the quality levels |
 | `refs --member M [--layout L] [--pin P] [--ref IMG]` | the 2 to 3 reference images a render would pass, plus every ref of the member with its pin token |
 | `route --layout L [--style S]` | which member renders this layout; alternates; `pin` when `--style` names a ref of the `--layout` member |
 | `icons [--pack P] [--query WORD] [--label TEXT] [--detail TEXT]` | glyph names matching a word in a pack; the glyph the script would pick for an item's text |
 | `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
 | `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
-| `render --spec F --out-dir D [--dry-run] [--quality draft\|1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
+| `render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
 | `add --image IMG --meta meta.yaml` | register an image as a reference (below) |
 | `docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `check [--allow-watermark]` | validate catalogue, refs and docs; exit 1 with every violation |
@@ -346,7 +346,7 @@ follows `skills/iig3d/SKILL.md`:
 
 1. Once per session it asks "Load a CSS file for brand colours?" (skip by naming a CSS file
    in the request, setting `palette_css`, or saying `--no-confirm`) and "Render quality?"
-   (draft, 1K, 2K or 4K; skip by naming a level or setting `quality`).
+   (1K, 2K or 4K; skip by naming a level or setting `quality`).
 2. It writes `spec.yaml` from your source, verbatim labels, secrets stripped.
 3. It confirms member, layout, aspect and language once, then runs `render`.
 4. It reports the PNG path, the prompt file and any warnings. It never patches rendered text

@@ -1193,15 +1193,12 @@ def api_key(explicit: str | None, cwd: Path | None = None) -> tuple[str, str]:
 # --- render ---
 
 DEFAULT_MODEL = "gemini-3-pro-image"
-DRAFT_MODEL = "gemini-2.5-flash-image"
-# Four quality levels, each the exact Gemini parameters used: the model and its `image_size`
-# (ImageConfig). Draft uses the flash image model, which has no size parameter and renders
-# about 1024 px on the long edge.
+# Quality levels: one model for every level so the look stays the same, and the level is exactly
+# the `image_size` value gemini-3-pro-image accepts (ImageConfig). The model has no fourth size.
 QUALITY = {
-    "draft": {"model": DRAFT_MODEL, "image_size": None, "about": "about 1024 px, flash model, fastest and cheapest; layout checks"},
-    "1K": {"model": DEFAULT_MODEL, "image_size": "1K", "about": "1024 px long edge, pro model; slides and chat"},
-    "2K": {"model": DEFAULT_MODEL, "image_size": "2K", "about": "2048 px long edge, pro model; documents and web (default)"},
-    "4K": {"model": DEFAULT_MODEL, "image_size": "4K", "about": "4096 px long edge, pro model; print and posters"},
+    "1K": {"model": DEFAULT_MODEL, "image_size": "1K", "about": "1024 px long edge; drafts, slides, chat"},
+    "2K": {"model": DEFAULT_MODEL, "image_size": "2K", "about": "2048 px long edge; documents and web (default)"},
+    "4K": {"model": DEFAULT_MODEL, "image_size": "4K", "about": "4096 px long edge; print and posters"},
 }
 RESOLUTIONS = tuple(QUALITY)
 DEFAULT_QUALITY = "2K"
@@ -1330,7 +1327,7 @@ def render(
         contents.append(prompt)
         config = types.GenerateContentConfig(
             response_modalities=["TEXT", "IMAGE"],
-            image_config=types.ImageConfig(aspect_ratio=ratio, **({"image_size": level["image_size"]} if level["image_size"] else {})),
+            image_config=types.ImageConfig(aspect_ratio=ratio, image_size=level["image_size"]),
             automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
         )
         client = (client_factory or _genai_client)(api_key)
@@ -1631,7 +1628,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("prompt", parents=[common, prepare_args], help="assemble and persist the prompt file")
     p_render = sub.add_parser("render", parents=[common, prepare_args], help="assemble the prompt and render with Nano Banana Pro")
     p_render.add_argument("--dry-run", action="store_true")
-    p_render.add_argument("--quality", "--resolution", dest="quality", default=None, choices=RESOLUTIONS, help="draft | 1K | 2K | 4K (default 2K, or the spec's quality)")
+    p_render.add_argument("--quality", "--resolution", dest="quality", default=None, choices=RESOLUTIONS, help="1K | 2K | 4K (default 2K, or the spec's quality)")
     p_render.add_argument("--model", default=None)
     p_render.add_argument("--retries", type=int, default=1)
     p_render.add_argument("--api-key", default=None)

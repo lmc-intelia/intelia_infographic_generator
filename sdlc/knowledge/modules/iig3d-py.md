@@ -1,15 +1,15 @@
 ---
 type: Module
 title: iig3d.py
-description: "Graphify community 9: skills/iig3d/scripts/iig3d.py"
+description: "Graphify community 41: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:52:20Z" }
-stale_after: "2026-10-05T04:52:20Z"
-source_commit: 8ed9020fab339416db7371697fc62e238ae2042e
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:03:47Z" }
+stale_after: "2026-10-05T05:03:47Z"
+source_commit: b59f3451dc0b77b589cbafd9812f581df6f10352
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T14:48:56+10:00", digest: 05b5aa06590e0558 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:03:44+10:00", digest: 1eab83aa7c95cc71 }
 ---
 
 # Files
@@ -17,55 +17,41 @@ sources:
 
 # Symbols
 - iig3d.py (skills/iig3d/scripts/iig3d.py:L1)
-- text_labels() (skills/iig3d/scripts/iig3d.py:L1015)
-- word_count() (skills/iig3d/scripts/iig3d.py:L1027)
-- reference_composition() (skills/iig3d/scripts/iig3d.py:L1031)
-- The Reference Composition section: reproduce reference image 1, swap in the… (skills/iig3d/scripts/iig3d.py:L1032)
-- assemble() (skills/iig3d/scripts/iig3d.py:L1050)
-- Fill templates/base-prompt.md; warnings for text budget and item range; strict… (skills/iig3d/scripts/iig3d.py:L1064)
-- write_prompt() (skills/iig3d/scripts/iig3d.py:L1135)
-- prompts/NN-infographic-<slug>.md with NN the next free number; never overwrites. (skills/iig3d/scripts/iig3d.py:L1136)
-- exit_code() (skills/iig3d/scripts/iig3d.py:L1197)
-- _genai_client() (skills/iig3d/scripts/iig3d.py:L1248)
-- build_parser() (skills/iig3d/scripts/iig3d.py:L1584)
-- dispatch() (skills/iig3d/scripts/iig3d.py:L1781)
-- main() (skills/iig3d/scripts/iig3d.py:L1787)
-- _dry_assembly() (skills/iig3d/scripts/iig3d.py:L1875)
-- Assemble a prompt for every member x pairing layout; report ref-rule violations. (skills/iig3d/scripts/iig3d.py:L1876)
-- Item (skills/iig3d/scripts/iig3d.py:L286)
-- Spec (skills/iig3d/scripts/iig3d.py:L294)
-- _str() (skills/iig3d/scripts/iig3d.py:L316)
-- _opt_str() (skills/iig3d/scripts/iig3d.py:L320)
-- load_spec() (skills/iig3d/scripts/iig3d.py:L324)
-- Parse the YAML content spec; unknown keys and missing title/items/label fail by… (skills/iig3d/scripts/iig3d.py:L325)
-- _ratio_value() (skills/iig3d/scripts/iig3d.py:L379)
-- snap_aspect() (skills/iig3d/scripts/iig3d.py:L386)
-- Return (supported ratio, original when snapped). Presets and None use the… (skills/iig3d/scripts/iig3d.py:L387)
-- orientation() (skills/iig3d/scripts/iig3d.py:L401)
-- ref_rule_violations() (skills/iig3d/scripts/iig3d.py:L447)
-- The two selection invariants, stated once for the selector and the checker. (skills/iig3d/scripts/iig3d.py:L448)
-- _nums() (skills/iig3d/scripts/iig3d.py:L525)
-- normalise_colour() (skills/iig3d/scripts/iig3d.py:L529)
-- Any CSS colour literal to #RRGGBB (alpha dropped); None when it is not a colour. (skills/iig3d/scripts/iig3d.py:L530)
-- icon_guidance() (skills/iig3d/scripts/iig3d.py:L917)
-- The Icon Set section: copy each numbered glyph from the sheet onto its item. (skills/iig3d/scripts/iig3d.py:L918)
-- Prompt (skills/iig3d/scripts/iig3d.py:L939)
-- redact() (skills/iig3d/scripts/iig3d.py:L945)
-- content_block() (skills/iig3d/scripts/iig3d.py:L988)
-- The content section; `icon_slots` maps item index to a sheet glyph note… (skills/iig3d/scripts/iig3d.py:L989)
+- write_prompt() (skills/iig3d/scripts/iig3d.py:L1139)
+- prompts/NN-infographic-<slug>.md with NN the next free number; never overwrites. (skills/iig3d/scripts/iig3d.py:L1140)
+- exit_code() (skills/iig3d/scripts/iig3d.py:L1212)
+- _genai_client() (skills/iig3d/scripts/iig3d.py:L1263)
+- build_parser() (skills/iig3d/scripts/iig3d.py:L1602)
+- _split_vars() (skills/iig3d/scripts/iig3d.py:L1657)
+- cmd_palette() (skills/iig3d/scripts/iig3d.py:L1777)
+- dispatch() (skills/iig3d/scripts/iig3d.py:L1800)
+- main() (skills/iig3d/scripts/iig3d.py:L1806)
+- _ratio_value() (skills/iig3d/scripts/iig3d.py:L383)
+- snap_aspect() (skills/iig3d/scripts/iig3d.py:L390)
+- Return (supported ratio, original when snapped). Presets and None use the… (skills/iig3d/scripts/iig3d.py:L391)
+- Colour (skills/iig3d/scripts/iig3d.py:L521)
+- .as_dict() (skills/iig3d/scripts/iig3d.py:L525)
+- _nums() (skills/iig3d/scripts/iig3d.py:L529)
+- normalise_colour() (skills/iig3d/scripts/iig3d.py:L533)
+- Any CSS colour literal to #RRGGBB (alpha dropped); None when it is not a colour. (skills/iig3d/scripts/iig3d.py:L534)
+- is_neutral() (skills/iig3d/scripts/iig3d.py:L562)
+- Greys, near-white and near-black by the HSL rule: S < 15 %, L > 92 % or L < 10… (skills/iig3d/scripts/iig3d.py:L563)
+- extract_palette() (skills/iig3d/scripts/iig3d.py:L569)
+- Colours from a CSS file: custom properties in declaration order, then bare… (skills/iig3d/scripts/iig3d.py:L570)
+- palette_paragraph() (skills/iig3d/scripts/iig3d.py:L612)
+- Prompt (skills/iig3d/scripts/iig3d.py:L943)
 
 # Depends on
+- [assemble](/modules/assemble.md)
 - [Catalogue](/modules/catalogue.md)
+- [.items](/modules/items.md)
 - [Member](/modules/member.md)
+- [normalise_image](/modules/normalise-image.md)
 - [Path](/modules/path.md)
-- [prepare](/modules/prepare.md)
 - [resolve_icons](/modules/resolve-icons.md)
 
 # Inferred
-- [Member](/modules/member.md)
-- [Path](/modules/path.md)
-- [prepare](/modules/prepare.md)
-- [resolve_icons](/modules/resolve-icons.md)
+- [Catalogue](/modules/catalogue.md)
 
 # Features
 - [iig3d skill](/features/iig3d-skill.md)
