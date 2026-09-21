@@ -5,11 +5,11 @@ description: "Graphify community 35: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:03:47Z" }
-stale_after: "2026-10-05T05:03:47Z"
-source_commit: b59f3451dc0b77b589cbafd9812f581df6f10352
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:06:16Z" }
+stale_after: "2026-10-05T05:06:16Z"
+source_commit: 6ac4d77c7d0e6ad62e60d2fa01cebbade71dc4ca
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:03:44+10:00", digest: 1eab83aa7c95cc71 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:06:12+10:00", digest: 755d0eccdd75a015 }
 ---
 
 # Files
@@ -22,15 +22,15 @@ sources:
 - Minimal .env parser: KEY=VALUE, optional `export `, quotes stripped, # comments… (skills/iig3d/scripts/iig3d.py:L1157)
 - api_key() (skills/iig3d/scripts/iig3d.py:L1177)
 - (key, source). Order: --api-key, ./.env in the calling directory, process… (skills/iig3d/scripts/iig3d.py:L1178)
-- load_prompt_text() (skills/iig3d/scripts/iig3d.py:L1245)
-- backup_existing() (skills/iig3d/scripts/iig3d.py:L1254)
-- render() (skills/iig3d/scripts/iig3d.py:L1269)
-- Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.… (skills/iig3d/scripts/iig3d.py:L1282)
-- _load_meta() (skills/iig3d/scripts/iig3d.py:L1389)
-- _check_variant() (skills/iig3d/scripts/iig3d.py:L1418)
-- _new_member_record() (skills/iig3d/scripts/iig3d.py:L1426)
-- add_ref() (skills/iig3d/scripts/iig3d.py:L1447)
-- Normalise an image into refs/<member>/, register it in the member YAML (or… (skills/iig3d/scripts/iig3d.py:L1448)
+- load_prompt_text() (skills/iig3d/scripts/iig3d.py:L1242)
+- backup_existing() (skills/iig3d/scripts/iig3d.py:L1251)
+- render() (skills/iig3d/scripts/iig3d.py:L1266)
+- Call Nano Banana Pro with the persisted prompt file and save an RGB PNG.… (skills/iig3d/scripts/iig3d.py:L1279)
+- _load_meta() (skills/iig3d/scripts/iig3d.py:L1386)
+- _check_variant() (skills/iig3d/scripts/iig3d.py:L1415)
+- _new_member_record() (skills/iig3d/scripts/iig3d.py:L1423)
+- add_ref() (skills/iig3d/scripts/iig3d.py:L1444)
+- Normalise an image into refs/<member>/, register it in the member YAML (or… (skills/iig3d/scripts/iig3d.py:L1445)
 - read_yaml() (skills/iig3d/scripts/iig3d.py:L155)
 - write_yaml() (skills/iig3d/scripts/iig3d.py:L163)
 - load_catalogue() (skills/iig3d/scripts/iig3d.py:L169)

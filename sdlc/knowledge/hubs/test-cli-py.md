@@ -5,11 +5,11 @@ description: Graphify god node with degree 26 in tests/test_cli.py
 resource: tests/test_cli.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:03:47Z" }
-stale_after: "2026-10-05T05:03:47Z"
-source_commit: b59f3451dc0b77b589cbafd9812f581df6f10352
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:06:16Z" }
+stale_after: "2026-10-05T05:06:16Z"
+source_commit: 6ac4d77c7d0e6ad62e60d2fa01cebbade71dc4ca
 sources:
-  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T15:03:44+10:00", digest: 642c971c2f3553fa }
+  - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T15:06:12+10:00", digest: c36dbf09fe60c0d4 }
 ---
 
 # Where

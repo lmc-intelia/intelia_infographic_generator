@@ -12,7 +12,7 @@ Member of the 3D corporate family. Neumorphic soft-embossed grey devices: jigsaw
 | `3d-soft-emboss/02` | `ref-02-jigsaw-ring-four.jpg` | Neumorphic light grey disc cut into four jigsaw quarters with a recessed centre, raised icon discs on each quarter, big light-grey numerals 01 to 04 with names and descriptions two per side of the disc | Jigsaw ring | clean |
 | `3d-soft-emboss/03` | `ref-03-segment-ring-three.jpg` | Neumorphic light grey disc split into three wedges by thin grooves around a recessed centre, raised icon disc per wedge on the right, three raised numbered cards 01 to 03 on the left, title centred at top | Segment ring | clean |
 | `3d-soft-emboss/04` | `ref-04-overlapping-circles.jpg` | Three raised translucent light-grey circles overlapping like a Venn diagram on the right, numerals 01 to 03 in the overlaps, a raised icon disc on each outer lobe, big numerals 1 to 3 with names and descriptions in a column on the left | Overlapping circles | clean |
-| `3d-soft-emboss/05` | `ref-05-chevron-row-six.jpg` | Six raised neumorphic chevron arrows nesting left to right in one row, all the same matte light grey as the backdrop with white top-left highlights and soft bottom-right shadows, a large light-grey numeral and a bold dark name on each chevron, a raised icon disc with a two-line caption under each one, title centred at top between two thin rules | Chevron row | clean |
+| `3d-soft-emboss/05` | `ref-05-chevron-row-six.jpg` | Six matte light-grey chevron arrows in one row, each a single smooth slab with a rolled glossy plastic edge, one soft highlight along the top edge and one soft shadow beneath, flat backdrop between them with no grooves or secondary outlines, a large light-grey numeral and a bold dark name on each chevron, a raised icon disc with a two-line caption under each one, title centred at top between two thin rules | Chevron row | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
@@ -58,7 +58,7 @@ Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition 
 | **Jigsaw ring** | Parts that lock into one whole | Puzzle-cut disc, pieces separated by fine grooves |
 | **Segment ring** | Cycles and phases | Wedge-cut disc around a recessed centre |
 | **Overlapping circles** | Shared ground between three areas | Three raised circles with numerals in the overlaps |
-| **Chevron row** | Sequences of five or six steps | Raised chevrons in a row, icon discs and captions beneath, title between thin rules |
+| **Chevron row** | Sequences of five or six steps | Raised chevrons in a row with one rolled glossy edge each and flat gaps between, icon discs and captions beneath, title between thin rules |
 
 ### Visual Elements
 

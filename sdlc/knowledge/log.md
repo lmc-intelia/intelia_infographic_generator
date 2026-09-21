@@ -1,6 +1,25 @@
 # Knowledge Update Log
 
 ## 2026-09-21
+* **Update**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Update**: [test_spec.py](/modules/test-spec-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [.items](/modules/items.md).
+* **Update**: [resolve_icons](/modules/resolve-icons.md).
+* **Update**: [normalise_image](/modules/normalise-image.md).
+* **Update**: [test_render.py](/modules/test-render-py.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [test_cli.py](/hubs/test-cli-py.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [run()](/hubs/run.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).
 * **Update**: [test_cli.py](/modules/test-cli-py.md).
 * **Update**: [assemble](/modules/assemble.md).

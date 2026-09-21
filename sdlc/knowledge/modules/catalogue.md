@@ -5,11 +5,11 @@ description: "Graphify community 39: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T05:03:47Z" }
-stale_after: "2026-10-05T05:03:47Z"
-source_commit: b59f3451dc0b77b589cbafd9812f581df6f10352
+generated: { by: sdlc/0.3.5, at: "2026-09-21T05:06:16Z" }
+stale_after: "2026-10-05T05:06:16Z"
+source_commit: 6ac4d77c7d0e6ad62e60d2fa01cebbade71dc4ca
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:03:44+10:00", digest: 1eab83aa7c95cc71 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T15:06:12+10:00", digest: 755d0eccdd75a015 }
 ---
 
 # Files
@@ -24,17 +24,17 @@ sources:
 - A catalogue ref named by the user: `<member>/<id|file|stem>`, a… (skills/iig3d/scripts/iig3d.py:L122)
 - .pin_token() (skills/iig3d/scripts/iig3d.py:L142)
 - .flag_values() (skills/iig3d/scripts/iig3d.py:L151)
-- prepare() (skills/iig3d/scripts/iig3d.py:L1677)
-- Shared front half of prompt and render: spec, route, aspect, refs, palette,… (skills/iig3d/scripts/iig3d.py:L1678)
-- cmd_render() (skills/iig3d/scripts/iig3d.py:L1718)
-- cmd_route() (skills/iig3d/scripts/iig3d.py:L1738)
-- cmd_refs() (skills/iig3d/scripts/iig3d.py:L1745)
-- The refs a render would pass, plus every catalogue ref of the member with its… (skills/iig3d/scripts/iig3d.py:L1746)
-- cmd_icons() (skills/iig3d/scripts/iig3d.py:L1760)
-- Name search and text-based suggestion in one call, so Claude can pick or verify… (skills/iig3d/scripts/iig3d.py:L1761)
-- cmd_check() (skills/iig3d/scripts/iig3d.py:L1782)
-- check() (skills/iig3d/scripts/iig3d.py:L1843)
-- Every catalogue rule in one pass; empty list means clean. (skills/iig3d/scripts/iig3d.py:L1844)
+- prepare() (skills/iig3d/scripts/iig3d.py:L1674)
+- Shared front half of prompt and render: spec, route, aspect, refs, palette,… (skills/iig3d/scripts/iig3d.py:L1675)
+- cmd_render() (skills/iig3d/scripts/iig3d.py:L1715)
+- cmd_route() (skills/iig3d/scripts/iig3d.py:L1735)
+- cmd_refs() (skills/iig3d/scripts/iig3d.py:L1742)
+- The refs a render would pass, plus every catalogue ref of the member with its… (skills/iig3d/scripts/iig3d.py:L1743)
+- cmd_icons() (skills/iig3d/scripts/iig3d.py:L1757)
+- Name search and text-based suggestion in one call, so Claude can pick or verify… (skills/iig3d/scripts/iig3d.py:L1758)
+- cmd_check() (skills/iig3d/scripts/iig3d.py:L1779)
+- check() (skills/iig3d/scripts/iig3d.py:L1840)
+- Every catalogue rule in one pass; empty list means clean. (skills/iig3d/scripts/iig3d.py:L1841)
 - Route (skills/iig3d/scripts/iig3d.py:L229)
 - .as_dict() (skills/iig3d/scripts/iig3d.py:L236)
 - split_style() (skills/iig3d/scripts/iig3d.py:L240)
