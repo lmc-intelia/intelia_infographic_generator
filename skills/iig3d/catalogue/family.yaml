@@ -38,6 +38,14 @@ typography:
 - 'Step labels: large bold numeral over small all-caps word (01 over STEP)'
 - Body text small, light, charcoal, left-aligned, short blocks beside each shape
 - 'Stats: oversized bold numerals in the item colour with a short caption'
+# Typography schema. Every render states these roles in the prompt; a spec's `fonts:` overrides
+# any field per role. Values are plain words the model understands; no font files are sent.
+fonts:
+  title: {family: Montserrat, fallback: "Poppins or Gotham", weight: bold, case: upper, tracking: wide, colour: charcoal, size: largest text on the canvas}
+  body: {family: Montserrat, fallback: Poppins, weight: light, case: sentence, tracking: normal, colour: charcoal, size: "small, two lines maximum"}
+  label: {family: Montserrat, fallback: Poppins, weight: bold, case: upper, tracking: normal, colour: item colour or charcoal, size: "medium, one line"}
+  numeral: {family: Montserrat, fallback: Poppins, weight: bold, case: none, tracking: normal, colour: item colour or white, size: large}
+
 negative_list: No hand-drawn lines, no paper texture, no cartoon characters, no photographic realism, no watermarks, no placeholder
   or lorem ipsum text. Clean premium business-template 3D.
 aspect_map:

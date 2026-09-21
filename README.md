@@ -22,6 +22,7 @@ environment (tests, pre-commit, sdlc stage records) and can be ignored by users.
 - [Brand colours from a CSS file](#brand-colours-from-a-css-file)
 - [Icons from a named pack](#icons-from-a-named-pack)
 - [Logo stamp](#logo-stamp)
+- [Typography](#typography)
 - [Commands](#commands)
 - [Adding your own reference images](#adding-your-own-reference-images)
 - [Using the skill from Claude Code](#using-the-skill-from-claude-code)
@@ -131,6 +132,7 @@ aspect: landscape                         # landscape | portrait | square | W:H 
 quality: 2K                               # 1K | 2K | 4K, see Quick start
 palette_css: ./brand.css                  # optional, see Brand colours
 palette_vars: [--brand-primary, --brand-secondary]   # optional, restricts and orders the colours
+fonts: {title: {family: Inter, weight: extrabold}, body: Inter}   # optional, see Typography
 icon_pack: lucide                         # optional, see Icons from a named pack
 items:                                    # one per step, tier, capsule, pill, cell, plate or cylinder
   - label: COMMIT                         # required; rendered as "01 COMMIT"
@@ -281,6 +283,35 @@ one-off finish ("embossed grey relief", "white line icons"). The frontmatter mar
 `usage: icons` and lists the item-to-icon map. Expect faithful shapes and stroke weight, not
 pixel-exact glyphs.
 
+## Typography
+
+Gemini takes no font parameter, so the script states the typography in the prompt every time,
+as a schema rather than prose. `catalogue/family.yaml` `fonts:` declares four roles, each with
+`family`, `fallback`, `weight`, `case`, `tracking`, `colour`, `size` and optional `style`:
+
+```yaml
+fonts:
+  title:   {family: Montserrat, fallback: "Poppins or Gotham", weight: bold, case: upper, tracking: wide, colour: charcoal, size: largest text on the canvas}
+  body:    {family: Montserrat, fallback: Poppins, weight: light, case: sentence, colour: charcoal, size: "small, two lines maximum"}
+  label:   {...}    # item names
+  numeral: {...}    # 01, 02, stats
+```
+
+A spec overrides any field per role, and `--title-font` / `--body-font` set the family from
+the command line:
+
+```yaml
+fonts:
+  title: {family: Inter, weight: extrabold}   # other title fields stay as the family says
+  body: Inter                                 # a bare string sets the family only
+```
+
+The prompt gains a "Typography" section, one line per role ("Title: Inter, extrabold, all caps,
+wide letter-spacing, size: largest text on the canvas, colour: charcoal") and the rule that no
+other typeface appears. The frontmatter records the resolved `fonts`. The model approximates
+named families it knows (Montserrat, Inter, Roboto, Helvetica, Bebas Neue, Playfair); it cannot
+load a font file, so expect the look, not metric-exact glyphs.
+
 ## Logo stamp
 
 Every render gets the Intelia mark (`skills/iig3d/assets/trimmed_intellia_logo.png`) composited
@@ -307,7 +338,7 @@ Every command prints one JSON line on stdout; diagnostics go to stderr.
 | `icons [--pack P] [--query WORD] [--label TEXT] [--detail TEXT]` | glyph names matching a word in a pack; the glyph the script would pick for an item's text |
 | `palette --css PATH [--vars a,b]` | colours extracted from a CSS file |
 | `prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md`; no API call |
-| `render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--logo PATH\|none] [--no-logo] [--aspect A] [--style S] [--layout L] [--palette-css P] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
+| `render --spec F --out-dir D [--dry-run] [--quality 1K\|2K\|4K] [--logo PATH\|none] [--no-logo] [--aspect A] [--style S] [--layout L] [--palette-css P] [--title-font F] [--body-font F] [--pin M/ID] [--icon-pack P] [--no-icon-fetch] [--ref IMG] [--no-style-refs] [--strict] [--model ID] [--retries N] [--api-key K]` | prompt file, then Gemini, then `infographic.png` |
 | `add --image IMG --meta meta.yaml` | register an image as a reference (below) |
 | `docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `check [--allow-watermark]` | validate catalogue, refs and docs; exit 1 with every violation |
@@ -418,7 +449,7 @@ Layout of the skill:
 skills/iig3d/
   SKILL.md                    # what Claude reads
   scripts/iig3d.py            # the whole CLI, one file, PEP 723 header
-  catalogue/family.yaml       # palette, typography, negative list, routing table, ref rules
+  catalogue/family.yaml       # palette, fonts schema, negative list, routing table, ref rules
   catalogue/members/3d-*.yaml # one member each: device, layout, style, prompt fragment, refs, pairings
   catalogue/schema.yaml       # walked by validate_member
   refs/<member>/ref-NN-*.jpg  # reference images, all clean renders or clean originals

@@ -10,6 +10,9 @@ quality: 2K                       # optional: 1K | 2K | 4K, the gemini-3-pro-ima
 # palette_vars: [--brand-primary, --brand-secondary]
 # icon_pack: lucide              # optional: Iconify pack; item icons then name a glyph (rocket, or tabler:rocket) copied from an icon sheet
 # icon_style: white line icons   # optional: one line on how the glyphs are finished; default is the member's own icon treatment
+# fonts:                          # optional: per-role overrides of family.yaml fonts (roles title, body, label, numeral)
+#   title: {family: Inter, weight: extrabold, case: upper}
+#   body: Inter                     # a bare string sets the family only
 items:                            # one per step, tier, capsule, pill, cell, plate or cylinder
   - label: COMMIT
     detail: Developer pushes to main
