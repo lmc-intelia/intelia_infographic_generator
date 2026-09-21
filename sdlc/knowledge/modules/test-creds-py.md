@@ -5,9 +5,9 @@ description: "Graphify community 20: tests/test_creds.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:36:43Z" }
+stale_after: "2026-10-05T02:36:43Z"
+source_commit: 6de363a7f637fc903d43af9cfa93954eafdc5fc9
 sources:
   - { id: test_creds, resource: tests/test_creds.py, last_modified: "2026-09-17T11:21:36+10:00", digest: 4c40dd0d7e15dc03 }
 ---

@@ -5,9 +5,9 @@ description: "Graphify community 41: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T02:34:09Z" }
-stale_after: "2026-10-05T02:34:09Z"
-source_commit: da9997f4fe89158d984ba9c261c11eb28668ab76
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:36:43Z" }
+stale_after: "2026-10-05T02:36:43Z"
+source_commit: 6de363a7f637fc903d43af9cfa93954eafdc5fc9
 sources:
   - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:34:05+10:00", digest: 3579c45b24e4283a }
 ---
@@ -16,6 +16,7 @@ sources:
 - `skills/iig3d/scripts/iig3d.py`
 
 # Symbols
+- .member() (skills/iig3d/scripts/iig3d.py:L105)
 - .resolve_ref() (skills/iig3d/scripts/iig3d.py:L118)
 - A catalogue ref named by the user: `<member>/<id|file|stem>`, a… (skills/iig3d/scripts/iig3d.py:L119)
 - _split_vars() (skills/iig3d/scripts/iig3d.py:L1285)
@@ -25,8 +26,8 @@ sources:
 - cmd_refs() (skills/iig3d/scripts/iig3d.py:L1365)
 - The refs a render would pass, plus every catalogue ref of the member with its… (skills/iig3d/scripts/iig3d.py:L1366)
 - cmd_palette() (skills/iig3d/scripts/iig3d.py:L1380)
+- cmd_check() (skills/iig3d/scripts/iig3d.py:L1385)
 - .pin_token() (skills/iig3d/scripts/iig3d.py:L139)
-- dispatch() (skills/iig3d/scripts/iig3d.py:L1402)
 - split_style() (skills/iig3d/scripts/iig3d.py:L237)
 - (style, pin) after reading a ref name out of `style`: with `layout` naming a… (skills/iig3d/scripts/iig3d.py:L238)
 - Colour (skills/iig3d/scripts/iig3d.py:L509)
@@ -36,13 +37,15 @@ sources:
 - extract_palette() (skills/iig3d/scripts/iig3d.py:L557)
 - Colours from a CSS file: custom properties in declaration order, then bare… (skills/iig3d/scripts/iig3d.py:L558)
 - palette_paragraph() (skills/iig3d/scripts/iig3d.py:L600)
+- slugify() (skills/iig3d/scripts/iig3d.py:L622)
 
 # Depends on
 - [assemble](/modules/assemble.md)
 - [Catalogue](/modules/catalogue.md)
 - [iig3d.py](/modules/iig3d-py.md)
 - [Member](/modules/member.md)
-- [Path](/modules/path.md)
+- [select_refs](/modules/select-refs.md)
+- [UsageError](/modules/usageerror.md)
 
 # Inferred
 - no INFERRED edges; treat any that appear as hints

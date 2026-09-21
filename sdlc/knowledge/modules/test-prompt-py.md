@@ -5,9 +5,9 @@ description: "Graphify community 19: tests/test_prompt.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T02:21:34Z" }
-stale_after: "2026-10-05T02:21:34Z"
-source_commit: d126a0296a37604c78c4c0df4830556ff521c974
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:36:43Z" }
+stale_after: "2026-10-05T02:36:43Z"
+source_commit: 6de363a7f637fc903d43af9cfa93954eafdc5fc9
 sources:
   - { id: test_prompt, resource: tests/test_prompt.py, last_modified: "2026-09-21T12:21:30+10:00", digest: 981a74c667851871 }
 ---

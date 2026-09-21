@@ -4,9 +4,9 @@
 * [Catalogue](catalogue.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [iig3d.py](iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
 * [Member](member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
-* [normalise_image](normalise-image.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py
 * [Path](path.md) - Graphify community 35: skills/iig3d/scripts/iig3d.py
 * [prepare](prepare.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
+* [select_refs](select-refs.md) - Graphify community 36: skills/iig3d/scripts/iig3d.py
 * [test_add.py](test-add-py.md) - Graphify community 34: tests/test_add.py
 * [test_aspect.py](test-aspect-py.md) - Graphify community 10: tests/test_aspect.py
 * [test_catalogue.py](test-catalogue-py.md) - Graphify community 3: tests/test_catalogue.py, tests/test_routing.py
@@ -20,3 +20,4 @@
 * [test_render.py](test-render-py.md) - Graphify community 5: tests/conftest.py, tests/test_render.py
 * [test_skill_md.py](test-skill-md-py.md) - Graphify community 38: tests/test_skill_md.py
 * [test_spec.py](test-spec-py.md) - Graphify community 11: tests/test_spec.py
+* [UsageError](usageerror.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py

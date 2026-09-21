@@ -15,9 +15,9 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [Catalogue](modules/catalogue.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [iig3d.py](modules/iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
 * [Member](modules/member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
-* [normalise_image](modules/normalise-image.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py
 * [Path](modules/path.md) - Graphify community 35: skills/iig3d/scripts/iig3d.py
 * [prepare](modules/prepare.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
+* [select_refs](modules/select-refs.md) - Graphify community 36: skills/iig3d/scripts/iig3d.py
 * [test_add.py](modules/test-add-py.md) - Graphify community 34: tests/test_add.py
 * [test_aspect.py](modules/test-aspect-py.md) - Graphify community 10: tests/test_aspect.py
 * [test_catalogue.py](modules/test-catalogue-py.md) - Graphify community 3: tests/test_catalogue.py, tests/test_routing.py
@@ -31,6 +31,7 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 * [test_render.py](modules/test-render-py.md) - Graphify community 5: tests/conftest.py, tests/test_render.py
 * [test_skill_md.py](modules/test-skill-md-py.md) - Graphify community 38: tests/test_skill_md.py
 * [test_spec.py](modules/test-spec-py.md) - Graphify community 11: tests/test_spec.py
+* [UsageError](modules/usageerror.md) - Graphify community 43: skills/iig3d/scripts/iig3d.py
 
 # Hubs
 * [add_ref()](hubs/add-ref.md) - Graphify god node with degree 20 in skills/iig3d/scripts/iig3d.py

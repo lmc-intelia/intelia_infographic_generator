@@ -1,8 +1,8 @@
 {
-  "commit": "da9997f4fe89158d984ba9c261c11eb28668ab76",
-  "graph_commit": "da9997f4fe89158d984ba9c261c11eb28668ab76",
-  "updates": 5,
-  "ts": "2026-09-21T02:34:09Z",
+  "commit": "6de363a7f637fc903d43af9cfa93954eafdc5fc9",
+  "graph_commit": "6de363a7f637fc903d43af9cfa93954eafdc5fc9",
+  "updates": 1,
+  "ts": "2026-09-21T02:36:43Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -23,9 +23,10 @@
       "modules/iig3d-py.md",
       "modules/member.md",
       "modules/path.md",
+      "modules/select-refs.md",
       "modules/assemble.md",
       "modules/prepare.md",
-      "modules/normalise-image.md",
+      "modules/usageerror.md",
       "modules/catalogue.md"
     ],
     "tests/test_aspect.py": [
