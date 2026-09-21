@@ -5,6 +5,7 @@ language: en                      # text language for all labels
 layout: linear-progression        # optional: a general layout or a 3d-* device name (a refs/ folder)
 style: industrial-3d              # optional: industrial-3d (route by layout), a 3d-* member, or a ref id/file of the layout member (e.g. 06)
 aspect: landscape                 # optional: landscape | portrait | square | W:H (snapped to the Gemini set)
+quality: 2K                       # optional: draft (gemini-2.5-flash-image) | 1K | 2K | 4K (gemini-3-pro-image image_size)
 # palette_css: ./brand.css        # optional: brand colours replace the item colours only
 # palette_vars: [--brand-primary, --brand-secondary]
 # icon_pack: lucide              # optional: Iconify pack; item icons then name a glyph (rocket, or tabler:rocket) copied from an icon sheet

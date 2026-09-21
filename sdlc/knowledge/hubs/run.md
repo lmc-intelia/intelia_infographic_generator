@@ -5,9 +5,9 @@ description: Graphify god node with degree 21 in tests/test_cli.py
 resource: tests/test_cli.py
 tags: [hub, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:48:39Z" }
-stale_after: "2026-10-05T04:48:39Z"
-source_commit: fc98b7651e28bcb666f0776fc2f24f2441f4e765
+generated: { by: sdlc/0.3.5, at: "2026-09-21T04:52:20Z" }
+stale_after: "2026-10-05T04:52:20Z"
+source_commit: 8ed9020fab339416db7371697fc62e238ae2042e
 sources:
   - { id: test_cli, resource: tests/test_cli.py, last_modified: "2026-09-21T14:48:35+10:00", digest: a321f9144afb70f7 }
 ---

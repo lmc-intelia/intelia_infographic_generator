@@ -123,3 +123,31 @@ def test_client_factory_failure_is_error(iig3d, tmp_path, prompt_file):
 
     result = iig3d.render(prompt_file, tmp_path / "i.png", "16:9", retries=0, api_key="k", client_factory=boom)
     assert result["status"] == "error" and "client refused" in result["error"]
+
+
+def test_quality_levels_map_to_gemini_parameters(iig3d):
+    assert tuple(iig3d.QUALITY) == ("draft", "1K", "2K", "4K") == iig3d.RESOLUTIONS
+    assert iig3d.QUALITY["draft"] == {**iig3d.QUALITY["draft"], "model": iig3d.DRAFT_MODEL, "image_size": None}
+    for level in ("1K", "2K", "4K"):
+        assert iig3d.QUALITY[level]["model"] == iig3d.DEFAULT_MODEL and iig3d.QUALITY[level]["image_size"] == level
+
+
+def test_draft_uses_flash_model_without_image_size(iig3d, tmp_path, prompt_file, fake_client):
+    fake_client.behaviour = [png_bytes("RGB")]
+    result = iig3d.render(prompt_file, tmp_path / "d.png", "16:9", resolution="draft", api_key="k", client_factory=fake_client)
+    assert result["status"] == "ok" and result["quality"] == "draft" and result["image_size"] is None
+    call = fake_client.calls[0]
+    assert call["model"] == iig3d.DRAFT_MODEL
+    assert call["config"].image_config.aspect_ratio == "16:9" and call["config"].image_config.image_size is None
+
+
+def test_4k_uses_pro_model_with_image_size(iig3d, tmp_path, prompt_file, fake_client):
+    fake_client.behaviour = [png_bytes("RGB")]
+    result = iig3d.render(prompt_file, tmp_path / "p.png", "16:9", resolution="4K", api_key="k", client_factory=fake_client)
+    assert result["model"] == iig3d.DEFAULT_MODEL and result["image_size"] == "4K"
+    assert fake_client.calls[0]["config"].image_config.image_size == "4K"
+
+
+def test_explicit_model_overrides_quality_model(iig3d, tmp_path, prompt_file, fake_client):
+    result = iig3d.render(prompt_file, tmp_path / "m.png", "16:9", resolution="draft", model="custom-image", dry_run=True, api_key="k", client_factory=fake_client)
+    assert result["model"] == "custom-image" and result["quality"] == "draft"

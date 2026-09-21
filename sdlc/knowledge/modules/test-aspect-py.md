@@ -5,9 +5,9 @@ description: "Graphify community 10: tests/test_aspect.py"
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:05:37Z" }
-stale_after: "2026-10-05T04:05:37Z"
-source_commit: 7ba9fba7a655769a839ae420f00e5a62beab9810
+generated: { by: sdlc/0.3.5, at: "2026-09-21T04:52:20Z" }
+stale_after: "2026-10-05T04:52:20Z"
+source_commit: 8ed9020fab339416db7371697fc62e238ae2042e
 sources:
   - { id: test_aspect, resource: tests/test_aspect.py, last_modified: "2026-09-17T11:16:28+10:00", digest: 3e9ae8c1fec4540b }
 ---

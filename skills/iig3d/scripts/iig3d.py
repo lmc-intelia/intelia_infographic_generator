@@ -306,6 +306,7 @@ class Spec:
     refs: list[Path] = field(default_factory=list)
     pin: str | None = None
     icon_pack: str | None = None
+    quality: str | None = None
     path: Path | None = None
 
 
@@ -351,6 +352,8 @@ def load_spec(path: Path) -> Spec:
             )
         )
     base = path.resolve().parent
+    if raw.get("quality") is not None and str(raw["quality"]) not in RESOLUTIONS:
+        raise UsageError(f"{path}: quality must be one of {', '.join(RESOLUTIONS)}, got {raw['quality']!r}")
     css = raw.get("palette_css")
     return Spec(
         title=_str(raw["title"]),
@@ -367,6 +370,7 @@ def load_spec(path: Path) -> Spec:
         refs=[(base / r).resolve() for r in raw.get("refs") or []],
         pin=_opt_str(raw.get("pin")),
         icon_pack=_opt_str(raw.get("icon_pack")),
+        quality=_opt_str(raw.get("quality")),
         path=path.resolve(),
     )
 
@@ -1189,7 +1193,18 @@ def api_key(explicit: str | None, cwd: Path | None = None) -> tuple[str, str]:
 # --- render ---
 
 DEFAULT_MODEL = "gemini-3-pro-image"
-RESOLUTIONS = ("1K", "2K", "4K")
+DRAFT_MODEL = "gemini-2.5-flash-image"
+# Four quality levels, each the exact Gemini parameters used: the model and its `image_size`
+# (ImageConfig). Draft uses the flash image model, which has no size parameter and renders
+# about 1024 px on the long edge.
+QUALITY = {
+    "draft": {"model": DRAFT_MODEL, "image_size": None, "about": "about 1024 px, flash model, fastest and cheapest; layout checks"},
+    "1K": {"model": DEFAULT_MODEL, "image_size": "1K", "about": "1024 px long edge, pro model; slides and chat"},
+    "2K": {"model": DEFAULT_MODEL, "image_size": "2K", "about": "2048 px long edge, pro model; documents and web (default)"},
+    "4K": {"model": DEFAULT_MODEL, "image_size": "4K", "about": "4096 px long edge, pro model; print and posters"},
+}
+RESOLUTIONS = tuple(QUALITY)
+DEFAULT_QUALITY = "2K"
 STYLE_NOTE = "The images above are style references only. Match their rendering style, depth, lighting, palette treatment and typography. Do not copy their text or data."
 EXIT_CODES = {"ok": 0, "dry-run": 0, "violations": 1, "error": 2}
 
@@ -1268,8 +1283,9 @@ def render(
 
     Returns the single result record the CLI prints; status ok | dry-run | error."""
     if resolution not in RESOLUTIONS:
-        raise UsageError(f"resolution must be one of {', '.join(RESOLUTIONS)}, got {resolution!r}")
-    model = model or os.environ.get("IIG3D_MODEL") or DEFAULT_MODEL
+        raise UsageError(f"quality must be one of {', '.join(RESOLUTIONS)}, got {resolution!r}")
+    level = QUALITY[resolution]
+    model = model or os.environ.get("IIG3D_MODEL") or level["model"]
     prompt_path, out_png = Path(prompt_path), Path(out_png)
     prompt = load_prompt_text(prompt_path)
     if not prompt:
@@ -1281,6 +1297,8 @@ def render(
         "model": model,
         "aspect_ratio": ratio,
         "resolution": resolution,
+        "quality": resolution,
+        "image_size": level["image_size"],
         "refs": len(ref_paths),
         "attempts": 0,
         "elapsed_seconds": 0.0,
@@ -1312,7 +1330,7 @@ def render(
         contents.append(prompt)
         config = types.GenerateContentConfig(
             response_modalities=["TEXT", "IMAGE"],
-            image_config=types.ImageConfig(image_size=resolution, aspect_ratio=ratio),
+            image_config=types.ImageConfig(aspect_ratio=ratio, **({"image_size": level["image_size"]} if level["image_size"] else {})),
             automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
         )
         client = (client_factory or _genai_client)(api_key)
@@ -1613,7 +1631,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("prompt", parents=[common, prepare_args], help="assemble and persist the prompt file")
     p_render = sub.add_parser("render", parents=[common, prepare_args], help="assemble the prompt and render with Nano Banana Pro")
     p_render.add_argument("--dry-run", action="store_true")
-    p_render.add_argument("--resolution", default="2K", choices=RESOLUTIONS)
+    p_render.add_argument("--quality", "--resolution", dest="quality", default=None, choices=RESOLUTIONS, help="draft | 1K | 2K | 4K (default 2K, or the spec's quality)")
     p_render.add_argument("--model", default=None)
     p_render.add_argument("--retries", type=int, default=1)
     p_render.add_argument("--api-key", default=None)
@@ -1653,7 +1671,7 @@ def cmd_list(cat: Catalogue) -> dict:
         for m in cat.members.values()
     ]
     layouts = [{"layout": layout, "primary": row["primary"], "alternates": row["alternates"]} for layout, row in cat.routing.items()]
-    return {"status": "ok", "members": members, "layouts": layouts, "umbrella": UMBRELLA}
+    return {"status": "ok", "members": members, "layouts": layouts, "umbrella": UMBRELLA, "quality": {k: {"model": v["model"], "image_size": v["image_size"], "about": v["about"]} for k, v in QUALITY.items()}}
 
 
 def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
@@ -1689,6 +1707,7 @@ def prepare(cat: Catalogue, args: argparse.Namespace) -> dict:
         "language": spec.language,
         "refs": [str(r) for r in refs],
         "pin": cat.pin_token(member.name, pinned) if pinned else None,
+        "quality": spec.quality or DEFAULT_QUALITY,
         "icon_sheet": str(icon_sheet) if icon_sheet else None,
         "icons": [f"{i['pack']}:{i['name']}" for i in icons],
         "palette": [c.as_dict() for c in palette] if palette else None,
@@ -1704,7 +1723,7 @@ def cmd_render(cat: Catalogue, args: argparse.Namespace) -> dict:
         Path(prepared["prompt_file"]),
         Path(args.out_dir) / "infographic.png",
         prepared["aspect_ratio"],
-        resolution=args.resolution,
+        resolution=args.quality or prepared["quality"],
         model=args.model,
         refs=[Path(r) for r in prepared["refs"]],
         retries=args.retries,

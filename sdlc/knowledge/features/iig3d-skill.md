@@ -5,15 +5,15 @@ description: The 3D corporate infographic capability built on 2026-09-15 to 2026
 resource: sdlc/iig3d-skill
 tags: [feature, accepted]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-21T04:48:39Z" }
+generated: { by: sdlc/0.3.5, at: "2026-09-21T04:52:20Z" }
 verified:
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:38:17Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T00:56:26Z" }
   - { by: "human:linus-mcmanamey", at: "2026-09-17T01:07:19Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:08:40Z" }
   - { by: "process:sdlc-test", at: "2026-09-17T02:19:41Z" }
-stale_after: "2026-10-05T04:48:39Z"
-source_commit: fc98b7651e28bcb666f0776fc2f24f2441f4e765
+stale_after: "2026-10-05T04:52:20Z"
+source_commit: 8ed9020fab339416db7371697fc62e238ae2042e
 sources:
   - { id: intent, resource: sdlc/iig3d-skill/intent.md, last_modified: "2026-09-17T10:38:23+10:00", digest: a2d1906944e50ff8 }
   - { id: spec, resource: sdlc/iig3d-skill/spec.md, last_modified: "2026-09-17T12:19:34+10:00", digest: 6ae2d676b3b13706 }
