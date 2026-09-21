@@ -5,12 +5,12 @@ description: "Graphify community 3: tests/test_catalogue.py, tests/test_routing.
 resource: tests
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:34:09Z" }
+stale_after: "2026-10-05T02:34:09Z"
+source_commit: da9997f4fe89158d984ba9c261c11eb28668ab76
 sources:
   - { id: test_catalogue, resource: tests/test_catalogue.py, last_modified: "2026-09-17T12:19:34+10:00", digest: 395385c4ca4fb714 }
-  - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-17T11:15:25+10:00", digest: 53a24b265e288942 }
+  - { id: test_routing, resource: tests/test_routing.py, last_modified: "2026-09-21T12:34:05+10:00", digest: 68018c1e94cbf3f7 }
 ---
 
 # Files
@@ -37,6 +37,8 @@ sources:
 - test_family_constants() (tests/test_catalogue.py:L95)
 - test_routing.py (tests/test_routing.py:L1)
 - R4: industrial-3d routes by layout; a named member skips the table; unknown… (tests/test_routing.py:L1)
+- test_split_style() (tests/test_routing.py:L115)
+- test_split_style_ref_without_member_layout_fails() (tests/test_routing.py:L119)
 - cat() (tests/test_routing.py:L35)
 - test_general_layout_routes_to_primary() (tests/test_routing.py:L41)
 - test_device_layout_returns_member() (tests/test_routing.py:L51)
@@ -45,6 +47,8 @@ sources:
 - test_no_layout_no_style_defaults_to_bento_grid() (tests/test_routing.py:L72)
 - test_unknown_layout_lists_valid_names() (tests/test_routing.py:L78)
 - test_unknown_style_lists_valid_names() (tests/test_routing.py:L84)
+- test_pinned_member_sets_style_and_default_layout() (tests/test_routing.py:L90)
+- test_pinned_member_conflicts_with_explicit_style() (tests/test_routing.py:L97)
 
 # Depends on
 - no EXTRACTED edges to other modules

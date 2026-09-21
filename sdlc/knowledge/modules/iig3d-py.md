@@ -5,11 +5,11 @@ description: "Graphify community 9: skills/iig3d/scripts/iig3d.py"
 resource: skills/iig3d/scripts
 tags: [module, graphify]
 status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:34:09Z" }
+stale_after: "2026-10-05T02:34:09Z"
+source_commit: da9997f4fe89158d984ba9c261c11eb28668ab76
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T12:38:26+10:00", digest: 4be94854c4daa288 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:34:05+10:00", digest: 3579c45b24e4283a }
 ---
 
 # Files
@@ -17,36 +17,42 @@ sources:
 
 # Symbols
 - iig3d.py (skills/iig3d/scripts/iig3d.py:L1)
-- build_parser() (skills/iig3d/scripts/iig3d.py:L1115)
-- dispatch() (skills/iig3d/scripts/iig3d.py:L1256)
-- main() (skills/iig3d/scripts/iig3d.py:L1262)
-- Spec (skills/iig3d/scripts/iig3d.py:L248)
-- _str() (skills/iig3d/scripts/iig3d.py:L268)
-- _opt_str() (skills/iig3d/scripts/iig3d.py:L272)
-- load_spec() (skills/iig3d/scripts/iig3d.py:L276)
-- Parse the YAML content spec; unknown keys and missing title/items/label fail by… (skills/iig3d/scripts/iig3d.py:L277)
-- _nums() (skills/iig3d/scripts/iig3d.py:L446)
-- normalise_colour() (skills/iig3d/scripts/iig3d.py:L450)
-- Any CSS colour literal to #RRGGBB (alpha dropped); None when it is not a colour. (skills/iig3d/scripts/iig3d.py:L451)
-- redact() (skills/iig3d/scripts/iig3d.py:L547)
-- content_block() (skills/iig3d/scripts/iig3d.py:L590)
-- text_labels() (skills/iig3d/scripts/iig3d.py:L614)
-- exit_code() (skills/iig3d/scripts/iig3d.py:L753)
-- _genai_client() (skills/iig3d/scripts/iig3d.py:L804)
+- build_parser() (skills/iig3d/scripts/iig3d.py:L1238)
+- main() (skills/iig3d/scripts/iig3d.py:L1408)
+- _dry_assembly() (skills/iig3d/scripts/iig3d.py:L1496)
+- Assemble a prompt for every member x pairing layout; report ref-rule violations. (skills/iig3d/scripts/iig3d.py:L1497)
+- Item (skills/iig3d/scripts/iig3d.py:L283)
+- Spec (skills/iig3d/scripts/iig3d.py:L291)
+- _str() (skills/iig3d/scripts/iig3d.py:L312)
+- _opt_str() (skills/iig3d/scripts/iig3d.py:L316)
+- load_spec() (skills/iig3d/scripts/iig3d.py:L320)
+- Parse the YAML content spec; unknown keys and missing title/items/label fail by… (skills/iig3d/scripts/iig3d.py:L321)
+- _ratio_value() (skills/iig3d/scripts/iig3d.py:L374)
+- snap_aspect() (skills/iig3d/scripts/iig3d.py:L381)
+- Return (supported ratio, original when snapped). Presets and None use the… (skills/iig3d/scripts/iig3d.py:L382)
+- ref_rule_violations() (skills/iig3d/scripts/iig3d.py:L442)
+- The two selection invariants, stated once for the selector and the checker. (skills/iig3d/scripts/iig3d.py:L443)
+- _nums() (skills/iig3d/scripts/iig3d.py:L517)
+- normalise_colour() (skills/iig3d/scripts/iig3d.py:L521)
+- Any CSS colour literal to #RRGGBB (alpha dropped); None when it is not a colour. (skills/iig3d/scripts/iig3d.py:L522)
+- redact() (skills/iig3d/scripts/iig3d.py:L618)
+- content_block() (skills/iig3d/scripts/iig3d.py:L661)
+- text_labels() (skills/iig3d/scripts/iig3d.py:L685)
+- exit_code() (skills/iig3d/scripts/iig3d.py:L857)
+- _genai_client() (skills/iig3d/scripts/iig3d.py:L908)
 
 # Depends on
 - [assemble](/modules/assemble.md)
 - [Catalogue](/modules/catalogue.md)
-- [_dry_assembly](/modules/dry-assembly.md)
 - [Member](/modules/member.md)
-- [_new_member_record](/modules/new-member-record.md)
+- [normalise_image](/modules/normalise-image.md)
 - [Path](/modules/path.md)
-- [UsageError](/modules/usageerror.md)
+- [prepare](/modules/prepare.md)
 
 # Inferred
-- [assemble](/modules/assemble.md)
 - [Catalogue](/modules/catalogue.md)
 - [Path](/modules/path.md)
+- [prepare](/modules/prepare.md)
 
 # Features
 - [iig3d skill](/features/iig3d-skill.md)

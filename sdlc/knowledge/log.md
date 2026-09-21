@@ -1,5 +1,62 @@
 # Knowledge Update Log
 
+## 2026-09-21
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Creation**: [prepare](/modules/prepare.md).
+* **Update**: [normalise_image](/modules/normalise-image.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [test_cli.py](/hubs/test-cli-py.md).
+* **Update**: [prepare()](/hubs/prepare.md).
+* **Deprecation**: [Member](/hubs/member.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Creation**: [.items](/modules/items.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [iig3d skill](/features/iig3d-skill.md).
+* **Update**: [test_catalogue.py](/modules/test-catalogue-py.md).
+* **Update**: [test_cli.py](/modules/test-cli-py.md).
+* **Update**: [iig3d.py](/modules/iig3d-py.md).
+* **Update**: [test_spec.py](/modules/test-spec-py.md).
+* **Update**: [test_refs.py](/modules/test-refs-py.md).
+* **Update**: [test_prompt.py](/modules/test-prompt-py.md).
+* **Update**: [Member](/modules/member.md).
+* **Update**: [test_add.py](/modules/test-add-py.md).
+* **Update**: [add_ref](/modules/add-ref.md).
+* **Update**: [Path](/modules/path.md).
+* **Update**: [Catalogue](/modules/catalogue.md).
+* **Update**: [assemble](/modules/assemble.md).
+* **Update**: [normalise_image](/modules/normalise-image.md).
+* **Creation**: [select_refs](/modules/select-refs.md).
+* **Update**: [iig3d.py](/hubs/iig3d-py.md).
+* **Update**: [Catalogue](/hubs/catalogue.md).
+* **Update**: [Path](/hubs/path.md).
+* **Update**: [assemble()](/hubs/assemble.md).
+* **Update**: [test_prompt.py](/hubs/test-prompt-py.md).
+* **Update**: [test_refs.py](/hubs/test-refs-py.md).
+* **Update**: [add_ref()](/hubs/add-ref.md).
+* **Update**: [UsageError](/hubs/usageerror.md).
+* **Update**: [Member](/hubs/member.md).
+* **Update**: [prepare()](/hubs/prepare.md).
+* **Deprecation**: [test_catalogue.py](/hubs/test-catalogue-py.md).
+
 ## 2026-09-17
 * **Update**: [Path](/hubs/path.md).
 * **Update**: [iig3d skill](/features/iig3d-skill.md).

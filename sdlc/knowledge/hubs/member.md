@@ -1,22 +1,17 @@
 ---
 type: Hub
 title: Member
-description: Graphify god node with degree 16 in skills/iig3d/scripts/iig3d.py
+description: Graphify god node with degree 18 in skills/iig3d/scripts/iig3d.py
 resource: skills/iig3d/scripts/iig3d.py
 tags: [hub, graphify]
-status: draft
-generated: { by: sdlc/0.3.5, at: "2026-09-17T03:14:52Z" }
-stale_after: "2026-10-01T03:14:52Z"
-source_commit: 08802b907cd4f8f7021c481a3d443d13812b6656
+status: deprecated
+generated: { by: sdlc/0.3.5, at: "2026-09-21T02:34:09Z" }
+source_commit: da9997f4fe89158d984ba9c261c11eb28668ab76
 sources:
-  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-17T12:38:26+10:00", digest: 4be94854c4daa288 }
+  - { id: iig3d, resource: skills/iig3d/scripts/iig3d.py, last_modified: "2026-09-21T12:21:30+10:00", digest: 5a17624de6e73002 }
 ---
 
-# Where
-- `skills/iig3d/scripts/iig3d.py:L52`
+# Deprecated
+- sources removed by commit `da9997f4fe89`: `skills/iig3d/scripts/iig3d.py`
+- replacement: [Member](/modules/member.md)
 
-# Module
-- [Member](/modules/member.md)
-
-# Why it matters
-- degree 16: many modules reach this symbol; changes here have a wide blast radius

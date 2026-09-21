@@ -1,8 +1,8 @@
 {
-  "commit": "26dccff828a3c6d8b30d74a7e5ccbce1de50796c",
-  "graph_commit": "26dccff828a3c6d8b30d74a7e5ccbce1de50796c",
-  "updates": 2,
-  "ts": "2026-09-17T03:15:35Z",
+  "commit": "da9997f4fe89158d984ba9c261c11eb28668ab76",
+  "graph_commit": "da9997f4fe89158d984ba9c261c11eb28668ab76",
+  "updates": 5,
+  "ts": "2026-09-21T02:34:09Z",
   "files": {
     "tests/test_catalogue.py": [
       "modules/test-catalogue-py.md"
@@ -22,12 +22,11 @@
     "skills/iig3d/scripts/iig3d.py": [
       "modules/iig3d-py.md",
       "modules/member.md",
-      "modules/catalogue.md",
       "modules/path.md",
-      "modules/usageerror.md",
       "modules/assemble.md",
-      "modules/new-member-record.md",
-      "modules/dry-assembly.md"
+      "modules/prepare.md",
+      "modules/normalise-image.md",
+      "modules/catalogue.md"
     ],
     "tests/test_aspect.py": [
       "modules/test-aspect-py.md"
