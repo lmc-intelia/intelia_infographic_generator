@@ -147,3 +147,26 @@ def test_route_layout_member_style_ref(iig3d, capsys, tmp_catalogue):
     assert code == 0 and data["member"] == "3d-capsule-hub" and data["pin"] == "3d-capsule-hub/06"
     code, data = run(iig3d, capsys, ["route", "--layout", "hub-spoke", "--skill-root", str(tmp_catalogue.root)])
     assert code == 0 and data["pin"] is None
+
+
+def test_prompt_icon_pack_flag_builds_sheet(iig3d, capsys, tmp_path, tmp_catalogue, monkeypatch):
+    import shutil
+
+    from tests.conftest import SKILL
+
+    shutil.copytree(SKILL / "icons", tmp_catalogue.root / "icons", dirs_exist_ok=True)
+    spec = tmp_path / "s.yaml"
+    spec.write_text("title: T\nstyle: 3d-slab-stack\nitems:\n  - {label: PLAN, icon: compass}\n  - {label: BUILD, icon: hammer}\n  - {label: SHIP, icon: rocket}\n")
+    args = ["prompt", "--spec", str(spec), "--out-dir", str(tmp_path / "out"), "--skill-root", str(tmp_catalogue.root), "--icon-pack", "lucide", "--no-icon-fetch"]
+    code, data = run(iig3d, capsys, args)
+    assert code == 0 and data["icons"] == ["lucide:compass", "lucide:hammer", "lucide:rocket"]
+    assert data["icon_sheet"].endswith("icon-sheet.png") and data["refs"][-1] == data["icon_sheet"]
+    text = (tmp_path / "out" / "prompts" / "01-infographic-t.md").read_text()
+    assert "usage: icons" in text and "## Icon Set" in text
+
+
+def test_prompt_missing_icon_offline_exits_1(iig3d, capsys, tmp_path, tmp_catalogue):
+    spec = tmp_path / "s.yaml"
+    spec.write_text("title: T\nicon_pack: lucide\nitems:\n  - {label: A, icon: unicorn-horn}\n")
+    code, data = run(iig3d, capsys, ["prompt", "--spec", str(spec), "--out-dir", str(tmp_path / "out"), "--skill-root", str(tmp_catalogue.root), "--no-icon-fetch"])
+    assert code == 1 and "lucide:unicorn-horn" in data["error"]

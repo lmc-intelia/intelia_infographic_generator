@@ -31,9 +31,10 @@ style: industrial-3d                  # or a 3d-* member; or a ref id/file when 
 aspect: landscape                     # landscape | portrait | square | W:H
 palette_css: ./brand.css              # optional; brand colours replace item colours only
 items:                                # 3 to 10 depending on member; one per step/tier/cell
-  - {label: COMMIT, detail: Developer pushes to main}
+  - {label: COMMIT, detail: Developer pushes to main, icon: git-branch}
 stats: [{value: "73%", caption: pages refreshed}]   # optional
 notes: keep the world map faint       # optional design instructions
+icon_pack: lucide                     # optional; item `icon: rocket` (or tabler:rocket) then comes from an icon sheet the model copies
 pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub + style: 06
 ```
 
@@ -46,7 +47,7 @@ pin: 3d-capsule-hub/06               # optional; same as layout: 3d-capsule-hub 
 | `iig3d.py refs --member M [--layout L] [--pin P]` | the 2 to 3 reference images the render will pass, plus every pin of the member |
 | `iig3d.py palette --css PATH [--vars a,b]` | preview brand colours extracted from a CSS file |
 | `iig3d.py prompt --spec F --out-dir D [...]` | write `prompts/NN-infographic-<slug>.md` without calling the API |
-| `iig3d.py render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` |
+| `iig3d.py render --spec F --out-dir D [--dry-run] [--resolution 1K\|2K\|4K] [--aspect A] [--style S] [--layout L] [--palette-css P] [--ref IMG] [--pin M/ID] [--icon-pack P] [--strict]` | prompt file, then Gemini `gemini-3-pro-image`, then `infographic.png` |
 | `iig3d.py add --image IMG --meta meta.yaml` | register a user image as a reference (below) |
 | `iig3d.py docs` | regenerate `docs/` markdown from the YAML catalogue |
 | `iig3d.py check` | validate catalogue, refs, docs; exit 1 with every violation |
