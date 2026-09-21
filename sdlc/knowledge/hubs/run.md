@@ -1,7 +1,7 @@
 ---
 type: Hub
-title: test_cli.py
-description: Graphify god node with degree 24 in tests/test_cli.py
+title: run()
+description: Graphify god node with degree 21 in tests/test_cli.py
 resource: tests/test_cli.py
 tags: [hub, graphify]
 status: draft
@@ -13,10 +13,10 @@ sources:
 ---
 
 # Where
-- `tests/test_cli.py:L1`
+- `tests/test_cli.py:L17`
 
 # Module
 - [test_cli.py](/modules/test-cli-py.md)
 
 # Why it matters
-- degree 24: many modules reach this symbol; changes here have a wide blast radius
+- degree 21: many modules reach this symbol; changes here have a wide blast radius

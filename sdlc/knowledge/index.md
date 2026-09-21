@@ -13,35 +13,35 @@ human accept publishes them; `graphify query "<question>"` answers call-graph qu
 # Modules
 * [Catalogue](modules/catalogue.md) - Graphify community 45: skills/iig3d/scripts/iig3d.py
 * [iig3d.py](modules/iig3d-py.md) - Graphify community 9: skills/iig3d/scripts/iig3d.py
-* [load_catalogue](modules/load-catalogue.md) - Graphify community 48: skills/iig3d/scripts/iig3d.py
 * [Member](modules/member.md) - Graphify community 33: skills/iig3d/scripts/iig3d.py
 * [Path](modules/path.md) - Graphify community 35: skills/iig3d/scripts/iig3d.py
-* [prepare](modules/prepare.md) - Graphify community 41: skills/iig3d/scripts/iig3d.py
+* [prepare](modules/prepare.md) - Graphify community 39: skills/iig3d/scripts/iig3d.py
+* [resolve_icons](modules/resolve-icons.md) - Graphify community 49: skills/iig3d/scripts/iig3d.py
 * [test_add.py](modules/test-add-py.md) - Graphify community 34: tests/test_add.py
 * [test_aspect.py](modules/test-aspect-py.md) - Graphify community 10: tests/test_aspect.py
 * [test_catalogue.py](modules/test-catalogue-py.md) - Graphify community 3: tests/test_catalogue.py, tests/test_routing.py
 * [test_cli.py](modules/test-cli-py.md) - Graphify community 7: tests/test_cli.py
 * [test_creds.py](modules/test-creds-py.md) - Graphify community 20: tests/test_creds.py
 * [test_docs.py](modules/test-docs-py.md) - Graphify community 32: tests/test_docs.py
+* [test_icons.py](modules/test-icons-py.md) - Graphify community 36: tests/test_icons.py
 * [test_palette.py](modules/test-palette-py.md) - Graphify community 16: tests/test_palette.py
 * [test_prompt.py](modules/test-prompt-py.md) - Graphify community 19: tests/test_prompt.py
 * [test_refs.py](modules/test-refs-py.md) - Graphify community 12: tests/test_refs.py
 * [test_render.py](modules/test-render-py.md) - Graphify community 5: tests/conftest.py, tests/test_install.py, tests/test_render.py
 * [test_skill_md.py](modules/test-skill-md-py.md) - Graphify community 38: tests/test_skill_md.py
 * [test_spec.py](modules/test-spec-py.md) - Graphify community 11: tests/test_spec.py
-* [UsageError](modules/usageerror.md) - Graphify community 36: skills/iig3d/scripts/iig3d.py
 
 # Hubs
 * [add_ref()](hubs/add-ref.md) - Graphify god node with degree 20 in skills/iig3d/scripts/iig3d.py
-* [assemble()](hubs/assemble.md) - Graphify god node with degree 22 in skills/iig3d/scripts/iig3d.py
-* [Catalogue](hubs/catalogue.md) - Graphify god node with degree 36 in skills/iig3d/scripts/iig3d.py
-* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 77 in skills/iig3d/scripts/iig3d.py
-* [Path](hubs/path.md) - Graphify god node with degree 30
-* [prepare()](hubs/prepare.md) - Graphify god node with degree 19 in skills/iig3d/scripts/iig3d.py
-* [test_cli.py](hubs/test-cli-py.md) - Graphify god node with degree 20 in tests/test_cli.py
+* [assemble()](hubs/assemble.md) - Graphify god node with degree 23 in skills/iig3d/scripts/iig3d.py
+* [Catalogue](hubs/catalogue.md) - Graphify god node with degree 41 in skills/iig3d/scripts/iig3d.py
+* [iig3d.py](hubs/iig3d-py.md) - Graphify god node with degree 88 in skills/iig3d/scripts/iig3d.py
+* [Path](hubs/path.md) - Graphify god node with degree 33
+* [run()](hubs/run.md) - Graphify god node with degree 21 in tests/test_cli.py
+* [test_cli.py](hubs/test-cli-py.md) - Graphify god node with degree 24 in tests/test_cli.py
 * [test_prompt.py](hubs/test-prompt-py.md) - Graphify god node with degree 22 in tests/test_prompt.py
 * [test_refs.py](hubs/test-refs-py.md) - Graphify god node with degree 22 in tests/test_refs.py
-* [UsageError](hubs/usageerror.md) - Graphify god node with degree 20 in skills/iig3d/scripts/iig3d.py
+* [UsageError](hubs/usageerror.md) - Graphify god node with degree 24 in skills/iig3d/scripts/iig3d.py
 
 # Lessons
 * none yet
