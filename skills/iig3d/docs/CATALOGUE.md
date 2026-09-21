@@ -8,7 +8,7 @@
 
 | Style | Structural device | Backdrop | Items | Refs |
 |-------|-------------------|----------|-------|------|
-| `3d-arrow-ribbon` | Fat 3D chevron arrows and folded ribbons carrying a sequence | Light studio, dotted world map | 5-8 | 2 |
+| `3d-arrow-ribbon` | Fat 3D chevron arrows and folded ribbons carrying a sequence | Light studio, dotted world map | 4-8 | 8 |
 | `3d-capsule-hub` | Central disc, pill capsules with rimmed circles, thin connectors, rimmed capsule wheel | White | 4-8 | 7 |
 | `3d-cylinder-column` | Stepped glossy cylinders with bent 3D arrows to labels | Pale studio, reflective floor | 3-6 | 3 |
 | `3d-disc-timeline` | Rimmed bevelled discs on a track, ribbon or S-curve | Light studio, ghosted world map | 4-8 | 6 |

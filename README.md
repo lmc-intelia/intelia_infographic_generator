@@ -144,7 +144,7 @@ Fifteen members share one rendering language and differ in the structural device
 | Style | Device | Items | Best for |
 |-------|--------|-------|----------|
 | `3d-slab-stack` | Stacked extruded slabs, staircase, folded ribbons | 3 to 7 | tiers, ranked lists, funnels |
-| `3d-arrow-ribbon` | Fat chevron arrows carrying a sequence | 5 to 8 | pipelines, journeys |
+| `3d-arrow-ribbon` | Fat chevron arrows, arrow bars, angled banners, folded ribbons | 4 to 8 | pipelines, journeys, ranked options |
 | `3d-disc-timeline` | Rimmed discs on a track, chain or S-curve | 4 to 8 | timelines, procedures |
 | `3d-paper-tile` | Embossed tiles, hexagons, tabs, tile-capped charts | 6 to 16 | dashboards, grids |
 | `3d-gradient-pedestal` | Isometric gradient pedestals with 3D numerals | 3 to 5 | short summaries, comparisons |
