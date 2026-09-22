@@ -96,7 +96,7 @@ def test_suggest_from_synonyms_offline(iig3d, offline_cat):
     # label has no synonym, detail does
     assert iig3d.suggest_icon(offline_cat, "lucide", "STEP TWO", "measure outcomes", fetch=False) == ("chart-line", "synonym:measure")
     # synonym exists but glyph not vendored and fetching off: skipped, nothing else fits
-    assert "wallet.svg" not in {p.name for p in (offline_cat.root / "icons" / "lucide").iterdir()}
+    (offline_cat.root / "icons" / "lucide" / "wallet.svg").unlink(missing_ok=True)
     assert iig3d.suggest_icon(offline_cat, "lucide", "BUDGET", fetch=False) is None
     assert iig3d.suggest_icon(offline_cat, "lucide", "AUDIT", fetch=False) is None
 

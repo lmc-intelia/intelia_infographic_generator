@@ -1,6 +1,6 @@
 name: 3d-soft-emboss
-device: 'Neumorphic soft-embossed grey devices: jigsaw ring, segment ring or overlapping circles pressed into a matte grey
-  field'
+device: 'Neumorphic soft-embossed grey devices: jigsaw ring, segment ring, overlapping circles, chevron row, hexagon clusters,
+  pill and card lists, ring chains, hub spokes, all pressed into a matte grey field'
 backdrop: Matte light grey
 items:
   min: 3
@@ -16,6 +16,9 @@ layout:
   - Numbered text cards or big numerals in a column beside the device, one per item
   - Chevron row: five or six raised chevron arrows nesting left to right in one row, numeral and name on each, a raised icon
       disc with a caption under each chevron
+  - 'Hexagon devices: raised hexagons in columns or an arc, connected to a centre disc by thin lines with end dots'
+  - 'List devices: raised icon discs or numeral tiles beside rounded pill or card text blocks, in one or two columns'
+  - 'Hub devices: one large centre disc with spokes or brackets to raised icon discs, text beside each'
   variants:
   - name: Jigsaw ring
     focus: Parts that lock into one whole
@@ -28,7 +31,44 @@ layout:
     emphasis: Three raised circles with numerals in the overlaps
   - name: Chevron row
     focus: Sequences of five or six steps
-    emphasis: Raised chevrons in a row with one rolled glossy edge each and flat gaps between, icon discs and captions beneath, title between thin rules
+    emphasis: Raised chevrons in a row with one rolled glossy edge each and flat gaps between, icon discs and captions beneath,
+      title between thin rules
+  - name: Hex cluster
+    focus: Six capabilities around one core
+    emphasis: Two columns of three raised hexagons flanking a central ring disc, thin connectors with end dots
+  - name: Tile grid
+    focus: Six numbered points at a glance
+    emphasis: Numeral hexagon tile beside a rounded text card, two columns of three
+  - name: Pill list
+    focus: Three to four points read top to bottom
+    emphasis: Raised icon discs in a column with a rounded pill card beside each, optionally inside one large raised panel
+  - name: Numbered cards
+    focus: Three ordered points with equal weight
+    emphasis: Rounded cards each carrying a large numeral, name and detail, in a row or a column, icon disc optional
+  - name: Ring chain
+    focus: Five linked stages
+    emphasis: Raised ring nodes joined by one zigzag band, icon in each ring, labels alternating above and below
+  - name: Capsule row
+    focus: Four parallel pillars
+    emphasis: Tall capsules in a row, white icon disc at the top of each, name and detail inside
+  - name: Hex arc hub
+    focus: Five satellites around one centre
+    emphasis: Hexagon tiles in an arc left of a large centre disc, dotted connectors and small ring nodes
+  - name: Bar stack
+    focus: Three stages with icon and numeral
+    emphasis: Stacked rounded bars, each with a raised icon sphere and a numeral ring, sides alternating
+  - name: Step branches
+    focus: Three steps from one centre
+    emphasis: Large centre disc left, step rings on a vertical stem, each with a header tab and a text bar
+  - name: Arrow bars
+    focus: Four ranked measures
+    emphasis: Half disc left, arrow bars stacked with name and numeral, icon ring and percentage to the right
+  - name: Hub spokes
+    focus: Three pillars from one hub
+    emphasis: Centre disc or title with straight or bracket connectors to a column of raised icon discs, text beside each
+  - name: Lettered discs
+    focus: Four lettered options
+    emphasis: Raised discs with big letters resting on U cradles, stems down to text blocks
   visual_elements:
   - Every shape is the same light grey as the backdrop, raised by a soft light-top-left shadow and a darker bottom-right shadow
   - Icon discs raised a second level above the piece, dark grey flat icons
@@ -57,6 +97,8 @@ style:
   - 'Three items: segment ring or overlapping circles; four items: jigsaw or segment ring'
   - Five or six items: chevron row, landscape only
   - More than six items, switch to 3d-paper-tile or 3d-capsule-hub
+  - 'Six items: hex cluster or tile grid; five items: ring chain or hex arc hub'
+  - 'Portrait or square sources: pill list, framed pill list or bar stack'
 prompt_fragment: 'Render as a polished corporate 3D infographic in a neumorphic soft-embossed style: every shape is the same
   matte light grey as the backdrop and stands out only through a soft white highlight at the top left and a darker shadow
   at the bottom right. One ring device, a disc cut into puzzle pieces or wedges, or three overlapping raised circles, with
@@ -144,7 +186,221 @@ refs:
     added: '2026-09-21'
     user_added: true
     regenerated: true
-    derived_from: skills/iig3d/refs/3d-arrow-ribbon/ref-07-six-chevron-row.jpg (composition, restyled in grey relief, then edges rolled)
+    derived_from: skills/iig3d/refs/3d-arrow-ribbon/ref-07-six-chevron-row.jpg (composition, restyled in grey relief, then
+      edges rolled)
+- id: '06'
+  file: ref-06-hex-cluster-six.jpg
+  shows: Six raised light-grey hexagons in two columns of three at the canvas edges, a raised icon disc with a flat dark icon
+    on each, a central raised ring disc that carries the title and subtitle, thin connectors with end dots, a pale numeral
+    01 to 06 over a bold name and short detail beside each hexagon
+  flags:
+  - clean
+  variant: Hex cluster
+  item_count: 6
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/hex-cluster-six/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_09_50-Greenshot.png
+- id: '07'
+  file: ref-07-numbered-tile-grid-six.jpg
+  shows: Six raised light-grey hexagon tiles with a flat dark icon inside and a big pale numeral 1 to 6 overlapping the left
+    edge, each beside a raised rounded text card with a bold name and short detail, two columns of three, title and subtitle
+    centred at top between thin rules
+  flags:
+  - clean
+  variant: Tile grid
+  item_count: 6
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/numbered-tile-grid-six/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_10_58-Greenshot.png
+- id: 08
+  file: ref-08-icon-pill-list-four.jpg
+  shows: Four raised light-grey icon discs in a column with flat dark icons, a raised rounded pill card beside each with a
+    bold centred name and short detail, title and letter-spaced subtitle centred at top
+  flags:
+  - clean
+  variant: Pill list
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/icon-pill-list-four/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_11_41-Greenshot.png
+- id: 09
+  file: ref-09-numbered-icon-cards-three.jpg
+  shows: Three wide raised light-grey rounded cards stacked in a column, each with a raised icon disc on the left, a large
+    grey numeral 01 to 03, a bold name and short detail, title and subtitle centred at top
+  flags:
+  - clean
+  variant: Numbered cards
+  item_count: 3
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/numbered-icon-cards-three/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_12_00-Greenshot.png
+- id: '10'
+  file: ref-10-numeral-card-row-three.jpg
+  shows: Three tall raised light-grey rounded cards in a row, each with a huge dark grey numeral 01 to 03, a bold name and
+    short detail centred below, title and subtitle centred at top
+  flags:
+  - clean
+  variant: Numbered cards
+  item_count: 3
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/numeral-card-row-three/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_12_16-Greenshot.png
+- id: '11'
+  file: ref-11-framed-pill-list-three.jpg
+  shows: One large raised light-grey rounded panel holding three raised pill rows, a dark grey icon disc with a white icon
+    on the left of each pill, a bold name and short detail, title and subtitle centred at the top of the panel
+  flags:
+  - clean
+  variant: Pill list
+  item_count: 3
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/framed-pill-list-three/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_12_29-Greenshot.png
+- id: '12'
+  file: ref-12-ring-chain-five.jpg
+  shows: Five raised light-grey ring nodes joined by one zigzag band across the canvas, a flat dark icon in each recessed
+    ring centre, a bold name and short detail alternating above and below the nodes, title centred at top
+  flags:
+  - clean
+  variant: Ring chain
+  item_count: 5
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/ring-chain-five/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_12_50-Greenshot.png
+- id: '13'
+  file: ref-13-capsule-row-four.jpg
+  shows: Four tall raised light-grey capsules in a row, a raised white icon disc with a flat dark icon near the top of each,
+    a bold name and short detail inside, title and letter-spaced subtitle centred at top
+  flags:
+  - clean
+  variant: Capsule row
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/capsule-row-four/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_13_03-Greenshot.png
+- id: '14'
+  file: ref-14-hex-arc-hub-five.jpg
+  shows: Five raised light-grey hexagon tiles in an arc on the left, each with a flat dark icon, a bold name and short detail,
+    thin dotted connectors to small raised rings on a semicircle around a large raised centre disc that carries the title
+  flags:
+  - clean
+  variant: Hex arc hub
+  item_count: 5
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/hex-arc-hub-five/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_14_10-Greenshot.png
+- id: '15'
+  file: ref-15-bar-stack-three.jpg
+  shows: Three stacked raised light-grey rounded bars, each with a raised icon disc and a thin numeral ring 01 to 03 at one
+    end, sides alternating, a bold name and short detail at the other end, title centred at top
+  flags:
+  - clean
+  variant: Bar stack
+  item_count: 3
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/bar-stack-three/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_14_33-Greenshot.png
+- id: '16'
+  file: ref-16-step-branches-three.jpg
+  shows: Large raised light-grey disc on the left carrying the title, a thin vertical stem with three raised step rings reading
+    STEP 01 to 03, each with a raised grey header tab holding the name and a rounded text bar holding the detail
+  flags:
+  - clean
+  variant: Step branches
+  item_count: 3
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/step-branches-three/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_14_59-Greenshot.png
+- id: '17'
+  file: ref-17-arrow-bars-four.jpg
+  shows: Large raised light-grey half disc on the left carrying the title, four raised arrow bars of differing length stacked
+    to the right, each with a letter-spaced name and a numeral 01 to 04, a dotted leader to a raised icon ring and a percentage
+  flags:
+  - clean
+  variant: Arrow bars
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/arrow-bars-four/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_15_12-Greenshot.png
+- id: '18'
+  file: ref-18-hub-spokes-three.jpg
+  shows: Large raised light-grey disc on the left carrying the title, three straight spokes to smaller raised discs with flat
+    dark icons, a bold name and short detail beside each
+  flags:
+  - clean
+  variant: Hub spokes
+  item_count: 3
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/hub-spokes-three/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_15_24-Greenshot.png
+- id: '19'
+  file: ref-19-bracket-hub-three.jpg
+  shows: One raised pill on the left holding a raised icon disc, the title and subtitle, thin bracket connectors to a column
+    of three raised light-grey discs with flat dark icons, a raised rounded card beside each with a big numeral, a bold name
+    and short detail
+  flags:
+  - clean
+  variant: Hub spokes
+  item_count: 3
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/bracket-hub-three/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_15_40-Greenshot.png
+- id: '20'
+  file: ref-20-lettered-discs-four.jpg
+  shows: Four raised light-grey discs with one big pale embossed letter each, A to D, resting on U cradles, thin stems ending
+    in a dot, a bold condensed name and short detail under each, title centred at top between two rules with a subtitle below
+  flags:
+  - clean
+  variant: Lettered discs
+  item_count: 4
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/lettered-discs-four/out/infographic.png
+    added: '2026-09-21'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_16_37-Greenshot.png
 pairings:
   jigsaw:
   - '01'
@@ -161,6 +417,38 @@ pairings:
   - '04'
   linear-progression:
   - '05'
+  - '07'
+  - 08
+  - 09
+  - '10'
+  - '12'
+  - '13'
+  - '15'
+  - '16'
+  - '17'
+  - '20'
+  hub-spoke:
+  - '06'
+  - '14'
+  - '18'
+  - '19'
+  bento-grid:
+  - '06'
+  - '07'
+  hierarchical-layers:
+  - 08
+  - '11'
+  - '13'
+  - '15'
+  winding-roadmap:
+  - '12'
+  tree-branching:
+  - '16'
+  - '19'
+  dashboard:
+  - '17'
+  comparison-matrix:
+  - '20'
 source:
   origin: user-added via iig3d.py add (03-emboss-jigsaw3.yaml)
   added: '2026-09-21'
