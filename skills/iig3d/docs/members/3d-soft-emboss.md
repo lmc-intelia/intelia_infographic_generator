@@ -28,6 +28,7 @@ Member of the 3D corporate family. Neumorphic soft-embossed grey devices: jigsaw
 | `3d-soft-emboss/18` | `ref-18-hub-spokes-three.jpg` | Large raised light-grey disc on the left carrying the title, three straight spokes to smaller raised discs with flat dark icons, a bold name and short detail beside each | Hub spokes | clean |
 | `3d-soft-emboss/19` | `ref-19-bracket-hub-three.jpg` | One raised pill on the left holding a raised icon disc, the title and subtitle, thin bracket connectors to a column of three raised light-grey discs with flat dark icons, a raised rounded card beside each with a big numeral, a bold name and short detail | Hub spokes | clean |
 | `3d-soft-emboss/20` | `ref-20-lettered-discs-four.jpg` | Four raised light-grey discs with one big pale embossed letter each, A to D, resting on U cradles, thin stems ending in a dot, a bold condensed name and short detail under each, title centred at top between two rules with a subtitle below | Lettered discs | clean |
+| `3d-soft-emboss/21` | `ref-21-paired-cards-six.jpg` | Two columns of six raised light-grey cards, one row per item, each row joined by a thin connector bar with a raised dot at each end, a raised numeral tile and a raised icon tile with a flat dark glyph at the head of every card, the left card holding a bold name and one sentence, the right card holding the word LESSON and one sentence, title and subtitle centred at top | Paired cards | clean |
 
 Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition with your content.
 
@@ -70,6 +71,7 @@ Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition 
 - Hexagon devices: raised hexagons in columns or an arc, connected to a centre disc by thin lines with end dots
 - List devices: raised icon discs or numeral tiles beside rounded pill or card text blocks, in one or two columns
 - Hub devices: one large centre disc with spokes or brackets to raised icon discs, text beside each
+- Paired cards: two columns of six raised cards, each row joined by a short connector with end dots, a numeral tile and an icon tile at the head of every card
 
 ### Variants
 
@@ -91,6 +93,7 @@ Pin one with `pin: <Pin>` in the spec (or `--pin`) to reproduce its composition 
 | **Arrow bars** | Four ranked measures | Half disc left, arrow bars stacked with name and numeral, icon ring and percentage to the right |
 | **Hub spokes** | Three pillars from one hub | Centre disc or title with straight or bracket connectors to a column of raised icon discs, text beside each |
 | **Lettered discs** | Four lettered options | Raised discs with big letters resting on U cradles, stems down to text blocks |
+| **Paired cards** | Six problems each matched to one answer | Two columns of raised cards joined row by row by a short connector, numeral tile and icon tile at the head of each card |
 
 ### Visual Elements
 
@@ -133,7 +136,8 @@ Render as a polished corporate 3D infographic in a neumorphic soft-embossed styl
 - `winding-roadmap`: refs 12
 - `tree-branching`: refs 16, 19
 - `dashboard`: refs 17
-- `comparison-matrix`: refs 20
+- `comparison-matrix`: refs 20, 21
+- `binary-comparison`: refs 21
 
 Alternates: `3d-paper-tile`, `3d-capsule-hub`, `3d-triangle-plate`
 
