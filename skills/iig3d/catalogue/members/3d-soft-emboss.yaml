@@ -19,6 +19,8 @@ layout:
   - 'Hexagon devices: raised hexagons in columns or an arc, connected to a centre disc by thin lines with end dots'
   - 'List devices: raised icon discs or numeral tiles beside rounded pill or card text blocks, in one or two columns'
   - 'Hub devices: one large centre disc with spokes or brackets to raised icon discs, text beside each'
+  - 'Paired cards: two columns of six raised cards, each row joined by a short connector with end dots, a numeral tile and
+    an icon tile at the head of every card'
   variants:
   - name: Jigsaw ring
     focus: Parts that lock into one whole
@@ -69,6 +71,10 @@ layout:
   - name: Lettered discs
     focus: Four lettered options
     emphasis: Raised discs with big letters resting on U cradles, stems down to text blocks
+  - name: Paired cards
+    focus: Six problems each matched to one answer
+    emphasis: Two columns of raised cards joined row by row by a short connector, numeral tile and icon tile at the head of
+      each card
   visual_elements:
   - Every shape is the same light grey as the backdrop, raised by a soft light-top-left shadow and a darker bottom-right shadow
   - Icon discs raised a second level above the piece, dark grey flat icons
@@ -401,6 +407,22 @@ refs:
     user_added: true
     regenerated: true
     derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/docs/3d_white/2026-09-21 17_16_37-Greenshot.png
+- id: '21'
+  file: ref-21-paired-cards-six.jpg
+  shows: Two columns of six raised light-grey cards, one row per item, each row joined by a thin connector bar with a raised
+    dot at each end, a raised numeral tile and a raised icon tile with a flat dark glyph at the head of every card, the left
+    card holding a bold name and one sentence, the right card holding the word LESSON and one sentence, title and subtitle
+    centred at top
+  flags:
+  - clean
+  variant: Paired cards
+  item_count: 6
+  source:
+    path: /tmp/claude-1000/-home-linusmcmanamey-Development-intelia-infographic-generator/32dc3338-c6ce-4f3e-896d-4b7fdfe84435/scratchpad/white/paired-cards-six/out/infographic.png
+    added: '2026-09-22'
+    user_added: true
+    regenerated: true
+    derived_from: /home/linusmcmanamey/Development/intelia_knowledge_base/infographic/health_check_01/slide08/infographic-backup-20260921-134545.png
 pairings:
   jigsaw:
   - '01'
@@ -449,6 +471,9 @@ pairings:
   - '17'
   comparison-matrix:
   - '20'
+  - '21'
+  binary-comparison:
+  - '21'
 source:
   origin: user-added via iig3d.py add (03-emboss-jigsaw3.yaml)
   added: '2026-09-21'
